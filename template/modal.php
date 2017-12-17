@@ -151,9 +151,12 @@
   <div class="modal-body">
 	<form action="proses/add/add_penyewa.php" method="post" class="form-horizontal">
 	  <div class="control-group">
-		<label class="control-label">Nama :</label>
+		<label class="control-label">Apartemen :</label>
 		<div class="controls">
-		  <input name="nama" type="text" class="span2" placeholder="Nama" />
+		  <select>
+		    <option>Apt1</option>
+		    <option>Apt2</option>
+		  </select>
 		</div>
 	  </div>
 	  <div class="control-group">
@@ -166,17 +169,6 @@
 		<label class="control-label">No Telpon :</label>
 		<div class="controls">
 		  <input name="no_tlp" type="text"  class="span2" placeholder="ex: 0812...."  />
-		</div>
-	  </div>
-	  <div class="control-group">
-		<label class="control-label">Jenis Kelamin :</label>
-		<div class="controls">
-		  <label>
-			<input type="radio" name="jenis_kelamin" value="Laki-laki" checked/> Laki-laki
-		  </label>
-		  <label>
-			<input type="radio" name="jenis_kelamin" value="Perempuan" /> Perempuan
-		  </label>
 		</div>
 	  </div>
 	  <div class="control-group">
