@@ -72,7 +72,7 @@
     <h3>Data Baru</h3>
   </div>
   <div class="modal-body">
-	<form action="proses/add/add_booking_via.php" method="post" class="form-horizontal">
+	<form action="proses/proses_add.php" method="post" class="form-horizontal">
 	  <div class="control-group">
 		<label class="control-label">Booking Via :</label>
 		<div class="controls">

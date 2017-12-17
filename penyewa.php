@@ -77,7 +77,7 @@
     <h3>Pelanggan Baru</h3>
   </div>
   <div class="modal-body">
-	<form action="proses/add/add_penyewa.php" method="post" class="form-horizontal">
+	<form action="proses/proses_add.php" method="post" class="form-horizontal">
 	  <div class="control-group">
 		<label class="control-label">Nama :</label>
 		<div class="controls">
