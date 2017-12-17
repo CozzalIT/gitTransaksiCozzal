@@ -154,21 +154,53 @@
 		<label class="control-label">Apartemen :</label>
 		<div class="controls">
 		  <select>
-		    <option>Apt1</option>
-		    <option>Apt2</option>
+		  <option name="" value="">-- Pilih Apartemen --</option>
+			<?php
+			  include "config.php";
+					
+			  $sql = $pdo->prepare("SELECT * FROM tb_apt ORDER BY nama_apt");
+			  $sql->execute();
+					
+			  while($data = $sql->fetch()){
+				echo "<option name='kd_apt' value='".$data['kd_apt']."'>".$data['nama_apt']."</option>";
+			  }
+			?>
 		  </select>
 		</div>
 	  </div>
 	  <div class="control-group">
-		<label class="control-label">Alamat :</label>
+		<label class="control-label">No Unit :</label>
 		<div class="controls">
-		  <input name="alamat" type="text" class="span2" placeholder="Alamat" />
+		  <input name="no_unit" type="text" class="span2" placeholder="No Unit" />
 		</div>
 	  </div>
 	  <div class="control-group">
-		<label class="control-label">No Telpon :</label>
+		<label class="control-label">Harga Owner WD :</label>
 		<div class="controls">
-		  <input name="no_tlp" type="text"  class="span2" placeholder="ex: 0812...."  />
+		  <input name="h_owner_wd" type="text"  class="span2" placeholder="Owner Week Day"  />
+		</div>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label">Harga Owner WE :</label>
+		<div class="controls">
+		  <input name="h_owner_we" type="text"  class="span2" placeholder="Owner Week End"  />
+		</div>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label">Harga Sewa WD :</label>
+		<div class="controls">
+		  <input name="h_sewa_wd" type="text"  class="span2" placeholder="Sewa Week Day"  />
+		</div>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label">Harga Sewa WE :</label>
+		<div class="controls">
+		  <input name="h_sewa_wd" type="text"  class="span2" placeholder="Sewa Week End"  />
+		</div>
+	  </div><div class="control-group">
+		<label class="control-label">Ekstra Charge :</label>
+		<div class="controls">
+		  <input name="ekstra_charge" type="text"  class="span2" placeholder="Sewa Week Day"  />
 		</div>
 	  </div>
 	  <div class="control-group">
