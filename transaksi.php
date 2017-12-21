@@ -214,13 +214,10 @@
 				    <select id="booking_via" name="booking_via" class="span4">
 					  <option>-- Booking --</option>
 					  <?php
-						include "config.php";
-
-						$sql = $pdo->prepare("SELECT * FROM tb_booking_via ORDER BY booking_via");
-						$sql->execute();
-
-						while($data = $sql->fetch()){
-						  echo "<option name='kd_booking' value='".$data['kd_booking']."'>".$data['booking_via']."</option>";
+            $Proses = new Proses();
+  				  $show = $Proses->showBooking_via();
+  				  while($data = $show->fetch(PDO::FETCH_OBJ)){
+						  echo "<option name='kd_booking' value='$data->kd_booking'>$data->booking_via</option>";
 						}
 					  ?>
 					</select>
@@ -232,13 +229,10 @@
 				    <select id="dp_via" name="dp_via" class="span4">
 					  <option>-- Bank --</option>
 					  <?php
-						include "config.php";
-
-						$sql = $pdo->prepare("SELECT * FROM tb_bank ORDER BY nama_bank");
-						$sql->execute();
-
-						while($data = $sql->fetch()){
-						  echo "<option name='kd_bank' value='".$data['kd_bank']."'>".$data['nama_bank']."</option>";
+            $Proses = new Proses();
+  				  $show = $Proses->showDp_via();
+  				  while($data = $show->fetch(PDO::FETCH_OBJ)){
+						  echo "<option name='kd_bank' value='$data->kd_bank'>$data->nama_bank</option>";
 						}
 					  ?>
 					</select>

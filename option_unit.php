@@ -5,7 +5,6 @@
 // Ambil data ID Provinsi yang dikirim via ajax post
 $kd_apt = $_POST['apartemen'];
 
-// Buat variabel untuk menampung tag-tag option nya
 // Set defaultnya dengan tag option Pilih
 $html = "<option value=''>-- Pilih Unit --</option>";
 
