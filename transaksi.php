@@ -76,7 +76,7 @@
 			      <div class="control-group">
 				    <label class="control-label">Jenis Kelamin :</label>
 				    ';
-				
+
 					if ($edit->jenis_kelamin == 'Laki-laki') {
 					  echo '
 						<div class="controls">
@@ -87,10 +87,10 @@
 							<input type="radio" name="jenis_kelamin" value="Perempuan" /> Perempuan
 						  </label>
 						</div>
-				
+
 					  ';
 					} else {
-					  echo '				
+					  echo '
 						<div class="controls">
 						  <label>
 							<input type="radio" name="jenis_kelamin" value="Laki-laki" /> Laki-laki
@@ -98,10 +98,10 @@
 						  <label>
 							<input type="radio" name="jenis_kelamin" value="Perempuan" checked/> Perempuan
 						  </label>
-						</div>		
+						</div>
 					  ';
 					}
-				
+
 				  echo '
 			      </div>
 			      <div class="control-group">
@@ -126,13 +126,10 @@
 					<select id="apartemen" name="apartemen" class="span4">
 					  <option name="" value="">-- Pilih Apartemen --</option>
 					  <?php
-						include "config.php";
-					
-						$sql = $pdo->prepare("SELECT * FROM tb_apt ORDER BY nama_apt");
-						$sql->execute();
-					
-						while($data = $sql->fetch()){
-						  echo "<option name='kd_apt' value='".$data['kd_apt']."'>".$data['nama_apt']."</option>";
+            $Proses = new Proses();
+  				  $show = $Proses->showApartemen();
+  				  while($data = $show->fetch(PDO::FETCH_OBJ)){
+						  echo "<option name='kd_apt' value='$data->kd_apt'>$data->nama_apt</option>";
 						}
 					  ?>
 					</select>
@@ -152,7 +149,7 @@
 				<div class="control-group">
 				  <label class="control-label">Jumlah Tamu :</label>
 				  <div class="controls">
-				    <input name="tamu" type="number" />
+				    <input name="tamu" type="number" value="5"/>
 				  </div>
 			    </div>
 			    <div class="control-group">
@@ -160,7 +157,7 @@
 				    <button data-parent="#collapse-group" href="#collapseGFour" data-toggle="collapse" class="btn btn-success">Lanjut</button>
 				 </div>
 			   </div>
-			  
+
             </div>
           </div>
 		  <div class="accordion-group widget-box">
@@ -170,7 +167,7 @@
                 </a> </div>
             </div>
             <div class="collapse accordion-body" id="collapseGFour">
-             
+
 			    <div class="control-group">
 				  <label class="control-label">Check In :</label>
 				  <div class="controls">
@@ -200,7 +197,7 @@
 				    <button data-parent="#collapse-group" href="#collapseGFive" data-toggle="collapse" class="btn btn-success">Lanjut</button>
 				 </div>
 			   </div>
-			 
+
             </div>
           </div>
 		  <div class="accordion-group widget-box">
@@ -210,7 +207,7 @@
                 </a> </div>
             </div>
             <div class="collapse accordion-body" id="collapseGFive">
-              
+
 			    <div class="control-group">
 				  <label class="control-label">Booking Via :</label>
 				  <div class="controls">
@@ -218,10 +215,10 @@
 					  <option>-- Booking --</option>
 					  <?php
 						include "config.php";
-					
+
 						$sql = $pdo->prepare("SELECT * FROM tb_booking_via ORDER BY booking_via");
 						$sql->execute();
-					
+
 						while($data = $sql->fetch()){
 						  echo "<option name='kd_booking' value='".$data['kd_booking']."'>".$data['booking_via']."</option>";
 						}
@@ -236,10 +233,10 @@
 					  <option>-- Bank --</option>
 					  <?php
 						include "config.php";
-					
+
 						$sql = $pdo->prepare("SELECT * FROM tb_bank ORDER BY nama_bank");
 						$sql->execute();
-					
+
 						while($data = $sql->fetch()){
 						  echo "<option name='kd_bank' value='".$data['kd_bank']."'>".$data['nama_bank']."</option>";
 						}
@@ -259,7 +256,7 @@
 				    <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
 				 </div>
 			   </div>
-			  
+
             </div>
           </div>
         </div>
@@ -283,7 +280,7 @@
 <script src="js/matrix.wizard.js"></script>
 
 <script src="js/jquery.uniform.js"></script>
-<script src="js/select2.min.js"></script>
+<!-- <script src="js/select2.min.js"></script> -->
 <script src="js/jquery.dataTables.min.js"></script>
 <script src="js/matrix.tables.js"></script>
 </body>
