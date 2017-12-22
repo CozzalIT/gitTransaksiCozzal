@@ -58,7 +58,7 @@
 						<td>$data->h_owner_we</td>
 						<td>
 						    <a class='btn btn-primary' href='#'>Edit</a>
-						    <a class='btn btn-danger' href='proses/delete/delete_unit.php?delete=$data->kd_unit'>Hapus</a>
+						    <a class='btn btn-danger' href='proses/proses_delete.php?delete_unit=$data->kd_unit'>Hapus</a>
 						</td>
 					  </tr>";
 				  };

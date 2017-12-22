@@ -1,10 +1,10 @@
-<?php  
+<?php
   session_start();
-  
+
   if(!isset($_SESSION['username'])) {
-    header('location:login.php'); 
-  }else { 
-    $username = $_SESSION['username']; 
+    header('location:login.php');
+  }else {
+    $username = $_SESSION['username'];
   }
 
   $thisPage = "Dp_via";
@@ -51,7 +51,7 @@
 					    <td>$data->nama_bank</td>
 						<td>
 						  <a class='btn btn-primary' href='edit.php?edit_bank=$data->kd_bank'>Edit</a>
-						  <a class='btn btn-danger' href='proses/delete/delete_dp_via.php?delete=$data->kd_bank'>Hapus</a>
+						  <a class='btn btn-danger' href='proses/proses_delete.php?delete_dp=$data->kd_bank'>Hapus</a>
 						</td>
 					  </tr>";
 					$i++;

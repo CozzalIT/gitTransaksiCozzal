@@ -1,32 +1,34 @@
 <?php
-class prosesDelete{
-  public function __construct(){
-    $this->db = new PDO('mysql:host=localhost;dbname=db_keuangan_cozzal','root','');
+  require('proses.php');
+  $proses = new proses();
+
+//Delete Penyewa
+  if(isset($_GET['delete_penyewa'])){
+    $del = $proses->deletePenyewa($_GET['delete_penyewa']);
+    header("location:../penyewa.php");
   }
 
-  public function deletePenyewa($kd_penyewa){
-	$sql = "DELETE FROM tb_penyewa WHERE kd_penyewa='$kd_penyewa'";
-	$query = $this->db->query($sql);
+//Delete Apartemen
+  if(isset($_GET['delete_apt'])){
+    $del = $proses->deleteApartemen($_GET['delete_apt']);
+    header("location:../apartemen.php");
   }
 
-  public function deleteApartemen($kd_apt){
-	$sql = "DELETE FROM tb_apt WHERE kd_apt='$kd_apt'";
-	$query = $this->db->query($sql);
+//Delete Unit
+  if(isset($_GET['delete_unit'])){
+    $del = $proses->deleteUnit($_GET['delete_unit']);
+    header("location:../unit.php");
   }
 
-  public function deleteUnit($kd_unit){
-	$sql = "DELETE FROM tb_unit WHERE kd_unit='$kd_unit'";
-	$query = $this->db->query($sql);
+//Delete Booking Via
+  if(isset($_GET['delete_booking'])){
+    $del = $proses->deleteBooking_via($_GET['delete_booking']);
+    header("location:../booking_via.php");
   }
-  
-  public function deleteBooking_via($kd_booking){
-	$sql = "DELETE FROM tb_booking_via WHERE kd_booking='$kd_booking'";
-	$query = $this->db->query($sql);
+
+//Delete DP Via
+  if(isset($_GET['delete_dp'])){
+    $del = $proses->deleteDp_via($_GET['delete_dp']);
+    header("location:../dp_via.php");
   }
-  
-  public function deleteDp_via($kd_bank){
-	$sql = "DELETE FROM tb_bank WHERE kd_bank='$kd_bank'";
-	$query = $this->db->query($sql);
-  }
-}
 ?>
