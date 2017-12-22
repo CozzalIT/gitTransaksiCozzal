@@ -143,7 +143,7 @@
 
   //detail data owner
     if(isset($_GET['detail_owner'])){
-  	$show = $Proses->edit_owner($_GET['detail_owner']);
+  	$show = $Proses->editOwner($_GET['detail_owner']);
   	$detail = $show->fetch(PDO::FETCH_OBJ);
 
       echo '
@@ -198,7 +198,7 @@
   					<td>: '.$detail->tgl_gabung.'</td>
   				  </tr>
   				  <tr>
-  					<td>Via Bank</td>
+  					<td>Bank</td>
   					<td>: '.$detail->nama_bank.'</td>
   				  </tr>
   				  <tr>
@@ -293,12 +293,6 @@
   <div class="modal-body">
 	<form action="proses/proses_add.php" method="post" class="form-horizontal">
 	  <div class="control-group">
-		<label class="control-label">Kode :</label>
-		<div class="controls">
-		  <input name="kd_owner" type="text" class="span2" placeholder="Kode" />
-		</div>
-	  </div>
-	  <div class="control-group">
 		<label class="control-label">Nama :</label>
 		<div class="controls">
 		  <input name="nama" type="text" class="span2" placeholder="Nama Lengkap" />
@@ -328,13 +322,13 @@
 		</div>
 	  </div>
 	  <div class="control-group">
-		<label class="control-label">Via Bank :</label>
+		<label class="control-label">Bank :</label>
 		<div class="controls">
 		  <select name="kd_bank">
 		  <option name="" value="" >-- Pilih Bank --</option>
 			<?php
         $Proses = new Proses();
-        $show = $Proses->showUnit();
+        $show = $Proses->showDp_via();
         while($data = $show->fetch(PDO::FETCH_OBJ)){
 				  echo "<option name='kd_bank' value='$data->kd_bank'>$data->nama_bank</option>";
 			  }
@@ -352,12 +346,6 @@
 		<label class="control-label">E-mail :</label>
 		<div class="controls">
 		  <input name="email" type="text" class="span2" placeholder="Alamat E-Mail" />
-		</div>
-	  </div>
-	  <div class="control-group">
-		<label class="control-label">Tanggal Bergabung :</label>
-		<div class="controls">
-		  <input name="tgl_gabung" type="date" class="span2" />
 		</div>
 	  </div>
 	  <div class="control-group">

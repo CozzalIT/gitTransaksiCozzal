@@ -240,7 +240,111 @@
 			  </div>
 		  ';
 		}
+//Edit data owner
+		
+		if (isset($_GET['edit_owner']))
+		{
+		  $Proses = new Proses();
+		  $show = $Proses->editOwner($_GET['edit_owner']);
+		  $edit = $show->fetch(PDO::FETCH_OBJ);
+		  echo '
+			<div class="span3">
+			</div>
+			<div class="span6">
+			  <div class="widget-box">
+				<div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+				  <h5>Data Baru</h5>
+				</div>  
+				<div class="widget-content nopadding">
+				  <form action="proses/proses_update.php" method="post" class="form-horizontal">
+					<div class="control-group">
+					  <label class="control-label">Nama :</label>
+					  <div class="controls">
+						<input name="nama" type="text" class="span11" placeholder="Nama" value="'.$edit->nama.'"/>
+					  </div>
+					</div>
+					<div class="control-group">
+					  <label class="control-label">Alamat :</label>
+					  <div class="controls">
+						<input name="alamat" type="text" class="span11" placeholder="Alamat" value="'.$edit->alamat.'"/>
+					  </div>
+					</div>
+					<div class="control-group">
+					  <label class="control-label">No Telpon :</label>
+					  <div class="controls">
+						<input name="no_tlp" type="text" class="span11" placeholder="Ex : 08x..." value="'.$edit->no_tlp.'"/>
+					  </div>
+					</div>
+					<div class="control-group">
+					  <label class="control-label">Jenis Kelamin :</label>
+                    ';
+					if ($edit->jenis_kelamin == 'Laki-laki') {
+					  echo '
+						<div class="controls">
+						  <label>
+							<input type="radio" name="jenis_kelamin" value="Laki-laki" checked/> Laki-laki
+						  </label>
+						  <label>
+							<input type="radio" name="jenis_kelamin" value="Perempuan" /> Perempuan
+						  </label>
+						</div>				
+					  ';
+					} else {
+					  echo '				
+						<div class="controls">
+						  <label>
+							<input type="radio" name="jenis_kelamin" value="Laki-laki" /> Laki-laki
+						  </label>
+						  <label>
+							<input type="radio" name="jenis_kelamin" value="Perempuan" checked/> Perempuan
+						  </label>
+						</div>		
+					'; }
+					echo ' 	  
+						<div class="control-group">
+						  <label class="control-label">Via Bank :</label>
+							<div class="controls">
+								<select name="kd_bank">
+									<option name="" value="" >-- Pilih Bank --</option>';
+				
+	
+						$Proses = new Proses();
+						$show = $Proses->showDp_via();
+						while($data = $show->fetch(PDO::FETCH_OBJ)){
+						echo "<option name='kd_bank' value='$data->kd_bank'>$data->nama_bank</option>";}
 
+					echo '
+				
+								</select>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">No Rekening :</label>
+							<div class="controls">
+								<input name="no_rek" type="text" class="span11" placeholder="No Rekening" value="'.$edit->alamat.'"/>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">E-mail :</label>
+							<div class="controls">
+								<input name="email" type="text" class="span11" placeholder="Alamat E-Mail" value="'.$edit->email.'"/>
+							</div>
+						</div>';
+
+//button here					
+					echo '
+					  <div class="form-actions" style="text-align:right">
+						<button name="updateOwner" type="submit" class="btn btn-success">Update</button>
+					  </div>
+					</form>
+				  </div>
+				</div>
+			  </div>
+			  <div class="span3">
+			  </div>
+		  ';				
+		}
+		
 	  ?>
 	</div>
   </div>

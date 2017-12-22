@@ -53,15 +53,22 @@
   }
 
 //Tambah Owner
-  if(isset($_POST['add_owner'])){
-	  $kd_apt = $_POST['kd_bank'];
-	  $nama_bank= $_POST['nama_bank'];
+  if(isset($_POST['addOwner'])){
+	  $nama= $_POST['nama'];
+	  $alamat= $_POST['alamat'];
+	  $no_tlp= $_POST['no_tlp'];
+	  $kd_bank= $_POST['kd_bank'];
+	  $no_rek= $_POST['no_rek'];
+	  $tgl_gabung= date('y-m-d');
+	  $email= $_POST['email'];
+	  $jenis_kelamin= $_POST['jenis_kelamin'];
 
-    $add = $proses->add_owner($kd_apt, $nama, $alamat, $no_tlp, $kd_bank, $no_rek, $tgl_gabung);
+    $add = $proses->addOwner($nama, $alamat, $no_tlp, $kd_bank, $no_rek, $tgl_gabung, $email, $jenis_kelamin);
 
     if($add == "Success"){
-	    header('Location:../dp_via.php');
+	    header('Location:../owner.php');
     }
+	else echo 'error'; 
   }
 
 //Tambah Transaksi

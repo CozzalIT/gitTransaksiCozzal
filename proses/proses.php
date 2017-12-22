@@ -55,9 +55,9 @@ class Proses{
 	}
   }
 
-  public function add_owner($kd_apt, $nama, $alamat, $no_tlp, $kd_bank, $no_rek, $tgl_gabung){
-	$sql = "INSERT INTO tb_owner (kd_apt,nama,alamat,no_tlp, kd_bank, no_rek, tgl_gabung)
-	VALUES('$kd_apt', '$nama', '$alamat', '$no_tlp', '$kd_bank', '$no_rek', '$tgl_gabung')";
+  public function addOwner($nama, $alamat, $no_tlp, $kd_bank, $no_rek, $tgl_gabung, $email, $jenis_kelamin){
+	$sql = "INSERT INTO tb_owner (nama,alamat, no_tlp, kd_bank, no_rek, tgl_gabung, email, jenis_kelamin)
+	VALUES('$nama', '$alamat', '$no_tlp', '$kd_bank', '$no_rek', '$tgl_gabung', '$email', '$jenis_kelamin')";
 	$query = $this->db->query($sql);
 	if(!$query){
 	  return "Failed";
@@ -102,6 +102,13 @@ class Proses{
   $query = $this->db->query($sql);
   return $query;
   }
+  
+  public function editOwner($kd_owner){
+	$sql = "SELECT * from tb_owner 
+	INNER JOIN tb_bank ON tb_bank.kd_bank = tb_owner.kd_bank where kd_owner='$kd_owner'";
+	$query = $this->db->query($sql);
+	return $query;
+  }
 //Proses Edit (Akhir)
 
 //Proses Show (Awal)
@@ -138,9 +145,8 @@ class Proses{
 	return $query;
   }
 
-  public function showowner(){
+  public function showOwner(){
   $sql = "SELECT * from tb_owner
-    INNER JOIN tb_apt ON tb_apt.kd_apt = tb_owner.kd_apt
     INNER JOIN tb_bank ON tb_bank.kd_bank = tb_owner.kd_bank";
   $query = $this->db->query($sql);
   return $query;
@@ -203,6 +209,9 @@ class Proses{
       return "Success";
     }
   }
+  
+//  public function updateOwner($kd_owner ,$nama, $alamat, $no_tlp, $kd_bank, $no_rek, $tgl_gabung, $email, $jenis_kelamin)
+  
 //Proses Update (Akhir)
 
 //Proses Delete (Awal)
@@ -230,6 +239,12 @@ class Proses{
     $sql = "DELETE FROM tb_bank WHERE kd_bank='$kd_bank'";
     $query = $this->db->query($sql);
   }
+  
+  public function deleteOwner($kd_owner){
+	$sql = "DELETE FROM tb_owner WHERE kd_owner='$kd_owner'";
+	$query = $this->db->query($sql);
+  }
+
 //Proses Delete (Akhir)
 }
 ?>

@@ -19,7 +19,7 @@
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Tables</a> </div>
-    <a href="#popup-penyewa" data-toggle="modal" class="btn btn-info btn-add"><i class="icon-plus"></i> Tambah Data</a>
+    <a href="#popup-owner" data-toggle="modal" class="btn btn-info btn-add"><i class="icon-plus"></i> Tambah Data</a>
   </div>
   <div class="container-fluid">
     <hr>
@@ -33,38 +33,35 @@
             <table class="table table-bordered data-table">
               <thead>
                 <tr>
-                  <th>Kode</th>
+                  <th>No</th>
                   <th>Nama</th>
 				  <th>Alamat</th>
 				  <th>No Telepon</th>
-                  <th>Nama Apartemen</th>
-                  <th>Via Bank</th>
-				  <th>No Rekening</th>
-                  <th>Tanggal Bergabung</th>
+                  <th>E-mail</th>
+				  <th>Action</th>
 				</tr>
               </thead>
               <tbody>
                 <?php
 				  require("proses/proses.php");
 				  $Proses = new Proses();
-				  $show = $Proses->showowner();
+				  $i = 1;
+				  $show = $Proses->showOwner();
 				  while($data = $show->fetch(PDO::FETCH_OBJ)){
 					echo "
 					  <tr class=gradeC'>
-					    <td>$data->kd_owner</td>
+						<td>$i</td>
 					    <td>$data->nama</td>
 						<td>$data->alamat</td>
 						<td>$data->no_tlp</td>
-						<td>$data->nama_apt</td>
-						<td>$data->nama_bank</td>
-						<td>$data->no_rek</td>
-						<td>$data->tgl_gabung</td>
+						<td>$data->email</td>
 						<td>
-						  <a class='btn btn-primary' href='edit.php?edit_bank=$data->kd_bank'>Edit</a>
-						  <a class='btn btn-danger' href='proses/delete/delete_dp_via.php?delete=$data->kd_bank'>Hapus</a>
+						  <a class='btn btn-success' href='owner.php?detail_owner=$data->kd_owner'>Detail</a>
+						  <a class='btn btn-primary' href='edit.php?edit_owner=$data->kd_owner'>Edit</a>
+						  <a class='btn btn-danger' href='proses/proses_delete.php?delete_owner=$data->kd_owner'>Hapus</a>
 						</td>
-					  </tr>";
-				  };
+					  </tr>"; $i++;
+				  }; 
 				?>
               </tbody>
             </table>
@@ -75,41 +72,9 @@
   </div>
 </div>
 
-<div id="popup-penyewa" class="modal hide">
-  <div class="modal-header">
-    <button data-dismiss="modal" class="close" type="button">×</button>
-    <h3>Data Owner Baru</h3>
-  </div>
-  <div class="modal-body">
-	<form action="proses/add/add_dp_via.php" method="post" class="form-horizontal">
-	  <div class="control-group">
-		<label class="control-label">Kode :</label>
-		<div class="controls">
-		  <input name="kd_owner" type="text" class="span2" placeholder="Kode" />
-		</div>
-	  </div>
-	  <div class="control-group">
-		<label class="control-label">Nama :</label>
-		<div class="controls">
-		  <input name="nama" type="text" class="span2" placeholder="Nama Owner" />
-		</div>
-	  </div>
-	  	  <div class="control-group">
-		<label class="control-label">Alamat :</label>
-		<div class="controls">
-		  <input name="nama" type="text" class="span2" placeholder="Nama Owner" />
-		</div>
-	  </div>
-	  
-	  <div class="control-group">
-		<div class="controls">
-		  <input type="submit" name="addDp_via" class="btn btn-success">
-		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
-		</div>
-	  </div>
-	</form>
-  </div>
-</div>
+<?php
+  include 'template/modal.php';
+?>
 
 <!--Footer-part-->
 <div class="row-fluid">
@@ -119,7 +84,7 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.ui.custom.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.uniform.js"></script>
+<!--<script src="js/jquery.uniform.js"></script> -->
 <script src="js/select2.min.js"></script>
 <script src="js/jquery.dataTables.min.js"></script>
 <script src="js/matrix.js"></script>
