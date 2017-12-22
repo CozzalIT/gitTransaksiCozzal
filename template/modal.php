@@ -2,7 +2,7 @@
   if(isset($_GET['detail'])){
 	$show = $Proses->editTransaksi($_GET['detail']);
 	$detail = $show->fetch(PDO::FETCH_OBJ);
-	 
+
     echo '
 	<div id="popup-detail" class="modal">
 	  <div class="modal-header">
@@ -45,7 +45,7 @@
 				  <tr>
 					<td>No Telpon</td>
 					<td>: '.$detail->no_tlp.'</td>
-				  </tr>      
+				  </tr>
 				  <tr>
 					<td>E-Mail</td>
 					<td>: '.$detail->email.'</td>
@@ -54,7 +54,7 @@
 			  </table>
 			</div>
 		  </div>
-		  
+
 			<div class="row-fluid">
 			  <div class="span12">
 				<table style="margin-top: 20px;" class="table table-bordered table-invoice">
@@ -79,7 +79,7 @@
 					  </tr>
 					  <tr>
 						<td class="width30">Booking Via:</td>
-						<td class="width70"><strong>'.$detail->via.'</strong></td>
+						<td class="width70"><strong>'.$detail->booking_via.'</strong></td>
 					  </tr>
 					  <tr>
 						<td class="width30">Check In:</td>
@@ -134,7 +134,7 @@
 				</table>
 			  </div>
 			</div>
-		  
+
 		</div>
 	  </div>
 	</div>
@@ -156,13 +156,10 @@
 		  <select>
 		  <option name="" value="">-- Pilih Apartemen --</option>
 			<?php
-			  include "config.php";
-					
-			  $sql = $pdo->prepare("SELECT * FROM tb_apt ORDER BY nama_apt");
-			  $sql->execute();
-					
-			  while($data = $sql->fetch()){
-				echo "<option name='kd_apt' value='".$data['kd_apt']."'>".$data['nama_apt']."</option>";
+      $Proses = new Proses();
+      $show = $Proses->showApartemen();
+      while($data = $show->fetch(PDO::FETCH_OBJ)){
+				echo "<option name='kd_apt' value='$data->kd_apt'>$data->nama_apt</option>";
 			  }
 			?>
 		  </select>
