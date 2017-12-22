@@ -1,6 +1,6 @@
 <?php
 // Load file koneksi.php
- require("proses/proses.php");
+require("proses/proses.php");
 
 // Ambil data ID Provinsi yang dikirim via ajax post
 $kd_apt = $_POST['apartemen'];
