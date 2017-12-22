@@ -171,13 +171,13 @@
 			    <div class="control-group">
 				  <label class="control-label">Check In :</label>
 				  <div class="controls">
-				    <input name="check_in" type="date" />
+				    <input name="check_in" type="date" onchange="cobaan(this.form)"/>
 				  </div>
 			    </div>
 				<div class="control-group">
 				  <label class="control-label">Check Out :</label>
 				  <div class="controls">
-				    <input name="check_out" type="date" />
+				    <input name="check_out" type="date" onchange="cobaan2(this.form)"/>
 				  </div>
 			    </div>
 				<div class="control-group">
@@ -272,7 +272,7 @@
 <script src="js/jquery.wizard.js"></script>
 <script src="js/matrix.js"></script>
 <script src="js/matrix.wizard.js"></script>
-
+<script src="js/imron_tanggal.js"></script>
 <script src="js/jquery.uniform.js"></script>
 <!-- <script src="js/select2.min.js"></script> -->
 <script src="js/jquery.dataTables.min.js"></script>
