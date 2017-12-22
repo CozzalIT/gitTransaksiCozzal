@@ -1,10 +1,10 @@
-<?php  
+<?php
   session_start();
-  
+
   if(!isset($_SESSION['username'])) {
-    header('location:login.php'); 
-  }else { 
-    $username = $_SESSION['username']; 
+    header('location:login.php');
+  }else {
+    $username = $_SESSION['username'];
   }
 
   $thisPage = "Edit";
@@ -25,7 +25,7 @@
     <div class="row-fluid">
 	  <?php
 		require('proses/proses.php');
-//edit data penyewa 
+//edit data penyewa
 		if(isset($_GET['edit'])){
 		  $Proses = new Proses();
 		  $show = $Proses->editPenyewa($_GET['edit']);
@@ -37,9 +37,9 @@
 			  <div class="widget-box">
 				<div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
 				  <h5>Personal-info</h5>
-				</div>  
+				</div>
 				<div class="widget-content nopadding">
-				  <form action="proses/update/update_penyewa.php" method="post" class="form-horizontal">
+				  <form action="proses/proses_update.php" method="post" class="form-horizontal">
 					<div class="control-group">
 					  <label class="control-label">Kode Penyewa :</label>
 					  <div class="controls">
@@ -67,7 +67,7 @@
 					<div class="control-group">
 					  <label class="control-label">Jenis Kelamin :</label>
           ';
-				
+
 					if ($edit->jenis_kelamin == 'Laki-laki') {
 					  echo '
 						<div class="controls">
@@ -78,10 +78,10 @@
 							<input type="radio" name="jenis_kelamin" value="Perempuan" /> Perempuan
 						  </label>
 						</div>
-				
+
 					  ';
 					} else {
-					  echo '				
+					  echo '
 						<div class="controls">
 						  <label>
 							<input type="radio" name="jenis_kelamin" value="Laki-laki" /> Laki-laki
@@ -89,9 +89,9 @@
 						  <label>
 							<input type="radio" name="jenis_kelamin" value="Perempuan" checked/> Perempuan
 						  </label>
-						</div>		
+						</div>
 					  ';
-					} 
+					}
 //button here
 					echo '
 					  </div>
@@ -104,10 +104,10 @@
 			  </div>
 			  <div class="span3">
 			  </div>
-		  ';				  
+		  ';
 		}
-		
-//edit data apartemen	
+
+//edit data apartemen
 		if (isset($_GET['edit_apt']))
 		{
 		  $Proses = new Proses();
@@ -120,9 +120,9 @@
 			  <div class="widget-box">
 				<div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
 				  <h5>Apartement-info</h5>
-				</div>  
+				</div>
 				<div class="widget-content nopadding">
-				  <form action="proses/update/update_apartemen.php" method="post" class="form-horizontal">
+				  <form action="proses/proses_update.php" method="post" class="form-horizontal">
 					<div class="control-group">
 					  <label class="control-label">Kode Apartement :</label>
 					  <div class="controls">
@@ -141,7 +141,7 @@
 						<input name="alamat_apt" type="text" class="span11" placeholder="Alamat" value="'.$edit->alamat_apt.'"/>
 					  </div>
 					</div>';
-//button here					
+//button here
 					echo '
 					  <div class="form-actions" style="text-align:right">
 						<button name="updateApartemen" type="submit" class="btn btn-success">Update</button>
@@ -152,10 +152,10 @@
 			  </div>
 			  <div class="span3">
 			  </div>
-		  ';				
+		  ';
 		}
-		
-//edit data bank	
+
+//edit data bank
 		if (isset($_GET['edit_bank']))
 		{
 		  $Proses = new Proses();
@@ -168,9 +168,9 @@
 			  <div class="widget-box">
 				<div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
 				  <h5>Data Baru</h5>
-				</div>  
+				</div>
 				<div class="widget-content nopadding">
-				  <form action="proses/update/update_bank.php" method="post" class="form-horizontal">
+				  <form action="proses/proses_update.php" method="post" class="form-horizontal">
 					<div class="control-group">
 					  <label class="control-label">Kode :</label>
 					  <div class="controls">
@@ -184,7 +184,7 @@
 					  </div>
 					</div>
 					';
-//button here					
+//button here
 					echo '
 					  <div class="form-actions" style="text-align:right">
 						<button name="updateBank" type="submit" class="btn btn-success">Update</button>
@@ -195,10 +195,10 @@
 			  </div>
 			  <div class="span3">
 			  </div>
-		  ';				
+		  ';
 		}
 
-//edit booking_via	
+//edit booking_via
 		if (isset($_GET['edit_booking']))
 		{
 		  $Proses = new Proses();
@@ -211,9 +211,9 @@
 			  <div class="widget-box">
 				<div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
 				  <h5>Data Baru</h5>
-				</div>  
+				</div>
 				<div class="widget-content nopadding">
-				  <form action="proses/update/update_booking.php" method="post" class="form-horizontal">
+				  <form action="proses/proses_update.php" method="post" class="form-horizontal">
 					<div class="control-group">
 					  <label class="control-label">Kode :</label>
 					  <div class="controls">
@@ -227,7 +227,7 @@
 					  </div>
 					</div>
 					';
-//button here					
+//button here
 					echo '
 					  <div class="form-actions" style="text-align:right">
 						<button name="updateBooking" type="submit" class="btn btn-success">Update</button>
@@ -238,9 +238,9 @@
 			  </div>
 			  <div class="span3">
 			  </div>
-		  ';				
+		  ';
 		}
-				
+
 	  ?>
 	</div>
   </div>

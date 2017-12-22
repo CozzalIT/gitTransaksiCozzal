@@ -52,7 +52,7 @@
 					    <td>$data->nama_apt</td>
 						<td>$data->alamat_apt</td>
 						<td>
-						    <a class='btn btn-primary' href='#'>Edit</a>
+						    <a class='btn btn-primary' href='edit.php?edit_apt=$data->kd_apt'>Edit</a>
 						    <a class='btn btn-danger' href='proses/delete/delete_apt.php?delete=$data->kd_apt'>Hapus</a>
 						  </td>
 					  </tr>";
