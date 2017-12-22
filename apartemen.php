@@ -19,7 +19,7 @@
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Tables</a> </div>
-    <a href="#popup-penyewa" data-toggle="modal" class="btn btn-info btn-add"><i class="icon-plus"></i> Tambah Data</a>
+    <a href="#popup-apartemen" data-toggle="modal" class="btn btn-info btn-add"><i class="icon-plus"></i> Tambah Data</a>
   </div>
   <div class="container-fluid">
     <hr>
@@ -68,34 +68,9 @@
   </div>
 </div>
 
-<div id="popup-penyewa" class="modal hide">
-  <div class="modal-header">
-    <button data-dismiss="modal" class="close" type="button">×</button>
-    <h3>Pelanggan Baru</h3>
-  </div>
-  <div class="modal-body">
-	<form action="proses/proses_add.php" method="post" class="form-horizontal">
-	  <div class="control-group">
-		<label class="control-label">Nama Apartemen</label>
-		<div class="controls">
-		  <input name="nama_apt" type="text" class="span2" placeholder="Nama" />
-		</div>
-	  </div>
-	  <div class="control-group">
-		<label class="control-label">Alamat Apartemen</label>
-		<div class="controls">
-		  <input name="alamat_apt" type="text" class="span2" placeholder="Alamat" />
-		</div>
-	  </div>
-	  <div class="control-group">
-		<div class="controls">
-		  <input type="submit" name="addApartemen" class="btn btn-success">
-		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
-		</div>
-	  </div>
-	</form>
-  </div>
-</div>
+<?php
+  include 'template/modal.php';
+?>
 
 <!--Footer-part-->
 <div class="row-fluid">

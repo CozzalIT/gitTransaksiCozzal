@@ -1,4 +1,5 @@
 <?php
+//Detail Transaksi
   if(isset($_GET['detail'])){
 	$show = $Proses->editTransaksi($_GET['detail']);
 	$detail = $show->fetch(PDO::FETCH_OBJ);
@@ -283,7 +284,7 @@
   </div>
 </div>
 
-<!-- Modul Popup Tambah Owner -->
+<!-- Modal Popup Tambah Owner -->
 <div id="popup-owner" class="modal hide">
   <div class="modal-header">
     <button data-dismiss="modal" class="close" type="button">×</button>
@@ -362,6 +363,131 @@
 	  <div class="control-group">
 		<div class="controls">
 		  <input type="submit" name="addOwner" class="btn btn-success">
+		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+		</div>
+	  </div>
+	</form>
+  </div>
+</div>
+
+<!-- Modal Popup Tambah Penyewa -->
+<div id="popup-penyewa" class="modal hide">
+  <div class="modal-header">
+    <button data-dismiss="modal" class="close" type="button">×</button>
+    <h3>Pelanggan Baru</h3>
+  </div>
+  <div class="modal-body">
+	<form action="proses/proses_add.php" method="post" class="form-horizontal">
+	  <div class="control-group">
+		<label class="control-label">Nama :</label>
+		<div class="controls">
+		  <input name="nama" type="text" class="span2" placeholder="Nama" />
+		</div>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label">Alamat :</label>
+		<div class="controls">
+		  <input name="alamat" type="text" class="span2" placeholder="Alamat" />
+		</div>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label">No Telpon :</label>
+		<div class="controls">
+		  <input name="no_tlp" type="text"  class="span2" placeholder="ex: 0812...."  />
+		</div>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label">Jenis Kelamin :</label>
+		<div class="controls">
+		  <label>
+			<input type="radio" name="jenis_kelamin" value="Laki-laki" checked/> Laki-laki
+		  </label>
+		  <label>
+			<input type="radio" name="jenis_kelamin" value="Perempuan" /> Perempuan
+		  </label>
+		</div>
+	  </div>
+	  <div class="control-group">
+		<div class="controls">
+		  <input type="submit" name="addPenyewa" class="btn btn-success">
+		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+		</div>
+	  </div>
+	</form>
+  </div>
+</div>
+
+<!--Modal Popup Tambah Apartemen -->
+<div id="popup-apartemen" class="modal hide">
+  <div class="modal-header">
+    <button data-dismiss="modal" class="close" type="button">×</button>
+    <h3>Apartemen Baru</h3>
+  </div>
+  <div class="modal-body">
+	<form action="proses/proses_add.php" method="post" class="form-horizontal">
+	  <div class="control-group">
+		<label class="control-label">Nama Apartemen</label>
+		<div class="controls">
+		  <input name="nama_apt" type="text" class="span2" placeholder="Nama" />
+		</div>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label">Alamat Apartemen</label>
+		<div class="controls">
+		  <input name="alamat_apt" type="text" class="span2" placeholder="Alamat" />
+		</div>
+	  </div>
+	  <div class="control-group">
+		<div class="controls">
+		  <input type="submit" name="addApartemen" class="btn btn-success">
+		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+		</div>
+	  </div>
+	</form>
+  </div>
+</div>
+
+<!--Modal Popup Tambah Booking Via-->
+<div id="popup-booking" class="modal hide">
+  <div class="modal-header">
+    <button data-dismiss="modal" class="close" type="button">×</button>
+    <h3>Data Baru</h3>
+  </div>
+  <div class="modal-body">
+	<form action="proses/proses_add.php" method="post" class="form-horizontal">
+	  <div class="control-group">
+		<label class="control-label">Booking Via :</label>
+		<div class="controls">
+		  <input name="booking_via" type="text" class="span2" placeholder="Dari" />
+		</div>
+	  </div>
+	  <div class="control-group">
+		<div class="controls">
+		  <input type="submit" name="addBooking_via" class="btn btn-success">
+		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+		</div>
+	  </div>
+	</form>
+  </div>
+</div>
+
+<!--Modal Tambah DP Via-->
+<div id="popup-dp" class="modal hide">
+  <div class="modal-header">
+    <button data-dismiss="modal" class="close" type="button">×</button>
+    <h3>Data Baru</h3>
+  </div>
+  <div class="modal-body">
+	<form action="proses/proses_add.php" method="post" class="form-horizontal">
+	  <div class="control-group">
+		<label class="control-label">Nama Bank :</label>
+		<div class="controls">
+		  <input name="nama_bank" type="text" class="span2" placeholder="Bank" />
+		</div>
+	  </div>
+	  <div class="control-group">
+		<div class="controls">
+		  <input type="submit" name="addDp_via" class="btn btn-success">
 		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
 		</div>
 	  </div>
