@@ -134,12 +134,85 @@
 				</table>
 			  </div>
 			</div>
-
 		</div>
 	  </div>
 	</div>
 	';
   }
+
+  //detail data owner
+    if(isset($_GET['detail_owner'])){
+  	$show = $Proses->edit_owner($_GET['detail_owner']);
+  	$detail = $show->fetch(PDO::FETCH_OBJ);
+
+      echo '
+  	<div id="popup-detail" class="modal">
+  	  <div class="modal-header">
+  		<button id="tambah" data-dismiss="modal" class="close" type="button" href="../owner.php">×</button>
+  		<script type="text/javascript">
+  		  $(document).ready(function(){
+  			$("#tambah").click(function(){
+  			  $(".modal").addClass("hide");
+  			});
+  		  });
+  		</script>
+  		<h3>Transaksi</h3>
+  	  </div>
+  	  <div class="modal-body">
+  		<div class="widget-content">
+  		  <div class="row-fluid">
+  			<div class="span8">
+  			  <table class="">
+  				<tbody>
+  				  <script>
+  					function Detail(x) {
+  					  document.getElementById("demo").innerHTML = "hai";
+  					}
+  				  </script>
+  				  <tr>
+  					<td><h4>Detail Owner</h4><p id="demo"></p></td>
+  				  </tr>
+  				  <tr>
+  					<td>Nama</td>
+  					<td>: '.$detail->nama.'</td>
+  				  </tr>
+  				  <tr>
+  					<td>Alamat</td>
+  					<td>: '.$detail->alamat.'</td>
+  				  </tr>
+  				  <tr>
+  					<td>Jenis Kelamin</td>
+  					<td>: '.$detail->jenis_kelamin.'</td>
+  				  </tr>
+  				  <tr>
+  					<td>No Telpon</td>
+  					<td>: '.$detail->no_tlp.'</td>
+  				  </tr>
+  				  <tr>
+  					<td>E-Mail</td>
+  					<td>: '.$detail->email.'</td>
+  				  </tr>
+  				  <tr>
+  					<td>Tanggal Bergabung</td>
+  					<td>: '.$detail->tgl_gabung.'</td>
+  				  </tr>
+  				  <tr>
+  					<td>Via Bank</td>
+  					<td>: '.$detail->nama_bank.'</td>
+  				  </tr>
+  				  <tr>
+  					<td>No Rekening</td>
+  					<td>: '.$detail->no_rek.'</td>
+  				  </tr>
+  				</tbody>
+  			  </table>
+  			</div>
+  		  </div>
+  		</div>
+  	  </div>
+  	</div>
+  	';
+    }
 ?>
 
 <!--modal popup tambah unit-->
@@ -203,6 +276,92 @@
 	  <div class="control-group">
 		<div class="controls">
 		  <input type="submit" name="addPenyewa" class="btn btn-success">
+		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+		</div>
+	  </div>
+	</form>
+  </div>
+</div>
+
+<!-- Modul Popup Tambah Owner -->
+<div id="popup-owner" class="modal hide">
+  <div class="modal-header">
+    <button data-dismiss="modal" class="close" type="button">×</button>
+    <h3>Data Owner Baru</h3>
+  </div>
+  <div class="modal-body">
+	<form action="proses/proses_add.php" method="post" class="form-horizontal">
+	  <div class="control-group">
+		<label class="control-label">Kode :</label>
+		<div class="controls">
+		  <input name="kd_owner" type="text" class="span2" placeholder="Kode" />
+		</div>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label">Nama :</label>
+		<div class="controls">
+		  <input name="nama" type="text" class="span2" placeholder="Nama Lengkap" />
+		</div>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label">Alamat :</label>
+		<div class="controls">
+		  <input name="alamat" type="text" class="span2" placeholder="Alamat" />
+		</div>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label">No Telepon :</label>
+		<div class="controls">
+		  <input name="no_tlp" type="text" class="span2" placeholder="ex : 0812.." />
+		</div>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label">Jenis Kelamin :</label>
+		<div class="controls">
+		  <label>
+			<input type="radio" name="jenis_kelamin" value="Laki-laki" checked/> Laki-laki
+		  </label>
+		  <label>
+			<input type="radio" name="jenis_kelamin" value="Perempuan" /> Perempuan
+		  </label>
+		</div>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label">Via Bank :</label>
+		<div class="controls">
+		  <select name="kd_bank">
+		  <option name="" value="" >-- Pilih Bank --</option>
+			<?php
+        $Proses = new Proses();
+        $show = $Proses->showUnit();
+        while($data = $show->fetch(PDO::FETCH_OBJ)){
+				  echo "<option name='kd_bank' value='$data->kd_bank'>$data->nama_bank</option>";
+			  }
+			?>
+		  </select>
+		</div>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label">No Rekening :</label>
+		<div class="controls">
+		  <input name="no_rek" type="text" class="span2" placeholder="No Rekening" />
+		</div>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label">E-mail :</label>
+		<div class="controls">
+		  <input name="email" type="text" class="span2" placeholder="Alamat E-Mail" />
+		</div>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label">Tanggal Bergabung :</label>
+		<div class="controls">
+		  <input name="tgl_gabung" type="date" class="span2" />
+		</div>
+	  </div>
+	  <div class="control-group">
+		<div class="controls">
+		  <input type="submit" name="addOwner" class="btn btn-success">
 		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
 		</div>
 	  </div>
