@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
--- https://www.phpmyadmin.net/
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 10, 2017 at 03:41 AM
--- Server version: 10.1.26-MariaDB
--- PHP Version: 7.1.9
+-- Generation Time: Dec 22, 2017 at 11:08 AM
+-- Server version: 10.1.13-MariaDB
+-- PHP Version: 5.6.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -39,10 +37,9 @@ CREATE TABLE `tb_apt` (
 --
 
 INSERT INTO `tb_apt` (`kd_apt`, `nama_apt`, `alamat_apt`) VALUES
-(1, 'Newton', ''),
-(2, 'Jardin', ''),
-(3, 'Metro The Suite', ''),
-(4, 'Gateway', '');
+(1, 'Newton', 'Buah Batu'),
+(2, 'Jardin', 'Cihampelas'),
+(4, 'Metro The Suite', 'Margahayu Raya');
 
 -- --------------------------------------------------------
 
@@ -51,7 +48,7 @@ INSERT INTO `tb_apt` (`kd_apt`, `nama_apt`, `alamat_apt`) VALUES
 --
 
 CREATE TABLE `tb_bank` (
-  `kd_bank` int(5) NOT NULL,
+  `kd_bank` int(4) NOT NULL,
   `nama_bank` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -60,8 +57,10 @@ CREATE TABLE `tb_bank` (
 --
 
 INSERT INTO `tb_bank` (`kd_bank`, `nama_bank`) VALUES
-(2131, 'Mandiri'),
-(3453453, 'BRI');
+(5, 'Muamalat'),
+(6, 'BCA'),
+(7, 'BRI'),
+(9, 'Mandiri');
 
 -- --------------------------------------------------------
 
@@ -83,16 +82,17 @@ CREATE TABLE `tb_blacklist` (
 
 CREATE TABLE `tb_booking_via` (
   `kd_booking` int(5) NOT NULL,
-  `via` varchar(25) NOT NULL
+  `booking_via` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_booking_via`
 --
 
-INSERT INTO `tb_booking_via` (`kd_booking`, `via`) VALUES
-(0, 'Cozzal'),
-(34, 'Airbnb');
+INSERT INTO `tb_booking_via` (`kd_booking`, `booking_via`) VALUES
+(1, 'Offline1'),
+(3, 'Airbnb'),
+(8, 'Security');
 
 -- --------------------------------------------------------
 
@@ -102,14 +102,22 @@ INSERT INTO `tb_booking_via` (`kd_booking`, `via`) VALUES
 
 CREATE TABLE `tb_owner` (
   `kd_owner` int(4) NOT NULL,
-  `kd_apt` int(4) NOT NULL,
   `nama` varchar(30) NOT NULL,
   `alamat` varchar(50) NOT NULL,
   `no_tlp` varchar(15) NOT NULL,
   `kd_bank` int(4) NOT NULL,
   `no_rek` varchar(20) NOT NULL,
-  `tgl_gabung` date NOT NULL
+  `tgl_gabung` date NOT NULL,
+  `email` varchar(30) DEFAULT NULL,
+  `jenis_kelamin` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_owner`
+--
+
+INSERT INTO `tb_owner` (`kd_owner`, `nama`, `alamat`, `no_tlp`, `kd_bank`, `no_rek`, `tgl_gabung`, `email`, `jenis_kelamin`) VALUES
+(3, 'Ulah', 'hvkv', '07907', 5, '69676', '2017-12-22', 'jbjkbj', 'Laki-laki');
 
 -- --------------------------------------------------------
 
@@ -123,6 +131,7 @@ CREATE TABLE `tb_penyewa` (
   `alamat` varchar(50) NOT NULL,
   `no_tlp` varchar(15) NOT NULL,
   `jenis_kelamin` varchar(10) NOT NULL,
+  `email` varchar(40) NOT NULL,
   `tgl_gabung` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -130,24 +139,18 @@ CREATE TABLE `tb_penyewa` (
 -- Dumping data for table `tb_penyewa`
 --
 
-INSERT INTO `tb_penyewa` (`kd_penyewa`, `nama`, `alamat`, `no_tlp`, `jenis_kelamin`, `tgl_gabung`) VALUES
-(1, 'Farhan Hanif Alaudin', 'Margahayu', '089652281077', 'Laki-laki', '2017-10-04'),
-(3, 'Annisa Diah', 'Jakarta', '081315797957', 'Perempuan', '2017-10-12'),
-(4, 'Gardina Dewi', 'Jawa Timur', '084541121', 'Perempuan', '2017-10-18'),
-(5, 'Irham A', 'Margaasih', '0812236654', 'Laki-laki', '2017-10-06'),
-(6, 'Ridwan Remin', 'Jakarta', '0823336566', 'Laki-laki', '2017-10-21'),
-(8, 'Uye Uyay', 'Sorenyang', '0822155663', 'Laki-laki', '0000-00-00'),
-(9, 'Udin Samsudin', 'Kebayoran Lama', '081255469', 'Laki-laki', '0000-00-00'),
-(10, 'Fauziyah Astuti', 'Sekeloa', '0856663998', 'Perempuan', '0000-00-00'),
-(11, 'Michele', 'Inggris', '0836658997', 'Laki-laki', '0000-00-00'),
-(12, 'Iman', 'Margahayu', '0812266', 'Laki-laki', '0000-00-00'),
-(13, 'Budi Raharjo', 'Sukasuka', '0819785263', 'Laki-laki', '0000-00-00'),
-(14, 'ivan', 'asd', 'asdasda', 'Laki-laki', '0000-00-00'),
-(15, 'Agung Sandylea', 'Majalaya', '081222566', 'Laki-laki', '0000-00-00'),
-(16, 'Abduh Surabduh', 'Margahayu', '089652281077', 'Laki-laki', '0000-00-00'),
-(17, 'Rohmana Aisyah', 'Margaluyu', '082233369', 'Perempuan', '0000-00-00'),
-(18, 'Bangbang', 'Ciroyom', '021-000', 'Laki-laki', '0000-00-00'),
-(20, 'Abdul Rojak', 'Jakarta', '082222', 'Laki-laki', '0000-00-00');
+INSERT INTO `tb_penyewa` (`kd_penyewa`, `nama`, `alamat`, `no_tlp`, `jenis_kelamin`, `email`, `tgl_gabung`) VALUES
+(3, 'Annisa Diah', 'Jakarta', '081315797957', 'Perempuan', 'annisa_diah@gmail.com', '2017-10-12'),
+(4, 'Gardina Dewi', 'Jawa Timur', '084541121', 'Perempuan', '', '2017-10-18'),
+(8, 'Uye Uyay', 'Sorenyang', '0822155663', 'Laki-laki', '', '0000-00-00'),
+(15, 'Agung Sandylea', 'Majalaya', '081222566', 'Laki-laki', '', '0000-00-00'),
+(18, 'Bangbang', 'Ciroyom', '021-000', 'Laki-laki', '', '0000-00-00'),
+(20, 'Abdul Rojak', 'Jakarta', '082222', 'Laki-laki', '', '0000-00-00'),
+(21, 'Udin Samsudin', 'Sekeloa Barat', '0812236655', 'Laki-laki', '', '0000-00-00'),
+(22, 'AA Abid', 'Jalan Pungkur', '082666544', 'Laki-laki', '', '0000-00-00'),
+(23, 'Maman', '-', '-', 'Laki-laki', '', '0000-00-00'),
+(24, 'Hamizah', '-', '-', 'Perempuan', '', '0000-00-00'),
+(28, 'Iwan Setiadi', '-', '-', 'Laki-laki', '', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -177,22 +180,34 @@ CREATE TABLE `tb_transaksi` (
   `check_in` date NOT NULL,
   `check_out` date NOT NULL,
   `hari` int(3) NOT NULL,
-  `harga_sewa` int(10) NOT NULL,
-  `tgl_transaksi` int(11) NOT NULL,
-  `diskon` int(11) NOT NULL,
-  `ekstra_charge` int(11) NOT NULL,
-  `kd_bank` int(5) NOT NULL,
+  `harga_sewa` int(20) NOT NULL,
+  `tgl_transaksi` date NOT NULL,
+  `diskon` int(20) NOT NULL,
+  `ekstra_charge` int(20) NOT NULL,
+  `kd_bank` int(4) NOT NULL,
   `tamu` int(11) NOT NULL,
-  `kd_booking` int(5) NOT NULL
+  `kd_booking` int(5) NOT NULL,
+  `dp` int(20) NOT NULL,
+  `total_tagihan` int(20) NOT NULL,
+  `sisa_pelunasan` int(20) NOT NULL,
+  `catatan` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_transaksi`
 --
 
-INSERT INTO `tb_transaksi` (`kd_transaksi`, `kd_penyewa`, `kd_apt`, `kd_unit`, `check_in`, `check_out`, `hari`, `harga_sewa`, `tgl_transaksi`, `diskon`, `ekstra_charge`, `kd_bank`, `tamu`, `kd_booking`) VALUES
-(5, 16, 1, 1, '0000-00-00', '0000-00-00', 0, 0, 0, 0, 0, 0, 2, 0),
-(6, 1, 1, 1, '2017-12-09', '2017-12-11', 0, 500000, 0, 0, 150000, 0, 5, 0);
+INSERT INTO `tb_transaksi` (`kd_transaksi`, `kd_penyewa`, `kd_apt`, `kd_unit`, `check_in`, `check_out`, `hari`, `harga_sewa`, `tgl_transaksi`, `diskon`, `ekstra_charge`, `kd_bank`, `tamu`, `kd_booking`, `dp`, `total_tagihan`, `sisa_pelunasan`, `catatan`) VALUES
+(40, 3, 1, 1, '2017-12-15', '2017-12-16', 0, 500000, '0000-00-00', 0, 150000, 5, 3, 1, 200000, 0, 0, ''),
+(43, 3, 1, 1, '2017-12-15', '2017-12-16', 0, 500000, '0000-00-00', 0, 150000, 6, 2, 1, 200000, 0, 0, ''),
+(44, 20, 1, 1, '2017-12-15', '2017-12-16', 0, 800000, '0000-00-00', 0, 300000, 9, 5, 8, 100000, 0, 0, ''),
+(45, 22, 1, 1, '2017-12-15', '2017-12-16', 0, 700000, '0000-00-00', 0, 50000, 6, 4, 8, 10000, 0, 0, ''),
+(46, 18, 1, 1, '2017-12-18', '2017-12-20', 0, 350000, '0000-00-00', 0, 0, 6, 5, 1, 150000, 0, 0, ''),
+(47, 4, 1, 1, '2017-12-17', '2017-12-20', 0, 500000, '0000-00-00', 0, 0, 5, 5, 3, 150000, 0, 0, ''),
+(48, 4, 1, 1, '2017-12-17', '2017-12-20', 0, 500000, '0000-00-00', 0, 0, 5, 5, 3, 150000, 0, 0, ''),
+(49, 4, 1, 1, '2017-12-17', '2017-12-18', 0, 350000, '0000-00-00', 0, 0, 7, 5, 1, 100000, 0, 0, ''),
+(50, 15, 1, 1, '2017-12-22', '2017-12-23', 0, 500000, '0000-00-00', 0, 150000, 7, 5, 3, 200000, 0, 0, ''),
+(51, 24, 1, 1, '2017-12-23', '2017-12-25', 0, 3333, '0000-00-00', 0, 555, 6, 5, 1, 888, 0, 0, '');
 
 -- --------------------------------------------------------
 
@@ -273,8 +288,7 @@ ALTER TABLE `tb_booking_via`
 --
 ALTER TABLE `tb_owner`
   ADD PRIMARY KEY (`kd_owner`),
-  ADD KEY `kd_bank` (`kd_bank`),
-  ADD KEY `kd_apt` (`kd_apt`);
+  ADD KEY `kd_bank` (`kd_bank`);
 
 --
 -- Indexes for table `tb_penyewa`
@@ -322,55 +336,51 @@ ALTER TABLE `tb_user`
 --
 ALTER TABLE `tb_apt`
   MODIFY `kd_apt` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- AUTO_INCREMENT for table `tb_bank`
 --
 ALTER TABLE `tb_bank`
-  MODIFY `kd_bank` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3453454;
-
+  MODIFY `kd_bank` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `tb_blacklist`
 --
 ALTER TABLE `tb_blacklist`
   MODIFY `kd_blacklist` int(11) NOT NULL AUTO_INCREMENT;
-
+--
+-- AUTO_INCREMENT for table `tb_booking_via`
+--
+ALTER TABLE `tb_booking_via`
+  MODIFY `kd_booking` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `tb_owner`
 --
 ALTER TABLE `tb_owner`
-  MODIFY `kd_owner` int(4) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `kd_owner` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `tb_penyewa`
 --
 ALTER TABLE `tb_penyewa`
-  MODIFY `kd_penyewa` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
+  MODIFY `kd_penyewa` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT for table `tb_recommended`
 --
 ALTER TABLE `tb_recommended`
   MODIFY `kd_recommended` int(4) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `tb_transaksi`
 --
 ALTER TABLE `tb_transaksi`
-  MODIFY `kd_transaksi` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
+  MODIFY `kd_transaksi` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 --
 -- AUTO_INCREMENT for table `tb_unit`
 --
 ALTER TABLE `tb_unit`
   MODIFY `kd_unit` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT for table `tb_user`
 --
 ALTER TABLE `tb_user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- Constraints for dumped tables
 --
@@ -385,8 +395,7 @@ ALTER TABLE `tb_blacklist`
 -- Constraints for table `tb_owner`
 --
 ALTER TABLE `tb_owner`
-  ADD CONSTRAINT `tb_owner_ibfk_1` FOREIGN KEY (`kd_bank`) REFERENCES `tb_bank` (`kd_bank`),
-  ADD CONSTRAINT `tb_owner_ibfk_2` FOREIGN KEY (`kd_apt`) REFERENCES `tb_apt` (`kd_apt`);
+  ADD CONSTRAINT `tb_owner_ibfk_3` FOREIGN KEY (`kd_bank`) REFERENCES `tb_bank` (`kd_bank`);
 
 --
 -- Constraints for table `tb_recommended`
@@ -400,14 +409,15 @@ ALTER TABLE `tb_recommended`
 ALTER TABLE `tb_transaksi`
   ADD CONSTRAINT `tb_transaksi_ibfk_1` FOREIGN KEY (`kd_penyewa`) REFERENCES `tb_penyewa` (`kd_penyewa`),
   ADD CONSTRAINT `tb_transaksi_ibfk_2` FOREIGN KEY (`kd_unit`) REFERENCES `tb_unit` (`kd_unit`),
-  ADD CONSTRAINT `tb_transaksi_ibfk_3` FOREIGN KEY (`kd_apt`) REFERENCES `tb_apt` (`kd_apt`);
+  ADD CONSTRAINT `tb_transaksi_ibfk_3` FOREIGN KEY (`kd_apt`) REFERENCES `tb_apt` (`kd_apt`),
+  ADD CONSTRAINT `tb_transaksi_ibfk_5` FOREIGN KEY (`kd_bank`) REFERENCES `tb_bank` (`kd_bank`),
+  ADD CONSTRAINT `tb_transaksi_ibfk_6` FOREIGN KEY (`kd_booking`) REFERENCES `tb_booking_via` (`kd_booking`);
 
 --
 -- Constraints for table `tb_unit`
 --
 ALTER TABLE `tb_unit`
   ADD CONSTRAINT `tb_unit_ibfk_1` FOREIGN KEY (`kd_apt`) REFERENCES `tb_apt` (`kd_apt`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
