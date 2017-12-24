@@ -258,6 +258,7 @@
 				<div class="widget-content nopadding">
 				  <form action="proses/proses_update.php" method="post" class="form-horizontal">
 					<div class="control-group">
+					  <input name="kd_owner" class="hide" type="text" value="'.$edit->kd_owner.'"/>
 					  <label class="control-label">Nama :</label>
 					  <div class="controls">
 						<input name="nama" type="text" class="span11" placeholder="Nama" value="'.$edit->nama.'"/>

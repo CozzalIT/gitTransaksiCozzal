@@ -219,6 +219,18 @@ class Proses{
       return "Success";
     }
   }
+  
+  public function updateOwner($kd_owner ,$nama, $alamat, $no_tlp, $kd_bank, $no_rek, $email, $jenis_kelamin){
+	$sql = "update tb_owner SET nama='$nama', alamat='$alamat', kd_bank='$kd_bank', no_rek='$no_rek', 
+	email='$email', jenis_kelamin='$jenis_kelamin' WHERE kd_owner='$kd_owner'";
+	$query = $this->db->query($sql);
+	if(!$query){
+	  return "Failed";
+	}else{
+	  return "Success";
+	}
+  }
+  
 
 //  public function updateOwner($kd_owner ,$nama, $alamat, $no_tlp, $kd_bank, $no_rek, $tgl_gabung, $email, $jenis_kelamin)
 

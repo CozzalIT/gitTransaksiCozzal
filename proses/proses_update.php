@@ -61,4 +61,42 @@
       echo 'error';
     }
   }
+  
+ //Update Penyewa
+  if(isset($_POST['updatePenyewa'])){
+    $kd_penyewa = $_POST['kd_penyewa'];
+    $nama = $_POST['nama'];
+  	$alamat = $_POST['alamat'];
+  	$no_tlp = $_POST['no_tlp'];
+  	$jenis_kelamin = $_POST['jenis_kelamin'];
+
+	  $update = $proses->updatePenyewa($kd_penyewa, $nama, $alamat, $no_tlp, $jenis_kelamin);
+
+  	if($update == "Success"){
+  	  header('Location:../penyewa.php');
+  	  } else {
+  	    echo 'error';
+	  }
+  }
+
+//Update Owner
+  if(isset($_POST['updateOwner'])){
+	  $nama= $_POST['nama'];
+	  $alamat= $_POST['alamat'];
+	  $no_tlp= $_POST['no_tlp'];
+	  $kd_bank= $_POST['kd_bank'];
+	  $no_rek= $_POST['no_rek'];
+	  $kd_owner= $_POST['kd_owner'];
+	  $email= $_POST['email'];
+	  $jenis_kelamin= $_POST['jenis_kelamin'];
+
+    $add = $proses->updateOwner($kd_owner ,$nama, $alamat, $no_tlp, $kd_bank, $no_rek, $email, $jenis_kelamin);
+
+    if($add == "Success"){
+	    header('Location:../owner.php');
+    }
+	else echo 'error';
+  }
+  
+  
 ?>

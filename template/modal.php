@@ -149,7 +149,9 @@
       echo '
   	<div id="popup-detail" class="modal">
   	  <div class="modal-header">
-  		<button id="tambah" data-dismiss="modal" class="close" type="button" href="../owner.php">×</button>
+		<form action="owner.php" >
+			<button id="tambah" data-dismiss="modal" class="close" type="submit">×</button>
+		</form>
   		<script type="text/javascript">
   		  $(document).ready(function(){
   			$("#tambah").click(function(){
