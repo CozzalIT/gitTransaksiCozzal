@@ -16,7 +16,7 @@
   include "template/header.php";
   include "template/sidebar.php";
 ?>
-
+  
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Tables</a> </div>
@@ -241,7 +241,7 @@
 		  ';
 		}
 //Edit data owner
-		
+
 		if (isset($_GET['edit_owner']))
 		{
 		  $Proses = new Proses();
@@ -254,7 +254,7 @@
 			  <div class="widget-box">
 				<div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
 				  <h5>Data Baru</h5>
-				</div>  
+				</div>
 				<div class="widget-content nopadding">
 				  <form action="proses/proses_update.php" method="post" class="form-horizontal">
 					<div class="control-group">
@@ -287,10 +287,10 @@
 						  <label>
 							<input type="radio" name="jenis_kelamin" value="Perempuan" /> Perempuan
 						  </label>
-						</div>				
+						</div>
 					  ';
 					} else {
-					  echo '				
+					  echo '
 						<div class="controls">
 						  <label>
 							<input type="radio" name="jenis_kelamin" value="Laki-laki" /> Laki-laki
@@ -298,23 +298,23 @@
 						  <label>
 							<input type="radio" name="jenis_kelamin" value="Perempuan" checked/> Perempuan
 						  </label>
-						</div>		
+						</div>
 					'; }
-					echo ' 	  
+					echo '
 						<div class="control-group">
 						  <label class="control-label">Via Bank :</label>
 							<div class="controls">
 								<select name="kd_bank">
 									<option name="" value="" >-- Pilih Bank --</option>';
-				
-	
+
+
 						$Proses = new Proses();
 						$show = $Proses->showDp_via();
 						while($data = $show->fetch(PDO::FETCH_OBJ)){
 						echo "<option name='kd_bank' value='$data->kd_bank'>$data->nama_bank</option>";}
 
 					echo '
-				
+
 								</select>
 							</div>
 						</div>
@@ -331,7 +331,7 @@
 							</div>
 						</div>';
 
-//button here					
+//button here
 					echo '
 					  <div class="form-actions" style="text-align:right">
 						<button name="updateOwner" type="submit" class="btn btn-success">Update</button>
@@ -342,9 +342,9 @@
 			  </div>
 			  <div class="span3">
 			  </div>
-		  ';				
+		  ';
 		}
-		
+
 	  ?>
 	</div>
   </div>
