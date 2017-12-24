@@ -16,7 +16,7 @@
   include "template/header.php";
   include "template/sidebar.php";
 ?>
-  
+
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Tables</a> </div>
@@ -344,6 +344,79 @@
 			  </div>
 		  ';
 		}
+
+    if (isset($_GET['edit_unit']))
+    {
+    //  $Proses = new Proses();
+    //  $show = $Proses->editOwner($_GET['edit_owner']);
+    //  $edit = $show->fetch(PDO::FETCH_OBJ);
+      echo '
+      <div class="span3">
+      </div>
+      <div class="span6">
+        <div class="widget-box">
+        <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+          <h5>Data Baru</h5>
+        </div>
+        <div class="widget-content nopadding">
+          <form action="proses/proses_update.php" method="post" class="form-horizontal">
+          <div class="control-group">
+      		<label class="control-label">Apartemen :</label>
+      		<div class="controls">
+      		  <select name="apartemen">
+      		  <option>-- Pilih Apartemen --</option>
+      		  </select>
+      		</div>
+      	  </div>
+      	  <div class="control-group">
+      		<label class="control-label">No Unit :</label>
+      		<div class="controls">
+      		  <input name="no_unit" type="text" placeholder="No Unit" />
+      		</div>
+      	  </div>
+      	  <div class="control-group">
+      		<label class="control-label">Harga Owner WD :</label>
+      		<div class="controls">
+      		  <input name="h_owner_wd" type="text" placeholder="Owner Week Day"  />
+      		</div>
+      	  </div>
+      	  <div class="control-group">
+      		<label class="control-label">Harga Owner WE :</label>
+      		<div class="controls">
+      		  <input name="h_owner_we" type="text" placeholder="Owner Week End"  />
+      		</div>
+      	  </div>
+      	  <div class="control-group">
+      		<label class="control-label">Harga Sewa WD :</label>
+      		<div class="controls">
+      		  <input name="h_sewa_wd" type="text" placeholder="Sewa Week Day"  />
+      		</div>
+      	  </div>
+      	  <div class="control-group">
+      		<label class="control-label">Harga Sewa WE :</label>
+      		<div class="controls">
+      		  <input name="h_sewa_we" type="text" placeholder="Sewa Week End"  />
+      		</div>
+      	  </div><div class="control-group">
+      		<label class="control-label">Ekstra Charge :</label>
+      		<div class="controls">
+      		  <input name="ekstra_charge" type="text" placeholder="Sewa Week Day"  />
+      		</div>
+      	  </div>
+      	  <div class="control-group">
+      		<div class="controls">
+      		  <input type="submit" name="addUnit" class="btn btn-success">
+      		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+      		</div>
+      	  </div>
+          </form>
+          </div>
+        </div>
+        </div>
+        <div class="span3">
+        </div>
+      ';
+    }
 
 	  ?>
 	</div>
