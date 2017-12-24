@@ -106,11 +106,39 @@
 			      </div>
 			      <div class="control-group">
 				    <div class="controls">
-					  <button data-parent="#collapse-group" href="#collapseUnit" data-toggle="collapse" class="btn btn-success">Lanjut</button>
+					  <button data-parent="#collapse-group" href="#collapseGFour" data-toggle="collapse" class="btn btn-success">Lanjut</button>
 					</div>
 			      </div>
 				</div>';}
 			  ?>
+            </div>
+          </div>
+		  <div class="accordion-group widget-box">
+            <div class="accordion-heading">
+              <div class="widget-title"> <a data-parent="#collapse-group" href="#collapseGFour" data-toggle="collapse"> <span class="icon"><i class="icon-eye-open"></i></span>
+                <h5>Pilih Tanggal</h5>
+                </a> </div>
+            </div>
+            <div class="collapse accordion-body" id="collapseGFour">
+
+			    <div class="control-group">
+				  <label class="control-label">Check In :</label>
+				  <div class="controls">
+				    <input name="check_in" type="date" onchange="cobaan(this.form)"/>
+				  </div>
+			    </div>
+				<div class="control-group">
+				  <label class="control-label">Check Out :</label>
+				  <div class="controls">
+				    <input name="check_out" type="date" onchange="cobaan2(this.form)"/>
+				  </div>
+			    <div class="control-group">
+          </div>
+				  <div class="controls">
+				    <button data-parent="#collapse-group" href="#collapseUnit" data-toggle="collapse" class="btn btn-success">Lanjut</button>
+				 </div>
+			   </div>
+
             </div>
           </div>
           <div class="accordion-group widget-box">
@@ -146,52 +174,27 @@
 					</div>
 				  </div>
 			    </div>
+          <div class="control-group">
+  				  <label class="control-label">Harga Sewa :</label>
+  				  <div class="controls">
+  				    <input name="harga_sewa" id="harga_sewa" type="number" />
+              <div id="loading2">
+    						<img src="images/loading.gif" width="18"> <small>Loading...</small>
+    					</div>
+            </div>
+  			    </div>
 				<div class="control-group">
 				  <label class="control-label">Jumlah Tamu :</label>
 				  <div class="controls">
 				    <input name="tamu" type="number" value="5"/>
 				  </div>
 			    </div>
-			    <div class="control-group">
-				  <div class="controls">
-				    <button data-parent="#collapse-group" href="#collapseGFour" data-toggle="collapse" class="btn btn-success">Lanjut</button>
-				 </div>
-			   </div>
-
+          <div class="control-group">
+            <label class="control-label">Ekstra Charge :</label>
+            <div class="controls">
+              <input name="ekstra_charge" type="number" />
             </div>
-          </div>
-		  <div class="accordion-group widget-box">
-            <div class="accordion-heading">
-              <div class="widget-title"> <a data-parent="#collapse-group" href="#collapseGFour" data-toggle="collapse"> <span class="icon"><i class="icon-eye-open"></i></span>
-                <h5>Pilih Tanggal</h5>
-                </a> </div>
             </div>
-            <div class="collapse accordion-body" id="collapseGFour">
-
-			    <div class="control-group">
-				  <label class="control-label">Check In :</label>
-				  <div class="controls">
-				    <input name="check_in" type="date" onchange="cobaan(this.form)"/>
-				  </div>
-			    </div>
-				<div class="control-group">
-				  <label class="control-label">Check Out :</label>
-				  <div class="controls">
-				    <input name="check_out" type="date" onchange="cobaan2(this.form)"/>
-				  </div>
-			    </div>
-				<div class="control-group">
-				  <label class="control-label">Harga Sewa :</label>
-				  <div class="controls">
-				    <input name="harga_sewa" type="number" />
-				  </div>
-			    </div>
-				<div class="control-group">
-				  <label class="control-label">Ekstra Charge :</label>
-				  <div class="controls">
-				    <input name="ekstra_charge" type="number" />
-				  </div>
-			    </div>
 			    <div class="control-group">
 				  <div class="controls">
 				    <button data-parent="#collapse-group" href="#collapseGFive" data-toggle="collapse" class="btn btn-success">Lanjut</button>
