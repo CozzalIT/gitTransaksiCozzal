@@ -30,8 +30,8 @@
   if(isset($_GET['delete_owner'])){
 	$del = $proses->deleteOwner($_GET['delete_owner']);
 	header("location:../owner.php");
-  }  
-  
+  }
+
 //Delete DP Via
   if(isset($_GET['delete_dp'])){
     $del = $proses->deleteDp_via($_GET['delete_dp']);
