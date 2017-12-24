@@ -28,6 +28,23 @@
     }
   }
 
+//Tambah Unit
+  if(isset($_POST['addUnit'])){
+    $kd_apt = $_POST['apartemen'];
+    $no_unit = $_POST['no_unit'];
+    $h_sewa_wd = $_POST['h_sewa_wd'];
+    $h_sewa_we = $_POST['h_sewa_we'];
+    $h_owner_wd = $_POST['h_owner_wd'];
+    $h_owner_we = $_POST['h_owner_we'];
+    $ekstra_charge = $_POST['ekstra_charge'];
+
+    $add = $proses->addUnit($kd_apt, $no_unit, $h_sewa_wd, $h_sewa_we, $h_owner_wd, $h_owner_we, $ekstra_charge);
+
+    if($add == "Success"){
+      header('Location:../unit.php');
+    }else{ echo 'error';}
+  }
+
 //Tambah Booking Via
   if(isset($_POST['addBooking_via'])){
 	  $kd_booking = $_POST['kd_booking'];
@@ -68,7 +85,7 @@
     if($add == "Success"){
 	    header('Location:../owner.php');
     }
-	else echo 'error'; 
+	else echo 'error';
   }
 
 //Tambah Transaksi

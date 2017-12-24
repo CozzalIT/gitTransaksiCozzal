@@ -25,6 +25,16 @@ class Proses{
 	}
   }
 
+  public function addUnit($kd_apt, $no_unit, $h_sewa_wd, $h_sewa_we, $h_owner_wd, $h_owner_we, $ekstra_charge){
+  $sql = "INSERT INTO tb_unit (kd_apt, no_unit, h_sewa_wd, h_sewa_we, h_owner_wd, h_owner_we, ekstra_charge) VALUES('$kd_apt', '$no_unit', '$h_sewa_wd', '$h_sewa_we', '$h_owner_wd', '$h_owner_we', '$ekstra_charge')";
+  $query = $this->db->query($sql);
+  if(!$query){
+    return "Failed";
+  }else{
+    return "Success";
+  }
+  }
+
   public function addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_bank, $dp){
 	$sql = "INSERT INTO tb_transaksi (kd_penyewa, kd_apt, kd_unit, tamu, check_in, check_out, harga_sewa, ekstra_charge, kd_booking, kd_bank, dp) VALUES('$kd_penyewa', '$kd_apt', '$kd_unit', '$tamu', '$check_in', '$check_out', '$harga_sewa', '$ekstra_charge', '$kd_booking', '$kd_bank', '$dp')";
 	$query = $this->db->query($sql);
@@ -102,9 +112,9 @@ class Proses{
   $query = $this->db->query($sql);
   return $query;
   }
-  
+
   public function editOwner($kd_owner){
-	$sql = "SELECT * from tb_owner 
+	$sql = "SELECT * from tb_owner
 	INNER JOIN tb_bank ON tb_bank.kd_bank = tb_owner.kd_bank where kd_owner='$kd_owner'";
 	$query = $this->db->query($sql);
 	return $query;
@@ -209,9 +219,9 @@ class Proses{
       return "Success";
     }
   }
-  
+
 //  public function updateOwner($kd_owner ,$nama, $alamat, $no_tlp, $kd_bank, $no_rek, $tgl_gabung, $email, $jenis_kelamin)
-  
+
 //Proses Update (Akhir)
 
 //Proses Delete (Awal)
@@ -239,7 +249,7 @@ class Proses{
     $sql = "DELETE FROM tb_bank WHERE kd_bank='$kd_bank'";
     $query = $this->db->query($sql);
   }
-  
+
   public function deleteOwner($kd_owner){
 	$sql = "DELETE FROM tb_owner WHERE kd_owner='$kd_owner'";
 	$query = $this->db->query($sql);

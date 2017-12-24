@@ -223,17 +223,17 @@
     <h3>Pelanggan Baru</h3>
   </div>
   <div class="modal-body">
-	<form action="proses/add/add_penyewa.php" method="post" class="form-horizontal">
+	<form action="proses/proses_add.php" method="post" class="form-horizontal">
 	  <div class="control-group">
 		<label class="control-label">Apartemen :</label>
 		<div class="controls">
-		  <select>
-		  <option name="" value="">-- Pilih Apartemen --</option>
+		  <select name="apartemen">
+		  <option>-- Pilih Apartemen --</option>
 			<?php
       $Proses = new Proses();
       $show = $Proses->showApartemen();
       while($data = $show->fetch(PDO::FETCH_OBJ)){
-				echo "<option name='kd_apt' value='$data->kd_apt'>$data->nama_apt</option>";
+				echo "<option name='apartemen' value='$data->kd_apt'>$data->nama_apt</option>";
 			  }
 			?>
 		  </select>
@@ -266,7 +266,7 @@
 	  <div class="control-group">
 		<label class="control-label">Harga Sewa WE :</label>
 		<div class="controls">
-		  <input name="h_sewa_wd" type="text"  class="span2" placeholder="Sewa Week End"  />
+		  <input name="h_sewa_we" type="text"  class="span2" placeholder="Sewa Week End"  />
 		</div>
 	  </div><div class="control-group">
 		<label class="control-label">Ekstra Charge :</label>
@@ -276,7 +276,7 @@
 	  </div>
 	  <div class="control-group">
 		<div class="controls">
-		  <input type="submit" name="addPenyewa" class="btn btn-success">
+		  <input type="submit" name="addUnit" class="btn btn-success">
 		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
 		</div>
 	  </div>
