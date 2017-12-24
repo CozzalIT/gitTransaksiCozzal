@@ -300,19 +300,22 @@
 						  </label>
 						</div>
 					'; }
+
 					echo '
 						<div class="control-group">
 						  <label class="control-label">Via Bank :</label>
 							<div class="controls">
-								<select name="kd_bank">
+								<select name="kd_bank" class="span11">
 									<option name="" value="" >-- Pilih Bank --</option>';
 
 
 						$Proses = new Proses();
 						$show = $Proses->showDp_via();
 						while($data = $show->fetch(PDO::FETCH_OBJ)){
-						echo "<option name='kd_bank' value='$data->kd_bank'>$data->nama_bank</option>";}
-
+						if ($edit->kd_bank!=$data->kd_bank)
+							  echo "<option name='kd_bank' value='$data->kd_bank'>$data->nama_bank</option>"; 
+						else  echo "<option name='kd_bank' value='$data->kd_bank' selected='true'>$data->nama_bank</option>";
+						}
 					echo '
 
 								</select>
@@ -359,7 +362,7 @@
 <script src="js/jquery.ui.custom.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.uniform.js"></script>
-<script src="js/select2.min.js"></script>
+<!--<script src="js/select2.min.js"></script>-->
 <script src="js/jquery.dataTables.min.js"></script>
 <script src="js/matrix.js"></script>
 <script src="js/matrix.tables.js"></script>
