@@ -41,9 +41,8 @@
 				<div class="widget-content nopadding">
 				  <form action="proses/proses_update.php" method="post" class="form-horizontal">
 					<div class="control-group">
-					  <label class="control-label">Kode Penyewa :</label>
 					  <div class="controls">
-						<input name="kd_penyewa" type="text" class="span11" placeholder="Nama" value="'.$edit->kd_penyewa.'"/>
+						<input name="kd_penyewa" type="text" class="span11 hide" placeholder="Nama" value="'.$edit->kd_penyewa.'"/>
 					  </div>
 					</div>
 					<div class="control-group">
@@ -313,7 +312,7 @@
 						$show = $Proses->showDp_via();
 						while($data = $show->fetch(PDO::FETCH_OBJ)){
 						if ($edit->kd_bank!=$data->kd_bank)
-							  echo "<option name='kd_bank' value='$data->kd_bank'>$data->nama_bank</option>"; 
+							  echo "<option name='kd_bank' value='$data->kd_bank'>$data->nama_bank</option>";
 						else  echo "<option name='kd_bank' value='$data->kd_bank' selected='true'>$data->nama_bank</option>";
 						}
 					echo '
@@ -348,6 +347,7 @@
 		  ';
 		}
 
+//Edit Data Unit
     if (isset($_GET['edit_unit']))
     {
     //  $Proses = new Proses();
