@@ -351,9 +351,9 @@
 //Edit Data Unit
     if (isset($_GET['edit_unit']))
     {
-    //  $Proses = new Proses();
-    //  $show = $Proses->editOwner($_GET['edit_owner']);
-    //  $edit = $show->fetch(PDO::FETCH_OBJ);
+      $Proses = new Proses();
+      $show = $Proses->editUnit($_GET['edit_unit']);
+      $edit = $show->fetch(PDO::FETCH_OBJ);
       echo '
       <div class="span3">
       </div>
@@ -365,6 +365,8 @@
         <div class="widget-content nopadding">
           <form action="proses/proses_update.php" method="post" class="form-horizontal">
           <div class="control-group">
+		    <input name="kd_unit" class="hide" type="text" value="'.$edit->kd_unit.'"/>  <!--Hiden Flag-->
+		    <input name="kd_owner_lama" class="hide" type="text" value="'.$edit->kd_owner.'"/>  <!--Hiden Flag-->			
       		<label class="control-label">Apartemen :</label>
           <div class="controls">
       		  <select name="apartemen">
@@ -385,50 +387,64 @@
       	  <div class="control-group">
       		<label class="control-label">No Unit :</label>
       		<div class="controls">
-      		  <input name="no_unit" type="text" placeholder="No Unit" />
+      		  <input name="no_unit" type="text" placeholder="No Unit" value="'.$edit->no_unit.'"/>
       		</div>
+      	  </div>
+          <div class="control-group">
+      		<label class="control-label">Owner :</label>
+          <div class="controls">
+      		  <select name="owner">
+      		  <option>-- Pilih Owner --</option>';
+
+              $show = $Proses->showOwner();
+              while($data = $show->fetch(PDO::FETCH_OBJ)){
+              if ($edit->kd_owner!=$data->kd_owner)
+                  echo "<option name='kd_owner' value='$data->kd_owner'>$data->nama</option>";
+              else  echo "<option name='kd_owner' value='$data->kd_owner' selected='true'>$data->nama</option>";
+              }
+          echo '
+          </select>
+        </div>
       	  </div>
       	  <div class="control-group">
       		<label class="control-label">Harga Owner WD :</label>
       		<div class="controls">
-      		  <input name="h_owner_wd" type="text" placeholder="Owner Week Day"  />
+      		  <input name="h_owner_wd" type="text" placeholder="Owner Week Day" value="'.$edit->h_owner_wd.'"/>
       		</div>
       	  </div>
       	  <div class="control-group">
       		<label class="control-label">Harga Owner WE :</label>
       		<div class="controls">
-      		  <input name="h_owner_we" type="text" placeholder="Owner Week End"  />
+      		  <input name="h_owner_we" type="text" placeholder="Owner Week End" value="'.$edit->h_owner_we.'" />
       		</div>
       	  </div>
       	  <div class="control-group">
       		<label class="control-label">Harga Sewa WD :</label>
       		<div class="controls">
-      		  <input name="h_sewa_wd" type="text" placeholder="Sewa Week Day"  />
+      		  <input name="h_sewa_wd" type="text" placeholder="Sewa Week Day" value="'.$edit->h_sewa_wd.'" />
       		</div>
       	  </div>
       	  <div class="control-group">
       		<label class="control-label">Harga Sewa WE :</label>
       		<div class="controls">
-      		  <input name="h_sewa_we" type="text" placeholder="Sewa Week End"  />
+      		  <input name="h_sewa_we" type="text" placeholder="Sewa Week End" value="'.$edit->h_sewa_we.'" />
       		</div>
       	  </div><div class="control-group">
       		<label class="control-label">Ekstra Charge :</label>
       		<div class="controls">
-      		  <input name="ekstra_charge" type="text" placeholder="Sewa Week Day"  />
+      		  <input name="ekstra_charge" type="text" placeholder="Ekstra Charge" value="'.$edit->ekstra_charge.'" />
       		</div>
-      	  </div>
-      	  <div class="control-group">
-      		<div class="controls">
-      		  <input type="submit" name="addUnit" class="btn btn-success">
-      		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
-      		</div>
-      	  </div>
-          </form>
-          </div>
-        </div>
-        </div>
-        <div class="span3">
-        </div>
+      	  </div> ';
+		  echo '
+		  <div class="form-actions" style="text-align:right">
+			<button name="updateUnit" type="submit" class="btn btn-success">Update</button>
+		  </div>
+		</form>
+	  </div>
+	</div>
+	</div>
+	<div class="span3">
+	</div>
       ';
     }
 

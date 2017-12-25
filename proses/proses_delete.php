@@ -15,8 +15,9 @@
   }
 
 //Delete Unit
-  if(isset($_GET['delete_unit'])){
+  if(isset($_GET['delete_unit']) || isset($_GET['kurangi_ju'])){
     $del = $proses->deleteUnit($_GET['delete_unit']);
+	$del = $proses->updateKurangi_jumlah_unit_owner($_GET['kurangi_ju']);
     header("location:../unit.php");
   }
 

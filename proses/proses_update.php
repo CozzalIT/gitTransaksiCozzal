@@ -97,6 +97,30 @@
     }
 	else echo 'error';
   }
-  
+
+//update Unit
+  if(isset($_POST['updateUnit'])){
+	  $kd_unit= $_POST['kd_unit'];
+	  $owner= $_POST['kd_owner_lama'];
+	  $kd_apt= $_POST['apartemen'];
+	  $kd_owner= $_POST['owner'];
+	  $no_unit= $_POST['no_unit'];
+	  $h_owner_wd= $_POST['h_owner_wd'];
+	  $h_owner_we= $_POST['h_owner_we'];
+	  $h_sewa_wd= $_POST['h_sewa_wd'];
+	  $h_sewa_we= $_POST['h_sewa_we'];
+	  $ekstra_charge= $_POST['ekstra_charge'];
+	  
+    $add = $proses->updateUnit($kd_unit ,$kd_apt, $no_unit, $h_owner_wd, $h_owner_we, $h_sewa_wd, $h_sewa_we, $ekstra_charge);
+	if($owner!=$kd_owner)
+	{
+		$add = $proses->updateJumlah_unit_owner($kd_owner);	
+		$add = $proses->updateKurangi_jumlah_unit_owner($owner);
+	}	
+    if($add == "Success"){
+	    header('Location:../unit.php');
+    }
+	else echo 'error';
+  }   
   
 ?>
