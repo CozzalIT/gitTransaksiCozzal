@@ -55,7 +55,7 @@
 						<td>$data->jenis_kelamin</td>
 						<td>$data->tgl_gabung</td>
 						<td>
-						  <a class='btn btn-success' href='transaksi.php?edit=$data->kd_penyewa'>Transaksi</a>
+						  <a class='btn btn-success' href='transaksi.php?transaksi=$data->kd_penyewa'>Transaksi</a>
 						  <a class='btn btn-primary' href='edit.php?edit=$data->kd_penyewa'>Edit</a>
 						  <a class='btn btn-danger' href='proses/proses_delete.php?delete_penyewa=$data->kd_penyewa'>Hapus</a>
 						</td>
