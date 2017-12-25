@@ -38,21 +38,21 @@
 			  <div class="widget-content center" style="text-align:center"> Piih Data Penyewa </div>
 			  <div class="widget-content">
 				<ul class="bs-docs-tooltip-examples">
-                  <li><button name="penyewaBaru" class="btn btn-success">Penyewa Baru</button> </li>
+                  <li><button name="penyewaBaru" class="btn btn-success" href="#popup-penyewa-baru" data-toggle="modal" class="btn btn-info btn-add">Penyewa Baru</button> </li>
                   <li><a href="penyewa.php" class="btn btn-success">Penyewa Lama</a> </li>
 				</ul>
 			  </div>
 			  <?php
-			  if(isset($_GET['edit'])){
+			  if(isset($_GET['transaksi'])){
 				$Proses = new Proses();
-				$show = $Proses->editPenyewa($_GET['edit']);
+				$show = $Proses->editPenyewa($_GET['transaksi']);
 				$edit = $show->fetch(PDO::FETCH_OBJ);
 				echo '
 				<div class="widget-content">
 				  <div class="control-group">
-				    <label class="control-label">ID :</label>
+				    <label class="control-label hide">ID :</label>
 				    <div class="controls">
-				      <input name="kd_penyewa" type="text" class="span3" placeholder="ID" value="'.$edit->kd_penyewa.'" />
+				      <input name="kd_penyewa" type="text" class="span3 hide" placeholder="ID" value="'.$edit->kd_penyewa.'" />
 				    </div>
 			      </div>
 			      <div class="control-group">
@@ -262,6 +262,10 @@
     </div>
   </div>
 </div>
+
+<?php
+  include 'template/modal.php';
+?>
 
 <!--Footer-part-->
 <div class="row-fluid">
