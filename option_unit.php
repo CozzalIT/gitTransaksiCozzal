@@ -11,7 +11,9 @@ $html = "<option value=''>-- Pilih Unit --</option>";
 $Proses = new Proses();
 $show = $Proses->showUnit();
 while($data = $show->fetch(PDO::FETCH_OBJ)){
-	$html .= "<option name='kd_unit' value='$data->kd_unit'>$data->no_unit</option>"; // Tambahkan tag option ke variabel $html
+	if ($data->kd_apt==$kd_apt){ $val=$data->kd_unit.'+'.$data->h_sewa_wd.'+'.$data->h_sewa_we.'+'.$data->ekstra_charge;
+	$html .= "<option name='kd_unit' value='$val'>$data->no_unit</option>"; // Tambahkan tag option ke variabel $html
+	}
 }
 
 $callback = array('data_unit'=>$html); // Masukan variabel html tadi ke dalam array $callback dengan index array : data_kota

@@ -219,7 +219,7 @@
 					<select id="apartemen" name="apartemen" class="span4">
 					  <option name="" value="">-- Pilih Apartemen --</option>
 					  <?php
-            $Proses = new Proses();
+				  $Proses = new Proses();
   				  $show = $Proses->showApartemen();
   				  while($data = $show->fetch(PDO::FETCH_OBJ)){
 						  echo "<option name='kd_apt' value='$data->kd_apt'>$data->nama_apt</option>";
@@ -231,7 +231,7 @@
 			    <div class="control-group">
 				  <label class="control-label">Unit :</label>
 				  <div class="controls">
-				    <select name="unit" id="unit" class="span4">
+				    <select name="unit" id="unit" class="span4" onchange="biaya(this.form)">
 					  <option value="">-- Pilih Unit --</option>
 					</select>
 					<div id="loading">
@@ -240,18 +240,15 @@
 				  </div>
 			    </div>
           <div class="control-group">
-  				  <label class="control-label">Harga Sewa :</label>
+  				  <label class="control-label">Harga Sewa Unit:</label>
   				  <div class="controls">
   				    <input name="harga_sewa" id="harga_sewa" type="number" />
-              <div id="loading2">
-    						<img src="images/loading.gif" width="18"> <small>Loading...</small>
-    					</div>
             </div>
   			    </div>
 				<div class="control-group">
 				  <label class="control-label">Jumlah Tamu :</label>
 				  <div class="controls">
-				    <input name="tamu" type="number" value="5"/>
+				    <input name="tamu" type="number" value="5" onChange="ECH(this.form)"/>
 				  </div>
 			    </div>
           <div class="control-group">
@@ -260,6 +257,13 @@
               <input name="ekstra_charge" type="number" />
             </div>
             </div>
+		  <div class="control-group">
+            <label class="control-label">Total Biaya :</label>
+            <div class="controls">
+              <input name="total" type="number" />
+            </div>
+            </div>
+
 			    <div class="control-group">
 				  <div class="controls">
 				    <button data-parent="#collapse-group" href="#collapseGFive" data-toggle="collapse" class="btn btn-success">Lanjut</button>
@@ -340,7 +344,7 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.ui.custom.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.validate.js"></script>
+<!--<script src="js/jquery.validate.js"></script> -->
 <script src="js/jquery.wizard.js"></script>
 <script src="js/matrix.js"></script>
 <script src="js/matrix.wizard.js"></script>

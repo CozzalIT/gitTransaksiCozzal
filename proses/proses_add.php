@@ -116,7 +116,8 @@
   if(isset($_POST['addTransaksi'])){
 	  $kd_penyewa 	= $_POST['kd_penyewa'];
 	  $kd_apt 		= $_POST['apartemen'];
-	  $kd_unit 		= $_POST['unit'];
+	  $kode = explode("+",$_POST['unit']);
+	  $kd_unit 		= $kode[0];
 	  $tamu 			= $_POST['tamu'];
 	  $check_in 		= $_POST['check_in'];
 	  $check_out 		= $_POST['check_out'];
