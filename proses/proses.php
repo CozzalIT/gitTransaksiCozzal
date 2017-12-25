@@ -25,8 +25,8 @@ class Proses{
 	}
   }
 
-  public function addUnit($kd_apt, $no_unit, $h_sewa_wd, $h_sewa_we, $h_owner_wd, $h_owner_we, $ekstra_charge){
-  $sql = "INSERT INTO tb_unit (kd_apt, no_unit, h_sewa_wd, h_sewa_we, h_owner_wd, h_owner_we, ekstra_charge) VALUES('$kd_apt', '$no_unit', '$h_sewa_wd', '$h_sewa_we', '$h_owner_wd', '$h_owner_we', '$ekstra_charge')";
+  public function addUnit($kd_apt,$kd_owner, $no_unit, $h_sewa_wd, $h_sewa_we, $h_owner_wd, $h_owner_we, $ekstra_charge){
+  $sql = "INSERT INTO tb_unit (kd_apt, kd_owner, no_unit, h_sewa_wd, h_sewa_we, h_owner_wd, h_owner_we, ekstra_charge) VALUES('$kd_apt', '$kd_owner', '$no_unit', '$h_sewa_wd', '$h_sewa_we', '$h_owner_wd', '$h_owner_we', '$ekstra_charge')";
   $query = $this->db->query($sql);
   if(!$query){
     return "Failed";
@@ -66,8 +66,8 @@ class Proses{
   }
 
   public function addOwner($nama, $alamat, $no_tlp, $kd_bank, $no_rek, $tgl_gabung, $email, $jenis_kelamin){
-	$sql = "INSERT INTO tb_owner (nama,alamat, no_tlp, kd_bank, no_rek, tgl_gabung, email, jenis_kelamin)
-	VALUES('$nama', '$alamat', '$no_tlp', '$kd_bank', '$no_rek', '$tgl_gabung', '$email', '$jenis_kelamin')";
+	$sql = "INSERT INTO tb_owner (nama,alamat, no_tlp, kd_bank, no_rek, tgl_gabung, email, jenis_kelamin, jumlah_unit)
+	VALUES('$nama', '$alamat', '$no_tlp', '$kd_bank', '$no_rek', '$tgl_gabung', '$email', '$jenis_kelamin', 0)";
 	$query = $this->db->query($sql);
 	if(!$query){
 	  return "Failed";
@@ -135,7 +135,9 @@ class Proses{
   }
 
   public function showUnit(){
-	$sql = "SELECT * FROM tb_unit INNER JOIN tb_apt USING (kd_apt)";
+	$sql = "SELECT * FROM tb_unit 
+	INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt 
+	INNER JOIN tb_owner ON tb_owner.kd_owner = tb_unit.kd_owner";
 	$query = $this->db->query($sql);
 	return $query;
   }
@@ -231,7 +233,16 @@ class Proses{
 	}
   }
   
-
+  
+  public function updateJumlah_unit_owner($kd_owner){
+	$sql = "update tb_owner SET jumlah_unit=jumlah_unit+1 where kd_owner='$kd_owner'";
+	$query = $this->db->query($sql);
+	if(!$query){
+	  return "Failed";
+	}else{
+	  return "Success";
+	}
+  }
 //  public function updateOwner($kd_owner ,$nama, $alamat, $no_tlp, $kd_bank, $no_rek, $tgl_gabung, $email, $jenis_kelamin)
 
 //Proses Update (Akhir)

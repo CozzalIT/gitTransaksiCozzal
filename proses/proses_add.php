@@ -37,12 +37,14 @@
     $h_owner_wd = $_POST['h_owner_wd'];
     $h_owner_we = $_POST['h_owner_we'];
     $ekstra_charge = $_POST['ekstra_charge'];
+	$kd_owner = $_POST['kd_owner'];
 
-    $add = $proses->addUnit($kd_apt, $no_unit, $h_sewa_wd, $h_sewa_we, $h_owner_wd, $h_owner_we, $ekstra_charge);
-
-    if($add == "Success"){
-      header('Location:../unit.php');
-    }else{ echo 'error';}
+    $add = $proses->addUnit($kd_apt,$kd_owner, $no_unit, $h_sewa_wd, $h_sewa_we, $h_owner_wd, $h_owner_we, $ekstra_charge);
+	$add2 = $proses->updateJumlah_unit_owner($kd_owner);
+	
+    if(($add == "Success") || ($add2 == "Success")){
+	header('Location:../unit.php');
+	}else{ echo 'error';}
   }
 
 //Tambah Booking Via

@@ -200,6 +200,11 @@
   					<td>: '.$detail->tgl_gabung.'</td>
   				  </tr>
   				  <tr>
+  					<td>Jumlah Unit</td>
+  					<td>: '.$detail->jumlah_unit.'</td>
+  				  </tr>
+
+  				  <tr>
   					<td>Bank</td>
   					<td>: '.$detail->nama_bank.'</td>
   				  </tr>
@@ -229,8 +234,8 @@
 	  <div class="control-group">
 		<label class="control-label">Apartemen :</label>
 		<div class="controls">
-		  <select name="apartemen">
-		  <option>-- Pilih Apartemen --</option>
+		  <select name="apartemen" class="span2">
+		  <option>--Pilih Apartemen--</option>
 			<?php
       $Proses = new Proses();
       $show = $Proses->showApartemen();
@@ -247,6 +252,20 @@
 		  <input name="no_unit" type="text" class="span2" placeholder="No Unit" />
 		</div>
 	  </div>
+	  <div class="control-group">
+		<label class="control-label">Owner :</label>
+		<div class="controls">
+		  <select name="kd_owner" class="span2">
+		  <option>--Pilih Owner--</option>
+			<?php
+      $show = $Proses->showOwner();
+      while($data = $show->fetch(PDO::FETCH_OBJ)){
+				echo "<option name='kd_owner' value='$data->kd_owner'>$data->nama</option>";
+			  }
+			?>
+		  </select>
+		</div>
+	  </div>	  
 	  <div class="control-group">
 		<label class="control-label">Harga Owner WD :</label>
 		<div class="controls">

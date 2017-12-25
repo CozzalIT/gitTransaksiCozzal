@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 22, 2017 at 11:08 AM
+-- Generation Time: Dec 25, 2017 at 04:45 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -109,15 +109,16 @@ CREATE TABLE `tb_owner` (
   `no_rek` varchar(20) NOT NULL,
   `tgl_gabung` date NOT NULL,
   `email` varchar(30) DEFAULT NULL,
-  `jenis_kelamin` varchar(10) DEFAULT NULL
+  `jenis_kelamin` varchar(10) DEFAULT NULL,
+  `jumlah_unit` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_owner`
 --
 
-INSERT INTO `tb_owner` (`kd_owner`, `nama`, `alamat`, `no_tlp`, `kd_bank`, `no_rek`, `tgl_gabung`, `email`, `jenis_kelamin`) VALUES
-(3, 'Ulah', 'hvkv', '07907', 5, '69676', '2017-12-22', 'jbjkbj', 'Laki-laki');
+INSERT INTO `tb_owner` (`kd_owner`, `nama`, `alamat`, `no_tlp`, `kd_bank`, `no_rek`, `tgl_gabung`, `email`, `jenis_kelamin`, `jumlah_unit`) VALUES
+(3, 'Mamang Abeh', 'Parahiyangan', '07907', 6, '12131', '2017-12-22', 'jjajah@gmail.com', 'Laki-laki', 2);
 
 -- --------------------------------------------------------
 
@@ -218,6 +219,7 @@ INSERT INTO `tb_transaksi` (`kd_transaksi`, `kd_penyewa`, `kd_apt`, `kd_unit`, `
 CREATE TABLE `tb_unit` (
   `kd_unit` int(4) NOT NULL,
   `kd_apt` int(4) NOT NULL,
+  `kd_owner` int(4) DEFAULT NULL,
   `no_unit` varchar(10) NOT NULL,
   `h_sewa_wd` int(10) NOT NULL,
   `h_sewa_we` int(10) NOT NULL,
@@ -230,8 +232,9 @@ CREATE TABLE `tb_unit` (
 -- Dumping data for table `tb_unit`
 --
 
-INSERT INTO `tb_unit` (`kd_unit`, `kd_apt`, `no_unit`, `h_sewa_wd`, `h_sewa_we`, `h_owner_wd`, `h_owner_we`, `ekstra_charge`) VALUES
-(1, 1, '18BF', 500000, 600000, 400000, 500000, 150000);
+INSERT INTO `tb_unit` (`kd_unit`, `kd_apt`, `kd_owner`, `no_unit`, `h_sewa_wd`, `h_sewa_we`, `h_owner_wd`, `h_owner_we`, `ekstra_charge`) VALUES
+(1, 1, 3, '18BF', 500000, 600000, 400000, 500000, 150000),
+(5, 2, 3, '6DGJ', 200000, 200000, 200000, 200000, 200000);
 
 -- --------------------------------------------------------
 
@@ -319,7 +322,8 @@ ALTER TABLE `tb_transaksi`
 --
 ALTER TABLE `tb_unit`
   ADD PRIMARY KEY (`kd_unit`),
-  ADD KEY `kd_apt` (`kd_apt`);
+  ADD KEY `kd_apt` (`kd_apt`),
+  ADD KEY `kd_owner` (`kd_owner`);
 
 --
 -- Indexes for table `tb_user`
@@ -375,7 +379,7 @@ ALTER TABLE `tb_transaksi`
 -- AUTO_INCREMENT for table `tb_unit`
 --
 ALTER TABLE `tb_unit`
-  MODIFY `kd_unit` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `kd_unit` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tb_user`
 --
@@ -417,7 +421,8 @@ ALTER TABLE `tb_transaksi`
 -- Constraints for table `tb_unit`
 --
 ALTER TABLE `tb_unit`
-  ADD CONSTRAINT `tb_unit_ibfk_1` FOREIGN KEY (`kd_apt`) REFERENCES `tb_apt` (`kd_apt`);
+  ADD CONSTRAINT `tb_unit_ibfk_1` FOREIGN KEY (`kd_apt`) REFERENCES `tb_apt` (`kd_apt`),
+  ADD CONSTRAINT `tb_unit_ibfk_2` FOREIGN KEY (`kd_owner`) REFERENCES `tb_owner` (`kd_owner`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

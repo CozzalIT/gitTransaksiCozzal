@@ -35,11 +35,12 @@
                 <tr>
                   <th>No Unit</th>
                   <th>Nama Apartemen</th>
+				  <th>Owner</th>
                   <th>Sewa WeekDay</th>
                   <th>Sewa WeekEnd</th>
                   <th>Owner WeekDay</th>
                   <th>Owner WeekEnd</th>
-				          <th class="span3">Action</th>
+				  <th class="span3">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -52,6 +53,7 @@
 					  <tr class=gradeC'>
 					    <td>$data->no_unit</td>
 					    <td>$data->nama_apt</td>
+						<td>$data->nama</td>
 						<td>$data->h_sewa_wd</td>
 						<td>$data->h_sewa_we</td>
 					    <td>$data->h_owner_wd</td>
