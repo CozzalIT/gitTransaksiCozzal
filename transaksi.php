@@ -110,6 +110,71 @@
 					</div>
 			      </div>
 				</div>';}
+
+			  if(isset($_GET['nama'])){
+				echo '
+				<div class="widget-content">
+				  <div class="control-group">
+				    <label class="control-label hide">ID :</label>
+				    <div class="controls">
+				      <input name="kd_penyewa" type="text" class="span3 hide" placeholder="ID" value="" />
+				    </div>
+			      </div>
+			      <div class="control-group">
+				    <label class="control-label">Nama :</label>
+				    <div class="controls">
+				      <input name="nama" type="text" class="span3" placeholder="Nama" value="'.$_GET['nama'].'" />
+				    </div>
+			      </div>
+			      <div class="control-group">
+				    <label class="control-label">Alamat :</label>
+				    <div class="controls">
+				      <input name="alamat" type="text" class="span3" placeholder="Alamat" value="'.$_GET['alamat'].'" />
+				    </div>
+			      </div>
+			      <div class="control-group">
+			  	    <label class="control-label">No Telpon :</label>
+				    <div class="controls">
+				      <input name="no_tlp" type="text"  class="span3" placeholder="ex: 0812...." value="'.$_GET['no_tlp'].'" />
+				    </div>
+			      </div>
+			      <div class="control-group">
+				    <label class="control-label">Jenis Kelamin :</label>
+				    ';
+
+					if ($_GET['jenis_kelamin'] == 'Laki-laki') {
+					  echo '
+						<div class="controls">
+						  <label>
+							<input type="radio" name="jenis_kelamin" value="Laki-laki" checked/> Laki-laki
+						  </label>
+						  <label>
+							<input type="radio" name="jenis_kelamin" value="Perempuan" /> Perempuan
+						  </label>
+						</div>
+
+					  ';
+					} else {
+					  echo '
+						<div class="controls">
+						  <label>
+							<input type="radio" name="jenis_kelamin" value="Laki-laki" /> Laki-laki
+						  </label>
+						  <label>
+							<input type="radio" name="jenis_kelamin" value="Perempuan" checked/> Perempuan
+						  </label>
+						</div>
+					  ';
+					}
+
+				  echo '
+			      </div>
+			      <div class="control-group">
+				    <div class="controls">
+					  <button data-parent="#collapse-group" href="#collapseGFour" data-toggle="collapse" class="btn btn-success">Lanjut</button>
+					</div>
+			      </div>
+				</div>';}
 			  ?>
             </div>
           </div>
