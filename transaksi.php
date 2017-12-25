@@ -117,7 +117,7 @@
 				  <div class="control-group">
 				    <label class="control-label hide">ID :</label>
 				    <div class="controls">
-				      <input name="kd_penyewa" type="text" class="span3 hide" placeholder="ID" value="" />
+				      <input name="kd_penyewa" type="text" class="span3 hide" placeholder="ID" value="'.$_GET['kd_penyewa'].'" />
 				    </div>
 			      </div>
 			      <div class="control-group">
