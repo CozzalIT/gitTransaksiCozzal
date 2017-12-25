@@ -25,16 +25,16 @@
     //if(mysql_num_rows($ada)>0){
       //$kd_penyewa++;
     //}
-
     $nama = $_POST['nama'];
 	  $alamat = $_POST['alamat'];
 	  $no_tlp = $_POST['no_tlp'];
 	  $jenis_kelamin = $_POST['jenis_kelamin'];
 
     $add = $proses->addPenyewa($nama, $alamat, $no_tlp, $jenis_kelamin);
+    //$last_id = $this->db->lastInsertId();
 
     if($add == "Success"){
-	    header('Location:../transaksi.php?nama='.$nama.'&alamat='.$alamat.'&no_tlp='.$no_tlp.'&jenis_kelamin='.$jenis_kelamin);
+	    header('Location:../transaksi.php?nama='.$nama.'&alamat='.$alamat.'&no_tlp='.$no_tlp.'&jenis_kelamin='.$jenis_kelamin.'&kd_penyewa=');
     }
   }
 
