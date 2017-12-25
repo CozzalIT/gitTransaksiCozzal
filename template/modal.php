@@ -465,7 +465,7 @@
 	  </div>
 	  <div class="control-group">
 		<div class="controls">
-		  <input type="submit" name="addPenyewa" class="btn btn-success">
+		  <input type="submit" name="addPenyewaTransaksi" class="btn btn-success">
 		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
 		</div>
 	  </div>
