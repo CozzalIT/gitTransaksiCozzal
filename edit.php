@@ -365,11 +365,21 @@
           <form action="proses/proses_update.php" method="post" class="form-horizontal">
           <div class="control-group">
       		<label class="control-label">Apartemen :</label>
-      		<div class="controls">
+          <div class="controls">
       		  <select name="apartemen">
-      		  <option>-- Pilih Apartemen --</option>
-      		  </select>
-      		</div>
+      		  <option>-- Pilih Apartemen --</option>';
+
+              $Proses = new Proses();
+              $show = $Proses->showApartemen();
+              while($data = $show->fetch(PDO::FETCH_OBJ)){
+              if ($edit->kd_apt!=$data->kd_apt)
+                  echo "<option name='kd_apt' value='$data->kd_apt'>$data->nama_apt</option>";
+              else  echo "<option name='kd_apt' value='$data->kd_apt' selected='true'>$data->nama_apt</option>";
+              }
+
+          echo '
+          </select>
+        </div>
       	  </div>
       	  <div class="control-group">
       		<label class="control-label">No Unit :</label>
