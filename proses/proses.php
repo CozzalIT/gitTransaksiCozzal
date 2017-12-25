@@ -119,21 +119,32 @@ class Proses{
 	$query = $this->db->query($sql);
 	return $query;
   }
-  
-    public function editUnit($kd_unit){
+
+  public function editUnit($kd_unit){
 	$sql = "SELECT * from tb_unit
-	INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt 
-	INNER JOIN tb_owner ON tb_owner.kd_owner = tb_unit.kd_owner 
+	INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt
+	INNER JOIN tb_owner ON tb_owner.kd_owner = tb_unit.kd_owner
 	where kd_unit='$kd_unit'";
 	$query = $this->db->query($sql);
 	return $query;
   }
 
+  //public function editPenyewa($kd_unit){
+  //$sql = "SELECT * FROM tsurat WHERE no_urut IN (SELECT MAX(no_urut) FROM tsurat)";
+  //$query = $this->db->query($sql);
+  //return $query;
+  //}
 //Proses Edit (Akhir)
 
 //Proses Show (Awal)
   public function showPenyewa(){
 	$sql = "SELECT * FROM tb_penyewa";
+	$query = $this->db->query($sql);
+	return $query;
+  }
+
+  public function showPenyewaTransaksi(){
+	$sql = "SELECT * FROM tb_penyewa WHERE kd_penyewa IN (SELECT MAX(kd_penyewa) FROM tb_penyewa)";
 	$query = $this->db->query($sql);
 	return $query;
   }
@@ -145,8 +156,8 @@ class Proses{
   }
 
   public function showUnit(){
-	$sql = "SELECT * FROM tb_unit 
-	INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt 
+	$sql = "SELECT * FROM tb_unit
+	INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt
 	INNER JOIN tb_owner ON tb_owner.kd_owner = tb_unit.kd_owner";
 	$query = $this->db->query($sql);
 	return $query;
@@ -231,9 +242,9 @@ class Proses{
       return "Success";
     }
   }
-  
+
   public function updateOwner($kd_owner ,$nama, $alamat, $no_tlp, $kd_bank, $no_rek, $email, $jenis_kelamin){
-	$sql = "update tb_owner SET nama='$nama', alamat='$alamat', kd_bank='$kd_bank', no_rek='$no_rek', 
+	$sql = "update tb_owner SET nama='$nama', alamat='$alamat', kd_bank='$kd_bank', no_rek='$no_rek',
 	email='$email', jenis_kelamin='$jenis_kelamin' WHERE kd_owner='$kd_owner'";
 	$query = $this->db->query($sql);
 	if(!$query){
@@ -242,19 +253,19 @@ class Proses{
 	  return "Success";
 	}
   }
-  
+
   public function updateUnit($kd_unit ,$kd_apt,$kd_owner, $no_unit, $h_owner_wd, $h_owner_we, $h_sewa_wd, $h_sewa_we, $ekstra_charge){
- 	$sql = "update tb_unit SET kd_apt='$kd_apt', kd_owner='$kd_owner', no_unit='$no_unit', h_owner_wd='$h_owner_wd', h_owner_we='$h_owner_we', 
+ 	$sql = "update tb_unit SET kd_apt='$kd_apt', kd_owner='$kd_owner', no_unit='$no_unit', h_owner_wd='$h_owner_wd', h_owner_we='$h_owner_we',
 	h_sewa_wd='$h_sewa_wd', h_sewa_we='$h_sewa_we', ekstra_charge='$ekstra_charge' where kd_unit='$kd_unit'";
 	$query = $this->db->query($sql);
 	if(!$query){
 	  return "Failed";
 	}else{
 	  return "Success";
-	} 
-  }	  
-  
-  
+	}
+  }
+
+
   public function updateJumlah_unit_owner($kd_owner){
 	$sql = "update tb_owner SET jumlah_unit=jumlah_unit+1 where kd_owner='$kd_owner'";
 	$query = $this->db->query($sql);

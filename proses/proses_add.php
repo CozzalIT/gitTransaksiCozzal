@@ -18,23 +18,18 @@
 
 //Tambah Penyewa di Halaman Transaksi
   if(isset($_POST['addPenyewaTransaksi'])){
-    //$kd_penyewa = 1
-    //$cekdata = "select kd_penyewa from tb_penyewa where kd_penyewa='$kd_penyewa'"
-    //$ada=mysql_query($cekdata) or die(mysql_error());
-
-    //if(mysql_num_rows($ada)>0){
-      //$kd_penyewa++;
-    //}
     $nama = $_POST['nama'];
 	  $alamat = $_POST['alamat'];
 	  $no_tlp = $_POST['no_tlp'];
 	  $jenis_kelamin = $_POST['jenis_kelamin'];
 
     $add = $proses->addPenyewa($nama, $alamat, $no_tlp, $jenis_kelamin);
-    //$last_id = $this->db->lastInsertId();
+    $Proses = new Proses();
+    $show = $Proses->showPenyewaTransaksi();
+    $data = $show->fetch(PDO::FETCH_OBJ);
 
     if($add == "Success"){
-	    header('Location:../transaksi.php?nama='.$nama.'&alamat='.$alamat.'&no_tlp='.$no_tlp.'&jenis_kelamin='.$jenis_kelamin.'&kd_penyewa=');
+	    header('Location:../transaksi.php?nama='.$nama.'&alamat='.$alamat.'&no_tlp='.$no_tlp.'&jenis_kelamin='.$jenis_kelamin.'&kd_penyewa='.$data->kd_penyewa);
     }
   }
 
