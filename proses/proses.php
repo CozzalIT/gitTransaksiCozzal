@@ -128,12 +128,6 @@ class Proses{
 	$query = $this->db->query($sql);
 	return $query;
   }
-
-  //public function editPenyewa($kd_unit){
-  //$sql = "SELECT * FROM tsurat WHERE no_urut IN (SELECT MAX(no_urut) FROM tsurat)";
-  //$query = $this->db->query($sql);
-  //return $query;
-  //}
 //Proses Edit (Akhir)
 
 //Proses Show (Awal)
