@@ -189,13 +189,13 @@
 			    <div class="control-group">
 				  <label class="control-label">Check In :</label>
 				  <div class="controls">
-				    <input name="check_in" type="date" onchange="cobaan(this.form)"/>
+				    <input name="check_in" type="date" onchange="validasi(this.form)"/>
 				  </div>
 			    </div>
 				<div class="control-group">
 				  <label class="control-label">Check Out :</label>
 				  <div class="controls">
-				    <input name="check_out" type="date" onchange="cobaan2(this.form)"/>
+				    <input name="check_out" type="date" onchange="validasi2(this.form)"/>
 				  </div>
 			    <div class="control-group">
           </div>
@@ -242,7 +242,7 @@
           <div class="control-group">
   				  <label class="control-label">Harga Sewa Unit:</label>
   				  <div class="controls">
-  				    <input name="harga_sewa" id="harga_sewa" type="number" />
+  				    <input name="harga_sewa" id="harga_sewa" type="number" onChange="hasil(this.form)" />
             </div>
   			    </div>
 				<div class="control-group">
@@ -254,7 +254,7 @@
           <div class="control-group">
             <label class="control-label">Ekstra Charge :</label>
             <div class="controls">
-              <input name="ekstra_charge" type="number" />
+              <input name="ekstra_charge" type="number" onChange="hasil(this.form)" />
             </div>
             </div>
 		  <div class="control-group">
@@ -348,7 +348,7 @@
 <script src="js/jquery.wizard.js"></script>
 <script src="js/matrix.js"></script>
 <script src="js/matrix.wizard.js"></script>
-<script src="js/imron_tanggal.js"></script>
+<script src="js/transaksi.js"></script>
 <script src="js/jquery.uniform.js"></script>
 <!-- <script src="js/select2.min.js"></script> -->
 <script src="js/jquery.dataTables.min.js"></script>

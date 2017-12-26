@@ -40,20 +40,29 @@ function biaya(form)
 	hasil(form);
 }
 
-function cobaan(form)
+function validasi(form)
 {
 	var a = form.check_in.value;
 	var b = new Date(a);
 	var c = new Date();
+	c.setHours(7); c.setMinutes(0); c.setSeconds(0); c.setMilliseconds(0);
+	var d = new Date(form.check_out.value);
 	hari = c.getDate(); bulan = c.getMonth()+1; tahun = c.getFullYear();
-	if (b<c)
-	{
-		alert("Tanggal check in tidak boleh kurang dari hari ini");
-		form.check_in.value = tahun+"-"+bulan+"-"+hari;
-	}
+		if (b<c)
+		{
+			alert("Tanggal check in tidak boleh kurang dari hari ini");
+			form.check_in.value = tahun+"-"+bulan+"-"+hari;
+		}
+		
+		if ((b>=d) && (d!=''))
+		{
+			alert("Tanggal Check in harus lebih dari tanggal check out");
+			form.check_in.value = '';
+			
+		}
 	biaya(form); ECH(form); hasil(form); 
 }
-function cobaan2(form)
+function validasi2(form)
 {
 	if (form.check_in.value!="")
 	{
