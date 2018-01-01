@@ -409,30 +409,30 @@
       	  <div class="control-group">
       		<label class="control-label">Harga Owner WD :</label>
       		<div class="controls">
-      		  <input name="h_owner_wd" type="text" placeholder="Owner Week Day" value="'.$edit->h_owner_wd.'"/>
+      		  <input name="h_owner_wd" type="number" min="0" step="1000" value="'.$edit->h_owner_wd.'"/>
       		</div>
       	  </div>
       	  <div class="control-group">
       		<label class="control-label">Harga Owner WE :</label>
       		<div class="controls">
-      		  <input name="h_owner_we" type="text" placeholder="Owner Week End" value="'.$edit->h_owner_we.'" />
+      		  <input name="h_owner_we" type="number" min="0" step="1000" value="'.$edit->h_owner_we.'" />
       		</div>
       	  </div>
       	  <div class="control-group">
       		<label class="control-label">Harga Sewa WD :</label>
       		<div class="controls">
-      		  <input name="h_sewa_wd" type="text" placeholder="Sewa Week Day" value="'.$edit->h_sewa_wd.'" />
+      		  <input name="h_sewa_wd" type="number" min="0" step="1000" value="'.$edit->h_sewa_wd.'" />
       		</div>
       	  </div>
       	  <div class="control-group">
       		<label class="control-label">Harga Sewa WE :</label>
       		<div class="controls">
-      		  <input name="h_sewa_we" type="text" placeholder="Sewa Week End" value="'.$edit->h_sewa_we.'" />
+      		  <input name="h_sewa_we" type="number" min="0" step="1000" value="'.$edit->h_sewa_we.'" />
       		</div>
       	  </div><div class="control-group">
       		<label class="control-label">Ekstra Charge :</label>
       		<div class="controls">
-      		  <input name="ekstra_charge" type="text" placeholder="Ekstra Charge" value="'.$edit->ekstra_charge.'" />
+      		  <input name="ekstra_charge" type="number" min="0" step="1000" value="'.$edit->ekstra_charge.'" />
       		</div>
       	  </div> ';
 		  echo '

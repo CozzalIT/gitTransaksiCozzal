@@ -269,30 +269,30 @@
 	  <div class="control-group">
 		<label class="control-label">Harga Owner WD :</label>
 		<div class="controls">
-		  <input name="h_owner_wd" type="text"  class="span2" placeholder="Owner Week Day"  />
+		  <input name="h_owner_wd" type="number" min="0" step="1000" class="span2" placeholder="Owner Week Day"  />
 		</div>
 	  </div>
 	  <div class="control-group">
 		<label class="control-label">Harga Owner WE :</label>
 		<div class="controls">
-		  <input name="h_owner_we" type="text"  class="span2" placeholder="Owner Week End"  />
+		  <input name="h_owner_we" type="number" min="0" step="1000"  class="span2" placeholder="Owner Week End"  />
 		</div>
 	  </div>
 	  <div class="control-group">
 		<label class="control-label">Harga Sewa WD :</label>
 		<div class="controls">
-		  <input name="h_sewa_wd" type="text"  class="span2" placeholder="Sewa Week Day"  />
+		  <input name="h_sewa_wd" type="number" min="0" step="1000"  class="span2" placeholder="Sewa Week Day"  />
 		</div>
 	  </div>
 	  <div class="control-group">
 		<label class="control-label">Harga Sewa WE :</label>
 		<div class="controls">
-		  <input name="h_sewa_we" type="text"  class="span2" placeholder="Sewa Week End"  />
+		  <input name="h_sewa_we" type="number" min="0" step="1000"  class="span2" placeholder="Sewa Week End"  />
 		</div>
 	  </div><div class="control-group">
 		<label class="control-label">Ekstra Charge :</label>
 		<div class="controls">
-		  <input name="ekstra_charge" type="text"  class="span2" placeholder="Sewa Week Day"  />
+		  <input name="ekstra_charge" type="number" min="0" step="1000"  class="span2" placeholder="Sewa Week Day"  />
 		</div>
 	  </div>
 	  <div class="control-group">

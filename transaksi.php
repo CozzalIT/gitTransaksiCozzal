@@ -197,13 +197,18 @@
 				  <div class="controls">
 				    <input name="check_out" type="date" onchange="validasi2(this.form)"/>
 				  </div>
+				</div>
+				<div class="control-group">
+				  <label class="control-label">Jumlah Hari :</label>
+				  <div class="controls">
+				    <input name="jumhari" min="0" type="number" onchange="tambah(this.form)"/>
+				  </div>
+				</div>
 			    <div class="control-group">
-          </div>
 				  <div class="controls">
 				    <button data-parent="#collapse-group" href="#collapseUnit" data-toggle="collapse" class="btn btn-success">Lanjut</button>
 				 </div>
-			   </div>
-
+				</div>
             </div>
           </div>
           <div class="accordion-group widget-box">
@@ -242,25 +247,25 @@
           <div class="control-group">
   				  <label class="control-label">Harga Sewa Unit:</label>
   				  <div class="controls">
-  				    <input name="harga_sewa" id="harga_sewa" type="number" onChange="hasil(this.form)" />
+  				    <input name="harga_sewa" min="0" step="1000" id="harga_sewa" type="number" onChange="hasil(this.form)" />
             </div>
   			    </div>
 				<div class="control-group">
 				  <label class="control-label">Jumlah Tamu :</label>
 				  <div class="controls">
-				    <input name="tamu" type="number" value="5" onChange="ECH(this.form)"/>
+				    <input name="tamu" min="0" type="number" value="5" onChange="ECH(this.form)"/>
 				  </div>
 			    </div>
           <div class="control-group">
             <label class="control-label">Ekstra Charge :</label>
             <div class="controls">
-              <input name="ekstra_charge" type="number" onChange="hasil(this.form)" />
+              <input name="ekstra_charge" min="0" step="1000" type="number" onChange="hasil(this.form)" />
             </div>
             </div>
 		  <div class="control-group">
             <label class="control-label">Total Biaya :</label>
             <div class="controls">
-              <input name="total" type="number" />
+              <input name="total" min="0" step="1000" type="number" />
             </div>
             </div>
 

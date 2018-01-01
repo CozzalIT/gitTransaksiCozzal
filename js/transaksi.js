@@ -1,15 +1,28 @@
-var selisih = 0;
-
-function hasil(form)
+function updateselisih(form)
 {
-	var CI = new Date(form.check_in.value);
+ 	var CI = new Date(form.check_in.value);
 	var CO = new Date(form.check_out.value);
 	var s = new Date(CI).getTime();
 	var z = new Date(CO).getTime();
-	
 	x = z-s;
-	selisih = x/86400000;
-	form.total.value= (Number(form.harga_sewa.value)*selisih) + Number(form.ekstra_charge.value);
+	x = x/86400000;
+	if(x>=0) form.jumhari.value=x;
+	else form.jumhari.value=0;
+}
+
+function nilaitanggal(t, b)
+{
+	t.setDate(t.getDate()+b);
+	t.setHours(7); t.setMinutes(0); t.setSeconds(0); t.setMilliseconds(0);
+	bln = t.getMonth()+1; thn = t.getFullYear(); hr = t.getDate();
+	b2 = Number(bln); h2 = Number(hr);
+	if(b2<10) bln = '0'+ bln; if(h2<10) hr = '0'+ hr;
+	return thn+'-'+bln+'-'+hr;
+}
+
+function hasil(form)
+{
+	form.total.value= (Number(form.harga_sewa.value)*Number(form.jumhari.value)) + Number(form.ekstra_charge.value);
 }
 
 function ECH(form)
@@ -47,20 +60,14 @@ function validasi(form)
 	var c = new Date();
 	c.setHours(7); c.setMinutes(0); c.setSeconds(0); c.setMilliseconds(0);
 	var d = new Date(form.check_out.value);
-	hari = c.getDate(); bulan = c.getMonth()+1; tahun = c.getFullYear();
-		if (b<c)
-		{
-			alert("Tanggal check in tidak boleh kurang dari hari ini");
-			form.check_in.value = tahun+"-"+bulan+"-"+hari;
-		}
-		
-		if ((b>=d) && (d!=''))
-		{
-			alert("Tanggal Check in harus lebih dari tanggal check out");
-			form.check_in.value = '';
-			
-		}
-	biaya(form); ECH(form); hasil(form); 
+	if (b<c)
+	{
+		alert("Tanggal check in tidak boleh kurang dari hari ini");
+		form.check_in.value = nilaitanggal(c,0);
+	}
+	form.check_out.value = nilaitanggal(b,1);
+	biaya(form); ECH(form); 
+	updateselisih(form); hasil(form); 
 }
 function validasi2(form)
 {
@@ -73,14 +80,18 @@ function validasi2(form)
 			alert("Pilih tanggal setelah tanggal check in");
 			form.check_out.value="";
 		}
+		updateselisih(form); hasil(form);
 	}
 	else
 	{
 		form.check_out.value="";
 		alert("Isi terlebih dahulu tanggal check in");
 	}
-	hasil(form);
 }
 
-
-
+function tambah(form)
+{
+	var d = new Date(form.check_in.value);
+	var h = nilaitanggal(d,Number(form.jumhari.value));
+    form.check_out.value=h; hasil(form);
+}

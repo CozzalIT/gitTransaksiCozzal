@@ -111,7 +111,7 @@
 	  $h_sewa_we= $_POST['h_sewa_we'];
 	  $ekstra_charge= $_POST['ekstra_charge'];
 	  
-    $add = $proses->updateUnit($kd_unit ,$kd_apt, $no_unit, $h_owner_wd, $h_owner_we, $h_sewa_wd, $h_sewa_we, $ekstra_charge);
+    $add = $proses->updateUnit($kd_unit ,$kd_apt,$kd_owner, $no_unit, $h_owner_wd, $h_owner_we, $h_sewa_wd, $h_sewa_we, $ekstra_charge);
 	if($owner!=$kd_owner)
 	{
 		$add = $proses->updateJumlah_unit_owner($kd_owner);	
