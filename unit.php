@@ -59,6 +59,7 @@
 					    <td>$data->h_owner_wd</td>
 						<td>$data->h_owner_we</td>
 						<td>
+                <a class='btn btn-success' href='calendar.php'>Calendar</a>
 						    <a class='btn btn-primary' href='edit.php?edit_unit=$data->kd_unit'>Edit</a>
 						    <a class='btn btn-danger' href='proses/proses_delete.php?delete_unit=$data->kd_unit&kurangi_ju=$data->kd_owner'>Hapus</a>
 						</td>
