@@ -28,6 +28,14 @@
     <hr>
     <div class="row-fluid">
       <div class="span12">
+        <?php
+          if (isset($_GET['calendar_unit'])){
+            require("proses/proses.php");
+            $Proses = new Proses();
+    		    $show = $Proses->showTransaksiUnit($_GET['calendar_unit']);
+    		    $edit = $show->fetch(PDO::FETCH_OBJ);
+          }
+        ?>
         <script>
           $(document).ready(function() {
             $('#calendar').fullCalendar({
@@ -41,22 +49,41 @@
               businessHours: true, // display business hours
               editable: true,
               events: [
-                <?php
-                  if (isset($_GET['calendar_unit'])){
-                    require("proses/proses.php");
-                    $Proses = new Proses();
-            		    $show = $Proses->showTransaksiUnit($_GET['calendar_unit']);
-            		    while($data = $show->fetch(PDO::FETCH_OBJ)){
-                      echo "
-                      {
-                        title: 'Booked',
-                        start: '$data->check_in',
-                        end: '$data->check_out',
-                      },
-                      ";
-                    }
-                  }
-                ?>
+                {
+                  title: '<?php echo $edit->check_in ?>',
+                  start: '2018-01-03',
+                  end: '2018-01-05',
+                },
+                {
+                  title: 'Meeting',
+                  start: '2017-12-13T11:00:00',
+                  constraint: 'availableForMeeting', // defined below
+                  color: '#257e4a'
+                },
+                {
+                  title: 'Conference',
+                  start: '2017-12-18',
+                  end: '2017-12-20'
+                },
+                {
+                  title: 'Party',
+                  start: '2017-12-29T20:00:00'
+                },
+
+                // areas where "Meeting" must be dropped
+                {
+                  id: 'availableForMeeting',
+                  start: '2017-12-11T10:00:00',
+                  end: '2017-12-11T16:00:00',
+                  rendering: 'background'
+                },
+                {
+                  id: 'availableForMeeting',
+                  start: '2017-12-13T10:00:00',
+                  end: '2017-12-13T16:00:00',
+                  rendering: 'background'
+                },
+
                 // red areas where no events can be dropped
                 {
                   start: '2017-12-24',

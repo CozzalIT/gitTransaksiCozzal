@@ -143,6 +143,12 @@ class Proses{
 	return $query;
   }
 
+  public function showTransaksiUnit($kd_unit){
+    $sql = "SELECT * from tb_transaksi where kd_unit='$kd_unit'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
   public function showApartemen(){
 	$sql = "SELECT * FROM tb_apt";
 	$query = $this->db->query($sql);
