@@ -1,10 +1,10 @@
-<?php  
+<?php
   session_start();
-  
+
   if(!isset($_SESSION['username'])) {
-    header('location:login.php'); 
-  }else { 
-    $username = $_SESSION['username']; 
+    header('location:login.php');
+  }else {
+    $username = $_SESSION['username'];
   }
 
   $thisPage = "Transaksi";
@@ -60,7 +60,7 @@
 						<td>
 						  <a class='btn btn-success' id='detail' name='detail' href='laporan_transaksi.php?detail=$data->kd_transaksi'>Detail</a>
 						  <a class='btn btn-primary' href='#'>Edit</a>
-						  <a class='btn btn-danger' href='#'>Hapus</a>
+						  <a class='btn btn-danger' href='proses/proses_delete.php?delete_transaksi=$data->kd_transaksi'>Hapus</a>
 						</td>
 					  </tr>";
 					$i++;

@@ -35,12 +35,12 @@
                 <tr>
                   <th>No Unit</th>
                   <th>Nama Apartemen</th>
-				  <th>Owner</th>
+				          <th>Owner</th>
                   <th>Sewa WeekDay</th>
                   <th>Sewa WeekEnd</th>
                   <th>Owner WeekDay</th>
                   <th>Owner WeekEnd</th>
-				  <th class="span3">Action</th>
+				          <th class="span3">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -53,16 +53,16 @@
 					  <tr class=gradeC'>
 					    <td>$data->no_unit</td>
 					    <td>$data->nama_apt</td>
-						<td>$data->nama</td>
-						<td>$data->h_sewa_wd</td>
-						<td>$data->h_sewa_we</td>
+						  <td>$data->nama</td>
+						  <td>$data->h_sewa_wd</td>
+						  <td>$data->h_sewa_we</td>
 					    <td>$data->h_owner_wd</td>
-						<td>$data->h_owner_we</td>
-						<td>
+						  <td>$data->h_owner_we</td>
+						  <td>
                 <a class='btn btn-success' href='calendar.php?calendar_unit=$data->kd_unit'>Calendar</a>
 						    <a class='btn btn-primary' href='edit.php?edit_unit=$data->kd_unit'>Edit</a>
 						    <a class='btn btn-danger' href='proses/proses_delete.php?delete_unit=$data->kd_unit&kurangi_ju=$data->kd_owner'>Hapus</a>
-						</td>
+						  </td>
 					  </tr>";
 				  };
 				?>

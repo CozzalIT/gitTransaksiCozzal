@@ -5,8 +5,8 @@ class Proses{
   }
 
 //Proses Add (Awal)
-  public function addPenyewa($nama, $alamat, $no_tlp, $jenis_kelamin){
-	$sql = "INSERT INTO tb_penyewa (nama, alamat, no_tlp, jenis_kelamin) VALUES('$nama', '$alamat', '$no_tlp', '$jenis_kelamin')";
+  public function addPenyewa($nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung){
+	$sql = "INSERT INTO tb_penyewa (nama, alamat, no_tlp, jenis_kelamin, email, tgl_gabung) VALUES('$nama', '$alamat', '$no_tlp', '$jenis_kelamin', '$email', '$tgl_gabung')";
 	$query = $this->db->query($sql);
 	if(!$query){
 	  return "Failed";
@@ -35,8 +35,8 @@ class Proses{
   }
   }
 
-  public function addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_bank, $dp){
-	$sql = "INSERT INTO tb_transaksi (kd_penyewa, kd_apt, kd_unit, tamu, check_in, check_out, harga_sewa, ekstra_charge, kd_booking, kd_bank, dp) VALUES('$kd_penyewa', '$kd_apt', '$kd_unit', '$tamu', '$check_in', '$check_out', '$harga_sewa', '$ekstra_charge', '$kd_booking', '$kd_bank', '$dp')";
+  public function addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total, $sisa_pelunasan, $hari, $tgl_transaksi){
+	$sql = "INSERT INTO tb_transaksi (kd_penyewa, kd_apt, kd_unit, tamu, check_in, check_out, harga_sewa, ekstra_charge, kd_booking, kd_bank, dp, total_tagihan, sisa_pelunasan, hari, tgl_transaksi) VALUES('$kd_penyewa', '$kd_apt', '$kd_unit', '$tamu', '$check_in', '$check_out', '$harga_sewa', '$ekstra_charge', '$kd_booking', '$kd_bank', '$dp', '$total', '$sisa_pelunasan', '$hari', '$tgl_transaksi')";
 	$query = $this->db->query($sql);
 	if(!$query){
 	  return "Failed";
@@ -316,6 +316,11 @@ class Proses{
 
   public function deleteOwner($kd_owner){
 	$sql = "DELETE FROM tb_owner WHERE kd_owner='$kd_owner'";
+	$query = $this->db->query($sql);
+  }
+
+  public function deleteTransaksi($kd_transaksi){
+	$sql = "DELETE FROM tb_transaksi WHERE kd_transaksi='$kd_transaksi'";
 	$query = $this->db->query($sql);
   }
 

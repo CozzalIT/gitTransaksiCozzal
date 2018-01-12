@@ -187,7 +187,7 @@
             <div class="collapse accordion-body" id="collapseGFour">
 
 			    <div class="control-group">
-				  <label class="control-label">Check In :</label>
+				  <label class="control-label">Check In :  <?$tgl=date('d-m-Y');echo $tgl;?></label>
 				  <div class="controls">
 				    <input name="check_in" type="date" onchange="validasi(this.form)"/>
 				  </div>

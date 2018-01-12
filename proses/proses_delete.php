@@ -38,4 +38,10 @@
     $del = $proses->deleteDp_via($_GET['delete_dp']);
     header("location:../dp_via.php");
   }
+
+//Delete DP Transakso
+  if(isset($_GET['delete_transaksi'])){
+    $del = $proses->deleteTransaksi($_GET['delete_transaksi']);
+    header("location:../laporan_transaksi.php");
+  }
 ?>

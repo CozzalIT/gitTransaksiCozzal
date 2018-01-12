@@ -64,7 +64,7 @@
 					  <th colspan="2">Detail Kwitansi Penyewaan</th>
 					  <tr>
 						<td class="width30">Kwitansi ID:</td>
-						<td class="width70"><strong>COZ-6546</strong></td>
+						<td class="width70"><strong>COZ-'.$detail->kd_transaksi.'</strong></td>
 					  </tr>
 					  <tr>
 						<td>Invoice Date:</td>
@@ -100,23 +100,23 @@
 					  </tr>
 					  <tr>
 						<td class="width30">Sewa Perhari:</td>
-						<td class="width70"><strong>'.$detail->harga_sewa.'</strong></td>
+						<td class="width70"><strong>'.number_format($detail->harga_sewa, 0, ".", ".").' IDR</strong></td>
 					  </tr>
 					  <tr>
 						<td class="width30">Diskon:</td>
-						<td class="width70"><strong>'.$detail->diskon.'</strong></td>
+						<td class="width70"><strong>'.number_format($detail->diskon, 0, ".", ".").' IDR</strong></td>
 					  </tr>
 					  <tr>
 						<td class="width30">Ekstra Charge:</td>
-						<td class="width70"><strong>'.$detail->ekstra_charge.'</strong></td>
+						<td class="width70"><strong>'.number_format($detail->ekstra_charge, 0, ".", ".").' IDR</strong></td>
 					  </tr>
 					  <tr>
 						<td class="width30">Total Tagihan:</td>
-						<td class="width70"><strong>'.$detail->total_tagihan.'</strong></td>
+						<td class="width70"><strong>'.number_format($detail->total_tagihan, 0, ".", ".").' IDR</strong></td>
 					  </tr>
 					  <tr>
 						<td class="width30">Pembayaran DP:</td>
-						<td class="width70"><strong>'.$detail->dp.'</strong></td>
+						<td class="width70"><strong>'.number_format($detail->dp, 0, ".", ".").' IDR</strong></td>
 					  </tr>
 					  <tr>
 						<td class="width30">DP Via:</td>
@@ -124,7 +124,7 @@
 					  </tr>
 					  <tr>
 						<td class="width30">Sisa Pelunasan:</td>
-						<td class="width70"><strong>'.$detail->sisa_pelunasan.'</strong></td>
+						<td class="width70"><strong>'.number_format($detail->sisa_pelunasan, 0, ".", ".").' IDR</strong></td>
 					  </tr>
 					  <tr>
 						<td class="width30">Note:</td>
@@ -409,11 +409,17 @@
 		<label class="control-label">Jenis Kelamin :</label>
 		<div class="controls">
 		  <label>
-			<input type="radio" name="jenis_kelamin" value="Laki-laki" checked/> Laki-laki
+			<input type="radio" name="jenis_kelamin" value="Laki-laki"/> Laki-laki
 		  </label>
 		  <label>
-			<input type="radio" name="jenis_kelamin" value="Perempuan" /> Perempuan
+			<input type="radio" name="jenis_kelamin" value="Perempuan"/> Perempuan
 		  </label>
+		</div>
+	  </div>
+    <div class="control-group">
+		<label class="control-label">Email :</label>
+		<div class="controls">
+		  <input name="email" type="text"  class="span2" placeholder="ex: abc@gmail.com"  />
 		</div>
 	  </div>
 	  <div class="control-group">

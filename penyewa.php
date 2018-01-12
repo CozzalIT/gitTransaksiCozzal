@@ -37,8 +37,9 @@
                   <th>Alamat</th>
                   <th>No Telpon</th>
                   <th>Jenis Kelamin</th>
+                  <th>Email</th>
                   <th>Tanggal Input</th>
-				  <th>Action</th>
+				          <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -51,9 +52,10 @@
 					  <tr class=gradeC'>
 					    <td>$data->nama</td>
 					    <td>$data->alamat</td>
-						<td>$data->no_tlp</td>
-						<td>$data->jenis_kelamin</td>
-						<td>$data->tgl_gabung</td>
+						  <td>$data->no_tlp</td>
+						  <td>$data->jenis_kelamin</td>
+              <td>$data->email</td>
+						  <td>$data->tgl_gabung</td>
 						<td>
 						  <a class='btn btn-success' href='transaksi.php?transaksi=$data->kd_penyewa'>Transaksi</a>
 						  <a class='btn btn-primary' href='edit.php?edit=$data->kd_penyewa'>Edit</a>

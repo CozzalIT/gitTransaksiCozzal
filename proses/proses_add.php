@@ -8,8 +8,10 @@
 	  $alamat = $_POST['alamat'];
 	  $no_tlp = $_POST['no_tlp'];
 	  $jenis_kelamin = $_POST['jenis_kelamin'];
+    $email = $_POST['email'];
+    $tgl_gabung = date('Y-m-d');
 
-    $add = $proses->addPenyewa($nama, $alamat, $no_tlp, $jenis_kelamin);
+    $add = $proses->addPenyewa($nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung);
 
     if($add == "Success"){
 	    header('Location:../penyewa.php');
@@ -121,8 +123,12 @@
 	  $kd_booking 	= $_POST['booking_via'];
 	  $kd_bank 		= $_POST['dp_via'];
 	  $dp 			= $_POST['dp'];
+    $total  = $_POST['total'];
+    $sisa_pelunasan = $total - $dp;
+    $hari = $_POST['jumhari'];
+    $tgl_transaksi = date('y-m-d');
 
-    $add = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_bank, $dp);
+    $add = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total, $sisa_pelunasan, $hari, $tgl_transaksi);
 
     if($add == "Success"){
 	    header('Location:../laporan_transaksi.php');
