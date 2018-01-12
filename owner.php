@@ -1,10 +1,10 @@
-<?php  
+<?php
   session_start();
-  
+
   if(!isset($_SESSION['username'])) {
-    header('location:login.php'); 
-  }else { 
-    $username = $_SESSION['username']; 
+    header('location:login.php');
+  }else {
+    $username = $_SESSION['username'];
   }
 
   $thisPage = "Owner";
@@ -48,20 +48,23 @@
 				  $i = 1;
 				  $show = $Proses->showOwner();
 				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-					echo "
-					  <tr class=gradeC'>
-						<td>$i</td>
-					    <td>$data->nama</td>
-						<td>$data->alamat</td>
-						<td>$data->no_tlp</td>
-						<td>$data->email</td>
-						<td>
-						  <a class='btn btn-success' href='owner.php?detail_owner=$data->kd_owner'>Detail</a>
-						  <a class='btn btn-primary' href='edit.php?edit_owner=$data->kd_owner'>Edit</a>
-						  <a class='btn btn-danger' href='proses/proses_delete.php?delete_owner=$data->kd_owner'>Hapus</a>
-						</td>
-					  </tr>"; $i++;
-				  }; 
+            if ($data->kd_owner != 0){
+              echo "
+    					  <tr class=gradeC'>
+    						<td>$i</td>
+    					    <td>$data->nama</td>
+    						<td>$data->alamat</td>
+    						<td>$data->no_tlp</td>
+    						<td>$data->email</td>
+    						<td>
+    						  <a class='btn btn-success' href='owner.php?detail_owner=$data->kd_owner'>Detail</a>
+    						  <a class='btn btn-primary' href='edit.php?edit_owner=$data->kd_owner'>Edit</a>
+    						  <a class='btn btn-danger' href='proses/proses_delete.php?delete_owner=$data->kd_owner'>Hapus</a>
+    						</td>
+    					  </tr>";
+              $i++;
+            }
+				  };
 				?>
               </tbody>
             </table>

@@ -46,17 +46,19 @@
 				  $show = $Proses->showApartemen();
 				  $i = 1;
 				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-					echo "
-					  <tr class=gradeC'>
-					    <td style='text-align:center;'>$i</td>
-					    <td>$data->nama_apt</td>
-						<td>$data->alamat_apt</td>
-						<td>
-						    <a class='btn btn-primary' href='edit.php?edit_apt=$data->kd_apt'>Edit</a>
-						    <a class='btn btn-danger' href='proses/proses_delete.php?delete_apt=$data->kd_apt'>Hapus</a>
-						  </td>
-					  </tr>";
-					$i++;
+            if ($data->kd_apt != 0){
+              echo "
+    					  <tr class=gradeC'>
+    					    <td style='text-align:center;'>$i</td>
+    					    <td>$data->nama_apt</td>
+    						  <td>$data->alamat_apt</td>
+    						  <td>
+    						    <a class='btn btn-primary' href='edit.php?edit_apt=$data->kd_apt'>Edit</a>
+    						    <a class='btn btn-danger' href='proses/proses_delete.php?delete_apt=$data->kd_apt'>Hapus</a>
+    						  </td>
+    					  </tr>";
+    					$i++;
+            }
 				  };
 				?>
               </tbody>

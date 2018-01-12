@@ -49,22 +49,25 @@
 				  $Proses = new Proses();
 				  $show = $Proses->showUnit();
 				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-					echo "
-					  <tr class=gradeC'>
-					    <td>$data->no_unit</td>
-					    <td>$data->nama_apt</td>
-						  <td>$data->nama</td>
-						  <td>$data->h_sewa_wd</td>
-						  <td>$data->h_sewa_we</td>
-					    <td>$data->h_owner_wd</td>
-						  <td>$data->h_owner_we</td>
-						  <td>
-                <a class='btn btn-success' href='calendar.php?calendar_unit=$data->kd_unit'>Calendar</a>
-						    <a class='btn btn-primary' href='edit.php?edit_unit=$data->kd_unit'>Edit</a>
-						    <a class='btn btn-danger' href='proses/proses_delete.php?delete_unit=$data->kd_unit&kurangi_ju=$data->kd_owner'>Hapus</a>
-						  </td>
-					  </tr>";
-				  };
+            if ($data->kd_unit != 0){
+    					echo "
+    					  <tr class=gradeC'>
+    					    <td>$data->no_unit</td>
+    					    <td>$data->nama_apt</td>
+    						  <td>$data->nama</td>
+    						  <td>".number_format($data->h_sewa_wd, 0, ".", ".")." IDR</td>
+    						  <td>".number_format($data->h_sewa_we, 0, ".", ".")." IDR</td>
+    					    <td>".number_format($data->h_owner_wd, 0, ".", ".")." IDR</td>
+    						  <td>".number_format($data->h_owner_we, 0, ".", ".")." IDR</td>
+    						  <td>
+                    <a class='btn btn-success' href='calendar.php?calendar_unit=$data->kd_unit'>Calendar</a>
+    						    <a class='btn btn-primary' href='edit.php?edit_unit=$data->kd_unit'>Edit</a>
+    						    <a class='btn btn-danger' href='proses/proses_delete.php?delete_unit=$data->kd_unit&kurangi_ju=$data->kd_owner'>Hapus</a>
+    						  </td>
+    					  </tr>
+              ";
+            }
+    			};
 				?>
               </tbody>
             </table>

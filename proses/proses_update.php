@@ -9,8 +9,9 @@
   	$alamat = $_POST['alamat'];
   	$no_tlp = $_POST['no_tlp'];
   	$jenis_kelamin = $_POST['jenis_kelamin'];
+    $email = $_POST['email'];
 
-	  $update = $proses->updatePenyewa($kd_penyewa, $nama, $alamat, $no_tlp, $jenis_kelamin);
+	  $update = $proses->updatePenyewa($kd_penyewa, $nama, $alamat, $no_tlp, $jenis_kelamin, $email);
 
   	if($update == "Success"){
   	  header('Location:../penyewa.php');
@@ -61,7 +62,7 @@
       echo 'error';
     }
   }
-  
+
  //Update Penyewa
   if(isset($_POST['updatePenyewa'])){
     $kd_penyewa = $_POST['kd_penyewa'];
@@ -110,17 +111,17 @@
 	  $h_sewa_wd= $_POST['h_sewa_wd'];
 	  $h_sewa_we= $_POST['h_sewa_we'];
 	  $ekstra_charge= $_POST['ekstra_charge'];
-	  
+
     $add = $proses->updateUnit($kd_unit ,$kd_apt,$kd_owner, $no_unit, $h_owner_wd, $h_owner_we, $h_sewa_wd, $h_sewa_we, $ekstra_charge);
 	if($owner!=$kd_owner)
 	{
-		$add = $proses->updateJumlah_unit_owner($kd_owner);	
+		$add = $proses->updateJumlah_unit_owner($kd_owner);
 		$add = $proses->updateKurangi_jumlah_unit_owner($owner);
-	}	
+	}
     if($add == "Success"){
 	    header('Location:../unit.php');
     }
 	else echo 'error';
-  }   
-  
+  }
+
 ?>

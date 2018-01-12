@@ -193,8 +193,8 @@ class Proses{
 //Proses Show (Akhir)
 
 //Proses Update (Awal)
-  public function updatePenyewa($kd_penyewa, $nama, $alamat, $no_tlp, $jenis_kelamin){
-    $sql = "UPDATE tb_penyewa SET nama='$nama', alamat='$alamat', no_tlp='$no_tlp', jenis_kelamin='$jenis_kelamin' WHERE kd_penyewa='$kd_penyewa'";
+  public function updatePenyewa($kd_penyewa, $nama, $alamat, $no_tlp, $jenis_kelamin, $email){
+    $sql = "UPDATE tb_penyewa SET nama='$nama', alamat='$alamat', no_tlp='$no_tlp', jenis_kelamin='$jenis_kelamin', email='$email' WHERE kd_penyewa='$kd_penyewa'";
     $query = $this->db->query($sql);
   if(!$query){
     return "Failed";
@@ -244,7 +244,7 @@ class Proses{
   }
 
   public function updateOwner($kd_owner ,$nama, $alamat, $no_tlp, $kd_bank, $no_rek, $email, $jenis_kelamin){
-	$sql = "update tb_owner SET nama='$nama', alamat='$alamat', kd_bank='$kd_bank', no_rek='$no_rek',
+	$sql = "update tb_owner SET nama='$nama', alamat='$alamat', no_tlp='$no_tlp', kd_bank='$kd_bank', no_rek='$no_rek',
 	email='$email', jenis_kelamin='$jenis_kelamin' WHERE kd_owner='$kd_owner'";
 	$query = $this->db->query($sql);
 	if(!$query){

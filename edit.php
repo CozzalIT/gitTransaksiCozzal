@@ -94,6 +94,12 @@
 //button here
 					echo '
 					  </div>
+            <div class="control-group">
+  					  <label class="control-label">No Telpon :</label>
+  					  <div class="controls">
+  						<input name="email" type="text" class="span11" placeholder="Ex : abc@gmail.com" value="'.$edit->email.'"/>
+  					  </div>
+  					</div>
 					  <div class="form-actions" style="text-align:right">
 						<button name="updatePenyewa" type="submit" class="btn btn-success">Update</button>
 					  </div>
@@ -123,9 +129,9 @@
 				<div class="widget-content nopadding">
 				  <form action="proses/proses_update.php" method="post" class="form-horizontal">
 					<div class="control-group">
-					  <label class="control-label">Kode Apartement :</label>
+					  <label class="control-label hide">Kode Apartement :</label>
 					  <div class="controls">
-						<input name="kd_apt" type="text" class="span11" placeholder="Kode" value="'.$edit->kd_apt.'"/>
+						<input name="kd_apt" type="text" class="span11 hide" placeholder="Kode" value="'.$edit->kd_apt.'"/>
 					  </div>
 					</div>
 					<div class="control-group">
@@ -171,9 +177,9 @@
 				<div class="widget-content nopadding">
 				  <form action="proses/proses_update.php" method="post" class="form-horizontal">
 					<div class="control-group">
-					  <label class="control-label">Kode :</label>
+					  <label class="control-label hide">Kode :</label>
 					  <div class="controls">
-						<input name="kd_bank" type="text" class="span11" placeholder="No Rekening" value="'.$edit->kd_bank.'"/>
+						<input name="kd_bank" type="text" class="span11 hide" placeholder="No Rekening" value="'.$edit->kd_bank.'"/>
 					  </div>
 					</div>
 					<div class="control-group">
@@ -214,9 +220,9 @@
 				<div class="widget-content nopadding">
 				  <form action="proses/proses_update.php" method="post" class="form-horizontal">
 					<div class="control-group">
-					  <label class="control-label">Kode :</label>
+					  <label class="control-label hide">Kode :</label>
 					  <div class="controls">
-						<input name="kd_booking" type="text" class="span11" placeholder="Kode" value="'.$edit->kd_booking.'"/>
+						<input name="kd_booking" type="text" class="span11 hide" placeholder="Kode" value="'.$edit->kd_booking.'"/>
 					  </div>
 					</div>
 					<div class="control-group">
@@ -366,7 +372,7 @@
           <form action="proses/proses_update.php" method="post" class="form-horizontal">
           <div class="control-group">
 		    <input name="kd_unit" class="hide" type="text" value="'.$edit->kd_unit.'"/>  <!--Hiden Flag-->
-		    <input name="kd_owner_lama" class="hide" type="text" value="'.$edit->kd_owner.'"/>  <!--Hiden Flag-->			
+		    <input name="kd_owner_lama" class="hide" type="text" value="'.$edit->kd_owner.'"/>  <!--Hiden Flag-->
       		<label class="control-label">Apartemen :</label>
           <div class="controls">
       		  <select name="apartemen">

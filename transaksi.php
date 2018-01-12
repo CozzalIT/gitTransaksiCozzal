@@ -227,7 +227,9 @@
 				  $Proses = new Proses();
   				  $show = $Proses->showApartemen();
   				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-						  echo "<option name='kd_apt' value='$data->kd_apt'>$data->nama_apt</option>";
+              if ($data->kd_apt != 0){
+						    echo "<option name='kd_apt' value='$data->kd_apt'>$data->nama_apt</option>";
+              }
 						}
 					  ?>
 					</select>

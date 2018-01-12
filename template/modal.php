@@ -240,8 +240,10 @@
       $Proses = new Proses();
       $show = $Proses->showApartemen();
       while($data = $show->fetch(PDO::FETCH_OBJ)){
-				echo "<option name='apartemen' value='$data->kd_apt'>$data->nama_apt</option>";
-			  }
+        if ($data->kd_apt != 0){
+          echo "<option name='apartemen' value='$data->kd_apt'>$data->nama_apt</option>";
+        }
+			}
 			?>
 		  </select>
 		</div>
@@ -260,8 +262,10 @@
 			<?php
       $show = $Proses->showOwner();
       while($data = $show->fetch(PDO::FETCH_OBJ)){
-				echo "<option name='kd_owner' value='$data->kd_owner'>$data->nama</option>";
-			  }
+        if ($data->kd_owner != 0){
+          echo "<option name='kd_owner' value='$data->kd_owner'>$data->nama</option>";
+        }
+			}
 			?>
 		  </select>
 		</div>
