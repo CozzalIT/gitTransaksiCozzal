@@ -320,19 +320,19 @@
 	  <div class="control-group">
 		<label class="control-label">Nama :</label>
 		<div class="controls">
-		  <input name="nama" type="text" class="span2" placeholder="Nama Lengkap" />
+		  <input name="nama" type="text" class="span2" placeholder="Nama Lengkap" required/>
 		</div>
 	  </div>
 	  <div class="control-group">
 		<label class="control-label">Alamat :</label>
 		<div class="controls">
-		  <input name="alamat" type="text" class="span2" placeholder="Alamat" />
+		  <input name="alamat" type="text" class="span2" placeholder="Alamat" required/>
 		</div>
 	  </div>
 	  <div class="control-group">
 		<label class="control-label">No Telepon :</label>
 		<div class="controls">
-		  <input name="no_tlp" type="text" class="span2" placeholder="ex : 0812.." />
+		  <input name="no_tlp" type="text" class="span2" placeholder="ex : 0812.." required/>
 		</div>
 	  </div>
 	  <div class="control-group">
@@ -364,13 +364,13 @@
 	  <div class="control-group">
 		<label class="control-label">No Rekening :</label>
 		<div class="controls">
-		  <input name="no_rek" type="text" class="span2" placeholder="No Rekening" />
+		  <input name="no_rek" type="text" class="span2" placeholder="No Rekening" required/>
 		</div>
 	  </div>
 	  <div class="control-group">
 		<label class="control-label">E-mail :</label>
 		<div class="controls">
-		  <input name="email" type="text" class="span2" placeholder="Alamat E-Mail" />
+		  <input name="email" type="text" class="span2" placeholder="Alamat E-Mail" required/>
 		</div>
 	  </div>
 	  <div class="control-group">
@@ -394,26 +394,26 @@
 	  <div class="control-group">
 		<label class="control-label">Nama :</label>
 		<div class="controls">
-		  <input name="nama" type="text" class="span2" placeholder="Nama" />
+		  <input name="nama" type="text" class="span2" placeholder="Nama" required/>
 		</div>
 	  </div>
 	  <div class="control-group">
 		<label class="control-label">Alamat :</label>
 		<div class="controls">
-		  <input name="alamat" type="text" class="span2" placeholder="Alamat" />
+		  <input name="alamat" type="text" class="span2" placeholder="Alamat" required/>
 		</div>
 	  </div>
 	  <div class="control-group">
 		<label class="control-label">No Telpon :</label>
 		<div class="controls">
-		  <input name="no_tlp" type="text"  class="span2" placeholder="ex: 0812...."  />
+		  <input name="no_tlp" type="text"  class="span2" placeholder="ex: 0812...." required/>
 		</div>
 	  </div>
 	  <div class="control-group">
 		<label class="control-label">Jenis Kelamin :</label>
 		<div class="controls">
 		  <label>
-			<input type="radio" name="jenis_kelamin" value="Laki-laki"/> Laki-laki
+			<input type="radio" name="jenis_kelamin" value="Laki-laki" checked/> Laki-laki
 		  </label>
 		  <label>
 			<input type="radio" name="jenis_kelamin" value="Perempuan"/> Perempuan
@@ -423,7 +423,7 @@
     <div class="control-group">
 		<label class="control-label">Email :</label>
 		<div class="controls">
-		  <input name="email" type="text"  class="span2" placeholder="ex: abc@gmail.com"  />
+		  <input name="email" type="text"  class="span2" placeholder="ex: abc@gmail.com" required/>
 		</div>
 	  </div>
 	  <div class="control-group">
@@ -447,19 +447,19 @@
 	  <div class="control-group">
 		<label class="control-label">Nama :</label>
 		<div class="controls">
-		  <input name="nama" type="text" class="span2" placeholder="Nama" />
+		  <input name="nama" type="text" class="span2" placeholder="Nama" required/>
 		</div>
 	  </div>
 	  <div class="control-group">
 		<label class="control-label">Alamat :</label>
 		<div class="controls">
-		  <input name="alamat" type="text" class="span2" placeholder="Alamat" />
+		  <input name="alamat" type="text" class="span2" placeholder="Alamat" required/>
 		</div>
 	  </div>
 	  <div class="control-group">
 		<label class="control-label">No Telpon :</label>
 		<div class="controls">
-		  <input name="no_tlp" type="text"  class="span2" placeholder="ex: 0812...."  />
+		  <input name="no_tlp" type="text"  class="span2" placeholder="ex: 0812...." required/>
 		</div>
 	  </div>
 	  <div class="control-group">
@@ -494,13 +494,13 @@
 	  <div class="control-group">
 		<label class="control-label">Nama Apartemen</label>
 		<div class="controls">
-		  <input name="nama_apt" type="text" class="span2" placeholder="Nama" />
+		  <input name="nama_apt" type="text" class="span2" placeholder="Nama" required/>
 		</div>
 	  </div>
 	  <div class="control-group">
 		<label class="control-label">Alamat Apartemen</label>
 		<div class="controls">
-		  <input name="alamat_apt" type="text" class="span2" placeholder="Alamat" />
+		  <input name="alamat_apt" type="text" class="span2" placeholder="Alamat" required/>
 		</div>
 	  </div>
 	  <div class="control-group">
@@ -524,7 +524,7 @@
 	  <div class="control-group">
 		<label class="control-label">Booking Via :</label>
 		<div class="controls">
-		  <input name="booking_via" type="text" class="span2" placeholder="Dari" />
+		  <input name="booking_via" type="text" class="span2" placeholder="Dari" required/>
 		</div>
 	  </div>
 	  <div class="control-group">
@@ -548,7 +548,7 @@
 	  <div class="control-group">
 		<label class="control-label">Nama Bank :</label>
 		<div class="controls">
-		  <input name="nama_bank" type="text" class="span2" placeholder="Bank" />
+		  <input name="nama_bank" type="text" class="span2" placeholder="Bank" required/>
 		</div>
 	  </div>
 	  <div class="control-group">
