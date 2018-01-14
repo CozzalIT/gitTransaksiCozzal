@@ -59,7 +59,7 @@
 						<td>$data->check_out</td>
 						<td>
 						  <a class='btn btn-success' id='detail' name='detail' href='laporan_transaksi.php?detail=$data->kd_transaksi'>Detail</a>
-						  <a class='btn btn-primary' href='#'>Edit</a>
+						  <a class='btn btn-primary' href='edit.php?edit_transaksi=$data->kd_transaksi'>Edit</a>
 						  <a class='btn btn-danger' href='proses/proses_delete.php?delete_transaksi=$data->kd_transaksi'>Hapus</a>
 						</td>
 					  </tr>";

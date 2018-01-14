@@ -64,7 +64,8 @@ function validasi(form)
 	{
 		alert("Tanggal check in tidak boleh kurang dari hari ini");
 		form.check_in.value = nilaitanggal(c,0);
-	}
+		form.check_out.value = nilaitanggal(c,1);
+	} else
 	form.check_out.value = nilaitanggal(b,1);
 	biaya(form); ECH(form); 
 	updateselisih(form); hasil(form); 
@@ -94,4 +95,34 @@ function tambah(form)
 	var d = new Date(form.check_in.value);
 	var h = nilaitanggal(d,Number(form.jumhari.value));
     form.check_out.value=h; hasil(form);
+}
+
+function valid1(form)
+{
+	var e = document.getElementById('btn1');
+	var f = document.getElementById('col1');
+	var flg;
+	if (form.check_in.value!="" && form.check_out.value!="")
+		flg = '#collapseUnit'; else flg = '#';
+	e.setAttribute('href',flg);
+	f.setAttribute('href',flg);
+	return false;
+}
+
+function valid2(form)
+{
+	var e = document.getElementById('btn2');
+	var f = document.getElementById('col2');
+	var flg;
+	if (form.unit.value!="" && form.total.value!=0)
+		flg = '#collapseGFive'; else flg = '#';
+	e.setAttribute('href',flg);
+	f.setAttribute('href',flg);
+	return false;
+}
+
+function valid(form)
+{
+	if(this.dp.value==0 || this.dp_via.value=="" || this.booking_via.value=="")
+	return false;
 }
