@@ -149,6 +149,15 @@ class Proses{
     return $query;
   }
 
+  public function showTransaksi_cek($CI,$CO,$kd_unit){
+  $sql = "SELECT * from tb_transaksi where ((check_in<='$CI' and check_out>='$CO')
+  or (check_in>='$CI' and check_in<='$CO')
+  or (check_out>='$CI' and check_out<='$CO'))
+  and (kd_unit ='$kd_unit')" ;
+  $query = $this->db->query($sql);
+  return $query;
+  }
+
   public function showApartemen(){
 	$sql = "SELECT * FROM tb_apt";
 	$query = $this->db->query($sql);

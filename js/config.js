@@ -10,7 +10,7 @@ $(document).ready(function(){ // Ketika halaman sudah siap (sudah selesai di loa
 		$.ajax({
 			type: "POST", // Method pengiriman data bisa dengan GET atau POST
 			url: "option_unit.php", // Isi dengan url/path file php yang dituju
-			data: {apartemen : $("#apartemen").val()}, // data yang akan dikirim ke file yang dituju
+			data: {apartement : $("#apartemen").val(), par:20}, // data yang akan dikirim ke file yang dituju
 			dataType: "json",
 			beforeSend: function(e) {
 				if(e && e.overrideMimeType) {
@@ -24,6 +24,7 @@ $(document).ready(function(){ // Ketika halaman sudah siap (sudah selesai di loa
 					// set isi dari combobox unit
 					// lalu munculkan kembali combobox unitnya
 					$("#unit").html(response.data_unit).show();
+
 				}, 1250);
 			},
 			error: function (xhr, ajaxOptions, thrownError) { // Ketika ada error

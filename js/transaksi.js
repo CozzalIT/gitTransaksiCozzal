@@ -109,20 +109,32 @@ function valid1(form)
 	return false;
 }
 
-function valid2(form)
-{
-	var e = document.getElementById('btn2');
-	var f = document.getElementById('col2');
-	var flg;
-	if (form.unit.value!="" && form.total.value!=0)
-		flg = '#collapseGFive'; else flg = '#';
-	e.setAttribute('href',flg);
-	f.setAttribute('href',flg);
-	return false;
-}
-
-function valid(form)
-{
-	if(this.dp.value==0 || this.dp_via.value=="" || this.booking_via.value=="")
-	return false;
-}
+$(document).ready(function(){ 
+	$("#btn2").click(function(){
+	if ($("#unit").val()!="" && $("#total").val()!=0){
+	idd = $("#unit").val().split("+");
+		$.ajax({
+			type: "POST", 
+			url: "proses/proses_cek_unit.php", 
+			data: {id : idd[0], tci:$("#check_in").val(), tco:$("#check_out").val()}, 
+			dataType: "json",
+			beforeSend: function(e) { 
+				if(e && e.overrideMimeType) {
+					e.overrideMimeType("application/json;charset=UTF-8");
+				}
+			},
+			success: function(response){ 
+					$ret = response.ketersediaan;
+					if ($ret=="Ada"){
+						$("#col2").attr("href","#collapseGFive");$("#col2").click(); 
+						$("#col2").attr("href","#");
+					}
+					else alert("Unit Telah Terisi, Silahkan pilih unit lain");
+			},
+			error: function (xhr, ajaxOptions, thrownError) { 
+				alert(thrownError); 
+			}
+		});
+	} 
+	});
+ });
