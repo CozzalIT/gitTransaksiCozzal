@@ -6,7 +6,7 @@
   }else {
     $username = $_SESSION['username'];
   }
-
+ 
   $thisPage = "Apartemen";
 
   include "template/head.php";
