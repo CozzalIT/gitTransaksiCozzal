@@ -8,6 +8,7 @@
         <li><a href="laporan_transaksi.php">Laporan Transaksi</a></li>
       </ul>
     </li>
+    <li <?php if($thisPage == "Booking Request") echo "class='active'"; ?>><a href="booking_request.php"><i class="icon icon-edit"></i> <span>Booking Request</span></a> </li>
 	  <li <?php if($thisPage == "Penyewa") echo "class='active'"; ?>><a href="penyewa.php"><i class="icon icon-user"></i> <span>Data Penyewa</span></a> </li>
     <li <?php if($thisPage == "Owner") echo "class='active'"; ?>><a href="owner.php"><i class="icon icon-th-large"></i> <span>Data Owner</span></a> </li>
     <li <?php if($thisPage == "Apartemen") echo "class='active'"; ?>><a href="apartemen.php"><i class="icon icon-columns"></i> <span>Data Apartemen</span></a> </li>

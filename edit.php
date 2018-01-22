@@ -91,7 +91,7 @@
 						</div>
 					  ';
 					}
-//button here
+          //button here
 					echo '
 					  </div>
             <div class="control-group">
@@ -189,7 +189,7 @@
 					  </div>
 					</div>
 					';
-//button here
+          //button here
 					echo '
 					  <div class="form-actions" style="text-align:right">
 						<button name="updateBank" type="submit" class="btn btn-success">Update</button>
@@ -232,7 +232,7 @@
 					  </div>
 					</div>
 					';
-//button here
+          //button here
 					echo '
 					  <div class="form-actions" style="text-align:right">
 						<button name="updateBooking" type="submit" class="btn btn-success">Update</button>
@@ -313,24 +313,21 @@
 							<div class="controls">
 								<select name="kd_bank" class="span11">
 									<option name="" value="" >-- Pilih Bank --</option>';
-
-
-						$Proses = new Proses();
-						$show = $Proses->showDp_via();
-						while($data = $show->fetch(PDO::FETCH_OBJ)){
-						if ($edit->kd_bank!=$data->kd_bank)
-							  echo "<option name='kd_bank' value='$data->kd_bank'>$data->nama_bank</option>";
-						else  echo "<option name='kd_bank' value='$data->kd_bank' selected='true'>$data->nama_bank</option>";
-						}
-					echo '
-
+      						$Proses = new Proses();
+      						$show = $Proses->showDp_via();
+      						while($data = $show->fetch(PDO::FETCH_OBJ)){
+        						if ($edit->kd_bank!=$data->kd_bank)
+        						  echo "<option name='kd_bank' value='$data->kd_bank'>$data->nama_bank</option>";
+        						else  echo "<option name='kd_bank' value='$data->kd_bank' selected='true'>$data->nama_bank</option>";
+      						}
+      					  echo '
 								</select>
 							</div>
 						</div>
 						<div class="control-group">
 							<label class="control-label">No Rekening :</label>
 							<div class="controls">
-								<input name="no_rek" type="text" class="span11" placeholder="No Rekening" value="'.$edit->alamat.'"/>
+								<input name="no_rek" type="text" class="span11" placeholder="No Rekening" value="'.$edit->no_rek.'"/>
 							</div>
 						</div>
 						<div class="control-group">
@@ -339,9 +336,8 @@
 								<input name="email" type="text" class="span11" placeholder="Alamat E-Mail" value="'.$edit->email.'"/>
 							</div>
 						</div>';
-
-//button here
-					echo '
+            //button here
+					  echo '
 					  <div class="form-actions" style="text-align:right">
 						<button name="updateOwner" type="submit" class="btn btn-success">Update</button>
 					  </div>
@@ -376,85 +372,235 @@
       		<label class="control-label">Apartemen :</label>
           <div class="controls">
       		  <select name="apartemen">
-      		  <option>-- Pilih Apartemen --</option>';
+        		  <option>-- Pilih Apartemen --</option>';
+                $Proses = new Proses();
+                $show = $Proses->showApartemen();
+                while($data = $show->fetch(PDO::FETCH_OBJ)){
+                  if ($edit->kd_apt!=$data->kd_apt){
+                    echo "<option name='kd_apt' value='$data->kd_apt'>$data->nama_apt</option>";
+                  }else{
+                    echo "<option name='kd_apt' value='$data->kd_apt' selected='true'>$data->nama_apt</option>";
+                  }
+                }
+            echo '
+            </select>
+          </div>
+        	  </div>
+        	  <div class="control-group">
+        		<label class="control-label">No Unit :</label>
+        		<div class="controls">
+        		  <input name="no_unit" type="text" placeholder="No Unit" value="'.$edit->no_unit.'"/>
+        		</div>
+        	  </div>
+            <div class="control-group">
+        		<label class="control-label">Owner :</label>
+            <div class="controls">
+        		  <select name="owner">
+        		  <option>-- Pilih Owner --</option>';
+                $show = $Proses->showOwner();
+                while($data = $show->fetch(PDO::FETCH_OBJ)){
+                  if ($edit->kd_owner!=$data->kd_owner){
+                    echo "<option name='kd_owner' value='$data->kd_owner'>$data->nama</option>";
+                  }else{
+                    echo "<option name='kd_owner' value='$data->kd_owner' selected='true'>$data->nama</option>";
+                  }
+                }
+            echo '
+            </select>
+          </div>
+        	  </div>
+        	  <div class="control-group">
+        		<label class="control-label">Harga Owner WD :</label>
+        		<div class="controls">
+        		  <input name="h_owner_wd" type="number" min="0" step="1000" value="'.$edit->h_owner_wd.'"/>
+        		</div>
+        	  </div>
+        	  <div class="control-group">
+        		<label class="control-label">Harga Owner WE :</label>
+        		<div class="controls">
+        		  <input name="h_owner_we" type="number" min="0" step="1000" value="'.$edit->h_owner_we.'" />
+        		</div>
+        	  </div>
+        	  <div class="control-group">
+        		<label class="control-label">Harga Sewa WD :</label>
+        		<div class="controls">
+        		  <input name="h_sewa_wd" type="number" min="0" step="1000" value="'.$edit->h_sewa_wd.'" />
+        		</div>
+        	  </div>
+        	  <div class="control-group">
+        		<label class="control-label">Harga Sewa WE :</label>
+        		<div class="controls">
+        		  <input name="h_sewa_we" type="number" min="0" step="1000" value="'.$edit->h_sewa_we.'" />
+        		</div>
+        	  </div><div class="control-group">
+        		<label class="control-label">Ekstra Charge :</label>
+        		<div class="controls">
+        		  <input name="ekstra_charge" type="number" min="0" step="1000" value="'.$edit->ekstra_charge.'" />
+        		</div>
+        	  </div> ';
+    		  echo '
+    		  <div class="form-actions" style="text-align:right">
+    			<button name="updateUnit" type="submit" class="btn btn-success">Update</button>
+    		  </div>
+    		</form>
+    	  </div>
+    	</div>
+    	</div>
+    	<div class="span3">
+    	</div>
+          ';
+      }
 
-              $Proses = new Proses();
-              $show = $Proses->showApartemen();
-              while($data = $show->fetch(PDO::FETCH_OBJ)){
-              if ($edit->kd_apt!=$data->kd_apt)
-                  echo "<option name='kd_apt' value='$data->kd_apt'>$data->nama_apt</option>";
-              else  echo "<option name='kd_apt' value='$data->kd_apt' selected='true'>$data->nama_apt</option>";
-              }
-
-          echo '
-          </select>
-        </div>
-      	  </div>
-      	  <div class="control-group">
-      		<label class="control-label">No Unit :</label>
-      		<div class="controls">
-      		  <input name="no_unit" type="text" placeholder="No Unit" value="'.$edit->no_unit.'"/>
-      		</div>
-      	  </div>
-          <div class="control-group">
-      		<label class="control-label">Owner :</label>
-          <div class="controls">
-      		  <select name="owner">
-      		  <option>-- Pilih Owner --</option>';
-
-              $show = $Proses->showOwner();
-              while($data = $show->fetch(PDO::FETCH_OBJ)){
-              if ($edit->kd_owner!=$data->kd_owner)
-                  echo "<option name='kd_owner' value='$data->kd_owner'>$data->nama</option>";
-              else  echo "<option name='kd_owner' value='$data->kd_owner' selected='true'>$data->nama</option>";
-              }
-          echo '
-          </select>
-        </div>
-      	  </div>
-      	  <div class="control-group">
-      		<label class="control-label">Harga Owner WD :</label>
-      		<div class="controls">
-      		  <input name="h_owner_wd" type="number" min="0" step="1000" value="'.$edit->h_owner_wd.'"/>
-      		</div>
-      	  </div>
-      	  <div class="control-group">
-      		<label class="control-label">Harga Owner WE :</label>
-      		<div class="controls">
-      		  <input name="h_owner_we" type="number" min="0" step="1000" value="'.$edit->h_owner_we.'" />
-      		</div>
-      	  </div>
-      	  <div class="control-group">
-      		<label class="control-label">Harga Sewa WD :</label>
-      		<div class="controls">
-      		  <input name="h_sewa_wd" type="number" min="0" step="1000" value="'.$edit->h_sewa_wd.'" />
-      		</div>
-      	  </div>
-      	  <div class="control-group">
-      		<label class="control-label">Harga Sewa WE :</label>
-      		<div class="controls">
-      		  <input name="h_sewa_we" type="number" min="0" step="1000" value="'.$edit->h_sewa_we.'" />
-      		</div>
-      	  </div><div class="control-group">
-      		<label class="control-label">Ekstra Charge :</label>
-      		<div class="controls">
-      		  <input name="ekstra_charge" type="number" min="0" step="1000" value="'.$edit->ekstra_charge.'" />
-      		</div>
-      	  </div> ';
-		  echo '
-		  <div class="form-actions" style="text-align:right">
-			<button name="updateUnit" type="submit" class="btn btn-success">Update</button>
-		  </div>
-		</form>
-	  </div>
-	</div>
-	</div>
-	<div class="span3">
-	</div>
-      ';
-    }
-
-	  ?>
+      if (isset($_GET['edit_transaksi']))
+      {
+        $Proses = new Proses();
+        $show = $Proses->editTransaksi($_GET['edit_transaksi']);
+        $edit = $show->fetch(PDO::FETCH_OBJ);
+        echo '
+          <div class="span3">
+          </div>
+          <div class="span6">
+            <div class="widget-box">
+              <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+                <h5>Edit Transaksi</h5>
+              </div>
+              <div class="widget-content nopadding">
+                <form action="proses/proses_update.php" method="post" class="form-horizontal">
+                  <div class="control-group">
+                    <input name="kd_transaksi" class="hide" type="text" value="'.$edit->kd_transaksi.'"/>
+                    <label class="control-label">Nama :</label>
+                  <div class="controls">
+                    <input name="nama" type="text" class="span11" placeholder="Nama" value="'.$edit->nama.'" disabled/>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Check In :</label>
+                    <div class="controls">
+                    <input name="check_in" type="date" class="span11" placeholder="Alamat" value="'.$edit->check_in.'"/>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Check Out :</label>
+                    <div class="controls">
+                    <input name="check_out" type="date" class="span11" placeholder="Alamat" value="'.$edit->check_out.'"/>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Jumlah Hari :</label>
+                    <div class="controls">
+                    <input name="hari" type="number" class="span11" placeholder="Alamat" value="'.$edit->hari.'"/>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Apartemen :</label>
+                    <div class="controls">
+                      <select name="apartemen">
+                        <option>-- Pilih Apartemen --</option>';
+                          $Proses = new Proses();
+                          $show = $Proses->showApartemen();
+                          while($data = $show->fetch(PDO::FETCH_OBJ)){
+                            if ($edit->kd_apt!=$data->kd_apt){
+                              echo "<option name='kd_apt' value='$data->kd_apt'>$data->nama_apt</option>";
+                            }else{
+                              echo "<option name='kd_apt' value='$data->kd_apt' selected='true'>$data->nama_apt</option>";
+                            }
+                          }
+                          echo '
+                      </select>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Unit :</label>
+                    <div class="controls">
+                      <select name="unit">
+                        <option>-- Pilih Unit --</option>';
+                          $Proses = new Proses();
+                          $show = $Proses->showUnit();
+                          while($data = $show->fetch(PDO::FETCH_OBJ)){
+                            if ($edit->kd_unit!=$data->kd_unit){
+                              echo "<option name='kd_unit' value='$data->kd_unit'>$data->no_unit</option>";
+                            }else{
+                              echo "<option name='kd_unit' value='$data->kd_unit' selected='true'>$data->no_unit</option>";
+                            }
+                          }
+                          echo '
+                      </select>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Tamu :</label>
+                    <div class="controls">
+                    <input name="tamu" type="number" class="span11" placeholder="Alamat" value="'.$edit->tamu.'"/>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Ekstra Charge :</label>
+                    <div class="controls">
+                    <input name="ekstra_charge" type="number" class="span11" placeholder="" value="'.$edit->ekstra_charge.'"/>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Total Biaya :</label>
+                    <div class="controls">
+                    <input name="total_tagihan" type="number" class="span11" placeholder="" value="'.$edit->total_tagihan.'"/>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Booking Via :</label>
+                    <div class="controls">
+                      <select name="unit">
+                        <option>-- Pilih Unit --</option>';
+                          $Proses = new Proses();
+                          $show = $Proses->showBooking_via();
+                          while($data = $show->fetch(PDO::FETCH_OBJ)){
+                            if ($edit->kd_booking!=$data->kd_booking){
+                              echo "<option name='kd_booking' value='$data->kd_booking'>$data->booking_via</option>";
+                            }else{
+                              echo "<option name='kd_booking' value='$data->kd_booking' selected='true'>$data->booking_via</option>";
+                            }
+                          }
+                          echo '
+                      </select>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">DP Via :</label>
+                    <div class="controls">
+                    <select name="unit">
+                      <option>-- Pilih Unit --</option>';
+                        $Proses = new Proses();
+                        $show = $Proses->showDp_via();
+                        while($data = $show->fetch(PDO::FETCH_OBJ)){
+                          if ($edit->kd_bank!=$data->kd_bank){
+                            echo "<option name='kd_bank' value='$data->kd_bank'>$data->nama_bank</option>";
+                          }else{
+                            echo "<option name='kd_bank' value='$data->kd_bank' selected='true'>$data->nama_bank</option>";
+                          }
+                        }
+                        echo '
+                    </select>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">DP :</label>
+                    <div class="controls">
+                    <input name="dp" type="number" class="span11" placeholder="Alamat" value="'.$edit->dp.'"/>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <div class="controls">
+                      <div class="form-actions" style="text-align:right">
+                			   <button name="updateTransaksi" type="submit" class="btn btn-success">Update</button>
+                		  </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        ';
+      }
+  	  ?>
 	</div>
   </div>
 </div>

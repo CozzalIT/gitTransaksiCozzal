@@ -188,16 +188,24 @@ class Proses{
   }
 
   public function showOwner(){
-  $sql = "SELECT * from tb_owner
+    $sql = "SELECT * from tb_owner
     INNER JOIN tb_bank ON tb_bank.kd_bank = tb_owner.kd_bank";
-  $query = $this->db->query($sql);
-  return $query;
+    $query = $this->db->query($sql);
+    return $query;
   }
 
   public function showDp_via(){
-  $sql = "SELECT * FROM tb_bank";
-  $query = $this->db->query($sql);
-  return $query;
+    $sql = "SELECT * FROM tb_bank";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
+  public function showRequestBook(){
+    $sql = "SELECT * FROM tb_reservasi
+    INNER JOIN tb_apt ON tb_apt.kd_apt = tb_reservasi.kd_apt
+    INNER JOIN tb_unit ON tb_unit.kd_unit = tb_reservasi.kd_unit";
+    $query = $this->db->query($sql);
+    return $query;
   }
 //Proses Show (Akhir)
 
