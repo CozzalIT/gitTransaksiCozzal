@@ -476,33 +476,35 @@
                   <div class="control-group">
                     <label class="control-label">Check In :</label>
                     <div class="controls">
-                    <input name="check_in" type="date" class="span11" placeholder="Alamat" value="'.$edit->check_in.'"/>
+                    <input name="check_in" id="check_in" type="date" class="span11" placeholder="" value="'.$edit->check_in.'" onchange="validasi(this.form)"/>
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label">Check Out :</label>
                     <div class="controls">
-                    <input name="check_out" type="date" class="span11" placeholder="Alamat" value="'.$edit->check_out.'"/>
+                    <input name="check_out" id="check_out" type="date" class="span11" placeholder="" value="'.$edit->check_out.'" onchange="validasi2(this.form)"/>
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label">Jumlah Hari :</label>
                     <div class="controls">
-                    <input name="hari" type="number" class="span11" placeholder="Alamat" value="'.$edit->hari.'"/>
+                    <input name="jumhari" type="number" class="span11" placeholder="" value="'.$edit->hari.'" onchange="tambah(this.form)"/>
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label">Apartemen :</label>
-                    <div class="controls">
+                    <div class="controls" id="form_apt" name="form_apt">
                       <select name="apartemen">
                         <option>-- Pilih Apartemen --</option>';
                           $Proses = new Proses();
                           $show = $Proses->showApartemen();
                           while($data = $show->fetch(PDO::FETCH_OBJ)){
-                            if ($edit->kd_apt!=$data->kd_apt){
-                              echo "<option name='kd_apt' value='$data->kd_apt'>$data->nama_apt</option>";
-                            }else{
-                              echo "<option name='kd_apt' value='$data->kd_apt' selected='true'>$data->nama_apt</option>";
+                            if ($data->kd_apt != 0){
+                              if ($edit->kd_apt!=$data->kd_apt){
+                                echo "<option name='kd_apt' value='$data->kd_apt'>$data->nama_apt</option>";
+                              }else{
+                                echo "<option name='kd_apt' value='$data->kd_apt' selected='true'>$data->nama_apt</option>";
+                              }
                             }
                           }
                           echo '
@@ -512,19 +514,30 @@
                   <div class="control-group">
                     <label class="control-label">Unit :</label>
                     <div class="controls">
-                      <select name="unit">
+                      <select name="unit" id="unit" onchange="biaya(this.form)">
                         <option>-- Pilih Unit --</option>';
                           $Proses = new Proses();
-                          $show = $Proses->showUnit();
+                          $show = $Proses->showUnitByApt($edit->kd_apt);
                           while($data = $show->fetch(PDO::FETCH_OBJ)){
-                            if ($edit->kd_unit!=$data->kd_unit){
-                              echo "<option name='kd_unit' value='$data->kd_unit'>$data->no_unit</option>";
-                            }else{
-                              echo "<option name='kd_unit' value='$data->kd_unit' selected='true'>$data->no_unit</option>";
+                            if ($data->kd_unit){
+                              if ($edit->kd_unit!=$data->kd_unit){
+                                echo "<option name='kd_unit' value='$data->kd_unit'>$data->no_unit</option>";
+                              }else{
+                                echo "<option name='kd_unit' value='$data->kd_unit' selected='true'>$data->no_unit</option>";
+                              }
                             }
                           }
                           echo '
                       </select>
+                      <div id="loading">
+            						<img src="images/loading.gif" width="18"> <small>Loading...</small>
+            					</div>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Harga Sewa :</label>
+                    <div class="controls">
+                    <input name="harga_sewa" min="0" step="1000" id="harga_sewa" type="number" class="span11" placeholder="Harga Sewa" value="'.$edit->harga_sewa.'" onChange="hasil(this.form)"/>
                     </div>
                   </div>
                   <div class="control-group">
@@ -548,8 +561,8 @@
                   <div class="control-group">
                     <label class="control-label">Booking Via :</label>
                     <div class="controls">
-                      <select name="unit">
-                        <option>-- Pilih Unit --</option>';
+                      <select name="booking_via">
+                        <option>-- Pilih Booking Via --</option>';
                           $Proses = new Proses();
                           $show = $Proses->showBooking_via();
                           while($data = $show->fetch(PDO::FETCH_OBJ)){
@@ -566,8 +579,8 @@
                   <div class="control-group">
                     <label class="control-label">DP Via :</label>
                     <div class="controls">
-                    <select name="unit">
-                      <option>-- Pilih Unit --</option>';
+                    <select name="dp_via">
+                      <option>-- Pilih DP Via --</option>';
                         $Proses = new Proses();
                         $show = $Proses->showDp_via();
                         while($data = $show->fetch(PDO::FETCH_OBJ)){
@@ -614,6 +627,7 @@
 <script src="js/jquery.ui.custom.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.uniform.js"></script>
+<script src="js/transaksi.js"></script>
 <!--<script src="js/select2.min.js"></script>-->
 <script src="js/jquery.dataTables.min.js"></script>
 <script src="js/matrix.js"></script>

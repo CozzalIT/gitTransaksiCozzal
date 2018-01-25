@@ -128,6 +128,7 @@ class Proses{
 	$query = $this->db->query($sql);
 	return $query;
   }
+
 //Proses Edit (Akhir)
 
 //Proses Show (Awal)
@@ -170,6 +171,12 @@ class Proses{
 	INNER JOIN tb_owner ON tb_owner.kd_owner = tb_unit.kd_owner";
 	$query = $this->db->query($sql);
 	return $query;
+  }
+
+  public function showUnitByApt($kd_apt){
+    $sql = "SELECT * from tb_unit where kd_apt='$kd_apt'";
+    $query = $this->db->query($sql);
+    return $query;
   }
 
   public function showTransaksi(){
