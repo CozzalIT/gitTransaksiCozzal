@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="css/uniform.css" />
 <link rel="stylesheet" href="css/theme.css" />
 <link rel="stylesheet" href="css/select2.css" />
+<link rel="stylesheet" href="css/new.css" />
 <link rel="stylesheet" href="css/matrix-style.css" />
 <link rel="stylesheet" href="css/matrix-media.css" />
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />

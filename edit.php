@@ -611,12 +611,196 @@
               </div>
             </div>
           </div>
-        ';
-      }
-  	  ?>
-	</div>
+    	</div>
   </div>
 </div>
+        ';
+      }
+
+//Edit data detail unit
+
+		if (isset($_GET['edit_detail_unit']) || isset($_GET['tambah_detail_unit']))
+		{
+		  $lantai = 0; $jml_kmr = 0; $jml_bed = 0; $jml_ac = 0; $water_heater='Tidak Tersedia';
+		  $dapur='Tidak Tersedia'; $wifi='Tidak Tersedia'; $tv='Tidak Tersedia'; $kd_unit=0; $act='';
+		  $amenities='Tidak Tersedia'; $merokok='Tidak Boleh';
+		  if(isset($_GET['edit_detail_unit']))
+		  {
+		  		$Proses = new Proses();
+		  		$show = $Proses->showDetailUnit($_GET['edit_detail_unit']);
+		  		$edit = $show->fetch(PDO::FETCH_OBJ);
+		  		$lantai = $edit->lantai; $jml_kmr = $edit->jml_kmr; $jml_bed = $edit->jml_bed; 
+		  		$jml_ac = $edit->jml_ac; $kd_unit = $_GET['edit_detail_unit']; $act = 'proses/proses_update.php';
+		  		if($edit->water_heater=='Y'){
+					$water_heater='Tersedia';
+				}
+				if($edit->dapur=='Y'){
+					$dapur='Tersedia';
+				}
+				if($edit->wifi=='Y'){
+					$wifi='Tersedia';
+				}
+				if($edit->tv=='Y'){
+					$tv='Tersedia';
+				}
+				if($edit->amenities=='Y'){
+					$amenities='Tersedia';
+				}
+				if($edit->merokok=='Y'){
+					$merokok='Boleh';
+				}
+		  }
+		  else
+		  {
+		  		$kd_unit = $_GET['tambah_detail_unit'];
+		  		$act = 'proses/proses_add.php';
+		  }
+		  echo '
+			<div class="span3">
+			</div>
+			<div class="span6">
+			  <div class="widget-box">
+				<div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+				  <h5>Detail Data Unit</h5>
+				</div>
+				<div class="widget-content nopadding">
+				  <form action="'.$act.'" method="post" class="form-horizontal">
+					<div class="control-group">
+					  <input name="kd_unit" class="hide" type="text" value="'.$kd_unit.'"/>
+					  <label class="control-label">Posisi lantai :</label>
+					  <div class="controls">
+						<input name="lantai" type="number" min="0" class="span11" value="'.$lantai.'"/>
+					  </div>
+					</div>
+					<div class="control-group">
+					  <label class="control-label">Jumlah Kamar :</label>
+					  <div class="controls">
+						<input name="jml_kmr" type="number" min="0" class="span11" value="'.$jml_kmr.'"/>
+					  </div>
+					</div>
+					<div class="control-group">
+					  <label class="control-label">Jumlah Kasur :</label>
+					  <div class="controls">
+						<input name="jml_bed" type="number" min="0" class="span11"  value="'.$jml_bed.'"/>
+					  </div>
+					</div>
+					<div class="control-group">
+					  <label class="control-label">Jumlah AC :</label>
+					  <div class="controls">
+						<input name="jml_ac" type="number" min="0" class="span11"  value="'.$jml_ac.'"/>
+					  </div>
+					</div>
+
+					<div class="control-group">
+					  <label class="control-label">Ruang Dapur :</label>
+						<div class="controls">
+						  <label>
+							<input type="radio" name="dapur" value="Y"';
+							 if($dapur=="Tersedia") echo 'checked';
+							 echo '/> Tersedia
+						  </label>
+						  <label>
+							<input type="radio" name="dapur" value="N"'; 
+							 if($dapur=="Tidak Tersedia") echo 'checked';
+							 echo '/> Tidak Tersedia
+						  </label>
+						</div>
+					</div>
+
+					<div class="control-group">
+					  <label class="control-label">Water Heater :</label>
+						<div class="controls">
+						  <label>
+							<input type="radio" name="water_heater" value="Y"';
+							 if($water_heater=="Tersedia") echo 'checked';
+							 echo '/> Tersedia
+						  </label>
+						  <label>
+							<input type="radio" name="water_heater" value="N"'; 
+							 if($water_heater=="Tidak Tersedia") echo 'checked';
+							 echo '/> Tidak Tersedia
+						  </label>
+						</div>
+					</div>
+
+					<div class="control-group">
+					  <label class="control-label">Tv Cable :</label>
+						<div class="controls">
+						  <label>
+							<input type="radio" name="tv" value="Y"';
+							 if($tv=="Tersedia") echo 'checked';
+							 echo '/> Tersedia
+						  </label>
+						  <label>
+							<input type="radio" name="tv" value="N"'; 
+							 if($tv=="Tidak Tersedia") echo 'checked';
+							 echo '/> Tidak Tersedia
+						  </label>
+						</div>
+					</div>
+
+					<div class="control-group">
+					  <label class="control-label">Wifi :</label>
+						<div class="controls">
+						  <label>
+							<input type="radio" name="wifi" value="Y"';
+							 if($wifi=="Tersedia") echo 'checked';
+							 echo '/> Tersedia
+						  </label>
+						  <label>
+							<input type="radio" name="wifi" value="N"'; 
+							 if($wifi=="Tidak Tersedia") echo 'checked';
+							 echo '/> Tidak Tersedia
+						  </label>
+						</div>
+					</div>
+
+					<div class="control-group">
+					  <label class="control-label">Amenities :</label>
+						<div class="controls">
+						  <label>
+							<input type="radio" name="amenities" value="Y"';
+							 if($amenities=="Tersedia") echo 'checked';
+							 echo '/> Tersedia
+						  </label>
+						  <label>
+							<input type="radio" name="amenities" value="N"'; 
+							 if($amenities=="Tidak Tersedia") echo 'checked';
+							 echo '/> Tidak Tersedia
+						  </label>
+						</div>
+					</div>
+
+					<div class="control-group">
+					  <label class="control-label">Merokok :</label>
+						<div class="controls">
+						  <label>
+							<input type="radio" name="merokok" value="Y"';
+							 if($merokok=="Boleh") echo 'checked';
+							 echo '/> Boleh
+						  </label>
+						  <label>
+							<input type="radio" name="merokok" value="N"'; 
+							 if($merokok=="Tidak Boleh") echo 'checked';
+							 echo '/> Tidak Boleh
+						  </label>
+						</div>
+					</div>
+					';
+            //button here
+					  echo '
+					  <div class="form-actions" style="text-align:right">
+						<button name="detail_unit" type="submit" class="btn btn-success">Update</button>
+					  </div>
+					</form>
+				  </div>
+				</div>
+			  </div>
+			  <div class="span3">
+			  </div>
+		  ';
+		}
+?>
 
 <!--Footer-part-->
 <div class="row-fluid">

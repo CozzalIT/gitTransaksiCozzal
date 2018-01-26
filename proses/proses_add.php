@@ -90,6 +90,28 @@
     }
   }
 
+//Tambah Detail Unit
+  if(isset($_POST['detail_unit'])){
+    $kd_unit = $_POST['kd_unit'];
+    $lantai = $_POST['lantai'];
+    $jml_kmr = $_POST['jml_kmr'];
+    $jml_bed = $_POST['jml_bed'];
+    $jml_ac = $_POST['jml_ac'];
+    $water_heater = $_POST['water_heater'];
+    $dapur = $_POST['dapur'];
+    $wifi = $_POST['wifi'];
+    $tv = $_POST['tv'];
+    $amenities = $_POST['amenities'];
+    $merokok = $_POST['merokok'];
+
+    $add = $proses->addDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok);
+
+    if($add == "Success"){
+      header('Location:../unit.php');
+    }
+    else echo "error";
+  }
+
 //Tambah Owner
   if(isset($_POST['addOwner'])){
 	  $nama= $_POST['nama'];

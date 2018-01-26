@@ -52,7 +52,9 @@
             if ($data->kd_unit != 0){
     					echo "
     					  <tr class=gradeC'>
-    					    <td>$data->no_unit</td>
+    					    <td>
+                    <a class='detail' href='unit.php?detail_unit=$data->kd_unit&no_unit=$data->no_unit' title='klik untuk lihat detail'>$data->no_unit</a>
+                  </td>
     					    <td>$data->nama_apt</td>
     						  <td>$data->nama</td>
     						  <td>".number_format($data->h_sewa_wd, 0, ".", ".")." IDR</td>

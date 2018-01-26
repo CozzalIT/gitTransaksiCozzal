@@ -15,6 +15,17 @@ class Proses{
 	}
   }
 
+  public function addDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok){
+  $sql = "INSERT INTO tb_detail_unit (kd_unit, lantai, jml_kmr, jml_bed, jml_ac, water_heater, dapur, wifi, tv, amenities, merokok) 
+  VALUES('$kd_unit', '$lantai', '$jml_kmr', '$jml_bed', '$jml_ac', '$water_heater', '$dapur', '$wifi', '$tv', '$amenities', '$merokok')";
+  $query = $this->db->query($sql);
+  if(!$query){
+    return "Failed";
+  }else{
+    return "Success";
+  }
+  }
+
   public function addApartemen($nama_apt, $alamat_apt){
 	$sql = "INSERT INTO tb_apt (nama_apt, alamat_apt) VALUES('$nama_apt', '$alamat_apt')";
 	$query = $this->db->query($sql);
@@ -136,6 +147,12 @@ class Proses{
 	$sql = "SELECT * FROM tb_penyewa";
 	$query = $this->db->query($sql);
 	return $query;
+  }
+
+  public function showDetailUnit($kd_unit){
+  $sql = "SELECT * FROM tb_detail_unit where kd_unit='$kd_unit'";
+  $query = $this->db->query($sql);
+  return $query;
   }
 
   public function showPenyewaTransaksi(){
@@ -289,6 +306,16 @@ class Proses{
 	}
   }
 
+  public function updateDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok){
+  $sql = "update tb_detail_unit SET lantai='$lantai', jml_kmr='$jml_kmr', jml_bed='$jml_bed', jml_ac='$jml_ac', water_heater='$water_heater',
+  dapur='$dapur', wifi='$wifi', tv='$tv', amenities='$amenities', merokok='$merokok' where kd_unit='$kd_unit'";
+  $query = $this->db->query($sql);
+  if(!$query){
+    return "Failed";
+  }else{
+    return "Success";
+  }
+  }
 
   public function updateJumlah_unit_owner($kd_owner){
 	$sql = "update tb_owner SET jumlah_unit=jumlah_unit+1 where kd_owner='$kd_owner'";

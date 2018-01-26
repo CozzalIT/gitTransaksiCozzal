@@ -560,3 +560,111 @@
 	</form>
   </div>
 </div>
+<?php
+//Detail Transaksi
+  if(isset($_GET['detail_unit'])){
+	$show = $Proses->showDetailUnit($_GET['detail_unit']);
+	$detail = $show->fetch(PDO::FETCH_OBJ);
+	echo '
+		<script type="text/javascript">
+		  $(document).ready(function(){
+			$("#tambah").click(function(){
+			  $(".modal").addClass("hide");
+			});
+		  });
+		</script>';
+	if($detail->lantai!="")
+	{
+	$wtr = 'Tersedia'; $dpr=$wtr; $wifi=$wtr; $tv=$dpr; $am=$tv; $roko='Boleh';
+	if($detail->water_heater=='N'){
+		$wtr='Tidak Tersedia';
+	}
+	if($detail->dapur=='N'){
+		$dpr='Tidak Tersedia';
+	}
+	if($detail->wifi=='N'){
+		$wifi='Tidak Tersedia';
+	}
+	if($detail->tv=='N'){
+		$tv='Tidak Tersedia';
+	}
+	if($detail->amenities=='N'){
+		$am='Tidak Tersedia';
+	}
+	if($detail->merokok=='N'){
+		$roko='Tidak Boleh';
+	}
+    echo '
+	<div id="popup-detail" class="modal">
+	  <div class="modal-header">
+		<button id="tambah" data-dismiss="modal" class="close" type="button">×</button>
+		<h3>'.$_GET["no_unit"].'</h3>
+	  </div>
+			<div class="row-fluid">
+			  <div class="span12">
+			  <a class="btn btn-primary" href="edit.php?edit_detail_unit='.$_GET["detail_unit"].'">Ubah Info Detail</a>
+
+				<table style="margin-top: 20px;" class="table table-bordered table-invoice">
+				  <tbody>
+					<tr>
+					  <th colspan="2">Detail Fitur Unit</th>
+					  <tr>
+						<td class="width30">Posisi dilantai ke:</td>
+						<td class="width70"><strong>'.$detail->lantai.'</strong></td>
+					  </tr>
+					  <tr>
+						<td>Jumlah Kamar:</td>
+						<td><strong>'.$detail->jml_kmr.'</strong></td>
+					  </tr>
+					  <tr>
+						<td>Jumlah Kasur:</td>
+						<td><strong>'.$detail->jml_bed.'</strong></td>
+					  </tr>
+					  <tr>
+						<td class="width30">Dapur:</td>
+						<td class="width70"><strong>'.$dpr.'</strong></td>
+					  </tr>
+					  <tr>
+						<td class="width30">Water Heater:</td>
+						<td class="width70"><strong>'.$wtr.'</strong></td>
+					  </tr>
+					  <tr>
+						<td class="width30">Tv Cable:</td>
+						<td class="width70"><strong>'.$tv.'</strong></td>
+					  </tr>
+					  <tr>
+						<td class="width30">Wifi:</td>
+						<td class="width70"><strong>'.$wifi.'</strong></td>
+					  </tr>
+					  <tr>
+						<td class="width30">Amenities:</td>
+						<td class="width70"><strong>'.$am.'</strong></td>
+					  </tr>
+					  <tr>
+						<td class="width30">Boleh Merokok:</td>
+						<td class="width70"><strong>'.$roko.'</strong></td>
+					  </tr>
+					</tr>
+				  </tbody>
+				</table>
+			  </div>
+			</div>
+		</div>
+	  </div>
+	</div>
+	';}
+	else
+	{
+		echo'
+			<div id="popup-detail" class="modal">
+	  			<div class="modal-header">
+				<button id="tambah" data-dismiss="modal" class="close" type="button">×</button>
+				<h3>'.$_GET["no_unit"].'</h3>
+				<div class="row-fluid">Info detail pada unit ini belum tersedia. Silahkan klik <a href="edit.php?tambah_detail_unit='.$_GET["detail_unit"].'">disini</a>
+				untuk menambahkan informasi detail pada unit
+				</div>
+	  			</div>
+	  		</div>';
+	}
+}
+?>
