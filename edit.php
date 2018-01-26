@@ -618,7 +618,6 @@
       }
 
 //Edit data detail unit
-
 		if (isset($_GET['edit_detail_unit']) || isset($_GET['tambah_detail_unit']))
 		{
 		  $lantai = 0; $jml_kmr = 0; $jml_bed = 0; $jml_ac = 0; $water_heater='Tidak Tersedia';
@@ -629,7 +628,7 @@
 		  		$Proses = new Proses();
 		  		$show = $Proses->showDetailUnit($_GET['edit_detail_unit']);
 		  		$edit = $show->fetch(PDO::FETCH_OBJ);
-		  		$lantai = $edit->lantai; $jml_kmr = $edit->jml_kmr; $jml_bed = $edit->jml_bed; 
+		  		$lantai = $edit->lantai; $jml_kmr = $edit->jml_kmr; $jml_bed = $edit->jml_bed;
 		  		$jml_ac = $edit->jml_ac; $kd_unit = $_GET['edit_detail_unit']; $act = 'proses/proses_update.php';
 		  		if($edit->water_heater=='Y'){
 					$water_heater='Tersedia';
@@ -661,7 +660,7 @@
 			<div class="span6">
 			  <div class="widget-box">
 				<div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-				  <h5>Detail Data Unit</h5>
+				  <h5>Detail Fasilitas Unit</h5>
 				</div>
 				<div class="widget-content nopadding">
 				  <form action="'.$act.'" method="post" class="form-horizontal">
@@ -700,7 +699,7 @@
 							 echo '/> Tersedia
 						  </label>
 						  <label>
-							<input type="radio" name="dapur" value="N"'; 
+							<input type="radio" name="dapur" value="N"';
 							 if($dapur=="Tidak Tersedia") echo 'checked';
 							 echo '/> Tidak Tersedia
 						  </label>
@@ -716,7 +715,7 @@
 							 echo '/> Tersedia
 						  </label>
 						  <label>
-							<input type="radio" name="water_heater" value="N"'; 
+							<input type="radio" name="water_heater" value="N"';
 							 if($water_heater=="Tidak Tersedia") echo 'checked';
 							 echo '/> Tidak Tersedia
 						  </label>
@@ -732,7 +731,7 @@
 							 echo '/> Tersedia
 						  </label>
 						  <label>
-							<input type="radio" name="tv" value="N"'; 
+							<input type="radio" name="tv" value="N"';
 							 if($tv=="Tidak Tersedia") echo 'checked';
 							 echo '/> Tidak Tersedia
 						  </label>
@@ -748,7 +747,7 @@
 							 echo '/> Tersedia
 						  </label>
 						  <label>
-							<input type="radio" name="wifi" value="N"'; 
+							<input type="radio" name="wifi" value="N"';
 							 if($wifi=="Tidak Tersedia") echo 'checked';
 							 echo '/> Tidak Tersedia
 						  </label>
@@ -764,7 +763,7 @@
 							 echo '/> Tersedia
 						  </label>
 						  <label>
-							<input type="radio" name="amenities" value="N"'; 
+							<input type="radio" name="amenities" value="N"';
 							 if($amenities=="Tidak Tersedia") echo 'checked';
 							 echo '/> Tidak Tersedia
 						  </label>
@@ -780,7 +779,7 @@
 							 echo '/> Boleh
 						  </label>
 						  <label>
-							<input type="radio" name="merokok" value="N"'; 
+							<input type="radio" name="merokok" value="N"';
 							 if($merokok=="Tidak Boleh") echo 'checked';
 							 echo '/> Tidak Boleh
 						  </label>

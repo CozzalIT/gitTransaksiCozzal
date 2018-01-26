@@ -1,6 +1,6 @@
 
 $(function ()
-{ $("#example, #example2, #example3, #example4").popover();
+{ $("#owner_wd, #owner_we, #example3, #example4").popover();
 });
 
 
