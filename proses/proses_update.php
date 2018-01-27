@@ -147,4 +147,34 @@
 	else echo 'error';
   }
 
+//update Transaksi
+  if(isset($_POST['updateTransaksi'])){
+    $kd_transaksi = $_POST['kd_transaksi'];
+    $kd_apt     = $_POST['apartemen'];
+    $kode = explode("+",$_POST['unit']);
+    $kd_unit    = $kode[0];
+    $tamu       = $_POST['tamu'];
+    $check_in     = $_POST['check_in'];
+    $check_out    = $_POST['check_out'];
+    $harga_sewa   = $_POST['harga_sewa'];
+    $harga_sewa_asli   = $_POST['harga_sewa_asli'];
+    $diskon = 0;
+    if($harga_sewa<$harga_sewa_asli){
+       $diskon = $harga_sewa_asli-$harga_sewa;
+    }
+    $ekstra_charge  = $_POST['ekstra_charge'];
+    $kd_booking   = $_POST['booking_via'];
+    $kd_bank    = $_POST['dp_via'];
+    $dp       = $_POST['dp'];
+    $total_tagihan  = $_POST['total'];
+    $sisa_pelunasan = $total_tagihan - $dp;
+    $hari = $_POST['jumhari'];
+
+    $add = $proses->updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $diskon, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total_tagihan, $sisa_pelunasan, $hari); 
+    if($add == "Success"){
+      header('Location:../laporan_transaksi.php');
+    }
+  else echo 'error';
+  }  
+
 ?>

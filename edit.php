@@ -476,25 +476,25 @@
                   <div class="control-group">
                     <label class="control-label">Check In :</label>
                     <div class="controls">
-                    <input name="check_in" id="check_in" type="date" class="span11" placeholder="" value="'.$edit->check_in.'" onchange="validasi(this.form)"/>
+                    <input name="check_in" id="check_in" type="date" class="span11" required placeholder="" value="'.$edit->check_in.'" onchange="validasi(this.form)"/>
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label">Check Out :</label>
                     <div class="controls">
-                    <input name="check_out" id="check_out" type="date" class="span11" placeholder="" value="'.$edit->check_out.'" onchange="validasi2(this.form)"/>
+                    <input name="check_out" id="check_out" type="date" class="span11" required placeholder="" value="'.$edit->check_out.'" onchange="validasi2(this.form)"/>
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label">Jumlah Hari :</label>
                     <div class="controls">
-                    <input name="jumhari" type="number" class="span11" placeholder="" value="'.$edit->hari.'" onchange="tambah(this.form)"/>
+                    <input name="jumhari" type="number" class="span11" min="1" value="'.$edit->hari.'" onchange="tambah(this.form)"/>
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label">Apartemen :</label>
                     <div class="controls" id="form_apt" name="form_apt">
-                      <select name="apartemen">
+                      <select id="apartemen" name="apartemen" required>
                         <option>-- Pilih Apartemen --</option>';
                           $Proses = new Proses();
                           $show = $Proses->showApartemen();
@@ -514,16 +514,20 @@
                   <div class="control-group">
                     <label class="control-label">Unit :</label>
                     <div class="controls">
-                      <select name="unit" id="unit" onchange="biaya(this.form)">
+                      <select name="unit" id="unit" onchange="biaya(this.form)" required >
                         <option>-- Pilih Unit --</option>';
+                          $harga_asal = 0;
                           $Proses = new Proses();
                           $show = $Proses->showUnitByApt($edit->kd_apt);
                           while($data = $show->fetch(PDO::FETCH_OBJ)){
-                            if ($data->kd_unit){
-                              if ($edit->kd_unit!=$data->kd_unit){
-                                echo "<option name='kd_unit' value='$data->kd_unit'>$data->no_unit</option>";
+                            if ($data->kd_unit!=0){
+                              $val=$data->kd_unit.'+'.$data->h_sewa_wd.'+'.$data->h_sewa_we.'+'.$data->ekstra_charge;
+                              if ($edit->kd_unit!=$data->kd_unit){ 
+                                echo "<option name='kd_unit' value='$val'>$data->no_unit</option>";
                               }else{
-                                echo "<option name='kd_unit' value='$data->kd_unit' selected='true'>$data->no_unit</option>";
+                                echo "<option name='kd_unit' value='$val' selected='true'>$data->no_unit</option>";
+                                $hari_ke = Date('w',strtotime($edit->check_in))+1;
+                                if($hari_ke>5) $harga_asal = $data->h_sewa_we; else $harga_asal = $data->h_sewa_wd;
                               }
                             }
                           }
@@ -537,31 +541,32 @@
                   <div class="control-group">
                     <label class="control-label">Harga Sewa :</label>
                     <div class="controls">
-                    <input name="harga_sewa" min="0" step="1000" id="harga_sewa" type="number" class="span11" placeholder="Harga Sewa" value="'.$edit->harga_sewa.'" onChange="hasil(this.form)"/>
+                    <input name="harga_sewa_asli" type="number" style="display:none;" value="'.$harga_asal.'"/>
+                    <input name="harga_sewa" min="0" step="1000" required id="harga_sewa" type="number" class="span11" placeholder="Harga Sewa" value="'.$edit->harga_sewa.'" onChange="hasil(this.form)"/>
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label">Tamu :</label>
                     <div class="controls">
-                    <input name="tamu" type="number" class="span11" placeholder="Alamat" value="'.$edit->tamu.'"/>
+                    <input name="tamu" onChange="ECH(this.form)" type="number" required min="0" class="span11" value="'.$edit->tamu.'"/>
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label">Ekstra Charge :</label>
                     <div class="controls">
-                    <input name="ekstra_charge" type="number" class="span11" placeholder="" value="'.$edit->ekstra_charge.'"/>
+                    <input name="ekstra_charge" min="0" step="1000" type="number" onChange="hasil(this.form)" required class="span11" value="'.$edit->ekstra_charge.'"/>
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label">Total Biaya :</label>
                     <div class="controls">
-                    <input name="total_tagihan" type="number" class="span11" placeholder="" value="'.$edit->total_tagihan.'"/>
+                    <input name="total" min="0" step="1000" class="span11" type="number" required value="'.$edit->total_tagihan.'"/>
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label">Booking Via :</label>
                     <div class="controls">
-                      <select name="booking_via">
+                      <select name="booking_via" required>
                         <option>-- Pilih Booking Via --</option>';
                           $Proses = new Proses();
                           $show = $Proses->showBooking_via();
@@ -579,7 +584,7 @@
                   <div class="control-group">
                     <label class="control-label">DP Via :</label>
                     <div class="controls">
-                    <select name="dp_via">
+                    <select name="dp_via" required>
                       <option>-- Pilih DP Via --</option>';
                         $Proses = new Proses();
                         $show = $Proses->showDp_via();
@@ -597,7 +602,7 @@
                   <div class="control-group">
                     <label class="control-label">DP :</label>
                     <div class="controls">
-                    <input name="dp" type="number" class="span11" placeholder="Alamat" value="'.$edit->dp.'"/>
+                    <input name="dp" type="number" class="span11" placeholder="Alamat" value="'.$edit->dp.'" required/>
                     </div>
                   </div>
                   <div class="control-group">
