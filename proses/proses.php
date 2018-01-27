@@ -46,8 +46,8 @@ class Proses{
   }
   }
 
-  public function addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total, $sisa_pelunasan, $hari, $tgl_transaksi){
-	$sql = "INSERT INTO tb_transaksi (kd_penyewa, kd_apt, kd_unit, tamu, check_in, check_out, harga_sewa, ekstra_charge, kd_booking, kd_bank, dp, total_tagihan, sisa_pelunasan, hari, tgl_transaksi) VALUES('$kd_penyewa', '$kd_apt', '$kd_unit', '$tamu', '$check_in', '$check_out', '$harga_sewa', '$ekstra_charge', '$kd_booking', '$kd_bank', '$dp', '$total', '$sisa_pelunasan', '$hari', '$tgl_transaksi')";
+  public function addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total, $sisa_pelunasan, $hari, $tgl_transaksi, $diskon){
+	$sql = "INSERT INTO tb_transaksi (kd_penyewa, kd_apt, kd_unit, tamu, check_in, check_out, harga_sewa, ekstra_charge, kd_booking, kd_bank, dp, total_tagihan, sisa_pelunasan, hari, tgl_transaksi, diskon) VALUES('$kd_penyewa', '$kd_apt', '$kd_unit', '$tamu', '$check_in', '$check_out', '$harga_sewa', '$ekstra_charge', '$kd_booking', '$kd_bank', '$dp', '$total', '$sisa_pelunasan', '$hari', '$tgl_transaksi', '$diskon')";
 	$query = $this->db->query($sql);
 	if(!$query){
 	  return "Failed";
@@ -147,6 +147,12 @@ class Proses{
 	$sql = "SELECT * FROM tb_penyewa";
 	$query = $this->db->query($sql);
 	return $query;
+  }
+
+  public function showUnitbyId($kd_unit){
+  $sql = "SELECT * from tb_unit where kd_unit='$kd_unit'";
+  $query = $this->db->query($sql);
+  return $query; 
   }
 
   public function showDetailUnit($kd_unit){

@@ -49,6 +49,7 @@ function biaya(form)
 	i = 1;
 	if (b>4) {i++;}
 	form.harga_sewa.value=a[i];
+	form.harga_sewa_asli.value = a[i];
 	form.ekstra_charge.value=0; 
 	hasil(form);
 }

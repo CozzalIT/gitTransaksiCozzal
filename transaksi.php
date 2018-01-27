@@ -261,6 +261,7 @@
       				  <label class="control-label">Jumlah Tamu :</label>
       				  <div class="controls">
       				    <input name="tamu" min="0" type="number" value="5" onChange="ECH(this.form)"/>
+                  <input name="harga_sewa_asli" type="number" style="display:none;"/>
       				  </div>
       			  </div>
               <div class="control-group">
