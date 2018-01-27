@@ -2,3 +2,18 @@
 margin-left: 20px;
 margin-top: 20px;
 }
+
+.foto-unit {
+  width:100px;
+  height:75px;
+  overflow:hidden;margin-bottom: 10px;
+  border-right-width: 5px;
+  border-right-style: solid;
+  border-bottom-width: 5px;
+  border-bottom-style: solid;
+  border-top-width: 5px;
+  border-top-style: solid;
+  border-left-width: 5px;
+  border-left-style: solid;
+  /* border-color: green;
+}

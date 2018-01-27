@@ -18,6 +18,11 @@
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <script src="js/config.js" type="text/javascript"></script>
 
+<!-- Slider Image -->
+<link href="js/js-image-slider.css" rel="stylesheet" type="text/css" />
+<script src="js/js-image-slider.js" type="text/javascript"></script>
+<!-- //Slider Image -->
+
 <!-- Full Calendar -->
 <link href='fullcalendar/fullcalendar.min.css' rel='stylesheet' />
 <link href='fullcalendar/fullcalendar.print.min.css' rel='stylesheet' media='print' />
