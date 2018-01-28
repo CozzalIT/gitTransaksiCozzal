@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 28, 2018 at 05:56 AM
+-- Generation Time: Jan 28, 2018 at 06:07 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -39,6 +39,7 @@ CREATE TABLE `tb_detail_unit` (
   `tv` char(1) NOT NULL,
   `amenities` char(1) NOT NULL,
   `merokok` char(1) NOT NULL,
+  `type` varchar(15) NOT NULL,
   `img` varchar(25) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
