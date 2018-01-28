@@ -16,10 +16,6 @@
   include "template/header.php";
   include "template/sidebar.php";
 ?>
-<style>
-.mySlides {display:none}
-.demo {cursor:pointer}
-</style>
 <body>
 <!--main-container-part-->
 <div id="content">
@@ -73,6 +69,39 @@
                   <center>
                     <h3>Detail Unit Coming Soon!!</h3>
                   </center>
+                  <div class="control-group">
+                    <div class="control">
+                      <center>
+                      <table class="">
+                				<tbody>
+                				  <tr>
+                					<td><h4>Detail Penyewa</h4></p></td>
+                				  </tr>
+                				  <tr>
+                					<td>Nama</td>
+                					<td>: '.$detail->nama.'</td>
+                				  </tr>
+                				  <tr>
+                					<td>Alamat</td>
+                					<td>: '.$detail->alamat.'</td>
+                				  </tr>
+                				  <tr>
+                					<td>Jenis Kelamin</td>
+                					<td>: '.$detail->jenis_kelamin.'</td>
+                				  </tr>
+                				  <tr>
+                					<td>No Telpon</td>
+                					<td>: '.$detail->no_tlp.'</td>
+                				  </tr>
+                				  <tr>
+                					<td>E-Mail</td>
+                					<td>: '.$detail->email.'</td>
+                				  </tr>
+                				</tbody>
+              			  </table>
+                    </center>
+                    </div>
+                  </div>
                 </div>
             </div>
             <script>
