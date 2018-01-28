@@ -2,10 +2,11 @@
 <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
   <ul>
     <li <?php if($thisPage == "Dashboard") echo "class='active'"; ?>><a href="index.php"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
-	  <li class="submenu <?php if($thisPage == "Transaksi") echo " active"; ?>"> <a href="transaksi.php"><i class="icon icon-money"></i> <span>Transaksi</span></a>
+	  <li class="submenu <?php if($thisPage == "Transaksi") echo " active"; ?>"> <a href="#"><i class="icon icon-money"></i> <span>Transaksi</span></a>
       <ul>
         <li><a href="transaksi.php">Input Transaksi</a></li>
         <li><a href="laporan_transaksi.php">Laporan Transaksi</a></li>
+        <li><a href="confirm_transaksi.php">Confirm Transaksi</a></li>
       </ul>
     </li>
     <li <?php if($thisPage == "Booking Request") echo "class='active'"; ?>><a href="booking_request.php"><i class="icon icon-edit"></i> <span>Booking Request</span></a> </li>

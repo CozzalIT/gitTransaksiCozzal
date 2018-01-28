@@ -606,7 +606,7 @@
   			<div class="row-fluid">
   			  <div class="span12">
     			  <a class="btn btn-primary" href="edit.php?edit_detail_unit='.$_GET["detail_unit"].'">Edit Fasilitas</a>
-            <a class="btn btn-success" href="foto_unit.php">Foto Unit</a>
+            <a class="btn btn-success" href="detail_unit.php">Foto Unit</a>
             <table style="margin-top: 20px;" class="table table-bordered table-invoice">
     				  <tbody>
       					<tr>

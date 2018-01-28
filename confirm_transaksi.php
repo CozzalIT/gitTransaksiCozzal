@@ -27,10 +27,10 @@
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5>Laporan Transaksi</h5>
+            <h5>Confirm Transaksi</h5>
           </div>
           <div class="widget-content nopadding">
-			<table class="table table-bordered data-table">
+			      <table class="table table-bordered data-table">
               <thead>
                 <tr>
                   <th>No</th>
@@ -38,37 +38,41 @@
                   <th>Apartemen</th>
                   <th>Unit</th>
                   <th>Check In</th>
-				  <th>Check Out</th>
-				  <th>Action</th>
+        				  <th>Check Out</th>
+        				  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-			    <?php
-				  require("proses/proses.php");
-				  $Proses = new Proses();
-				  $show = $Proses->showTransaksi();
-				  $i = 1;
-				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-					echo "
-					  <tr class='gradeC'>
-					    <td>$i</td>
-					    <td>$data->nama</td>
-					    <td>$data->nama_apt</td>
-						<td>$data->no_unit</td>
-						<td>$data->check_in</td>
-						<td>$data->check_out</td>
-						<td>
-              <center>
-  						  <a class='btn btn-success' id='detail' name='detail' href='laporan_transaksi.php?detail=$data->kd_transaksi'>Detail</a>
-  						  <a class='btn btn-primary' href='edit.php?edit_transaksi=$data->kd_transaksi'>Edit</a>
-                <a class='btn btn-info' href='confirm_transaksi.php'>Confirm</a>
-  						  <a class='btn btn-danger' href='proses/proses_delete.php?delete_transaksi=$data->kd_transaksi'>Hapus</a>
-              </center>
-            </td>
-					  </tr>";
-					$i++;
-				  };
-				?>
+    					  <tr class='gradeC'>
+    					    <td>1</td>
+    					    <td>Dummy</td>
+    					    <td>Dummy Apt</td>
+      						<td>Dummy Unit</td>
+      						<td>00-00-0000</td>
+      						<td>00-00-0000</td>
+      						<td>
+                    <center>
+                    <a class='btn btn-primary' href='kwitansi.php'>Kwtansi</a>
+      						  <a class='btn btn-success' id='detail' name='detail' href='#'>Detail</a>
+      						  <a class='btn btn-danger' href='#'>Hapus</a>
+                    </center>
+                  </td>
+    					  </tr>
+                <tr class='gradeC'>
+    					    <td>2</td>
+    					    <td>Dummy2</td>
+    					    <td>Dummy Apt2</td>
+      						<td>Dummy Unit2</td>
+      						<td>00-00-00002</td>
+      						<td>00-00-00002</td>
+      						<td>
+                    <center>
+                      <a class='btn btn-primary' href='kwitansi.php'>Kwitansi</a>
+        						  <a class='btn btn-success' id='detail' name='detail' href='#'>Detail</a>
+        						  <a class='btn btn-danger' href='#'>Hapus</a>
+                    </center>
+                  </td>
+    					  </tr>
               </tbody>
             </table>
           </div>
@@ -77,10 +81,6 @@
     </div>
   </div>
 </div>
-
-<?php
-  include 'template/modal.php';
-?>
 
 <!--Footer-part-->
 <div class="row-fluid">
@@ -96,4 +96,7 @@
 <script src="js/matrix.js"></script>
 <script src="js/matrix.tables.js"></script>
 </body>
+<?php
+  include 'template/modal.php';
+?>
 </html>
