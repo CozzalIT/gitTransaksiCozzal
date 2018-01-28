@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 26, 2018 at 02:37 AM
+-- Generation Time: Jan 28, 2018 at 05:56 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -27,6 +27,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `tb_detail_unit` (
+  `kd_detail_unit` int(4) NOT NULL,
   `kd_unit` int(4) NOT NULL,
   `lantai` int(11) NOT NULL,
   `jml_kmr` int(11) NOT NULL,
@@ -42,14 +43,6 @@ CREATE TABLE `tb_detail_unit` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tb_detail_unit`
---
-
-INSERT INTO `tb_detail_unit` (`kd_unit`, `lantai`, `jml_kmr`, `jml_bed`, `jml_ac`, `water_heater`, `dapur`, `wifi`, `tv`, `amenities`, `merokok`, `img`) VALUES
-(1, 2, 1, 1, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'N', NULL),
-(7, 1, 1, 1, 2, 'Y', 'Y', 'Y', 'N', 'N', 'N', NULL);
-
---
 -- Indexes for dumped tables
 --
 
@@ -57,7 +50,27 @@ INSERT INTO `tb_detail_unit` (`kd_unit`, `lantai`, `jml_kmr`, `jml_bed`, `jml_ac
 -- Indexes for table `tb_detail_unit`
 --
 ALTER TABLE `tb_detail_unit`
-  ADD PRIMARY KEY (`kd_unit`);
+  ADD PRIMARY KEY (`kd_detail_unit`),
+  ADD KEY `kd_unit` (`kd_unit`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `tb_detail_unit`
+--
+ALTER TABLE `tb_detail_unit`
+  MODIFY `kd_detail_unit` int(4) NOT NULL AUTO_INCREMENT;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `tb_detail_unit`
+--
+ALTER TABLE `tb_detail_unit`
+  ADD CONSTRAINT `tb_detail_unit_ibfk_1` FOREIGN KEY (`kd_unit`) REFERENCES `tb_unit` (`kd_unit`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
