@@ -111,8 +111,6 @@
 <script src="js/matrix.js"></script>
 <script src="js/matrix.tables.js"></script>
 
-
-
 <?php
   include 'template/modal.php';
 ?>

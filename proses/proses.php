@@ -16,7 +16,7 @@ class Proses{
   }
 
   public function addDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok){
-  $sql = "INSERT INTO tb_detail_unit (kd_unit, lantai, jml_kmr, jml_bed, jml_ac, water_heater, dapur, wifi, tv, amenities, merokok) 
+  $sql = "INSERT INTO tb_detail_unit (kd_unit, lantai, jml_kmr, jml_bed, jml_ac, water_heater, dapur, wifi, tv, amenities, merokok)
   VALUES('$kd_unit', '$lantai', '$jml_kmr', '$jml_bed', '$jml_ac', '$water_heater', '$dapur', '$wifi', '$tv', '$amenities', '$merokok')";
   $query = $this->db->query($sql);
   if(!$query){
@@ -152,7 +152,7 @@ class Proses{
   public function showUnitbyId($kd_unit){
   $sql = "SELECT * from tb_unit where kd_unit='$kd_unit'";
   $query = $this->db->query($sql);
-  return $query; 
+  return $query;
   }
 
   public function showDetailUnit($kd_unit){
@@ -209,6 +209,15 @@ class Proses{
 	  INNER JOIN tb_unit ON tb_unit.kd_unit = tb_transaksi.kd_unit";
 	$query = $this->db->query($sql);
 	return $query;
+  }
+
+  public function showConfirmTransaksi(){
+  $sql = "SELECT * from tb_confirm_transaksi
+    INNER JOIN tb_penyewa ON tb_penyewa.kd_penyewa = tb_confirm_transaksi.kd_penyewa
+    INNER JOIN tb_apt ON tb_apt.kd_apt = tb_confirm_transaksi.kd_apt
+    INNER JOIN tb_unit ON tb_unit.kd_unit = tb_confirm_transaksi.kd_unit";
+  $query = $this->db->query($sql);
+  return $query;
   }
 
   public function showBooking_via(){
@@ -345,14 +354,14 @@ class Proses{
 
   public function updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $diskon, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total_tagihan, $sisa_pelunasan, $hari){
   $sql = "update tb_transaksi SET kd_apt ='$kd_apt', kd_unit='$kd_unit', tamu='$tamu', check_in='$check_in', check_out='$check_out',
-  harga_sewa ='$harga_sewa', diskon ='$diskon', ekstra_charge='$ekstra_charge', kd_booking='$kd_booking', kd_bank='$kd_bank', dp='$dp', 
+  harga_sewa ='$harga_sewa', diskon ='$diskon', ekstra_charge='$ekstra_charge', kd_booking='$kd_booking', kd_bank='$kd_bank', dp='$dp',
   total_tagihan='$total_tagihan', sisa_pelunasan='$sisa_pelunasan', hari ='$hari' where kd_transaksi='$kd_transaksi'";
   $query = $this->db->query($sql);
   if(!$query){
     return "Failed";
   }else{
     return "Success";
-  } 
+  }
   }
 
 //Proses Update (Akhir)

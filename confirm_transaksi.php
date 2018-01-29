@@ -43,36 +43,31 @@
                 </tr>
               </thead>
               <tbody>
-    					  <tr class='gradeC'>
-    					    <td>1</td>
-    					    <td>Dummy</td>
-    					    <td>Dummy Apt</td>
-      						<td>Dummy Unit</td>
-      						<td>00-00-0000</td>
-      						<td>00-00-0000</td>
-      						<td>
-                    <center>
-                    <a class='btn btn-primary' href='kwitansi.php'>Kwtansi</a>
-      						  <a class='btn btn-success' id='detail' name='detail' href='#'>Detail</a>
-      						  <a class='btn btn-danger' href='#'>Hapus</a>
-                    </center>
-                  </td>
-    					  </tr>
-                <tr class='gradeC'>
-    					    <td>2</td>
-    					    <td>Dummy2</td>
-    					    <td>Dummy Apt2</td>
-      						<td>Dummy Unit2</td>
-      						<td>00-00-00002</td>
-      						<td>00-00-00002</td>
-      						<td>
-                    <center>
-                      <a class='btn btn-primary' href='kwitansi.php'>Kwitansi</a>
-        						  <a class='btn btn-success' id='detail' name='detail' href='#'>Detail</a>
-        						  <a class='btn btn-danger' href='#'>Hapus</a>
-                    </center>
-                  </td>
-    					  </tr>
+      			    <?php
+        				  require("proses/proses.php");
+        				  $Proses = new Proses();
+        				  $show = $Proses->showConfirmTransaksi();
+        				  $i = 1;
+        				  while($data = $show->fetch(PDO::FETCH_OBJ)){
+          					echo "
+          					  <tr class='gradeC'>
+          					    <td>$i</td>
+          					    <td>$data->nama</td>
+          					    <td>$data->nama_apt</td>
+            						<td>$data->no_unit</td>
+            						<td>$data->check_in</td>
+            						<td>$data->check_out</td>
+            						<td>
+                          <center>
+                            <a class='btn btn-primary'>Kwitansi</a>
+              						  <a class='btn btn-danger' href=''>Hapus</a>
+                          </center>
+                        </td>
+          					  </tr>
+                    ";
+          				$i++;
+        				  };
+      				  ?>
               </tbody>
             </table>
           </div>

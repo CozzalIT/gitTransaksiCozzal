@@ -30,7 +30,7 @@
             <h5>Laporan Transaksi</h5>
           </div>
           <div class="widget-content nopadding">
-			<table class="table table-bordered data-table">
+			      <table class="table table-bordered data-table">
               <thead>
                 <tr>
                   <th>No</th>
@@ -38,37 +38,38 @@
                   <th>Apartemen</th>
                   <th>Unit</th>
                   <th>Check In</th>
-				  <th>Check Out</th>
-				  <th>Action</th>
+        				  <th>Check Out</th>
+        				  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-			    <?php
-				  require("proses/proses.php");
-				  $Proses = new Proses();
-				  $show = $Proses->showTransaksi();
-				  $i = 1;
-				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-					echo "
-					  <tr class='gradeC'>
-					    <td>$i</td>
-					    <td>$data->nama</td>
-					    <td>$data->nama_apt</td>
-						<td>$data->no_unit</td>
-						<td>$data->check_in</td>
-						<td>$data->check_out</td>
-						<td>
-              <center>
-  						  <a class='btn btn-success' id='detail' name='detail' href='laporan_transaksi.php?detail=$data->kd_transaksi'>Detail</a>
-  						  <a class='btn btn-primary' href='edit.php?edit_transaksi=$data->kd_transaksi'>Edit</a>
-                <a class='btn btn-info' href='confirm_transaksi.php'>Confirm</a>
-  						  <a class='btn btn-danger' href='proses/proses_delete.php?delete_transaksi=$data->kd_transaksi'>Hapus</a>
-              </center>
-            </td>
-					  </tr>";
-					$i++;
-				  };
-				?>
+      			    <?php
+        				  require("proses/proses.php");
+        				  $Proses = new Proses();
+        				  $show = $Proses->showTransaksi();
+        				  $i = 1;
+        				  while($data = $show->fetch(PDO::FETCH_OBJ)){
+          					echo "
+          					  <tr class='gradeC'>
+          					    <td>$i</td>
+          					    <td>$data->nama</td>
+          					    <td>$data->nama_apt</td>
+          						<td>$data->no_unit</td>
+          						<td>$data->check_in</td>
+          						<td>$data->check_out</td>
+          						<td>
+                        <center>
+            						  <a class='btn btn-success' id='detail' name='detail' href='laporan_transaksi.php?detail=$data->kd_transaksi'>Detail</a>
+            						  <a class='btn btn-primary' href='edit.php?edit_transaksi=$data->kd_transaksi'>Edit</a>
+                          <a class='btn btn-info' href='confirm_transaksi.php'>Confirm</a>
+            						  <a class='btn btn-danger' href='proses/proses_delete.php?delete_transaksi=$data->kd_transaksi'>Hapus</a>
+                        </center>
+                      </td>
+          					  </tr>
+                    ";
+          				$i++;
+        				  };
+      				  ?>
               </tbody>
             </table>
           </div>
