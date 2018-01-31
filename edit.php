@@ -625,15 +625,15 @@
 //Edit data detail unit
 		if (isset($_GET['edit_detail_unit']) || isset($_GET['tambah_detail_unit']))
 		{
-		  $lantai = 0; $jml_kmr = 0; $jml_bed = 0; $jml_ac = 0; $water_heater='Tidak Tersedia';
+		  $lantai = 0; $jml_kmr = 0; $jml_bed = 0; $jml_ac = 0; $water_heater='Tidak Tersedia'; 
 		  $dapur='Tidak Tersedia'; $wifi='Tidak Tersedia'; $tv='Tidak Tersedia'; $kd_unit=0; $act='';
-		  $amenities='Tidak Tersedia'; $merokok='Tidak Boleh';
+		  $amenities='Tidak Tersedia'; $merokok='Tidak Boleh'; $type='';
 		  if(isset($_GET['edit_detail_unit']))
 		  {
 		  		$Proses = new Proses();
-		  		$show = $Proses->showDetailUnit($_GET['edit_detail_unit']);
+		  		$show = $Proses->showUnitById($_GET['edit_detail_unit']);
 		  		$edit = $show->fetch(PDO::FETCH_OBJ);
-		  		$lantai = $edit->lantai; $jml_kmr = $edit->jml_kmr; $jml_bed = $edit->jml_bed;
+		  		$lantai = $edit->lantai; $jml_kmr = $edit->jml_kmr; $jml_bed = $edit->jml_bed; $type=$edit->type;
 		  		$jml_ac = $edit->jml_ac; $kd_unit = $_GET['edit_detail_unit']; $act = 'proses/proses_update.php';
 		  		if($edit->water_heater=='Y'){
 					$water_heater='Tersedia';
@@ -669,6 +669,18 @@
   				</div>
   				<div class="widget-content nopadding">
   				  <form action="'.$act.'" method="post" class="form-horizontal">
+					<div class="control-group">
+  					  <label class="control-label">Type Unit :</label>
+  					  <div class="controls">
+						<select name="type" class="span11">
+							<option name="type" value="" '; if($type=='') echo'selected="true"'; echo'>-- Pilih Type Unit --</option>
+							<option name="type" value="Studio" '; if($type=='Studio') echo'selected="true"'; echo'>Studio</option>
+							<option name="type" value="1BR" '; if($type=='1BR') echo'selected="true"'; echo'>1BR</option>
+							<option name="type" value="2BR" '; if($type=='2BR') echo'selected="true"'; echo'>2BR</option>
+							<option name="type" value="3BR" '; if($type=='3BR') echo'selected="true"'; echo'>3BR</option>
+						</select>
+					  </div>
+					</div>
   					<div class="control-group">
   					  <input name="kd_unit" class="hide" type="text" value="'.$kd_unit.'"/>
   					  <label class="control-label">Posisi lantai :</label>

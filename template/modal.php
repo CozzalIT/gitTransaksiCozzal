@@ -1,4 +1,36 @@
 <?php
+	//notifikasi info bahwa detail unit kosong
+	if(isset($_GET['info_unit'])){
+		echo'
+			<div id="popup-detail" class="modal">
+	  		<div class="modal-header">
+			<form action="unit.php" >
+				<button id="tambah" data-dismiss="modal" class="close" type="submit">×</button>
+			</form>
+  				<script type="text/javascript">
+		  			$(document).ready(function(){
+						$("#tambah").click(function(){
+			  			$(".modal").addClass("hide");
+						});
+		  			});
+				</script>
+  				<h3>Info belum tersedia</h3>
+	  		</div>
+        <div class="modal-body">
+      		<div class="widget-content">
+      			<div class="row-fluid">
+      			  <div class="span12">
+                Detail fasilitas pada unit ini belum tersedia!! Klik button dibawah untuk menambahkan!!
+                <br>
+                <br>
+                <a class="btn btn-info" href="edit.php?tambah_detail_unit='.$_GET["info_unit"].'"><i class="icon-plus"></i> Tambahkan Detail</a>
+              </div>
+            </div>
+          </div>
+        </div>
+	  	</div>';
+	 }
+
 //Detail Transaksi
   if(isset($_GET['detail'])){
 	$show = $Proses->editTransaksi($_GET['detail']);
@@ -167,11 +199,6 @@
   			<div class="span8">
   			  <table class="">
   				<tbody>
-  				  <script>
-  					function Detail(x) {
-  					  document.getElementById("demo").innerHTML = "hai";
-  					}
-  				  </script>
   				  <tr>
   					<td><h4>Detail Owner</h4><p id="demo"></p></td>
   				  </tr>
@@ -560,123 +587,3 @@
 	</form>
   </div>
 </div>
-
-<?php
-//Detail Unit
-  if(isset($_GET['detail_unit'])){
-	$show = $Proses->showDetailUnit($_GET['detail_unit']);
-	$detail = $show->fetch(PDO::FETCH_OBJ);
-	echo '
-		<script type="text/javascript">
-		  $(document).ready(function(){
-			$("#tambah").click(function(){
-			  $(".modal").addClass("hide");
-			});
-		  });
-		</script>';
-	if($detail->lantai!="")
-	{
-	$wtr = 'Tersedia'; $dpr=$wtr; $wifi=$wtr; $tv=$dpr; $am=$tv; $roko='Boleh';
-	if($detail->water_heater=='N'){
-		$wtr='Tidak Tersedia';
-	}
-	if($detail->dapur=='N'){
-		$dpr='Tidak Tersedia';
-	}
-	if($detail->wifi=='N'){
-		$wifi='Tidak Tersedia';
-	}
-	if($detail->tv=='N'){
-		$tv='Tidak Tersedia';
-	}
-	if($detail->amenities=='N'){
-		$am='Tidak Tersedia';
-	}
-	if($detail->merokok=='N'){
-		$roko='Tidak Boleh';
-	}
-    echo '
-	<div id="popup-detail" class="modal">
-	  <div class="modal-header">
-  		<button id="tambah" data-dismiss="modal" class="close" type="button">×</button>
-  		<h3>Fasilitas Unit '.$_GET["no_unit"].'</h3>
-	  </div>
-    <div class="modal-body">
-  		<div class="widget-content">
-  			<div class="row-fluid">
-  			  <div class="span12">
-    			  <a class="btn btn-primary" href="edit.php?edit_detail_unit='.$_GET["detail_unit"].'">Edit Fasilitas</a>
-            <a class="btn btn-success" href="detail_unit.php">Foto Unit</a>
-            <table style="margin-top: 20px;" class="table table-bordered table-invoice">
-    				  <tbody>
-      					<tr>
-      					  <th colspan="2">Detail Fitur Unit</th>
-      					  <tr>
-        						<td class="width30">Lantai:</td>
-        						<td class="width70"><strong>'.$detail->lantai.'</strong></td>
-      					  </tr>
-      					  <tr>
-        						<td>Jumlah Kamar:</td>
-        						<td><strong>'.$detail->jml_kmr.'</strong></td>
-      					  </tr>
-      					  <tr>
-        						<td>Jumlah Kasur:</td>
-        						<td><strong>'.$detail->jml_bed.'</strong></td>
-      					  </tr>
-      					  <tr>
-        						<td class="width30">Dapur:</td>
-        						<td class="width70"><strong>'.$dpr.'</strong></td>
-      					  </tr>
-      					  <tr>
-        						<td class="width30">Water Heater:</td>
-        						<td class="width70"><strong>'.$wtr.'</strong></td>
-      					  </tr>
-      					  <tr>
-        						<td class="width30">Tv Cable:</td>
-        						<td class="width70"><strong>'.$tv.'</strong></td>
-      					  </tr>
-      					  <tr>
-        						<td class="width30">Wifi:</td>
-        						<td class="width70"><strong>'.$wifi.'</strong></td>
-      					  </tr>
-      					  <tr>
-        						<td class="width30">Amenities:</td>
-        						<td class="width70"><strong>'.$am.'</strong></td>
-      					  </tr>
-      					  <tr>
-        						<td class="width30">Boleh Merokok:</td>
-        						<td class="width70"><strong>'.$roko.'</strong></td>
-      					  </tr>
-      					</tr>
-    				  </tbody>
-    				</table>
-          </div>
-        </div>
-			 </div>
-		</div>
-	</div>
-	';}
-	else
-	{
-		echo'
-			<div id="popup-detail" class="modal">
-	  		<div class="modal-header">
-  				<button id="tambah" data-dismiss="modal" class="close" type="button">×</button>
-  				<h3>Fasilitas Unit '.$_GET["no_unit"].'</h3>
-	  		</div>
-        <div class="modal-body">
-      		<div class="widget-content">
-      			<div class="row-fluid">
-      			  <div class="span12">
-                Detail fasilitas pada unit ini belum tersedia!! Klik button dibawah untuk menambahkan!!
-                <br>
-                <br>
-                <a class="btn btn-info" href="edit.php?tambah_detail_unit='.$_GET["detail_unit"].'"><i class="icon-plus"></i> Tambahkan Detail</a>
-              </div>
-            </div>
-          </div>
-        </div>
-	  	</div>';
-	}
-}
-?>

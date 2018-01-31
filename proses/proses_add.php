@@ -103,11 +103,12 @@
     $tv = $_POST['tv'];
     $amenities = $_POST['amenities'];
     $merokok = $_POST['merokok'];
+    $type = $_POST['type'];
 
-    $add = $proses->addDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok);
+    $add = $proses->addDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok, $type);
 
     if($add == "Success"){
-      header('Location:../unit.php');
+      header('Location:../detail_unit.php?detail_unit='.$kd_unit);
     }
     else echo "error";
   }
