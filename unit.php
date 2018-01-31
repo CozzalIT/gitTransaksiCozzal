@@ -21,6 +21,7 @@
   <div id="content-header">
     <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Tables</a> </div>
     <a href="#popup-unit" data-toggle="modal" class="btn btn-info btn-add"><i class="icon-plus"></i> Tambah Data</a>
+    <a id='hidenbtn' href='#' style='display:none'></a>     
   </div>
   <div class="container-fluid">
     <hr>
@@ -69,8 +70,8 @@
                           -->
             						  <td>
                             <center>
-                              <a class='btn btn-success' href='calendar.php?calendar_unit=$data->kd_unit'>Calendar</a>
-                              <a class='btn btn-info' href='unit.php?detail_unit=$data->kd_unit&no_unit=$data->no_unit'>Fasilitas</a>
+                              <a class='btn btn-info' href='calendar.php?calendar_unit=$data->kd_unit'>Calendar</a>
+                              <a class='btn btn-success' href='#' onclick='cek_detail_unit(".$data->kd_unit.")'>Detail</a>                      
                             </center>
                           </td>
                           <td>
@@ -100,6 +101,7 @@
 </div>
 <!--End-Footer-part-->
 <script src="js/bootstrap.min.js"></script>
+<script src="js/unit.js"></script>
 <script src="js/jquery.gritter.min.js"></script>
 <script src="js/jquery.peity.min.js"></script>
 <script src="js/matrix.interface.js"></script>

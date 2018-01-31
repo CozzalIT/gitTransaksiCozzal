@@ -15,9 +15,9 @@ class Proses{
 	}
   }
 
-  public function addDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok){
-  $sql = "INSERT INTO tb_detail_unit (kd_unit, lantai, jml_kmr, jml_bed, jml_ac, water_heater, dapur, wifi, tv, amenities, merokok) 
-  VALUES('$kd_unit', '$lantai', '$jml_kmr', '$jml_bed', '$jml_ac', '$water_heater', '$dapur', '$wifi', '$tv', '$amenities', '$merokok')";
+  public function addDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok, $type){
+  $sql = "INSERT INTO tb_detail_unit (kd_unit, lantai, jml_kmr, jml_bed, jml_ac, water_heater, dapur, wifi, tv, amenities, merokok, type) 
+  VALUES('$kd_unit', '$lantai', '$jml_kmr', '$jml_bed', '$jml_ac', '$water_heater', '$dapur', '$wifi', '$tv', '$amenities', '$merokok', '$type')";
   $query = $this->db->query($sql);
   if(!$query){
     return "Failed";
@@ -149,16 +149,21 @@ class Proses{
 	return $query;
   }
 
-  public function showUnitbyId($kd_unit){
-  $sql = "SELECT * from tb_unit where kd_unit='$kd_unit'";
+  public function showDetail_Unit($kd_unit){
+  $sql = "SELECT kd_unit FROM tb_detail_unit
+  where kd_unit='$kd_unit'";
   $query = $this->db->query($sql);
   return $query; 
   }
 
-  public function showDetailUnit($kd_unit){
-  $sql = "SELECT * FROM tb_detail_unit where kd_unit='$kd_unit'";
+  public function showUnitbyId($kd_unit){
+  $sql = "SELECT * FROM tb_unit
+  INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt
+  INNER JOIN tb_owner ON tb_owner.kd_owner = tb_unit.kd_owner
+  INNER JOIN tb_detail_unit ON tb_detail_unit.kd_unit = tb_unit.kd_unit
+  where tb_unit.kd_unit='$kd_unit'";
   $query = $this->db->query($sql);
-  return $query;
+  return $query; 
   }
 
   public function showPenyewaTransaksi(){
@@ -312,9 +317,9 @@ class Proses{
 	}
   }
 
-  public function updateDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok){
+  public function updateDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok, $type){
   $sql = "update tb_detail_unit SET lantai='$lantai', jml_kmr='$jml_kmr', jml_bed='$jml_bed', jml_ac='$jml_ac', water_heater='$water_heater',
-  dapur='$dapur', wifi='$wifi', tv='$tv', amenities='$amenities', merokok='$merokok' where kd_unit='$kd_unit'";
+  dapur='$dapur', wifi='$wifi', tv='$tv', amenities='$amenities', merokok='$merokok', type='$type' where kd_unit='$kd_unit'";
   $query = $this->db->query($sql);
   if(!$query){
     return "Failed";
