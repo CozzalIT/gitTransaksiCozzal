@@ -625,9 +625,9 @@
 //Edit data detail unit
 		if (isset($_GET['edit_detail_unit']) || isset($_GET['tambah_detail_unit']))
 		{
-		  $lantai = 0; $jml_kmr = 0; $jml_bed = 0; $jml_ac = 0; $water_heater='Tidak Tersedia'; $type='';
+		  $lantai = 0; $jml_kmr = 0; $jml_bed = 0; $jml_ac = 0; $water_heater='Tidak Tersedia'; 
 		  $dapur='Tidak Tersedia'; $wifi='Tidak Tersedia'; $tv='Tidak Tersedia'; $kd_unit=0; $act='';
-		  $amenities='Tidak Tersedia'; $merokok='Tidak Boleh';
+		  $amenities='Tidak Tersedia'; $merokok='Tidak Boleh'; $type='';
 		  if(isset($_GET['edit_detail_unit']))
 		  {
 		  		$Proses = new Proses();
