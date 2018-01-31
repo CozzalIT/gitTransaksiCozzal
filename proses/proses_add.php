@@ -163,4 +163,29 @@
         echo 'gagal';
 	    }
     }
+
+    if(isset($_POST['addPenyewa'])){
+      $nama = $_POST['nama'];
+      $alamat = $_POST['alamat'];
+      $no_tlp = $_POST['no_tlp'];
+      $jenis_kelamin = $_POST['jenis_kelamin'];
+      $email = $_POST['email'];
+      $tgl_gabung = date('Y-m-d');
+
+      $add = $proses->addPenyewa($nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung);
+
+      if($add == "Success"){
+        header('Location:../penyewa.php');
+      }
+    }
+
+    //Confirm Transaksi
+    if (isset($_GET['addConfirm'])){
+      $kd_transaksi = $_GET['addConfirm'];
+
+      $add = $proses->addConfirm($kd_transaksi);
+      if($add == "Success"){
+        header('Location:../confirm_transaksi.php');
+      }
+    }
 ?>

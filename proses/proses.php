@@ -47,13 +47,28 @@ class Proses{
   }
 
   public function addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total, $sisa_pelunasan, $hari, $tgl_transaksi, $diskon){
-	$sql = "INSERT INTO tb_transaksi (kd_penyewa, kd_apt, kd_unit, tamu, check_in, check_out, harga_sewa, ekstra_charge, kd_booking, kd_bank, dp, total_tagihan, sisa_pelunasan, hari, tgl_transaksi, diskon) VALUES('$kd_penyewa', '$kd_apt', '$kd_unit', '$tamu', '$check_in', '$check_out', '$harga_sewa', '$ekstra_charge', '$kd_booking', '$kd_bank', '$dp', '$total', '$sisa_pelunasan', '$hari', '$tgl_transaksi', '$diskon')";
-	$query = $this->db->query($sql);
-	if(!$query){
-	  return "Failed";
-	}else{
-	  return "Success";
-	}
+  	$sql = "INSERT INTO tb_transaksi (kd_penyewa, kd_apt, kd_unit, tamu, check_in, check_out, harga_sewa, ekstra_charge, kd_booking, kd_bank, dp, total_tagihan, sisa_pelunasan, hari, tgl_transaksi, diskon) VALUES('$kd_penyewa', '$kd_apt', '$kd_unit', '$tamu', '$check_in', '$check_out', '$harga_sewa', '$ekstra_charge', '$kd_booking', '$kd_bank', '$dp', '$total', '$sisa_pelunasan', '$hari', '$tgl_transaksi', '$diskon')";
+  	$query = $this->db->query($sql);
+  	if(!$query){
+  	  return "Failed";
+  	}else{
+  	  return "Success";
+  	}
+  }
+
+  public function addConfirm($kd_transaksi){
+  	$sql = "INSERT INTO tb_confirm_transaksi (kd_penyewa, kd_apt, kd_unit, tamu, check_in, check_out, harga_sewa, ekstra_charge, kd_booking, kd_bank, dp, total_tagihan, sisa_pelunasan, hari, tgl_transaksi, diskon)
+      SELECT kd_penyewa, kd_apt, kd_unit, tamu, check_in, check_out, harga_sewa, ekstra_charge, kd_booking, kd_bank, dp, total_tagihan, sisa_pelunasan, hari, tgl_transaksi, diskon
+      FROM tb_transaksi WHERE kd_transaksi='$kd_transaksi'";
+    $sql_delete = "DELETE FROM tb_transaksi WHERE kd_transaksi='$kd_transaksi'";
+
+    $query = $this->db->query($sql);
+    $query1 = $this->db->query($sql_delete);
+  	if(!$query){
+  	  return "Failed";
+  	}else{
+  	  return "Success";
+  	}
   }
 
   public function addBooking_via($kd_booking, $booking_via){

@@ -39,6 +39,7 @@
                   <th>Unit</th>
                   <th>Check In</th>
         				  <th>Check Out</th>
+                  <th>Detail</th>
         				  <th>Action</th>
                 </tr>
               </thead>
@@ -54,17 +55,21 @@
           					    <td>$i</td>
           					    <td>$data->nama</td>
           					    <td>$data->nama_apt</td>
-          						<td>$data->no_unit</td>
-          						<td>$data->check_in</td>
-          						<td>$data->check_out</td>
-          						<td>
-                        <center>
-            						  <a class='btn btn-success' id='detail' name='detail' href='laporan_transaksi.php?detail=$data->kd_transaksi'>Detail</a>
-            						  <a class='btn btn-primary' href='edit.php?edit_transaksi=$data->kd_transaksi'>Edit</a>
-                          <a class='btn btn-info' href='confirm_transaksi.php'>Confirm</a>
-            						  <a class='btn btn-danger' href='proses/proses_delete.php?delete_transaksi=$data->kd_transaksi'>Hapus</a>
-                        </center>
-                      </td>
+            						<td>$data->no_unit</td>
+            						<td>$data->check_in</td>
+            						<td>$data->check_out</td>
+                        <td>
+                          <center>
+                            <a class='btn btn-success' id='detail' name='detail' href='laporan_transaksi.php?detail=$data->kd_transaksi'>Detail</a>
+                            <a class='btn btn-info' href='proses/proses_add.php?addConfirm=$data->kd_transaksi'>Confirm</a>
+                          </center>
+                        </td>
+            						<td>
+                          <center>
+              						  <a class='btn btn-primary' href='edit.php?edit_transaksi=$data->kd_transaksi'>Edit</a>
+              						  <a class='btn btn-danger' href='proses/proses_delete.php?delete_transaksi=$data->kd_transaksi'>Hapus</a>
+                          </center>
+                        </td>
           					  </tr>
                     ";
           				$i++;
