@@ -15,15 +15,10 @@ class Proses{
 	}
   }
 
-<<<<<<< HEAD
+
   public function addDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok, $type){
   $sql = "INSERT INTO tb_detail_unit (kd_unit, lantai, jml_kmr, jml_bed, jml_ac, water_heater, dapur, wifi, tv, amenities, merokok, type) 
   VALUES('$kd_unit', '$lantai', '$jml_kmr', '$jml_bed', '$jml_ac', '$water_heater', '$dapur', '$wifi', '$tv', '$amenities', '$merokok', '$type')";
-=======
-  public function addDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok){
-  $sql = "INSERT INTO tb_detail_unit (kd_unit, lantai, jml_kmr, jml_bed, jml_ac, water_heater, dapur, wifi, tv, amenities, merokok)
-  VALUES('$kd_unit', '$lantai', '$jml_kmr', '$jml_bed', '$jml_ac', '$water_heater', '$dapur', '$wifi', '$tv', '$amenities', '$merokok')";
->>>>>>> 3ce10bb088577480bcf54b3a34a80f863c849a9e
   $query = $this->db->query($sql);
   if(!$query){
     return "Failed";
