@@ -2,6 +2,22 @@
   require('proses.php');
   $proses = new proses();
 
+//fungsi untuk delete dir dan file nya
+function delete_files($target) {
+    if(is_dir($target)){
+        $files = glob( $target . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
+        
+        foreach( $files as $file )
+        {
+            delete_files( $file );      
+        }
+        if(file_exists($target))
+        rmdir( $target );
+    } elseif(is_file($target)) {
+        unlink( $target );  
+    }
+}
+
 //Delete Penyewa
   if(isset($_GET['delete_penyewa'])){
     $del = $proses->deletePenyewa($_GET['delete_penyewa']);
@@ -17,7 +33,13 @@
 //Delete Unit
   if(isset($_GET['delete_unit']) || isset($_GET['kurangi_ju'])){
     $del = $proses->deleteUnit($_GET['delete_unit']);
-	$del = $proses->updateKurangi_jumlah_unit_owner($_GET['kurangi_ju']);
+    if($del=='Success'){
+        $del = $proses->deleteDetail_Unit($_GET['delete_unit']);
+        $del = $proses->updateKurangi_jumlah_unit_owner($_GET['kurangi_ju']);
+        if(file_exists('../img/unit/'.$_GET['delete_unit'])){
+            delete_files('../img/unit/'.$_GET['delete_unit']);
+        }
+    }
     header("location:../unit.php");
   }
 

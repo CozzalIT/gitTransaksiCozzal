@@ -16,8 +16,8 @@ class Proses{
   }
 
   public function addDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok, $type){
-  $sql = "INSERT INTO tb_detail_unit (kd_unit, lantai, jml_kmr, jml_bed, jml_ac, water_heater, dapur, wifi, tv, amenities, merokok, type)
-  VALUES('$kd_unit', '$lantai', '$jml_kmr', '$jml_bed', '$jml_ac', '$water_heater', '$dapur', '$wifi', '$tv', '$amenities', '$merokok', '$type')";
+  $sql = "INSERT INTO tb_detail_unit (kd_unit, lantai, jml_kmr, jml_bed, jml_ac, water_heater, dapur, wifi, tv, amenities, merokok, type, img)
+  VALUES('$kd_unit', '$lantai', '$jml_kmr', '$jml_bed', '$jml_ac', '$water_heater', '$dapur', '$wifi', '$tv', '$amenities', '$merokok', '$type', 'None')";
   $query = $this->db->query($sql);
   if(!$query){
     return "Failed";
@@ -372,6 +372,16 @@ class Proses{
 	}
   }
 
+  public function updateGambar_unit($kd_unit, $img){
+  $sql = "update tb_detail_unit SET img='$img' where kd_unit='$kd_unit'";
+  $query = $this->db->query($sql);
+  if(!$query){
+    return "Failed";
+  }else{
+    return "Success";
+  }  
+  }
+
   public function updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $diskon, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total_tagihan, $sisa_pelunasan, $hari){
   $sql = "update tb_transaksi SET kd_apt ='$kd_apt', kd_unit='$kd_unit', tamu='$tamu', check_in='$check_in', check_out='$check_out',
   harga_sewa ='$harga_sewa', diskon ='$diskon', ekstra_charge='$ekstra_charge', kd_booking='$kd_booking', kd_bank='$kd_bank', dp='$dp',
@@ -400,6 +410,16 @@ class Proses{
   public function deleteUnit($kd_unit){
     $sql = "DELETE FROM tb_unit WHERE kd_unit='$kd_unit'";
     $query = $this->db->query($sql);
+  }
+
+  public function deleteDetail_Unit($kd_unit){
+    $sql = "DELETE FROM tb_detail_unit WHERE kd_unit='$kd_unit'";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
   }
 
   public function deleteBooking_via($kd_booking){

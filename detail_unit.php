@@ -12,8 +12,41 @@
   include "template/head.php";
   include "template/header.php";
   include "template/sidebar.php";
+  require('proses/proses.php');
+  $proses = new proses();
+    if (isset($_POST['upload_gambar'])){
+    $img_baru = ''; $img = '';
+    $kd_unit = $_POST['kd_unit'];
+    $jumlah = count($_FILES['gambar']['name']);
+    $tanggal = date('dmyHis');
+    if ($jumlah > 0) {
+      for ($i=0; $i < $jumlah; $i++) {
+        if(!file_exists('img/unit/'.$kd_unit)) mkdir('img/unit/'.$kd_unit); 
+        $file_name = $_FILES['gambar']['name'][$i];
+        $tmp_name = $_FILES['gambar']['tmp_name'][$i];
+        $tmp2 = explode('.', $file_name);        
+        $file_name_new = $tanggal.$i.'.'.$tmp2[1];
+        move_uploaded_file($tmp_name, "img/unit/".$kd_unit.'/'.$file_name_new);
+        if($img_baru==''){
+          $img_baru = $file_name_new;
+        } else {
+          $img_baru = $img_baru.'+'.$file_name_new;
+        } 
+      }
+      if($_POST['img']=='None'){
+        $img = $img_baru;  
+      }
+      else{
+        $img = $_POST['img'].'+'.$img_baru;
+      }
+      $add = $proses->updateGambar_unit($kd_unit, $img);
+      if(!$add == "Success"){
+        die('gagal upload gambar');
+      }
+    }
+    }
+
   if(isset($_GET['detail_unit'])){
-      require('proses/proses.php');
       $Proses = new Proses();
       $show = $Proses->showUnitbyId($_GET['detail_unit']);
       while($data = $show->fetch(PDO::FETCH_OBJ)){
@@ -35,8 +68,10 @@
               <div id="content-header">
                 <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Tables</a> </div>
                 <form action="" method="POST" enctype="multipart/form-data" style="padding-top: 20px;padding-left: 20px;">
+                  <input type="text" name="kd_unit" value='.$data->kd_unit.' style="display:none">
+                  <input type="text" name="img" value='.$data->img.' style="display:none">
                   <input type="file" name="gambar[]" multiple>
-                  <input class="btn btn-success" type="submit" name="upload" value="Upload Gambar">
+                  <input class="btn btn-success" type="submit" name="upload_gambar" value="Upload Gambar">
                 </form>
               </div>
               <div class="container-fluid">
@@ -54,48 +89,61 @@
                         </div>
                         <div class="row-fluid" style="max-width:1200px">
                             <div class="span6">
-                              <center>
-                                <img class="mySlides" src="img/unit/01.jpg" style="width:100%; height:350px">
-                                <img class="mySlides" src="img/unit/02.jpg" style="width:100%; height:350px">
-                                <img class="mySlides" src="img/unit/03.jpg" style="width:100%; height:350px">
-                                <img class="mySlides" src="img/unit/04.jpg" style="width:100%; height:350px">
-                                <img class="mySlides" src="img/unit/05.jpg" style="width:100%; height:350px">
+                              <center>';
+                                if($data->img=='None')
+                                  echo '
+                                <img class="mySlides" src="img/none.png" style="width:100%; height:350px; padding-top:20px">
                               </center>
                                   <table class="">
                                     <tbody>
                                       <tr><td></td></tr>
                                       <tr>
                                         <td>
-                                          <div class="foto-unit">
-                                            <img class="demo" src="img/unit/01.jpg" style="width:100%" onclick="currentDiv(1)">
+                                          <div class="" style="padding-top:10px">
+                                          Gambar belum tersedia, silahan anda upload terlebih dahulu
                                           </div>
                                         </td>
-                                        <td>
-                                          <div class="foto-unit">
-                                            <img class="demo" src="img/unit/02.jpg" style="width:100%" onclick="currentDiv(2)">
-                                          </div>
-                                        </td>
-                                        <td>
-                                          <div class="foto-unit">
-                                            <img class="demo" src="img/unit/03.jpg" style="width:100%" onclick="currentDiv(3)">
-                                          </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                    <td>
-                                          <div class="foto-unit">
-                                            <img class="demo" src="img/unit/04.jpg" style="width:100%" onclick="currentDiv(4)">
-                                          </div>
-                                        </td>
-                                        <td>
-                                          <div class="foto-unit">
-                                            <img class="demo" src="img/unit/05.jpg" style="width:100%" onclick="currentDiv(5)">
-                                          </div>
-                                        </td>  
                                     </tr>
                                     </tbody>
                                   </table>
                             </div>
+                                      ';
+                                else {
+                                $image = explode('+', $data->img);
+                                $n = count($image); $j = 0 - 3; 
+                                $dir = $data->kd_unit;
+                                foreach ($image as $nama_file_gambar) {
+                                  echo '<img class="mySlides" src="img/unit/'.$dir.'/'.$nama_file_gambar.'" style="width:100%; height:350px">';
+                                }
+                              echo'
+                              </center>
+                                  <table class="">
+                                    <tbody>
+                                      <tr><td></td></tr>';
+                              while ($n>0) {
+                                  $j = $j+3;
+                                  $s = 3;
+                                  if($n<3) $s=$n;
+                                  echo'<tr>';
+                                  for ($x=$j;$x<$j+$s;$x++)
+                                  {
+                                      $curdiv = $x+1;
+                                      echo'
+                                          <td>
+                                            <div class="foto-unit">
+                                              <img class="demo" src="img/unit/'.$dir.'/'.$image[$x].'" style="width:100%" onclick="currentDiv('.$curdiv.')">
+                                            </div>
+                                          </td>';
+                                      $n = $n - 1;
+                                  }
+                                  echo'</tr>';
+                              }
+                              echo '
+                                    </tbody>
+                                  </table>
+                            </div> ';
+                          }
+                            echo '
                             <div class="span5">
                               <div class="control-group">
                                 <div class="control">
@@ -107,6 +155,9 @@
                                       </tr>
                                       <td>Nama Pemilik</td>
                                       <td>: '.$data->nama.'</td>
+                                      </tr>
+                                      <tr>
+                                      <td><strong>Harga</strong></td>
                                       </tr>
                                       <tr>
                                       <td>Harga Sewa WeekDay</td>
@@ -127,6 +178,10 @@
                                       <tr>
                                       <td>Harga Ekstra Charge</td>
                                       <td>: '.number_format($data->ekstra_charge, 0, ".", ".").' IDR</td>
+                                      </tr>
+                                      </tr>
+                                      <tr>
+                                      <td><strong>Fasilitas</strong></td>
                                       </tr>
                                       <tr>
                                       <td>Type Unit</td>
