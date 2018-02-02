@@ -1,0 +1,376 @@
+<?php
+	//notifikasi info bahwa detail unit kosong
+	if(isset($_GET['info_unit'])){
+		echo'
+			<div id="popup-detail" class="modal">
+	  		<div class="modal-header">
+			<form action="unit.php" >
+				<button id="tambah" data-dismiss="modal" class="close" type="submit">×</button>
+			</form>
+  				<script type="text/javascript">
+		  			$(document).ready(function(){
+						$("#tambah").click(function(){
+			  			$(".modal").addClass("hide");
+						});
+		  			});
+				</script>
+  				<h3>Info belum tersedia</h3>
+	  		</div>
+        <div class="modal-body">
+      		<div class="widget-content">
+      			<div class="row-fluid">
+      			  <div class="span12">
+                Detail fasilitas pada unit ini belum tersedia!! Klik button dibawah untuk menambahkan!!
+                <br>
+                <br>
+                <a class="btn btn-info" href="edit.php?tambah_detail_unit='.$_GET["info_unit"].'"><i class="icon-plus"></i> Tambahkan Detail</a>
+              </div>
+            </div>
+          </div>
+        </div>
+	  	</div>';
+	 }
+
+//Detail Transaksi
+  if(isset($_GET['detail'])){
+	$show = $Proses->editTransaksi($_GET['detail']);
+	$detail = $show->fetch(PDO::FETCH_OBJ);
+
+    echo '
+	<div id="popup-detail" class="modal">
+	  <div class="modal-header">
+		<button id="tambah" data-dismiss="modal" class="close" type="button">×</button>
+		<script type="text/javascript">
+		  $(document).ready(function(){
+			$("#tambah").click(function(){
+			  $(".modal").addClass("hide");
+			});
+		  });
+		</script>
+		<h3>Transaksi</h3>
+	  </div>
+	  <div class="modal-body">
+		<div class="widget-content">
+		  <div class="row-fluid">
+			<div class="span8">
+			  <table class="">
+				<tbody>
+				  <script>
+					function Detail(x) {
+					  document.getElementById("demo").innerHTML = "hai";
+					}
+				  </script>
+				  <tr>
+					<td><h4>Detail Penyewa</h4><p id="demo"></p></td>
+				  </tr>
+				  <tr>
+					<td>Nama</td>
+					<td>: '.$detail->nama.'</td>
+				  </tr>
+				  <tr>
+					<td>Alamat</td>
+					<td>: '.$detail->alamat.'</td>
+				  </tr>
+				  <tr>
+					<td>Jenis Kelamin</td>
+					<td>: '.$detail->jenis_kelamin.'</td>
+				  </tr>
+				  <tr>
+					<td>No Telpon</td>
+					<td>: '.$detail->no_tlp.'</td>
+				  </tr>
+				  <tr>
+					<td>E-Mail</td>
+					<td>: '.$detail->email.'</td>
+				  </tr>
+				</tbody>
+			  </table>
+			</div>
+		  </div>
+
+			<div class="row-fluid">
+			  <div class="span12">
+				<table style="margin-top: 20px;" class="table table-bordered table-invoice">
+				  <tbody>
+					<tr>
+					  <th colspan="2">Detail Kwitansi Penyewaan</th>
+					  <tr>
+						<td class="width30">Kwitansi ID:</td>
+						<td class="width70"><strong>COZ-'.$detail->kd_transaksi.'</strong></td>
+					  </tr>
+					  <tr>
+						<td>Invoice Date:</td>
+						<td><strong>'.$detail->tgl_transaksi.'</strong></td>
+					  </tr>
+					  <tr>
+						<td>Apartemen:</td>
+						<td><strong>'.$detail->nama_apt.'</strong></td>
+					  </tr>
+					  <tr>
+						<td class="width30">Unit:</td>
+						<td class="width70"><strong>'.$detail->no_unit.'</strong></td>
+					  </tr>
+					  <tr>
+						<td class="width30">Booking Via:</td>
+						<td class="width70"><strong>'.$detail->booking_via.'</strong></td>
+					  </tr>
+					  <tr>
+						<td class="width30">Check In:</td>
+						<td class="width70"><strong>'.$detail->check_in.'</strong></td>
+					  </tr>
+					  <tr>
+						<td class="width30">Check Out:</td>
+						<td class="width70"><strong>'.$detail->check_out.'</strong></td>
+					  </tr>
+					  <tr>
+						<td class="width30">Jumlah Hari:</td>
+						<td class="width70"><strong>'.$detail->hari.'</strong></td>
+					  </tr>
+					  <tr>
+						<td class="width30">Jumlah Tamu:</td>
+						<td class="width70"><strong>'.$detail->tamu.'</strong></td>
+					  </tr>
+					  <tr>
+						<td class="width30">Sewa Perhari:</td>
+						<td class="width70"><strong>'.number_format($detail->harga_sewa, 0, ".", ".").' IDR</strong></td>
+					  </tr>
+					  <tr>
+						<td class="width30">Diskon:</td>
+						<td class="width70"><strong>'.number_format($detail->diskon, 0, ".", ".").' IDR</strong></td>
+					  </tr>
+					  <tr>
+						<td class="width30">Ekstra Charge:</td>
+						<td class="width70"><strong>'.number_format($detail->ekstra_charge, 0, ".", ".").' IDR</strong></td>
+					  </tr>
+					  <tr>
+						<td class="width30">Total Tagihan:</td>
+						<td class="width70"><strong>'.number_format($detail->total_tagihan, 0, ".", ".").' IDR</strong></td>
+					  </tr>
+					  <tr>
+						<td class="width30">Pembayaran DP:</td>
+						<td class="width70"><strong>'.number_format($detail->dp, 0, ".", ".").' IDR</strong></td>
+					  </tr>
+					  <tr>
+						<td class="width30">DP Via:</td>
+						<td class="width70"><strong>'.$detail->nama_bank.'</strong></td>
+					  </tr>
+					  <tr>
+						<td class="width30">Sisa Pelunasan:</td>
+						<td class="width70"><strong>'.number_format($detail->sisa_pelunasan, 0, ".", ".").' IDR</strong></td>
+					  </tr>
+					  <tr>
+						<td class="width30">Note:</td>
+						<td class="width70"><strong>'.$detail->catatan.'</strong></td>
+					  </tr>
+					</tr>
+				  </tbody>
+				</table>
+			  </div>
+			</div>
+		</div>
+	  </div>
+	</div>
+	';
+  }
+
+  //detail data owner
+    if(isset($_GET['detail_owner'])){
+  	$show = $Proses->editOwner($_GET['detail_owner']);
+  	$detail = $show->fetch(PDO::FETCH_OBJ);
+
+      echo '
+  	<div id="popup-detail" class="modal">
+  	  <div class="modal-header">
+		<form action="owner.php" >
+			<button id="tambah" data-dismiss="modal" class="close" type="submit">×</button>
+		</form>
+  		<script type="text/javascript">
+  		  $(document).ready(function(){
+  			$("#tambah").click(function(){
+  			  $(".modal").addClass("hide");
+  			});
+  		  });
+  		</script>
+  		<h3>Transaksi</h3>
+  	  </div>
+  	  <div class="modal-body">
+  		<div class="widget-content">
+  		  <div class="row-fluid">
+  			<div class="span8">
+  			  <table class="">
+  				<tbody>
+  				  <tr>
+  					<td><h4>Detail Owner</h4><p id="demo"></p></td>
+  				  </tr>
+  				  <tr>
+  					<td>Nama</td>
+  					<td>: '.$detail->nama.'</td>
+  				  </tr>
+  				  <tr>
+  					<td>Alamat</td>
+  					<td>: '.$detail->alamat.'</td>
+  				  </tr>
+  				  <tr>
+  					<td>Jenis Kelamin</td>
+  					<td>: '.$detail->jenis_kelamin.'</td>
+  				  </tr>
+  				  <tr>
+  					<td>No Telpon</td>
+  					<td>: '.$detail->no_tlp.'</td>
+  				  </tr>
+  				  <tr>
+  					<td>E-Mail</td>
+  					<td>: '.$detail->email.'</td>
+  				  </tr>
+  				  <tr>
+  					<td>Tanggal Bergabung</td>
+  					<td>: '.$detail->tgl_gabung.'</td>
+  				  </tr>
+  				  <tr>
+  					<td>Jumlah Unit</td>
+  					<td>: '.$detail->jumlah_unit.'</td>
+  				  </tr>
+
+  				  <tr>
+  					<td>Bank</td>
+  					<td>: '.$detail->nama_bank.'</td>
+  				  </tr>
+  				  <tr>
+  					<td>No Rekening</td>
+  					<td>: '.$detail->no_rek.'</td>
+  				  </tr>
+  				</tbody>
+  			  </table>
+  			</div>
+  		  </div>
+  		</div>
+  	  </div>
+  	</div>
+  	';
+    }
+?>
+
+<!-- Modal Popup Tambah Penyewa di Transaksi-->
+<div id="popup-penyewa-baru" class="modal hide">
+  <div class="modal-header">
+    <button data-dismiss="modal" class="close" type="button">×</button>
+    <h3>Pelanggan Baru</h3>
+  </div>
+  <div class="modal-body">
+	<form action="proses/proses_add.php" method="post" class="form-horizontal">
+	  <div class="control-group">
+		<label class="control-label">Nama :</label>
+		<div class="controls">
+		  <input name="nama" type="text" class="span2" placeholder="Nama" required/>
+		</div>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label">Alamat :</label>
+		<div class="controls">
+		  <input name="alamat" type="text" class="span2" placeholder="Alamat" required/>
+		</div>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label">No Telpon :</label>
+		<div class="controls">
+		  <input name="no_tlp" type="text"  class="span2" placeholder="ex: 0812...." required/>
+		</div>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label">Jenis Kelamin :</label>
+		<div class="controls">
+		  <label>
+			<input type="radio" name="jenis_kelamin" value="Laki-laki" checked/> Laki-laki
+		  </label>
+		  <label>
+			<input type="radio" name="jenis_kelamin" value="Perempuan" /> Perempuan
+		  </label>
+		</div>
+	  </div>
+	  <div class="control-group">
+		<div class="controls">
+		  <input type="submit" name="addPenyewaTransaksi" class="btn btn-success">
+		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+		</div>
+	  </div>
+	</form>
+  </div>
+</div>
+
+<!--Modal Popup Tambah Apartemen -->
+<div id="popup-apartemen" class="modal hide">
+  <div class="modal-header">
+    <button data-dismiss="modal" class="close" type="button">×</button>
+    <h3>Apartemen Baru</h3>
+  </div>
+  <div class="modal-body">
+	<form action="proses/proses_add.php" method="post" class="form-horizontal">
+	  <div class="control-group">
+		<label class="control-label">Nama Apartemen</label>
+		<div class="controls">
+		  <input name="nama_apt" type="text" class="span2" placeholder="Nama" required/>
+		</div>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label">Alamat Apartemen</label>
+		<div class="controls">
+		  <input name="alamat_apt" type="text" class="span2" placeholder="Alamat" required/>
+		</div>
+	  </div>
+	  <div class="control-group">
+		<div class="controls">
+		  <input type="submit" name="addApartemen" class="btn btn-success">
+		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+		</div>
+	  </div>
+	</form>
+  </div>
+</div>
+
+<!--Modal Popup Tambah Booking Via-->
+<div id="popup-booking" class="modal hide">
+  <div class="modal-header">
+    <button data-dismiss="modal" class="close" type="button">×</button>
+    <h3>Data Baru</h3>
+  </div>
+  <div class="modal-body">
+	<form action="proses/proses_add.php" method="post" class="form-horizontal">
+	  <div class="control-group">
+		<label class="control-label">Booking Via :</label>
+		<div class="controls">
+		  <input name="booking_via" type="text" class="span2" placeholder="Dari" required/>
+		</div>
+	  </div>
+	  <div class="control-group">
+		<div class="controls">
+		  <input type="submit" name="addBooking_via" class="btn btn-success">
+		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+		</div>
+	  </div>
+	</form>
+  </div>
+</div>
+
+<!--Modal Tambah DP Via-->
+<div id="popup-dp" class="modal hide">
+  <div class="modal-header">
+    <button data-dismiss="modal" class="close" type="button">×</button>
+    <h3>Data Baru</h3>
+  </div>
+  <div class="modal-body">
+	<form action="proses/proses_add.php" method="post" class="form-horizontal">
+	  <div class="control-group">
+		<label class="control-label">Nama Bank :</label>
+		<div class="controls">
+		  <input name="nama_bank" type="text" class="span2" placeholder="Bank" required/>
+		</div>
+	  </div>
+	  <div class="control-group">
+		<div class="controls">
+		  <input type="submit" name="addDp_via" class="btn btn-success">
+		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+		</div>
+	  </div>
+	</form>
+  </div>
+</div>

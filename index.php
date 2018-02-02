@@ -1,81 +1,81 @@
 <?php
   session_start();
+  require 'class/login/login.php';
+  require 'config/database.php';
 
-  if(!isset($_SESSION['username'])) {
-    header('location:login.php');
-  }else {
-    $username = $_SESSION['username'];
-  }
-
-  include "template/head.php";
-  $thisPage = "Dashboard";
+  if (isset ($_POST['login'])){
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $user = new Login($db);
+    $login = $user->loginuser($username, $password);
+    if($login == true){
+      $_SESSION['username'] = $login['username'];
+      $_SESSION['hak_akses'] = $login['hak_akses'];
+      if($_SESSION['hak_akses'] == "admin"){
+				header('Location: view/admin/home.php');
+      }elseif($_SESSION['hak_akses'] == "superadmin") {
+				header('Location: view/superadmin/home.php');
+			}
+    }else{
+			$error= "Username / Password Salah!";
+		}
+	}
 ?>
-<body>
-<?php
-  include "template/header.php";
-  include "template/sidebar.php";
-?>
-
-<!--main-container-part-->
-<div id="content">
-<!--breadcrumbs-->
-  <div id="content-header">
-    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
-  </div>
-<!--End-breadcrumbs-->
-
-<!--Action boxes-->
-  <div class="container-fluid">
-    <div class="quick-actions_homepage">
-      <ul class="quick-actions">
-        <li class="bg_lb"> <a href="index.html"> <i class="icon-dashboard"></i> <span class="label label-important">20</span> My Dashboard </a> </li>
-        <li class="bg_lg span3"> <a href="charts.html"> <i class="icon-signal"></i> Charts</a> </li>
-        <li class="bg_ly"> <a href="widgets.html"> <i class="icon-inbox"></i><span class="label label-success">101</span> Widgets </a> </li>
-        <li class="bg_lo"> <a href="tables.php"> <i class="icon-th"></i> Tables</a> </li>
-        <li class="bg_ls"> <a href="grid.html"> <i class="icon-fullscreen"></i> Full width</a> </li>
-        <li class="bg_lo span3"> <a href="form-common.html"> <i class="icon-th-list"></i> Forms</a> </li>
-        <li class="bg_ls"> <a href="buttons.html"> <i class="icon-tint"></i> Buttons</a> </li>
-        <li class="bg_lb"> <a href="interface.html"> <i class="icon-pencil"></i>Elements</a> </li>
-        <li class="bg_lg"> <a href="calendar.html"> <i class="icon-calendar"></i> Calendar</a> </li>
-        <li class="bg_lr"> <a href="error404.html"> <i class="icon-info-sign"></i> Error</a> </li>
-
-      </ul>
-    </div>
-<!--End-Action boxes-->
-
-<!--Chart-box-->
-    <div class="row-fluid">
-      <div class="widget-box">
-        <div class="widget-title bg_lg"><span class="icon"><i class="icon-signal"></i></span>
-          <h5>Site Analytics</h5>
-        </div>
-        <div class="widget-content" >
-          <div class="row-fluid">
-            <div class="span9">
-              <div class="chart"></div>
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <title>Matrix Admin</title><meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="asset/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="asset/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="asset/css/matrix-login.css" />
+    <link href="asset/font-awesome/css/font-awesome.css" rel="stylesheet" />
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <div id="loginbox">
+      <form id="loginform" class="form-vertical" action="" method="post">
+			  <div class="control-group normal_text"> <h3><img src="asset/img/logo.png" alt="Logo" /></h3></div>
+          <div class="control-group">
+            <?php
+              if(isset($error)){
+                echo '<div align="center" style="color:white;">'.$error.'</div>';
+              }
+            ?>
+            <div class="controls">
+              <div class="main_input_box">
+                <span class="add-on bg_lg"><i class="icon-user"> </i></span>
+							  <input name="username" type="text" placeholder="Username" />
+              </div>
             </div>
-            <div class="span3">
-              <ul class="site-stats">
-                <li class="bg_lh"><i class="icon-user"></i> <strong>2540</strong> <small>Total Users</small></li>
-                <li class="bg_lh"><i class="icon-plus"></i> <strong>120</strong> <small>New Users </small></li>
-                <li class="bg_lh"><i class="icon-shopping-cart"></i> <strong>656</strong> <small>Total Shop</small></li>
-                <li class="bg_lh"><i class="icon-tag"></i> <strong>9540</strong> <small>Total Orders</small></li>
-                <li class="bg_lh"><i class="icon-repeat"></i> <strong>10</strong> <small>Pending Orders</small></li>
-                <li class="bg_lh"><i class="icon-globe"></i> <strong>8540</strong> <small>Online Orders</small></li>
-              </ul>
+          </div>
+          <div class="control-group">
+            <div class="controls">
+              <div class="main_input_box">
+                <span class="add-on bg_ly"><i class="icon-lock"></i></span>
+							  <input name="password" type="password" placeholder="Password" />
+              </div>
             </div>
-		  </div>
-        </div>
+          </div>
+          <div class="form-actions">
+            <span class="pull-left"><a href="#" class="flip-link btn btn-info" id="to-recover">Lost password?</a></span>
+            <span class="pull-right"><button type="submit" class="btn btn-success" name="login"/> Login</button></span>
+          </div>
+        </form>
+        <form id="recoverform" action="#" class="form-vertical">
+				  <p class="normal_text">Enter your e-mail address below and we will send you instructions how to recover a password.</p>
+          <div class="controls">
+            <div class="main_input_box">
+              <span class="add-on bg_lo"><i class="icon-envelope"></i></span><input type="text" placeholder="E-mail address" />
+            </div>
+          </div>
+          <div class="form-actions">
+            <span class="pull-left"><a href="#" class="flip-link btn btn-success" id="to-login">&laquo; Back to login</a></span>
+            <span class="pull-right"><a class="btn btn-info"/>Reecover</a></span>
+          </div>
+        </form>
       </div>
-    </div>
-<!--End-Chart-box-->
-    <hr/>
-  </div>
-</div>
-<!--end-main-container-part-->
-
-<?php
-  include "template/footer.php";
-?>
-</body>
+      <script src="asset/js/jquery.min.js"></script>
+    <script src="asset/js/matrix.login.js"></script>
+  </body>
 </html>
