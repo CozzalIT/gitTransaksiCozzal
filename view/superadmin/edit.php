@@ -2,6 +2,11 @@
   session_start();
   require("../../class/penyewa.php");
   require("../../config/database.php");
+  require("../../class/unit.php");
+  require("../../class/apartemen.php");
+  require("../../class/booking.php");
+  require("../../class/dp_via.php");
+  require("../../class/owner.php");
 
   if(!isset($_SESSION['username'])) {
     header('location:../../index.php');
@@ -26,7 +31,6 @@
   <div class="container-fluid">
     <div class="row-fluid">
 	  <?php
-		require('proses/proses.php');
 //edit data penyewa
 		if(isset($_GET['edit'])){
 		  $Proses = new Penyewa($db);
@@ -117,7 +121,7 @@
 //edit data apartemen
 		if (isset($_GET['edit_apt']))
 		{
-		  $Proses = new Proses();
+		  $Proses = new Apartemen($db);
 		  $show = $Proses->editApartemen($_GET['edit_apt']);
 		  $edit = $show->fetch(PDO::FETCH_OBJ);
 		  echo '
@@ -128,7 +132,7 @@
 				<div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
 				  <h5>Apartement-info</h5>
 				</div>
-				<div class="widget-content nopadding">
+				<div class="widget-content nopading">
 				  <form action="proses/proses_update.php" method="post" class="form-horizontal">
 					<div class="control-group">
 					  <label class="control-label hide">Kode Apartement :</label>
@@ -165,7 +169,7 @@
 //edit data bank
 		if (isset($_GET['edit_bank']))
 		{
-		  $Proses = new Proses();
+		  $Proses = new Penyewa($db);
 		  $show = $Proses->editDp_via($_GET['edit_bank']);
 		  $edit = $show->fetch(PDO::FETCH_OBJ);
 		  echo '
@@ -355,7 +359,7 @@
 //Edit Data Unit
     if (isset($_GET['edit_unit']))
     {
-      $Proses = new Proses();
+      $Proses = new Unit($db);
       $show = $Proses->editUnit($_GET['edit_unit']);
       $edit = $show->fetch(PDO::FETCH_OBJ);
       echo '
@@ -367,7 +371,7 @@
           <h5>Data Baru</h5>
         </div>
         <div class="widget-content nopadding">
-          <form action="proses/proses_update.php" method="post" class="form-horizontal">
+          <form action="" method="post" class="form-horizontal">
           <div class="control-group">
 		    <input name="kd_unit" class="hide" type="text" value="'.$edit->kd_unit.'"/>  <!--Hiden Flag-->
 		    <input name="kd_owner_lama" class="hide" type="text" value="'.$edit->kd_owner.'"/>  <!--Hiden Flag-->
@@ -375,7 +379,7 @@
           <div class="controls">
       		  <select name="apartemen">
         		  <option>-- Pilih Apartemen --</option>';
-                $Proses = new Proses();
+                $Proses = new Apartemen($db);
                 $show = $Proses->showApartemen();
                 while($data = $show->fetch(PDO::FETCH_OBJ)){
                   if ($edit->kd_apt!=$data->kd_apt){
@@ -399,6 +403,7 @@
             <div class="controls">
         		  <select name="owner">
         		  <option>-- Pilih Owner --</option>';
+        		 $Proses = new Owner($db);
                 $show = $Proses->showOwner();
                 while($data = $show->fetch(PDO::FETCH_OBJ)){
                   if ($edit->kd_owner!=$data->kd_owner){

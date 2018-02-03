@@ -12,8 +12,9 @@
   include "template/head.php";
   include "template/header.php";
   include "template/sidebar.php";
-  require('proses/proses.php');
-  $proses = new proses();
+  require("../../class/unit.php");
+  require("../../config/database.php");
+  $proses = new Unit($db);
     if (isset($_POST['upload_gambar'])){
     $img_baru = ''; $img = '';
     $kd_unit = $_POST['kd_unit'];
@@ -47,7 +48,7 @@
     }
 
   if(isset($_GET['detail_unit'])){
-      $Proses = new Proses();
+      $Proses = new Unit($db);
       $show = $Proses->showUnitbyId($_GET['detail_unit']);
       while($data = $show->fetch(PDO::FETCH_OBJ)){
         $dapur ='Tersedia';

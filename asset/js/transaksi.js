@@ -116,8 +116,8 @@ $(document).ready(function(){
 	idd = $("#unit").val().split("+");
 		$.ajax({
 			type: "POST", 
-			url: "proses/proses_cek_unit.php", 
-			data: {id : idd[0], tci:$("#check_in").val(), tco:$("#check_out").val()}, 
+			url: "option_unit.php", 
+			data: {id1 : idd[0], tci1:$("#check_in").val(), tco1:$("#check_out").val()}, 
 			dataType: "json",
 			beforeSend: function(e) { 
 				if(e && e.overrideMimeType) {

@@ -1,8 +1,8 @@
                           function cek_detail_unit(n){
                               $.ajax({
                                 type: 'POST',
-                                url: 'proses/proses_cek_unit.php', 
-                                data: {detail_unit : n},
+                                url: 'option_unit.php', 
+                                data: {detail : n},
                                 dataType: 'json',
                                 beforeSend: function(e) {
                                   if(e && e.overrideMimeType) {

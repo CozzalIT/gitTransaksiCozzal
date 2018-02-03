@@ -1,6 +1,7 @@
 <?php
 
-require("proses.php");
+require("../../class/unit.php");
+require("../../config/database.php");
 
 //cek ketersediaan unit pada tanggal tertentu
 if(isset($_POST['id'])){
@@ -9,7 +10,7 @@ if(isset($_POST['id'])){
 	$CO = $_POST['tco'];
 	$hasil = "Tidak Ada";
 	$flag = 0;
-	$Proses = new Proses();
+	$Proses = new Unit($db);
 	$show = $Proses->showTransaksi_cek($CI,$CO,$kd_unit);
 	while($data = $show->fetch(PDO::FETCH_OBJ)){
 	$flag++;	
@@ -24,7 +25,7 @@ if(isset($_POST['detail_unit'])){
 	$kd_unit = $_POST['detail_unit'];
 	$flag = 0; $namaunit = '';
 	$hasil = "Ada";
-	$Proses = new Proses();
+	$Proses = new Unit($db);
 	$show = $Proses->showDetail_Unit($kd_unit);
 	while($data = $show->fetch(PDO::FETCH_OBJ)){
 	$flag++; 	
