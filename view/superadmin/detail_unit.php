@@ -154,86 +154,89 @@
                                       <tr>
                                       <td><h4>Detail Unit '.$data->no_unit.' ('.$data->nama_apt.')</h4></p></td>
                                       </tr>
-                                      <td>Nama Pemilik</td>
-                                      <td>: '.$data->nama.'</td>
+                                        <td>Nama Pemilik</td>
+                                        <td>: '.$data->nama.'</td>
+                                      </tr>
+                                      <tr style="border-bottom-width: 2px;border-bottom-style: solid;">
+                                        <td><strong>Harga</strong></td>
                                       </tr>
                                       <tr>
-                                      <td><strong>Harga</strong></td>
+                                        <td>Harga Sewa WeekDay</td>
+                                        <td>: '.number_format($data->h_sewa_wd, 0, ".", ".").' IDR</td>
                                       </tr>
                                       <tr>
-                                      <td>Harga Sewa WeekDay</td>
-                                      <td>: '.number_format($data->h_sewa_wd, 0, ".", ".").' IDR</td>
+                                        <td>Harga Sewa WeekEnd</td>
+                                        <td>: '.number_format($data->h_sewa_we, 0, ".", ".").' IDR</td>
                                       </tr>
                                       <tr>
-                                      <td>Harga Sewa WeekEnd</td>
-                                      <td>: '.number_format($data->h_sewa_we, 0, ".", ".").' IDR</td>
+                                        <td>Harga Owner WeekDay</td>
+                                        <td>: '.number_format($data->h_owner_wd, 0, ".", ".").' IDR</td>
                                       </tr>
                                       <tr>
-                                      <td>Harga Owner WeekDay</td>
-                                      <td>: '.number_format($data->h_owner_wd, 0, ".", ".").' IDR</td>
+                                        <td>Harga Owner WeekEnd</td>
+                                        <td>: '.number_format($data->h_owner_we, 0, ".", ".").' IDR</td>
                                       </tr>
                                       <tr>
-                                      <td>Harga Owner WeekEnd</td>
-                                      <td>: '.number_format($data->h_owner_we, 0, ".", ".").' IDR</td>
+                                        <td>Harga Ekstra Charge</td>
+                                        <td>: '.number_format($data->ekstra_charge, 0, ".", ".").' IDR</td>
                                       </tr>
                                       <tr>
-                                      <td>Harga Ekstra Charge</td>
-                                      <td>: '.number_format($data->ekstra_charge, 0, ".", ".").' IDR</td>
+                                        <td></td>
+                                        <td><a class="btn btn-primary">Tombol</a></td>
                                       </tr>
-                                      </tr>
-                                      <tr>
-                                      <td><strong>Fasilitas</strong></td>
-                                      </tr>
-                                      <tr>
-                                      <td>Type Unit</td>
-                                      <td>: '.$data->type.'</td>
+                                      <tr style="border-bottom-width: 2px;border-bottom-style: solid;">
+                                        <td><strong>Fasilitas</strong></td>
                                       </tr>
                                       <tr>
-                                      <td>Posisi Lantai</td>
-                                      <td>: '.$data->lantai.'</td>
+                                        <td>Type Unit</td>
+                                        <td>: '.$data->type.'</td>
                                       </tr>
                                       <tr>
-                                      <td>Jumlah Kamar</td>
-                                      <td>: '.$data->jml_kmr.'</td>
+                                        <td>Posisi Lantai</td>
+                                        <td>: '.$data->lantai.'</td>
                                       </tr>
                                       <tr>
-                                      <td>Jumlah Kasur</td>
-                                      <td>: '.$data->jml_bed.'</td>
+                                        <td>Jumlah Kamar</td>
+                                        <td>: '.$data->jml_kmr.'</td>
                                       </tr>
                                       <tr>
-                                      <td>Jumlah AC</td>
-                                      <td>: '.$data->jml_ac.'</td>
+                                        <td>Jumlah Kasur</td>
+                                        <td>: '.$data->jml_bed.'</td>
                                       </tr>
                                       <tr>
-                                      <td>Ruang Dapur</td>
-                                      <td>: '.$dapur.'</td>
+                                        <td>Jumlah AC</td>
+                                        <td>: '.$data->jml_ac.'</td>
                                       </tr>
                                       <tr>
-                                      <td>Water Heater</td>
-                                      <td>: '.$water_heater.'</td>
+                                        <td>Ruang Dapur</td>
+                                        <td>: '.$dapur.'</td>
                                       </tr>
                                       <tr>
-                                      <td>Tv Cable</td>
-                                      <td>: '.$tv.'</td>
+                                        <td>Water Heater</td>
+                                        <td>: '.$water_heater.'</td>
                                       </tr>
                                       <tr>
-                                      <td>Wifi</td>
-                                      <td>: '.$wifi.'</td>
+                                        <td>Tv Cable</td>
+                                        <td>: '.$tv.'</td>
                                       </tr>
                                       <tr>
-                                      <td>Amenities</td>
-                                      <td>: '.$amenities.'</td>
+                                        <td>Wifi</td>
+                                        <td>: '.$wifi.'</td>
                                       </tr>
                                       <tr>
-                                      <td>Merokok</td>
-                                      <td>: '.$merokok.'</td>
+                                        <td>Amenities</td>
+                                        <td>: '.$amenities.'</td>
+                                      </tr>
+                                      <tr>
+                                        <td>Merokok</td>
+                                        <td>: '.$merokok.'</td>
                                       </tr>
                                     </tbody>
                                   </table>
                                 </center>
-                                </div>
                               </div>
                             </div>
+                          </div>
                         </div>
                       </div>
                     </div>
