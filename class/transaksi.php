@@ -118,6 +118,24 @@ class Transaksi {
     $sql = "DELETE FROM tb_transaksi WHERE kd_transaksi='$kd_transaksi'";
     $query = $this->db->query($sql);
   }
+
+  //penyewa numpang lewat
+ public function addPenyewa($nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung){
+    $sql = "INSERT INTO tb_penyewa (nama, alamat, no_tlp, jenis_kelamin, email, tgl_gabung) VALUES('$nama', '$alamat', '$no_tlp', '$jenis_kelamin', '$email', '$tgl_gabung')";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
+  }
+
+  //Proses Show
+  public function showPenyewa(){
+    $sql = "SELECT * FROM tb_penyewa";
+    $query = $this->db->query($sql);
+    return $query;
+  }
 }
 
 //Tambah Transaksi

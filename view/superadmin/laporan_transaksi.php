@@ -62,13 +62,13 @@
                         <td>
                           <center>
                             <a class='btn btn-success' id='detail' name='detail' href='laporan_transaksi.php?detail=$data->kd_transaksi'>Detail</a>
-                            <a class='btn btn-info' href='proses/proses_add.php?addConfirm=$data->kd_transaksi'>Confirm</a>
+                            <a class='btn btn-info' href='laporan_transaksi.php?addConfirm=$data->kd_transaksi'>Confirm</a>
                           </center>
                         </td>
             						<td>
                           <center>
               						  <a class='btn btn-primary' href='edit.php?edit_transaksi=$data->kd_transaksi'>Edit</a>
-              						  <a class='btn btn-danger' href='proses/proses_delete.php?delete_transaksi=$data->kd_transaksi'>Hapus</a>
+              						  <a class='btn btn-danger' href='laporan_transaksi.php?delete_transaksi=$data->kd_transaksi'>Hapus</a>
                           </center>
                         </td>
           					  </tr>

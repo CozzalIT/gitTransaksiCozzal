@@ -49,20 +49,27 @@
 
   if(isset($_GET['detail_unit'])){
       $Proses = new Unit($db);
-      $show = $Proses->showUnitbyId($_GET['detail_unit']);
-      while($data = $show->fetch(PDO::FETCH_OBJ)){
+      $show2 = $Proses->showDetail_Unit($_GET['detail_unit']);
+      $dapur =''; $water_heater = ''; $tv = ''; $wifi = '';$amenities = '';$merokok = '';  $img_t = 'Nothing';
+      $flag = 0;        
+      while($data = $show2->fetch(PDO::FETCH_OBJ)){
+        $flag = 1;
         $dapur ='Tersedia';
         $water_heater = 'Tersedia';
         $tv = 'Tersedia';
         $wifi = 'Tersedia';
         $amenities = 'Tersedia';
-        $merokok = 'Boleh';
+        $merokok = 'Boleh';    
+        $img_t = $data->img;    
         if($data->dapur=='N') $dapur = 'Tidak Tersedia';
         if($data->water_heater=='N') $water_heater = 'Tidak Tersedia';
         if($data->tv=='N') $tv = 'Tidak Tersedia';
         if($data->wifi=='N') $wifi = 'Tidak Tersedia';
         if($data->amenities=='N') $amenities = 'Tidak Tersedia';
         if($data->merokok=='N') $merokok = 'Tidak Boleh';
+      }
+      $show = $Proses->showUnitbyId($_GET['detail_unit']);
+      while($data = $show->fetch(PDO::FETCH_OBJ)){
         echo '
             <!--main-container-part-->
             <div id="content">
@@ -70,7 +77,7 @@
                 <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Tables</a> </div>
                 <form action="" onsubmit="return validasi_upload()" method="POST" enctype="multipart/form-data" style="padding-top: 20px;padding-left: 20px;">
                   <input type="text" name="kd_unit" value='.$data->kd_unit.' style="display:none">
-                  <input type="text" id="kd_img" name="img" value='.$data->img.' style="display:none">
+                  <input type="text" id="kd_img" name="img" value='.$img_t.' style="display:none">
                   <input type="file" id="img" name="gambar[]" multiple>
                   <input class="btn btn-success" type="submit" name="upload_gambar" value="Upload Gambar">
                 </form>
@@ -78,7 +85,6 @@
               <div class="container-fluid">
                 <hr>
                 <a class="btn btn-primary" href="edit.php?edit_detail_unit='.$_GET["detail_unit"].'">Ubah Fasilitas</a>
-                 <a class="btn btn-small" onclick="tes()" href="#">Tes</a>
                 <div class="row-fluid">
                   <div class="span12">
                     <div class="widget-box">
@@ -92,7 +98,7 @@
                         <div class="row-fluid" style="max-width:1200px">
                             <div class="span6">
                               <center>';
-                                if($data->img=='None')
+                                if($img_t=='None')
                                   echo '
                                 <img class="mySlides" src="../../asset/img/none.png" style="width:100%; height:350px; padding-top:20px">
                               </center>
@@ -111,7 +117,7 @@
                             </div>
                                       ';
                                 else {
-                                $image = explode('+', $data->img);
+                                $image = explode('+', $img_t);
                                 $n = count($image); $j = 0 - 3;
                                 $dir = $data->kd_unit;
                                 foreach ($image as $nama_file_gambar) {
@@ -156,10 +162,15 @@
                                       <td><h4>Detail Unit '.$data->no_unit.' ('.$data->nama_apt.')</h4></p></td>
                                       </tr>
                                       <tr style="border-bottom-width: 2px;border-bottom-style: solid;">
-                                      <td><strong>Kepemilikan</strong></td>
+                                      <td><strong>Info Pemilik</strong></td>
                                       </tr>
                                       <td>Nama Pemilik</td>
                                       <td>: '.$data->nama.'</td>
+                                      </tr>
+                                      <tr>
+                                        <td>
+                                           <a class="btn btn-small" href="#">Edit Info Pemilik</a>
+                                        </td>
                                       </tr>
                                       <tr style="border-bottom-width: 2px;border-bottom-style: solid;">
                                       <td><strong>Harga</strong></td>

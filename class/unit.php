@@ -38,7 +38,7 @@ class Unit {
   }
 
   public function showDetail_Unit($kd_unit){
-    $sql = "SELECT kd_unit FROM tb_detail_unit
+    $sql = "SELECT * FROM tb_detail_unit
     where kd_unit='$kd_unit'";
     $query = $this->db->query($sql);
     return $query;
@@ -48,7 +48,6 @@ class Unit {
     $sql = "SELECT * FROM tb_unit
     INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt
     INNER JOIN tb_owner ON tb_owner.kd_owner = tb_unit.kd_owner
-    INNER JOIN tb_detail_unit ON tb_detail_unit.kd_unit = tb_unit.kd_unit
     where tb_unit.kd_unit='$kd_unit'";
     $query = $this->db->query($sql);
     return $query;
