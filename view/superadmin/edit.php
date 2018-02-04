@@ -638,11 +638,11 @@
 		  $amenities='Tidak Tersedia'; $merokok='Tidak Boleh'; $type='';
 		  if(isset($_GET['edit_detail_unit']))
 		  {
-		  		$Proses = new Proses();
-		  		$show = $Proses->showUnitById($_GET['edit_detail_unit']);
+		  		$Proses = new Unit($db);
+		  		$show = $Proses->showDetail_unit($_GET['edit_detail_unit']);
 		  		$edit = $show->fetch(PDO::FETCH_OBJ);
 		  		$lantai = $edit->lantai; $jml_kmr = $edit->jml_kmr; $jml_bed = $edit->jml_bed; $type=$edit->type;
-		  		$jml_ac = $edit->jml_ac; $kd_unit = $_GET['edit_detail_unit']; $act = 'proses/proses_update.php';
+		  		$jml_ac = $edit->jml_ac; $kd_unit = $_GET['edit_detail_unit']; $act = 'update_detail_unit';
 		  		if($edit->water_heater=='Y'){
 					$water_heater='Tersedia';
 				}
@@ -665,7 +665,7 @@
 		  else
 		  {
 		  		$kd_unit = $_GET['tambah_detail_unit'];
-		  		$act = 'proses/proses_add.php';
+		  		$act = 'add_detail_unit';
 		  }
 		  echo '
 			<div class="span3">
@@ -676,7 +676,7 @@
   				  <h5>Detail Fasilitas Unit</h5>
   				</div>
   				<div class="widget-content nopadding">
-  				  <form action="'.$act.'" method="post" class="form-horizontal">
+  				  <form action="unit.php" method="post" class="form-horizontal">
 					<div class="control-group">
   					  <label class="control-label">Type Unit :</label>
   					  <div class="controls">
@@ -814,7 +814,7 @@
               //button here
   					  echo '
   					  <div class="form-actions" style="text-align:right">
-  						<button name="detail_unit" type="submit" class="btn btn-success">Update</button>
+  						<button name="'.$act.'" type="submit" class="btn btn-success">Update</button>
   					  </div>
   					</form>
   				  </div>

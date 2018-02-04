@@ -17,9 +17,9 @@ class Unit {
     }
   }
 
-  public function addDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok, $type){
-    $sql = "INSERT INTO tb_detail_unit (kd_unit, lantai, jml_kmr, jml_bed, jml_ac, water_heater, dapur, wifi, tv, amenities, merokok, type, img)
-    VALUES('$kd_unit', '$lantai', '$jml_kmr', '$jml_bed', '$jml_ac', '$water_heater', '$dapur', '$wifi', '$tv', '$amenities', '$merokok', '$type', 'None')";
+  public function addDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok, $type, $img, $isi){
+    $sql = "INSERT INTO tb_detail_unit (kd_unit, lantai, jml_kmr, jml_bed, jml_ac, water_heater, dapur, wifi, tv, amenities, merokok, type, img, isi)
+    VALUES('$kd_unit', '$lantai', '$jml_kmr', '$jml_bed', '$jml_ac', '$water_heater', '$dapur', '$wifi', '$tv', '$amenities', '$merokok', '$type', '$img', '$isi')";
     $query = $this->db->query($sql);
     if(!$query){
       return "Failed";
@@ -83,7 +83,7 @@ class Unit {
 
   public function updateDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok, $type){
     $sql = "update tb_detail_unit SET lantai='$lantai', jml_kmr='$jml_kmr', jml_bed='$jml_bed', jml_ac='$jml_ac', water_heater='$water_heater',
-    dapur='$dapur', wifi='$wifi', tv='$tv', amenities='$amenities', merokok='$merokok', type='$type' where kd_unit='$kd_unit'";
+    dapur='$dapur', wifi='$wifi', tv='$tv', amenities='$amenities', merokok='$merokok', type='$type', isi='Y' where kd_unit='$kd_unit'";
     $query = $this->db->query($sql);
     if(!$query){
       return "Failed";
@@ -163,7 +163,7 @@ if(isset($_POST['addUnit'])){
 }
 
 //Tambah Detail Unit
-if(isset($_POST['detail_unit'])){
+if(isset($_POST['add_detail_unit'])){
   $kd_unit = $_POST['kd_unit'];
   $lantai = $_POST['lantai'];
   $jml_kmr = $_POST['jml_kmr'];
@@ -176,13 +176,12 @@ if(isset($_POST['detail_unit'])){
   $amenities = $_POST['amenities'];
   $merokok = $_POST['merokok'];
   $type = $_POST['type'];
-
   require("../../config/database.php");
   $proses = new Unit($db);
-  $add = $proses->addDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok, $type);
+  $add = $proses->addDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok, $type, 'None', 'Y');
 
   if($add == "Success"){
-    header('Location:../detail_unit.php?detail_unit='.$kd_unit);
+    header('Location:detail_unit.php?detail_unit='.$kd_unit);
   }
   else echo "error";
 }
@@ -243,7 +242,7 @@ if(isset($_POST['updateUnit'])){
 }
 
 //Update Detail Unit
-if(isset($_POST['detail_unit'])){
+if(isset($_POST['update_detail_unit'])){
   $kd_unit = $_POST['kd_unit'];
   $lantai = $_POST['lantai'];
   $jml_kmr = $_POST['jml_kmr'];
@@ -262,7 +261,7 @@ if(isset($_POST['detail_unit'])){
   $add = $proses->updateDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok, $type);
 
   if($add == "Success"){
-    header("Location:../detail_unit.php?detail_unit=".$kd_unit);
+    header("Location:detail_unit.php?detail_unit=".$kd_unit);
   }else echo 'error';
 }
 ?>

@@ -51,8 +51,6 @@
                 <?php
         				  $Proses = new Unit($db);
         				  $show = $Proses->showUnit();
-                  $hit = count($show);
-                  echo $hit;
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
                     if ($data->kd_unit != 0){
             					echo "

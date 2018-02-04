@@ -34,11 +34,18 @@
           $img_baru = $img_baru.'+'.$file_name_new;
         }
       }
-      if($_POST['img']=='None'){
+      if(($_POST['img']=='None') ||($_POST['img']=='Nothing')){
         $img = $img_baru;
       }
       else{
         $img = $_POST['img'].'+'.$img_baru;
+      }
+
+      if(($_POST['img']=='Nothing')){
+        $add = $proses->addDetail_Unit($kd_unit, 0, 0, 0, 0, 'X', 'X' , 'X', 'X', 'X', 'X', 'X', $img, 'N');
+        if(!$add == "Success"){
+        die('gagal upload gambar');
+      }
       }
       $add = $proses->updateGambar_unit($kd_unit, $img);
       if(!$add == "Success"){
@@ -50,23 +57,29 @@
   if(isset($_GET['detail_unit'])){
       $Proses = new Unit($db);
       $show2 = $Proses->showDetail_Unit($_GET['detail_unit']);
-      $dapur =''; $water_heater = ''; $tv = ''; $wifi = '';$amenities = '';$merokok = '';  $img_t = 'Nothing';
-      $flag = 0;        
+      $img_t = 'Nothing'; $flag = 0;     
       while($data = $show2->fetch(PDO::FETCH_OBJ)){
-        $flag = 1;
-        $dapur ='Tersedia';
-        $water_heater = 'Tersedia';
-        $tv = 'Tersedia';
-        $wifi = 'Tersedia';
-        $amenities = 'Tersedia';
-        $merokok = 'Boleh';    
-        $img_t = $data->img;    
-        if($data->dapur=='N') $dapur = 'Tidak Tersedia';
-        if($data->water_heater=='N') $water_heater = 'Tidak Tersedia';
-        if($data->tv=='N') $tv = 'Tidak Tersedia';
-        if($data->wifi=='N') $wifi = 'Tidak Tersedia';
-        if($data->amenities=='N') $amenities = 'Tidak Tersedia';
-        if($data->merokok=='N') $merokok = 'Tidak Boleh';
+        $img_t = $data->img; 
+        if($data->isi=='Y'){
+          $flag = 1;
+          $dapur ='Tersedia';
+          $water_heater = 'Tersedia';
+          $tv = 'Tersedia';
+          $wifi = 'Tersedia';
+          $amenities = 'Tersedia';
+          $merokok = 'Boleh';     
+          $lantai = $data->lantai;
+          $jml_kmr = $data->jml_kmr;
+          $jml_bed = $data->jml_bed;
+          $jml_ac = $data->jml_ac;
+          $type = $data->type; 
+          if($data->dapur=='N') $dapur = 'Tidak Tersedia';
+          if($data->water_heater=='N') $water_heater = 'Tidak Tersedia';
+          if($data->tv=='N') $tv = 'Tidak Tersedia';
+          if($data->wifi=='N') $wifi = 'Tidak Tersedia';
+          if($data->amenities=='N') $amenities = 'Tidak Tersedia';
+          if($data->merokok=='N') $merokok = 'Tidak Boleh';
+        }
       }
       $show = $Proses->showUnitbyId($_GET['detail_unit']);
       while($data = $show->fetch(PDO::FETCH_OBJ)){
@@ -98,7 +111,7 @@
                         <div class="row-fluid" style="max-width:1200px">
                             <div class="span6">
                               <center>';
-                                if($img_t=='None')
+                                if(($img_t=='None') || ($img_t=='Nothing'))
                                   echo '
                                 <img class="mySlides" src="../../asset/img/none.png" style="width:100%; height:350px; padding-top:20px">
                               </center>
@@ -169,7 +182,7 @@
                                       </tr>
                                       <tr>
                                         <td>
-                                           <a class="btn btn-small" href="#">Edit Info Pemilik</a>
+                                           <a class="btn btn-small" style="margin-bottom: 12px;" href="#">Edit Info Pemilik</a>
                                         </td>
                                       </tr>
                                       <tr style="border-bottom-width: 2px;border-bottom-style: solid;">
@@ -177,72 +190,87 @@
                                       </tr>
                                       <tr>
                                       <td>Harga Sewa WeekDay</td>
-                                      <td>: '.number_format($data->h_sewa_wd, 0, ".", ".").' IDR</td>
-                                      </tr>
-                                      <tr>
-                                      <td>Harga Sewa WeekEnd</td>
-                                      <td>: '.number_format($data->h_sewa_we, 0, ".", ".").' IDR</td>
-                                      </tr>
-                                      <tr>
-                                      <td>Harga Owner WeekDay</td>
                                       <td>: '.number_format($data->h_owner_wd, 0, ".", ".").' IDR</td>
                                       </tr>
                                       <tr>
-                                      <td>Harga Owner WeekEnd</td>
+                                      <td>Harga Sewa WeekEnd</td>
                                       <td>: '.number_format($data->h_owner_we, 0, ".", ".").' IDR</td>
                                       </tr>
                                       <tr>
-                                      <td>Harga Ekstra Charge</td>
-                                      <td>: '.number_format($data->ekstra_charge, 0, ".", ".").' IDR</td>
-                                      </tr>
+                                        <td>
+                                           <a class="btn btn-small" style="margin-bottom: 12px;" href="#">Edit Harga</a>
+                                        </td>
                                       </tr>
                                       <tr style="border-bottom-width: 2px;border-bottom-style: solid;">
-                                      <td><strong>Fasilitas</strong></td>
+                                        <td><strong>Fasilitas</strong></td>
                                       </tr>
-                                      <tr>
-                                      <td>Type Unit</td>
-                                      <td>: '.$data->type.'</td>
-                                      </tr>
-                                      <tr>
-                                      <td>Posisi Lantai</td>
-                                      <td>: '.$data->lantai.'</td>
-                                      </tr>
-                                      <tr>
-                                      <td>Jumlah Kamar</td>
-                                      <td>: '.$data->jml_kmr.'</td>
-                                      </tr>
-                                      <tr>
-                                      <td>Jumlah Kasur</td>
-                                      <td>: '.$data->jml_bed.'</td>
-                                      </tr>
-                                      <tr>
-                                      <td>Jumlah AC</td>
-                                      <td>: '.$data->jml_ac.'</td>
-                                      </tr>
-                                      <tr>
-                                      <td>Ruang Dapur</td>
-                                      <td>: '.$dapur.'</td>
-                                      </tr>
-                                      <tr>
-                                      <td>Water Heater</td>
-                                      <td>: '.$water_heater.'</td>
-                                      </tr>
-                                      <tr>
-                                      <td>Tv Cable</td>
-                                      <td>: '.$tv.'</td>
-                                      </tr>
-                                      <tr>
-                                      <td>Wifi</td>
-                                      <td>: '.$wifi.'</td>
-                                      </tr>
-                                      <tr>
-                                      <td>Amenities</td>
-                                      <td>: '.$amenities.'</td>
-                                      </tr>
-                                      <tr>
-                                      <td>Merokok</td>
-                                      <td>: '.$merokok.'</td>
-                                      </tr>
+                                      ';
+
+                                      if($flag==1){
+                                          echo'
+                                          <tr>
+                                          <td>Type Unit</td>
+                                          <td>: '.$type.'</td>
+                                          </tr>
+                                          <tr>
+                                          <td>Posisi Lantai</td>
+                                          <td>: '.$lantai.'</td>
+                                          </tr>
+                                          <tr>
+                                          <td>Jumlah Kamar</td>
+                                          <td>: '.$jml_kmr.'</td>
+                                          </tr>
+                                          <tr>
+                                          <td>Jumlah Kasur</td>
+                                          <td>: '.$jml_bed.'</td>
+                                          </tr>
+                                          <tr>
+                                          <td>Jumlah AC</td>
+                                          <td>: '.$jml_ac.'</td>
+                                          </tr>
+                                          <tr>
+                                          <td>Ruang Dapur</td>
+                                          <td>: '.$dapur.'</td>
+                                          </tr>
+                                          <tr>
+                                          <td>Water Heater</td>
+                                          <td>: '.$water_heater.'</td>
+                                          </tr>
+                                          <tr>
+                                          <td>Tv Cable</td>
+                                          <td>: '.$tv.'</td>
+                                          </tr>
+                                          <tr>
+                                          <td>Wifi</td>
+                                          <td>: '.$wifi.'</td>
+                                          </tr>
+                                          <tr>
+                                          <td>Amenities</td>
+                                          <td>: '.$amenities.'</td>
+                                          </tr>
+                                          <tr>
+                                          <td>Merokok</td>
+                                          <td>: '.$merokok.'</td>
+                                          </tr>
+                                          <tr>
+                                            <td>
+                                               <a class="btn btn-small" style="margin-bottom: 12px;" href="#">Edit Info Fasilitas</a>
+                                            </td>
+                                          </tr>
+                                          ';
+                                      }else{
+                                        echo'
+                                          <tr>
+                                          <td> Info fasilitas belum diisi</td>
+                                          </tr>
+                                          <tr>
+                                            <td>
+                                               <a class="btn btn-small" style="margin-bottom: 12px;" href="#">Tambah Detail Fasilitas</a>
+                                            </td>
+                                          </tr>
+                                        ';
+                                      }
+                                      echo'
                                     </tbody>
                                   </table>
                                 </center>
