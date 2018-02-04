@@ -7,6 +7,7 @@
   require("../../class/booking.php");
   require("../../class/dp_via.php");
   require("../../class/owner.php");
+    require("../../class/transaksi.php");
 
   if(!isset($_SESSION['username'])) {
     header('location:../../index.php');
@@ -133,7 +134,7 @@
 				  <h5>Apartement-info</h5>
 				</div>
 				<div class="widget-content nopading">
-				  <form action="apartemen.php" method="post" class="form-horizontal">
+				  <form action="" method="post" class="form-horizontal">
 					<div class="control-group">
 					  <label class="control-label hide">Kode Apartement :</label>
 					  <div class="controls">
@@ -181,7 +182,7 @@
 				  <h5>Data Baru</h5>
 				</div>
 				<div class="widget-content nopadding">
-				  <form action="dp_via.php" method="post" class="form-horizontal">
+				  <form action="" method="post" class="form-horizontal">
 					<div class="control-group">
 					  <label class="control-label hide">Kode :</label>
 					  <div class="controls">
@@ -267,7 +268,7 @@
 				  <h5>Data Baru</h5>
 				</div>
 				<div class="widget-content nopadding">
-				  <form action="owner.php" method="post" class="form-horizontal">
+				  <form action="" method="post" class="form-horizontal">
 					<div class="control-group">
 					  <input name="kd_owner" class="hide" type="text" value="'.$edit->kd_owner.'"/>
 					  <label class="control-label">Nama :</label>
@@ -460,7 +461,6 @@
 
       if (isset($_GET['edit_transaksi']))
       {
-      	require("../../class/transaksi.php");
         $Proses = new Transaksi($db);
         $show = $Proses->editTransaksi($_GET['edit_transaksi']);
         $edit = $show->fetch(PDO::FETCH_OBJ);
