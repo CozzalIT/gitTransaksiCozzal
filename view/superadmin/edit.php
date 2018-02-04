@@ -7,6 +7,7 @@
   require("../../class/booking.php");
   require("../../class/dp_via.php");
   require("../../class/owner.php");
+    require("../../class/transaksi.php");
 
   if(!isset($_SESSION['username'])) {
     header('location:../../index.php');
@@ -133,7 +134,7 @@
 				  <h5>Apartement-info</h5>
 				</div>
 				<div class="widget-content nopading">
-				  <form action="proses/proses_update.php" method="post" class="form-horizontal">
+				  <form action="" method="post" class="form-horizontal">
 					<div class="control-group">
 					  <label class="control-label hide">Kode Apartement :</label>
 					  <div class="controls">
@@ -169,7 +170,7 @@
 //edit data bank
 		if (isset($_GET['edit_bank']))
 		{
-		  $Proses = new Penyewa($db);
+		  $Proses = new dpVia($db);
 		  $show = $Proses->editDp_via($_GET['edit_bank']);
 		  $edit = $show->fetch(PDO::FETCH_OBJ);
 		  echo '
@@ -181,7 +182,7 @@
 				  <h5>Data Baru</h5>
 				</div>
 				<div class="widget-content nopadding">
-				  <form action="proses/proses_update.php" method="post" class="form-horizontal">
+				  <form action="" method="post" class="form-horizontal">
 					<div class="control-group">
 					  <label class="control-label hide">Kode :</label>
 					  <div class="controls">
@@ -255,7 +256,7 @@
 
 		if (isset($_GET['edit_owner']))
 		{
-		  $Proses = new Proses();
+		  $Proses = new Owner($db);
 		  $show = $Proses->editOwner($_GET['edit_owner']);
 		  $edit = $show->fetch(PDO::FETCH_OBJ);
 		  echo '
@@ -267,7 +268,7 @@
 				  <h5>Data Baru</h5>
 				</div>
 				<div class="widget-content nopadding">
-				  <form action="proses/proses_update.php" method="post" class="form-horizontal">
+				  <form action="" method="post" class="form-horizontal">
 					<div class="control-group">
 					  <input name="kd_owner" class="hide" type="text" value="'.$edit->kd_owner.'"/>
 					  <label class="control-label">Nama :</label>
@@ -319,7 +320,7 @@
 							<div class="controls">
 								<select name="kd_bank" class="span11">
 									<option name="" value="" >-- Pilih Bank --</option>';
-      						$Proses = new Proses();
+      						$Proses = new dpVia($db);
       						$show = $Proses->showDp_via();
       						while($data = $show->fetch(PDO::FETCH_OBJ)){
         						if ($edit->kd_bank!=$data->kd_bank)
@@ -460,7 +461,7 @@
 
       if (isset($_GET['edit_transaksi']))
       {
-        $Proses = new Proses();
+        $Proses = new Transaksi($db);
         $show = $Proses->editTransaksi($_GET['edit_transaksi']);
         $edit = $show->fetch(PDO::FETCH_OBJ);
         echo '
@@ -503,7 +504,7 @@
                     <div class="controls" id="form_apt" name="form_apt">
                       <select id="apartemen" name="apartemen" required>
                         <option>-- Pilih Apartemen --</option>';
-                          $Proses = new Proses();
+                          $Proses = new Apartemen($db);
                           $show = $Proses->showApartemen();
                           while($data = $show->fetch(PDO::FETCH_OBJ)){
                             if ($data->kd_apt != 0){
@@ -524,7 +525,7 @@
                       <select name="unit" id="unit" onchange="biaya(this.form)" required >
                         <option>-- Pilih Unit --</option>';
                           $harga_asal = 0;
-                          $Proses = new Proses();
+                          $Proses = new Unit($db);
                           $show = $Proses->showUnitByApt($edit->kd_apt);
                           while($data = $show->fetch(PDO::FETCH_OBJ)){
                             if ($data->kd_unit!=0){
@@ -575,7 +576,7 @@
                     <div class="controls">
                       <select name="booking_via" required>
                         <option>-- Pilih Booking Via --</option>';
-                          $Proses = new Proses();
+                          $Proses = new Booking($db);
                           $show = $Proses->showBooking_via();
                           while($data = $show->fetch(PDO::FETCH_OBJ)){
                             if ($edit->kd_booking!=$data->kd_booking){
@@ -593,7 +594,7 @@
                     <div class="controls">
                     <select name="dp_via" required>
                       <option>-- Pilih DP Via --</option>';
-                        $Proses = new Proses();
+                        $Proses = new dpVia($db);
                         $show = $Proses->showDp_via();
                         while($data = $show->fetch(PDO::FETCH_OBJ)){
                           if ($edit->kd_bank!=$data->kd_bank){
