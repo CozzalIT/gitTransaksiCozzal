@@ -26,7 +26,7 @@ if(isset($_POST['addTransaksi'])){
   $hari = $_POST['jumhari'];
   $tgl_transaksi = date('y-m-d');
 
-  require("../../config/database.php")  $proses = new Transaksi($db);
+  $proses = new Transaksi($db);
   $add = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total, $sisa_pelunasan, $hari, $tgl_transaksi, $diskon);
 
   if($add == "Success"){

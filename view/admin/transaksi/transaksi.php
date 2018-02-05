@@ -32,7 +32,7 @@
   <div class="container-fluid"><hr>
     <div class="row-fluid">
       <div class="span12">
-	    <form action="" method="post" class="form-horizontal" name="general">
+	    <form action="../../../proses/transaksi.php" method="post" class="form-horizontal" name="general">
         <div class="accordion" id="collapse-group">
           <div class="accordion-group widget-box">
             <div class="accordion-heading">
