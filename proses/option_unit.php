@@ -1,8 +1,8 @@
 <?php
-require("../../config/database.php");
+require("../config/database.php");
 
 if(isset($_POST['apartement'])){
-require("../../class/unit.php");
+require("../class/unit.php");
 // Ambil data ID Provinsi yang dikirim via ajax post
 $kd_apt = $_POST['apartement'];
 $nil = $_POST['par'];
@@ -25,7 +25,7 @@ echo json_encode($callback); // konversi varibael $callback menjadi JSON
 
 //cek ketersediaan unit pada tanggal tertentu
 elseif(isset($_POST['id1'])){
-	require("../../class/transaksi.php");
+	require("../class/transaksi.php");
 	$kd_unit = $_POST['id1'];
 	$CI = $_POST['tci1'];
 	$CO = $_POST['tco1'];
@@ -43,7 +43,7 @@ elseif(isset($_POST['id1'])){
 
 //cek ketersediaan informasi detail unit
 elseif(isset($_POST['detail'])){
-	require("../../class/unit.php");
+	require("../class/unit.php");
 	$kd_unit = $_POST['detail'];
 	$flag = 0; 
 	$namaunit = '';

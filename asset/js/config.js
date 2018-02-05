@@ -9,7 +9,7 @@ $(document).ready(function(){ // Ketika halaman sudah siap (sudah selesai di loa
 
 		$.ajax({
 			type: "POST", // Method pengiriman data bisa dengan GET atau POST
-			url: "option_unit.php", // Isi dengan url/path file php yang dituju
+			url: "../../../proses/option_unit.php", // Isi dengan url/path file php yang dituju
 			data: {apartement : $("#apartemen").val(), par:20}, // data yang akan dikirim ke file yang dituju
 			dataType: "json",
 			beforeSend: function(e) {
