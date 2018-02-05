@@ -176,7 +176,7 @@
         				  <h5>Detail Fasilitas Unit</h5>
         				</div>
         				<div class="widget-content nopadding">
-        				  <form action="unit.php" method="post" class="form-horizontal">
+        				  <form action="../../../proses/unit.php" method="post" class="form-horizontal">
       					<div class="control-group">
         					  <label class="control-label">Type Unit :</label>
         					  <div class="controls">

@@ -9,11 +9,11 @@
 
   $thisPage = "Unit";
 
-  include "template/head.php";
-  include "template/header.php";
-  include "template/sidebar.php";
-  require("../../class/unit.php");
-  require("../../config/database.php");
+  include "../template/head.php";
+  include "../template/header.php";
+  include "../template/sidebar.php";
+  require("../../../class/unit.php");
+  require("../../../config/database.php");
   $proses = new Unit($db);
     if (isset($_POST['upload_gambar'])){
     $img_baru = ''; $img = '';
@@ -22,12 +22,12 @@
     $tanggal = date('dmyHis');
     if ($jumlah > 0) {
       for ($i=0; $i < $jumlah; $i++) {
-        if(!file_exists('../../asset/img/unit/'.$kd_unit)) mkdir('../../asset/img/unit/'.$kd_unit);
+        if(!file_exists('../../../asset/img/unit/'.$kd_unit)) mkdir('../../../asset/img/unit/'.$kd_unit);
         $file_name = $_FILES['gambar']['name'][$i];
         $tmp_name = $_FILES['gambar']['tmp_name'][$i];
         $tmp2 = explode('.', $file_name);
         $file_name_new = $tanggal.$i.'.'.$tmp2[1];
-        move_uploaded_file($tmp_name, "../../asset/img/unit/".$kd_unit.'/'.$file_name_new);
+        move_uploaded_file($tmp_name, "../../../asset/img/unit/".$kd_unit.'/'.$file_name_new);
         if($img_baru==''){
           $img_baru = $file_name_new;
         } else {
@@ -112,7 +112,7 @@
                               <center>';
                                 if(($img_t=='None') || ($img_t=='Nothing'))
                                   echo '
-                                <img class="mySlides" src="../../asset/img/none.png" style="width:100%; height:350px; padding-top:20px">
+                                <img class="mySlides" src="../../../asset/img/none.png" style="width:100%; height:350px; padding-top:20px">
                               </center>
                                   <table class="">
                                     <tbody>
@@ -133,7 +133,7 @@
                                 $n = count($image); $j = 0 - 3;
                                 $dir = $data->kd_unit;
                                 foreach ($image as $nama_file_gambar) {
-                                  echo '<img class="mySlides" src="../../asset/img/unit/'.$dir.'/'.$nama_file_gambar.'" style="width:100%; height:350px">';
+                                  echo '<img class="mySlides" src="../../../asset/img/unit/'.$dir.'/'.$nama_file_gambar.'" style="width:100%; height:350px">';
                                 }
                               echo'
                               </center>
@@ -151,7 +151,7 @@
                                       echo'
                                           <td>
                                             <div class="foto-unit">
-                                              <img class="demo" src="../../asset/img/unit/'.$dir.'/'.$image[$x].'" style="width:100%" onclick="currentDiv('.$curdiv.')">
+                                              <img class="demo" src="../../../asset/img/unit/'.$dir.'/'.$image[$x].'" style="width:100%" onclick="currentDiv('.$curdiv.')">
                                             </div>
                                           </td>';
                                       $n = $n - 1;
