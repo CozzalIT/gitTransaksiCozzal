@@ -12,7 +12,7 @@
       $_SESSION['username'] = $login['username'];
       $_SESSION['hak_akses'] = $login['hak_akses'];
       if($_SESSION['hak_akses'] == "admin"){
-				header('Location: view/admin/home.php');
+				header('Location: view/admin/home/home.php');
       }elseif($_SESSION['hak_akses'] == "superadmin") {
 				header('Location: view/superadmin/home/home.php');
 			}
