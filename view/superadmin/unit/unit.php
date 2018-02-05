@@ -1,24 +1,24 @@
 <?php
   session_start();
-  require("../../class/unit.php");
-  require("../../class/owner.php");
-  require("../../class/apartemen.php");
-  require("../../config/database.php");
+  require("../../../class/unit.php");
+  require("../../../class/owner.php");
+  require("../../../class/apartemen.php");
+  require("../../../config/database.php");
 
   if(!isset($_SESSION['username'])) {
-    header('location:../../index.php');
+    header('location:../../../index.php');
   }else {
     $username = $_SESSION['username'];
   }
 
   $thisPage = "Unit";
 
-  include "template/head.php";
+  include "../template/head.php";
 ?>
 <body>
 <?php
-  include "template/header.php";
-  include "template/sidebar.php";
+  include "../template/header.php";
+  include "../template/sidebar.php";
 ?>
 <!--main-container-part-->
 <div id="content">
@@ -80,7 +80,7 @@
                           <td>
                             <center>
                               <a class='btn btn-primary' href='edit.php?edit_unit=$data->kd_unit'>Edit</a>
-                              <a class='btn btn-danger' href='unit.php?delete_unit=$data->kd_unit&kurangi_ju=$data->kd_owner'>Hapus</a>
+                              <a class='btn btn-danger' href='../../../proses/unit.php?delete_unit=$data->kd_unit&kurangi_ju=$data->kd_owner'>Hapus</a>
                             </center>
                           </td>
             					  </tr>
@@ -105,7 +105,7 @@
     <h3>Pelanggan Baru</h3>
   </div>
   <div class="modal-body">
-	<form action="" method="post" class="form-horizontal">
+	<form action="../../../proses/unit.php" method="post" class="form-horizontal">
 	  <div class="control-group">
 		<label class="control-label">Apartemen :</label>
 		<div class="controls">
@@ -191,20 +191,20 @@
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--End-Footer-part-->
-<script src="../../asset/js/bootstrap.min.js"></script>
-<script src="../../asset/js/unit.js"></script>
-<script src="../../asset/js/jquery.gritter.min.js"></script>
-<script src="../../asset/js/jquery.peity.min.js"></script>
-<script src="../../asset/js/matrix.interface.js"></script>
-<script src="../../asset/js/matrix.popover.js"></script>
-<script src="../../asset/js/jquery.ui.custom.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/unit.js"></script>
+<script src="../../../asset/js/jquery.gritter.min.js"></script>
+<script src="../../../asset/js/jquery.peity.min.js"></script>
+<script src="../../../asset/js/matrix.interface.js"></script>
+<script src="../../../asset/js/matrix.popover.js"></script>
+<script src="../../../asset/js/jquery.ui.custom.js"></script>
 <!--<script src="js/jquery.uniform.js"></script> -->
-<script src="../../asset/js/select2.min.js"></script>
-<script src="../../asset/js/jquery.dataTables.min.js"></script>
-<script src="../../asset/js/matrix.js"></script>
-<script src="../../asset/js/matrix.tables.js"></script>
+<script src="../../../asset/js/select2.min.js"></script>
+<script src="../../../asset/js/jquery.dataTables.min.js"></script>
+<script src="../../../asset/js/matrix.js"></script>
+<script src="../../../asset/js/matrix.tables.js"></script>
 </body>
 <?php
-  include 'template/modal.php';
+  include '../template/modal.php';
 ?>
 </html>

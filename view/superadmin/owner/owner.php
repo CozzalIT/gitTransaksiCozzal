@@ -1,23 +1,23 @@
 <?php
   session_start();
-  require("../../class/owner.php");
-  require("../../class/dp_via.php");
-  require("../../config/database.php");
+  require("../../../class/owner.php");
+  require("../../../class/dp_via.php");
+  require("../../../config/database.php");
 
   if(!isset($_SESSION['username'])) {
-    header('location:index.php');
+    header('location:../../../index.php');
   }else {
     $username = $_SESSION['username'];
   }
 
   $thisPage = "Owner";
 
-  include "template/head.php";
+  include "../template/head.php";
 ?>
 <body>
 <?php
-  include "template/header.php";
-  include "template/sidebar.php";
+  include "../template/header.php";
+  include "../template/sidebar.php";
 ?>
 <div id="content">
   <div id="content-header">
@@ -46,28 +46,28 @@
               </thead>
               <tbody>
                 <?php
-          $Proses = new Owner($db);
-				  $i = 1;
-				  $show = $Proses->showOwner();
-				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-            if ($data->kd_owner != 0){
-              echo "
-    					  <tr class=gradeC'>
-    						<td>$i</td>
-    					    <td>$data->nama</td>
-    						<td>$data->alamat</td>
-    						<td>$data->no_tlp</td>
-    						<td>$data->email</td>
-    						<td>
-    						  <a class='btn btn-success' href='owner.php?detail_owner=$data->kd_owner'>Detail</a>
-    						  <a class='btn btn-primary' href='edit.php?edit_owner=$data->kd_owner'>Edit</a>
-    						  <a class='btn btn-danger' href='owner.php?delete_owner=$data->kd_owner'>Hapus</a>
-    						</td>
-    					  </tr>";
-              $i++;
-            }
-				  };
-				?>
+                  $Proses = new Owner($db);
+        				  $i = 1;
+        				  $show = $Proses->showOwner();
+        				  while($data = $show->fetch(PDO::FETCH_OBJ)){
+                    if ($data->kd_owner != 0){
+                      echo "
+            					  <tr class=gradeC'>
+            						  <td>$i</td>
+            					    <td>$data->nama</td>
+              						<td>$data->alamat</td>
+              						<td>$data->no_tlp</td>
+              						<td>$data->email</td>
+              						<td>
+              						  <a class='btn btn-success' href='owner.php?detail_owner=$data->kd_owner'>Detail</a>
+              						  <a class='btn btn-primary' href='edit.php?edit_owner=$data->kd_owner'>Edit</a>
+              						  <a class='btn btn-danger' href='../../../proses/owner.php?delete_owner=$data->kd_owner'>Hapus</a>
+              						</td>
+            					  </tr>";
+                      $i++;
+                    }
+        				  };
+        				?>
               </tbody>
             </table>
           </div>
@@ -84,7 +84,7 @@
     <h3>Data Owner Baru</h3>
   </div>
   <div class="modal-body">
-	<form action="" method="post" class="form-horizontal">
+	<form action="../../../proses/owner.php" method="post" class="form-horizontal">
 	  <div class="control-group">
 		<label class="control-label">Nama :</label>
 		<div class="controls">
@@ -236,13 +236,13 @@ echo '
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
-<script src="../../asset/js/jquery.min.js"></script>
-<script src="../../asset/js/jquery.ui.custom.js"></script>
-<script src="../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.ui.custom.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
 <!--<script src="js/jquery.uniform.js"></script> -->
-<script src="../../asset/js/select2.min.js"></script>
-<script src="../../asset/js/jquery.dataTables.min.js"></script>
-<script src="../../asset/js/matrix.js"></script>
-<script src="../../asset/js/matrix.tables.js"></script>
+<script src="../../../asset/js/select2.min.js"></script>
+<script src="../../../asset/js/jquery.dataTables.min.js"></script>
+<script src="../../../asset/js/matrix.js"></script>
+<script src="../../../asset/js/matrix.tables.js"></script>
 </body>
 </html>

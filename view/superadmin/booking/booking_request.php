@@ -1,22 +1,22 @@
 <?php
   session_start();
-  require("../../class/booking.php");
-  require("../../config/database.php");
+  require("../../../class/booking.php");
+  require("../../../config/database.php");
 
   if(!isset($_SESSION['username'])) {
-    header('location:../../index.php');
+    header('location:../../../index.php');
   }else {
     $username = $_SESSION['username'];
   }
 
   $thisPage = "Booking Request";
 
-  include "template/head.php";
+  include "../template/head.php";
 ?>
 <body>
 <?php
-  include "template/header.php";
-  include "template/sidebar.php";
+  include "../template/header.php";
+  include "../template/sidebar.php";
 ?>
 <div id="content">
   <div id="content-header">
@@ -85,13 +85,13 @@
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
-<script src="../../asset/js/jquery.min.js"></script>
-<script src="../../asset/js/jquery.ui.custom.js"></script>
-<script src="../../asset/js/bootstrap.min.js"></script>
-<script src="../../asset/js/jquery.uniform.js"></script>
-<script src="../../asset/js/select2.min.js"></script>
-<script src="../../asset/js/jquery.dataTables.min.js"></script>
-<script src="../../asset/js/matrix.js"></script>
-<script src="../../asset/js/matrix.tables.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.ui.custom.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/jquery.uniform.js"></script>
+<script src="../../../asset/js/select2.min.js"></script>
+<script src="../../../asset/js/jquery.dataTables.min.js"></script>
+<script src="../../../asset/js/matrix.js"></script>
+<script src="../../../asset/js/matrix.tables.js"></script>
 </body>
 </html>

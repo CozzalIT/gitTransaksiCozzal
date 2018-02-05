@@ -1,27 +1,27 @@
 <?php
   session_start();
-  require("../../class/transaksi.php");
-  require("../../class/unit.php");
-  require("../../class/penyewa.php");
-  require("../../class/apartemen.php");
-  require("../../class/booking.php");
-  require("../../class/dp_via.php");
-  require("../../config/database.php");
+  require("../../../class/transaksi.php");
+  require("../../../class/unit.php");
+  require("../../../class/penyewa.php");
+  require("../../../class/apartemen.php");
+  require("../../../class/booking.php");
+  require("../../../class/dp_via.php");
+  require("../../../config/database.php");
 
   if(!isset($_SESSION['username'])) {
-    header('location:../../index.php');
+    header('location:../../../index.php');
   }else {
     $username = $_SESSION['username'];
   }
 
   $thisPage = "Transaksi";
 
-  include "template/head.php";
+  include "../template/head.php";
 ?>
 <body>
 <?php
-  include "template/header.php";
-  include "template/sidebar.php";
+  include "../template/header.php";
+  include "../template/sidebar.php";
 ?>
 <div id="content">
   <div id="content-header">
@@ -45,7 +45,7 @@
         			  <div class="widget-content">
           				<ul class="bs-docs-tooltip-examples">
                     <li><button name="penyewaBaru" class="btn btn-success" href="#popup-penyewa-baru" data-toggle="modal" class="btn btn-info btn-add">Penyewa Baru</button> </li>
-                    <li><a href="penyewa.php" class="btn btn-success">Penyewa Lama</a> </li>
+                    <li><a href="../penyewa/penyewa.php" class="btn btn-success">Penyewa Lama</a> </li>
           				</ul>
         			  </div>
         			  <?php
@@ -402,17 +402,17 @@
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
-<script src="../../asset/js/jquery.min.js"></script>
-<script src="../../asset/js/jquery.ui.custom.js"></script>
-<script src="../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.ui.custom.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
 <!--<script src="js/jquery.validate.js"></script> -->
-<script src="../../asset/js/jquery.wizard.js"></script>
-<script src="../../asset/js/matrix.js"></script>
-<script src="../../asset/js/matrix.wizard.js"></script>
-<script src="../../asset/js/transaksi.js"></script>
-<script src="../../asset/js/jquery.uniform.js"></script>
+<script src="../../../asset/js/jquery.wizard.js"></script>
+<script src="../../../asset/js/matrix.js"></script>
+<script src="../../../asset/js/matrix.wizard.js"></script>
+<script src="../../../asset/js/transaksi.js"></script>
+<script src="../../../asset/js/jquery.uniform.js"></script>
 <!-- <script src="js/select2.min.js"></script> -->
-<script src="../../asset/js/jquery.dataTables.min.js"></script>
-<script src="../../asset/js/matrix.tables.js"></script>
+<script src="../../../asset/js/jquery.dataTables.min.js"></script>
+<script src="../../../asset/js/matrix.tables.js"></script>
 </body>
 </html>

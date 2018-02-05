@@ -1,22 +1,22 @@
 <?php
   session_start();
-  require("../../class/transaksi.php");
-  require("../../config/database.php");
+  require("../../../class/transaksi.php");
+  require("../../../config/database.php");
 
   if(!isset($_SESSION['username'])) {
-    header('location:../../index.php');
+    header('location:../../../index.php');
   }else {
     $username = $_SESSION['username'];
   }
 
   $thisPage = "Transaksi";
 
-  include "template/head.php";
+  include "../template/head.php";
 ?>
 <body>
 <?php
-  include "template/header.php";
-  include "template/sidebar.php";
+  include "../template/header.php";
+  include "../template/sidebar.php";
 ?>
 <div id="content">
   <div id="content-header">
@@ -29,7 +29,7 @@
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5>Confirm Transaksi</h5>
+            <h5>Laporan Transaksi</h5>
           </div>
           <div class="widget-content nopadding">
 			      <table class="table table-bordered data-table">
@@ -41,13 +41,14 @@
                   <th>Unit</th>
                   <th>Check In</th>
         				  <th>Check Out</th>
+                  <th>Detail</th>
         				  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
       			    <?php
         				  $Proses = new Transaksi($db);
-        				  $show = $Proses->showConfirmTransaksi();
+        				  $show = $Proses->showTransaksi();
         				  $i = 1;
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
           					echo "
@@ -58,10 +59,16 @@
             						<td>$data->no_unit</td>
             						<td>$data->check_in</td>
             						<td>$data->check_out</td>
+                        <td>
+                          <center>
+                            <a class='btn btn-success' id='detail' name='detail' href='laporan_transaksi.php?detail=$data->kd_transaksi'>Detail</a>
+                            <a class='btn btn-info' href='../../../proses/transaksi.php?addConfirm=$data->kd_transaksi'>Confirm</a>
+                          </center>
+                        </td>
             						<td>
                           <center>
-                            <a class='btn btn-primary'>Kwitansi</a>
-              						  <a class='btn btn-danger' href=''>Hapus</a>
+              						  <a class='btn btn-primary' href='edit.php?edit_transaksi=$data->kd_transaksi'>Edit</a>
+              						  <a class='btn btn-danger' href='../../../proses/transaksi.php?delete_transaksi=$data->kd_transaksi'>Hapus</a>
                           </center>
                         </td>
           					  </tr>
@@ -83,16 +90,16 @@
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
-<script src="../../asset/js/jquery.min.js"></script>
-<script src="../../asset/js/jquery.ui.custom.js"></script>
-<script src="../../asset/js/bootstrap.min.js"></script>
-<script src="../../asset/js/jquery.uniform.js"></script>
-<script src="../../asset/js/select2.min.js"></script>
-<script src="../../asset/js/jquery.dataTables.min.js"></script>
-<script src="../../asset/js/matrix.js"></script>
-<script src="../../asset/js/matrix.tables.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.ui.custom.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/jquery.uniform.js"></script>
+<script src="../../../asset/js/select2.min.js"></script>
+<script src="../../../asset/js/jquery.dataTables.min.js"></script>
+<script src="../../../asset/js/matrix.js"></script>
+<script src="../../../asset/js/matrix.tables.js"></script>
 </body>
 <?php
-  include 'template/modal.php';
+  include '../template/modal.php';
 ?>
 </html>

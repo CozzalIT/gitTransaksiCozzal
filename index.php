@@ -14,7 +14,7 @@
       if($_SESSION['hak_akses'] == "admin"){
 				header('Location: view/admin/home.php');
       }elseif($_SESSION['hak_akses'] == "superadmin") {
-				header('Location: view/superadmin/home.php');
+				header('Location: view/superadmin/home/home.php');
 			}
     }else{
 			$error= "Username / Password Salah!";

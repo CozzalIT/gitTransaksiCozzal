@@ -1,20 +1,22 @@
 <?php
   session_start();
+  require("../../../class/transaksi.php");
+  require("../../../config/database.php");
 
   if(!isset($_SESSION['username'])) {
-    header('location:index.php');
+    header('location:../../../index.php');
   }else {
     $username = $_SESSION['username'];
   }
 
   $thisPage = "Unit";
 
-  include "template/head.php";
+  include "../template/head.php";
 ?>
 <body>
 <?php
-  include "template/header.php";
-  include "template/sidebar.php";
+  include "../template/header.php";
+  include "../template/sidebar.php";
 ?>
 <div id="content">
   <div id="content-header">
@@ -43,9 +45,7 @@
               events: [
                 <?php
                   if (isset($_GET['calendar_unit'])){
-                    require("proses/proses.php");
-                    require("config/database.php");
-          				  $Proses = new Proses($db);
+          				  $Proses = new Transaksi($db);
             		    $show = $Proses->showTransaksiUnit($_GET['calendar_unit']);
             		    while($data = $show->fetch(PDO::FETCH_OBJ)){
                       echo "

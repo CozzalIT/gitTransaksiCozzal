@@ -1,22 +1,22 @@
 <?php
   session_start();
-  require("../../class/booking.php");
-  require("../../config/database.php");
+  require("../../../class/booking.php");
+  require("../../../config/database.php");
 
   if(!isset($_SESSION['username'])) {
-    header('location:../../index.php');
+    header('location:../../../index.php');
   }else {
     $username = $_SESSION['username'];
   }
 
   $thisPage = "Booking_via";
 
-  include "template/head.php";
+  include "../template/head.php";
 ?>
 <body>
 <?php
-  include "template/header.php";
-  include "template/sidebar.php";
+  include "../template/header.php";
+  include "../template/sidebar.php";
 ?>
 <div id="content">
   <div id="content-header">
@@ -52,7 +52,7 @@
         					    <td>$data->booking_via</td>
         						<td>
         						  <a class='btn btn-primary' href='edit.php?edit_booking=$data->kd_booking'>Edit</a>
-        						  <a class='btn btn-danger' href='booking_via.php?delete_booking=$data->kd_booking'>Hapus</a>
+        						  <a class='btn btn-danger' href='../../../proses/booking.php?delete_booking=$data->kd_booking'>Hapus</a>
         						</td>
         					  </tr>";
         					$i++;
@@ -74,7 +74,7 @@
     <h3>Data Baru</h3>
   </div>
   <div class="modal-body">
-	<form action="" method="post" class="form-horizontal">
+	<form action="../../../proses/booking.php" method="post" class="form-horizontal">
 	  <div class="control-group">
 		<label class="control-label">Booking Via :</label>
 		<div class="controls">
@@ -96,13 +96,13 @@
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
-<script src="../../asset/js/jquery.min.js"></script>
-<script src="../../asset/js/jquery.ui.custom.js"></script>
-<script src="../../asset/js/bootstrap.min.js"></script>
-<script src="../../asset/js/jquery.uniform.js"></script>
-<script src="../../asset/js/select2.min.js"></script>
-<script src="../../asset/js/jquery.dataTables.min.js"></script>
-<script src="../../asset/js/matrix.js"></script>
-<script src="../../asset/js/matrix.tables.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.ui.custom.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/jquery.uniform.js"></script>
+<script src="../../../asset/js/select2.min.js"></script>
+<script src="../../../asset/js/jquery.dataTables.min.js"></script>
+<script src="../../../asset/js/matrix.js"></script>
+<script src="../../../asset/js/matrix.tables.js"></script>
 </body>
 </html>

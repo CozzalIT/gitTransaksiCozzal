@@ -56,42 +56,4 @@ class Booking {
     $query = $this->db->query($sql);
   }
 }
-
-//Tambah Booking Via
-if(isset($_POST['addBooking_via'])){
-	$kd_booking = $_POST['kd_booking'];
-	$booking_via = $_POST['booking_via'];
-
-  require("../../config/database.php");
-  $proses = new Booking($db);
-  $add = $proses->addBooking_via($kd_booking, $booking_via);
-
-  if($add == "Success"){
-	  header('Location:../superadmin/booking_via.php');
-  }
-}
-
-//Delete Booking Via
-if(isset($_GET['delete_booking'])){
-  require("../../config/database.php");
-  $proses = new Booking($db);
-  $del = $proses->deleteBooking_via($_GET['delete_booking']);
-  header("location:../superadmin/booking_via.php");
-}
-
-//Update Booking Via
-if(isset($_POST['updateBooking'])){
-  $kd_booking = $_POST['kd_booking'];
-  $booking_via = $_POST['booking_via'];
-
-  require("../../config/database.php");
-  $proses = new Booking($db);
-  $update = $proses->updateBooking($kd_booking, $booking_via);
-
-  if($update == "Success"){
-    header('Location:../superadmin/booking_via.php');
-  } else {
-    echo 'error';
-  }
-}
 ?>

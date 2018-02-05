@@ -1,22 +1,22 @@
 <?php
   session_start();
-  require("../../class/penyewa.php");
-  require("../../config/database.php");
+  require("../../../class/penyewa.php");
+  require("../../../config/database.php");
 
   if(!isset($_SESSION['username'])) {
-    header('location:../../index.php');
+    header('location:../../../index.php');
   }else {
     $username = $_SESSION['username'];
   }
 
   $thisPage = "Penyewa";
 
-  include "template/head.php";
+  include "../template/head.php";
 ?>
 <body>
 <?php
-  include "template/header.php";
-  include "template/sidebar.php";
+  include "../template/header.php";
+  include "../template/sidebar.php";
 ?>
 <div id="content">
   <div id="content-header">
@@ -58,9 +58,9 @@
                       <td>$data->email</td>
         						  <td>$data->tgl_gabung</td>
         						<td>
-        						  <a class='btn btn-success' href='transaksi.php?transaksi=$data->kd_penyewa'>Transaksi</a>
+        						  <a class='btn btn-success' href='../transaksi/transaksi.php?transaksi=$data->kd_penyewa'>Transaksi</a>
         						  <a class='btn btn-primary' href='edit.php?edit=$data->kd_penyewa'>Edit</a>
-        						  <a class='btn btn-danger' href='penyewa.php?delete_penyewa=$data->kd_penyewa'>Hapus</a>
+        						  <a class='btn btn-danger' href='../../../proses/penyewa.php?delete_penyewa=$data->kd_penyewa'>Hapus</a>
         						</td>
         					  </tr>";
         				  }
@@ -81,7 +81,7 @@
     <h3>Pelanggan Baru</h3>
   </div>
   <div class="modal-body">
-	<form action="" method="post" class="form-horizontal">
+	<form action="../../../proses/penyewa.php" method="post" class="form-horizontal">
 	  <div class="control-group">
 		<label class="control-label">Nama :</label>
 		<div class="controls">
@@ -133,13 +133,13 @@
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
-<script src="../../asset/js/jquery.min.js"></script>
-<script src="../../asset/js/jquery.ui.custom.js"></script>
-<script src="../../asset/js/bootstrap.min.js"></script>
-<script src="../../asset/js/jquery.uniform.js"></script>
-<script src="../../asset/js/select2.min.js"></script>
-<script src="../../asset/js/jquery.dataTables.min.js"></script>
-<script src="../../asset/js/matrix.js"></script>
-<script src="../../asset/js/matrix.tables.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.ui.custom.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/jquery.uniform.js"></script>
+<script src="../../../asset/js/select2.min.js"></script>
+<script src="../../../asset/js/jquery.dataTables.min.js"></script>
+<script src="../../../asset/js/matrix.js"></script>
+<script src="../../../asset/js/matrix.tables.js"></script>
 </body>
 </html>
