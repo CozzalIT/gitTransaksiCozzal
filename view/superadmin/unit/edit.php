@@ -28,11 +28,11 @@
   <div class="container-fluid">
     <div class="row-fluid">
 	  <?php
-    //Edit Data Unit
-    if (isset($_GET['edit_unit']))
+  //Edit informasi dasar unit
+    if (isset($_GET['edit_info_unit']))
     {
       $Proses = new Unit($db);
-      $show = $Proses->editUnit($_GET['edit_unit']);
+      $show = $Proses->editUnit($_GET['edit_info_unit']);
       $edit = $show->fetch(PDO::FETCH_OBJ);
       echo '
       <div class="span3">
@@ -40,42 +40,44 @@
       <div class="span6">
         <div class="widget-box">
         <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-          <h5>Data Baru</h5>
+          <h5>Informasi dasar unit</h5>
         </div>
         <div class="widget-content nopadding">
           <form action="../../../proses/unit.php" method="post" class="form-horizontal">
           <div class="control-group">
-		    <input name="kd_unit" class="hide" type="text" value="'.$edit->kd_unit.'"/>  <!--Hiden Flag-->
-		    <input name="kd_owner_lama" class="hide" type="text" value="'.$edit->kd_owner.'"/>  <!--Hiden Flag-->
-      		<label class="control-label">Apartemen :</label>
+          <input name="kd_owner_lama" class="hide" type="text" value="'.$edit->kd_owner.'"/>  <!--Hiden Flag-->
+          <input name="kd_unit" class="hide" type="text" value="'.$edit->kd_unit.'"/>  <!--Hiden Flag-->
+          <label class="control-label">Apartemen :</label>
           <div class="controls">
-      		  <select name="apartemen">
-        		  <option>-- Pilih Apartemen --</option>';
+            <select name="apartemen">
+              <option>-- Pilih Apartemen --</option>';
                 $Proses = new Apartemen($db);
                 $show = $Proses->showApartemen();
                 while($data = $show->fetch(PDO::FETCH_OBJ)){
+                if($data->kd_apt!='0'){
                   if ($edit->kd_apt!=$data->kd_apt){
-                    echo "<option name='kd_apt' value='$data->kd_apt'>$data->nama_apt</option>";
+                    echo "<option name='kd_apt' value='$data->kd_apt'>$data->nama_apt - $data->alamat_apt</option>";
                   }else{
-                    echo "<option name='kd_apt' value='$data->kd_apt' selected='true'>$data->nama_apt</option>";
+                    echo "<option name='kd_apt' value='$data->kd_apt' selected='true'>$data->nama_apt - $data->alamat_apt</option>";
                   }
+                }
                 }
             echo '
             </select>
           </div>
-        	  </div>
-        	  <div class="control-group">
-        		<label class="control-label">No Unit :</label>
-        		<div class="controls">
-        		  <input name="no_unit" type="text" placeholder="No Unit" value="'.$edit->no_unit.'"/>
-        		</div>
-        	  </div>
+            </div>
             <div class="control-group">
-        		<label class="control-label">Owner :</label>
+            <label class="control-label">No Unit :</label>
             <div class="controls">
-        		  <select name="owner">
-        		  <option>-- Pilih Owner --</option>';
-        		 $Proses = new Owner($db);
+              <input name="no_unit" type="text" placeholder="No Unit" value="'.$edit->no_unit.'"/>
+            </div>
+            </div>
+           <div class="control-group">
+            <label class="control-label">Owner :</label>
+            <div class="controls">
+              <select name="owner">
+              <option>-- Pilih Owner --</option>';
+             $Proses = new Owner($db);
                 $show = $Proses->showOwner();
                 while($data = $show->fetch(PDO::FETCH_OBJ)){
                   if ($edit->kd_owner!=$data->kd_owner){
@@ -87,46 +89,82 @@
             echo '
             </select>
           </div>
-        	  </div>
-        	  <div class="control-group">
-        		<label class="control-label">Harga Owner WD :</label>
-        		<div class="controls">
-        		  <input name="h_owner_wd" type="number" min="0" step="1000" value="'.$edit->h_owner_wd.'"/>
-        		</div>
-        	  </div>
-        	  <div class="control-group">
-        		<label class="control-label">Harga Owner WE :</label>
-        		<div class="controls">
-        		  <input name="h_owner_we" type="number" min="0" step="1000" value="'.$edit->h_owner_we.'" />
-        		</div>
-        	  </div>
-        	  <div class="control-group">
-        		<label class="control-label">Harga Sewa WD :</label>
-        		<div class="controls">
-        		  <input name="h_sewa_wd" type="number" min="0" step="1000" value="'.$edit->h_sewa_wd.'" />
-        		</div>
-        	  </div>
-        	  <div class="control-group">
-        		<label class="control-label">Harga Sewa WE :</label>
-        		<div class="controls">
-        		  <input name="h_sewa_we" type="number" min="0" step="1000" value="'.$edit->h_sewa_we.'" />
-        		</div>
-        	  </div><div class="control-group">
-        		<label class="control-label">Ekstra Charge :</label>
-        		<div class="controls">
-        		  <input name="ekstra_charge" type="number" min="0" step="1000" value="'.$edit->ekstra_charge.'" />
-        		</div>
-        	  </div> ';
-    		  echo '
-    		  <div class="form-actions" style="text-align:right">
-    			<button name="updateUnit" type="submit" class="btn btn-success">Update</button>
-    		  </div>
-    		</form>
-    	  </div>
-    	</div>
-    	</div>
-    	<div class="span3">
-    	</div>
+            </div>
+          ';
+          echo '
+          <div class="form-actions" style="text-align:right">
+          <button name="updateInfoUnit" type="submit" class="btn btn-success">Update</button>
+          </div>
+        </form>
+        </div>
+      </div>
+      </div>
+      <div class="span3">
+      </div>';
+      }
+
+//Edit harga Unit by owner
+    if (isset($_GET['edit_harga_owner']))
+    {
+      $Proses = new Unit($db);
+      $show = $Proses->editUnit($_GET['edit_harga_owner']);
+      $edit = $show->fetch(PDO::FETCH_OBJ);
+      echo '
+      <div class="span3">
+      </div>
+      <div class="span6">
+        <div class="widget-box">
+        <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+          <h5>Data Harga</h5>
+        </div>
+        <div class="widget-content nopadding">
+          <form action="../../../proses/unit.php" method="post" class="form-horizontal">
+            <div class="control-group">
+            <input name="kd_unit" class="hide" type="text" value="'.$edit->kd_unit.'"/>  <!--Hiden Flag-->
+            <label class="control-label">No Unit :</label>
+            <div class="controls">
+              <input name="no_unit" type="text" placeholder="No Unit" value="'.$edit->no_unit.'" disabled/>
+            </div>
+            </div>
+            <div class="control-group">
+            <label class="control-label">Harga Owner WD :</label>
+            <div class="controls">
+              <input name="h_owner_wd" type="number" min="0" step="1000" value="'.$edit->h_owner_wd.'"/>
+            </div>
+            </div>
+            <div class="control-group">
+            <label class="control-label">Harga Owner WE :</label>
+            <div class="controls">
+              <input name="h_owner_we" type="number" min="0" step="1000" value="'.$edit->h_owner_we.'" />
+            </div>
+            </div>
+            <div class="control-group">
+            <label class="control-label">Harga Sewa WD :</label>
+            <div class="controls">
+              <input name="h_sewa_wd" type="number" min="0" step="1000" value="'.$edit->h_sewa_wd.'" />
+            </div>
+            </div>
+            <div class="control-group">
+            <label class="control-label">Harga Sewa WE :</label>
+            <div class="controls">
+              <input name="h_sewa_we" type="number" min="0" step="1000" value="'.$edit->h_sewa_we.'" />
+            </div>
+            </div><div class="control-group">
+            <label class="control-label">Ekstra Charge :</label>
+            <div class="controls">
+              <input name="ekstra_charge" type="number" min="0" step="1000" value="'.$edit->ekstra_charge.'" />
+            </div>
+            </div> ';
+          echo '
+          <div class="form-actions" style="text-align:right">
+          <button name="updateHargaUnit" type="submit" class="btn btn-success">Update</button>
+          </div>
+        </form>
+        </div>
+      </div>
+      </div>
+      <div class="span3">
+      </div>
           ';
       }
 

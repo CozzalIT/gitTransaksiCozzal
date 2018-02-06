@@ -1,7 +1,8 @@
 <?php
 require("../config/database.php");
 require("../class/booking.php");
-
+session_start();
+$view = $_SESSION['hak_akses'];
 //Tambah Booking Via
 if(isset($_POST['addBooking_via'])){
 	$kd_booking = $_POST['kd_booking'];
@@ -11,7 +12,7 @@ if(isset($_POST['addBooking_via'])){
   $add = $proses->addBooking_via($kd_booking, $booking_via);
 
   if($add == "Success"){
-	  header('Location:../view/superadmin/booking/booking_via.php');
+	  header('Location:../view/'.$view.'/booking/booking_via.php');
   }
 }
 
@@ -19,7 +20,7 @@ if(isset($_POST['addBooking_via'])){
 if(isset($_GET['delete_booking'])){
   $proses = new Booking($db);
   $del = $proses->deleteBooking_via($_GET['delete_booking']);
-  header("location:../view/superadmin/booking/booking_via.php");
+  header("location:../view/".$view."/booking/booking_via.php");
 }
 
 //Update Booking Via
@@ -31,7 +32,7 @@ if(isset($_POST['updateBooking'])){
   $update = $proses->updateBooking($kd_booking, $booking_via);
 
   if($update == "Success"){
-    header('Location:../view/superadmin/booking/booking_via.php');
+    header('Location:../view/'.$view.'/booking/booking_via.php');
   } else {
     echo 'error';
   }

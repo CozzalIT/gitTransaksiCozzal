@@ -1,7 +1,8 @@
 <?php
 require("../config/database.php");
 require("../class/apartemen.php");
-
+session_start();
+$view = $_SESSION['hak_akses'];
 //Tambah Apartemen
 if(isset($_POST['addApartemen'])){
 	$nama_apt = $_POST['nama_apt'];
@@ -11,7 +12,7 @@ if(isset($_POST['addApartemen'])){
   $add = $proses->addApartemen($nama_apt, $alamat_apt);
 
   if($add == "Success"){
-	  header('Location:../view/superadmin/apartemen/apartemen.php');
+	  header('Location:../view/'.$view.'/apartemen/apartemen.php');
   }
 }
 
@@ -19,7 +20,7 @@ if(isset($_POST['addApartemen'])){
 if(isset($_GET['delete_apt'])){
   $proses = new Apartemen($db);
   $del = $proses->deleteApartemen($_GET['delete_apt']);
-  header("location:../view/superadmin/apartemen/apartemen.php");
+  header("location:../view/".$view."/apartemen/apartemen.php");
 }
 
 //Update Apartemen
@@ -32,7 +33,7 @@ if(isset($_POST['updateApartemen'])){
   $update = $proses->updateApartemen($kd_apt, $nama_apt, $alamat_apt);
 
   if($update == "Success"){
-    header('Location:../view/superadmin/apartemen/apartemen.php');
+    header('Location:../view/'.$view.'/apartemen/apartemen.php');
   }else{
       echo 'error';
   }

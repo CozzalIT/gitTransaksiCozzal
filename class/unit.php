@@ -81,6 +81,36 @@ class Unit {
     }
   }
 
+  //Proses Update informasi dasar unit
+  public function updateInfo_Unit($kd_unit ,$kd_apt, $no_unit, $kd_owner){
+    $sql = "update tb_unit SET kd_apt='$kd_apt', no_unit='$no_unit'";
+    if($kd_owner!=''){
+      $sql = $sql.", kd_owner='$kd_owner'";
+    }
+    $sql = $sql." where kd_unit='$kd_unit'";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
+  }
+
+  //Proses Update harga unit
+  public function updateHarga_Unit($kd_unit , $h_owner_wd, $h_owner_we, $h_sewa_wd, $h_owner_we, $ekstra_charge){
+    $sql = "update tb_unit SET h_owner_wd='$h_owner_wd', h_owner_we='$h_owner_we'";
+    if($ekstra_charge!=''){
+      $sql = $sql.", kd_owner='$kd_owner'";
+    }
+    $sql = $sql." where kd_unit='$kd_unit'";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
+  }
+
   public function updateDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok, $type){
     $sql = "update tb_detail_unit SET lantai='$lantai', jml_kmr='$jml_kmr', jml_bed='$jml_bed', jml_ac='$jml_ac', water_heater='$water_heater',
     dapur='$dapur', wifi='$wifi', tv='$tv', amenities='$amenities', merokok='$merokok', type='$type', isi='Y' where kd_unit='$kd_unit'";

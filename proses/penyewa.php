@@ -1,7 +1,8 @@
 <?php
 require("../config/database.php");
 require("../class/penyewa.php");
-
+session_start();
+$view = $_SESSION['hak_akses'];
 //Tambah Penyewa
 if(isset($_POST['addPenyewa'])){
   $nama = $_POST['nama'];
@@ -15,7 +16,7 @@ if(isset($_POST['addPenyewa'])){
   $add = $proses->addPenyewa($nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung);
 
   if($add == "Success"){
-	  header('Location:../view/superadmin/penyewa/penyewa.php');
+	  header('Location:../view/'.$view.'/penyewa/penyewa.php');
   }
 }
 
@@ -23,7 +24,7 @@ if(isset($_POST['addPenyewa'])){
 if(isset($_GET['delete_penyewa'])){
   $proses = new Penyewa($db);
   $del = $proses->deletePenyewa($_GET['delete_penyewa']);
-  header("location:../view/superadmin/penyewa/penyewa.php");
+  header("location:../view/".$view."/penyewa/penyewa.php");
 }
 
 //Update Penyewa
@@ -39,7 +40,7 @@ if(isset($_POST['updatePenyewa'])){
 	$update = $proses->updatePenyewa($kd_penyewa, $nama, $alamat, $no_tlp, $jenis_kelamin, $email);
 
   if($update == "Success"){
-  	header('Location:../view/superadmin/penyewa/penyewa.php');
+  	header('Location:../view/'.$view.'/penyewa/penyewa.php');
   } else {
   	echo 'error';
 	}

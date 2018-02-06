@@ -48,7 +48,7 @@
                   <th>Owner WeekDay</th>
                   <th>Owner WeekEnd</th>
                   -->
-				          <th>Detail</th>
+				          <th>Ekstra Charge</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -71,15 +71,11 @@
                             <td>".number_format($data->h_owner_wd, 0, ".", ".")." IDR</td>
               						  <td>".number_format($data->h_owner_we, 0, ".", ".")." IDR</td>
                           -->
-            						  <td>
-                            <center>
-                              <a class='btn btn-info' href='calendar.php?calendar_unit=$data->kd_unit'>Calendar</a>
-                              <a class='btn btn-success' href='#' onclick='cek_detail_unit(".$data->kd_unit.")'>Detail</a>
-                            </center>
-                          </td>
+            						  <td>".number_format($data->ekstra_charge, 0, ".", ".")." IDR </td>
                           <td>
                             <center>
-                              <a class='btn btn-primary' href='edit.php?edit_unit=$data->kd_unit'>Edit</a>
+                              <a class='btn btn-info' href='calendar.php?calendar_unit=$data->kd_unit'>Calendar</a>
+                              <a class='btn btn-success' href='detail_unit.php?detail_unit=".$data->kd_unit."' >Kelola Unit</a>
                               <a class='btn btn-danger' href='../../../proses/unit.php?delete_unit=$data->kd_unit&kurangi_ju=$data->kd_owner'>Hapus</a>
                             </center>
                           </td>

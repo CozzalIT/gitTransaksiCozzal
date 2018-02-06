@@ -57,9 +57,10 @@
   if(isset($_GET['detail_unit'])){
       $Proses = new Unit($db);
       $show2 = $Proses->showDetail_Unit($_GET['detail_unit']);
-      $img_t = 'Nothing'; $flag = 0;     
+      $img_t = 'Nothing'; $flag = 0; $hreffasil = 'edit.php?tambah_detail_unit=';    
       while($data = $show2->fetch(PDO::FETCH_OBJ)){
         $img_t = $data->img; 
+        $hreffasil = 'edit.php?edit_detail_unit=';   
         if($data->isi=='Y'){
           $flag = 1;
           $dapur ='Tersedia';
@@ -96,8 +97,7 @@
                 </form>
               </div>
               <div class="container-fluid">
-                <hr>
-                <div class="row-fluid">
+                 <div class="row-fluid">
                   <div class="span12">
                     <div class="widget-box">
                       <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
@@ -171,7 +171,7 @@
                                   <table class="detail-unit">
                                     <tbody>
                                       <tr>
-                                      <td><h4>Detail Unit</h4></p></td>
+                                      <td><h4>Detail Unit '.$data->no_unit.' ('.$data->nama_apt.')</h4></p></td>
                                       </tr>
                                       <tr style="border-bottom-width: 2px;border-bottom-style: solid;">
                                       <td><strong>Informasi Dasar</strong></td>
@@ -189,54 +189,23 @@
                                       <td>: '.$data->alamat_apt.'</td>
                                       </tr>
                                         <td>
-                                           <a class="btn btn-small" style="margin-bottom: 12px;" href="#">Edit Informasi Dasar</a>
-                                        </td>
-                                      </tr>
-                                      <tr style="border-bottom-width: 2px;border-bottom-style: solid;">
-                                      <td><strong>Info Pemilik</strong></td>
-                                      </tr>
-                                      <td>Nama Pemilik</td>
-                                      <td>: '.$data->nama.'</td>
-                                      </tr>
-                                      </tr>
-                                      <td>Alamat</td>
-                                      <td>: '.$data->alamat.'</td>
-                                      </tr>
-                                      <tr>
-                                      </tr>
-                                      <td>No Telepon</td>
-                                      <td>: '.$data->no_tlp.'</td>
-                                      </tr>
-                                        <td>
-                                           <a class="btn btn-small" style="margin-bottom: 12px;" href="#">Edit Info Pemilik</a>
+                                           <a class="btn btn-small" style="margin-bottom: 12px;" href="edit.php?edit_info_unit='.$data->kd_unit.'">Edit Informasi Dasar</a>
                                         </td>
                                       </tr>
                                       <tr style="border-bottom-width: 2px;border-bottom-style: solid;">
                                       <td><strong>Harga</strong></td>
                                       </tr>
                                       <tr>
-                                      <td>Owner WeekDay</td>
+                                      <td>Sewa WeekDay</td>
                                       <td>: '.number_format($data->h_owner_wd, 0, ".", ".").' IDR</td>
                                       </tr>
                                       <tr>
-                                      <td>Owner WeekEnd</td>
+                                      <td>Sewa WeekEnd</td>
                                       <td>: '.number_format($data->h_owner_we, 0, ".", ".").' IDR</td>
                                       </tr>
                                       <tr>
-                                      <td>Sewa WeekDay</td>
-                                      <td>: '.number_format($data->h_sewa_wd, 0, ".", ".").' IDR</td>
-                                      </tr>
-                                      <tr>
-                                      <td>Sewa WeekEnd</td>
-                                      <td>: '.number_format($data->h_sewa_we, 0, ".", ".").' IDR</td>
-                                      </tr>
-                                      <tr>
-                                      <td>Ekstra Charge</td>
-                                      <td>: '.number_format($data->ekstra_charge, 0, ".", ".").' IDR</td>
-                                      </tr>
-                                      <tr>
                                         <td>
-                                           <a class="btn btn-small" style="margin-bottom: 12px;" href="#">Edit Harga</a>
+                                           <a class="btn btn-small" style="margin-bottom: 12px;" href="edit.php?edit_harga_owner='.$data->kd_unit.'">Edit Harga</a>
                                         </td>
                                       </tr>
                                       <tr style="border-bottom-width: 2px;border-bottom-style: solid;">
@@ -292,7 +261,7 @@
                                           </tr>
                                           <tr>
                                             <td>
-                                               <a class="btn btn-small" style="margin-bottom: 12px;" href="edit.php?edit_detail_unit='.$_GET["detail_unit"].'">Edit Info Fasilitas</a>
+                                               <a class="btn btn-small" style="margin-bottom: 12px;" href="'.$hreffasil.$data->kd_unit.'">Edit Info Fasilitas</a>
                                             </td>
                                           </tr>
                                           ';
@@ -303,7 +272,7 @@
                                           </tr>
                                           <tr>
                                             <td>
-                                               <a class="btn btn-small" style="margin-bottom: 12px;" href="edit.php?edit_detail_unit='.$_GET["detail_unit"].'">Tambah Detail Fasilitas</a>
+                                               <a class="btn btn-small" style="margin-bottom: 12px;" href="'.$hreffasil.$data->kd_unit.'">Tambah Detail Fasilitas</a>
                                             </td>
                                           </tr>
                                         ';
@@ -332,18 +301,20 @@
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--End-Footer-part-->
-<script src="../../asset/js/slidegambar.js"></script>
+<script src="../../../asset/js/slidegambar.js"></script>
+<!--
 <script src="../../asset/js/bootstrap.min.js"></script>
 <script src="../../asset/js/jquery.gritter.min.js"></script>
 <script src="../../asset/js/jquery.peity.min.js"></script>
 <script src="../../asset/js/matrix.interface.js"></script>
 <script src="../../asset/js/matrix.popover.js"></script>
-<script src="../../asset/js/jquery.ui.custom.js"></script>
+<script src="../../asset/js/jquery.ui.custom.js"></script> -->
 <!--<script src="js/jquery.uniform.js"></script> -->
+<!--
 <script src="../../asset/js/select2.min.js"></script>
 <script src="../../asset/js/jquery.dataTables.min.js"></script>
 <script src="../../asset/js/matrix.js"></script>
 <script src="../../asset/js/matrix.tables.js"></script>
-
+-->
 </body>
 </html>

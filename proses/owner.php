@@ -1,7 +1,8 @@
 <?php
 require("../config/database.php");
 require("../class/owner.php");
-
+session_start();
+$view = $_SESSION['hak_akses'];
 //Tambah Owner
 if(isset($_POST['addOwner'])){
 	$nama= $_POST['nama'];
@@ -17,7 +18,7 @@ if(isset($_POST['addOwner'])){
   $add = $proses->addOwner($nama, $alamat, $no_tlp, $kd_bank, $no_rek, $tgl_gabung, $email, $jenis_kelamin);
 
   if($add == "Success"){
-	  header('Location:../view/superadmin/owner/owner.php');
+	  header('Location:../view/'.$view.'/owner/owner.php');
   }
 	else echo 'error';
 }
@@ -26,7 +27,7 @@ if(isset($_POST['addOwner'])){
 if(isset($_GET['delete_owner'])){
   $proses = new Owner($db);
 	$del = $proses->deleteOwner($_GET['delete_owner']);
-	header("location:../view/superadmin/owner/owner.php");
+	header("Location:../view/".$view."/owner/owner.php");
 }
 
 //Update Owner
@@ -44,7 +45,7 @@ if(isset($_POST['updateOwner'])){
   $add = $proses->updateOwner($kd_owner ,$nama, $alamat, $no_tlp, $kd_bank, $no_rek, $email, $jenis_kelamin);
 
   if($add == "Success"){
-	  header('Location:../view/superadmin/owner/owner.php');
+	  header('Location:../view/'.$view.'/owner/owner.php');
   } else echo 'error';
 }
 ?>

@@ -9,11 +9,11 @@
 
   $thisPage = "Unit";
 
-  include "template/head.php";
-  include "template/header.php";
-  include "template/sidebar.php";
-  require("../../class/unit.php");
-  require("../../config/database.php");
+  include "../template/head.php";
+  include "../template/header.php";
+  include "../template/sidebar.php";
+  require("../../../class/unit.php");
+  require("../../../config/database.php");
   $proses = new Unit($db);
     if (isset($_POST['upload_gambar'])){
     $img_baru = ''; $img = '';
@@ -22,12 +22,12 @@
     $tanggal = date('dmyHis');
     if ($jumlah > 0) {
       for ($i=0; $i < $jumlah; $i++) {
-        if(!file_exists('../../asset/img/unit/'.$kd_unit)) mkdir('../../asset/img/unit/'.$kd_unit);
+        if(!file_exists('../../../asset/img/unit/'.$kd_unit)) mkdir('../../../asset/img/unit/'.$kd_unit);
         $file_name = $_FILES['gambar']['name'][$i];
         $tmp_name = $_FILES['gambar']['tmp_name'][$i];
         $tmp2 = explode('.', $file_name);
         $file_name_new = $tanggal.$i.'.'.$tmp2[1];
-        move_uploaded_file($tmp_name, "../../asset/img/unit/".$kd_unit.'/'.$file_name_new);
+        move_uploaded_file($tmp_name, "../../../asset/img/unit/".$kd_unit.'/'.$file_name_new);
         if($img_baru==''){
           $img_baru = $file_name_new;
         } else {
@@ -57,9 +57,10 @@
   if(isset($_GET['detail_unit'])){
       $Proses = new Unit($db);
       $show2 = $Proses->showDetail_Unit($_GET['detail_unit']);
-      $img_t = 'Nothing'; $flag = 0;     
+      $img_t = 'Nothing'; $flag = 0; $hreffasil = 'edit.php?tambah_detail_unit=';    
       while($data = $show2->fetch(PDO::FETCH_OBJ)){
         $img_t = $data->img; 
+        $hreffasil = 'edit.php?edit_detail_unit=';   
         if($data->isi=='Y'){
           $flag = 1;
           $dapur ='Tersedia';
@@ -96,9 +97,7 @@
                 </form>
               </div>
               <div class="container-fluid">
-                <hr>
-                <a class="btn btn-primary" href="edit.php?edit_detail_unit='.$_GET["detail_unit"].'">Ubah Fasilitas</a>
-                <div class="row-fluid">
+                 <div class="row-fluid">
                   <div class="span12">
                     <div class="widget-box">
                       <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
@@ -113,7 +112,7 @@
                               <center>';
                                 if(($img_t=='None') || ($img_t=='Nothing'))
                                   echo '
-                                <img class="mySlides" src="../../asset/img/none.png" style="width:100%; height:350px; padding-top:20px">
+                                <img class="mySlides" src="../../../asset/img/none.png" style="width:100%; height:350px; padding-top:20px">
                               </center>
                                   <table class="">
                                     <tbody>
@@ -134,7 +133,7 @@
                                 $n = count($image); $j = 0 - 3;
                                 $dir = $data->kd_unit;
                                 foreach ($image as $nama_file_gambar) {
-                                  echo '<img class="mySlides" src="../../asset/img/unit/'.$dir.'/'.$nama_file_gambar.'" style="width:100%; height:350px">';
+                                  echo '<img class="mySlides" src="../../../asset/img/unit/'.$dir.'/'.$nama_file_gambar.'" style="width:100%; height:350px">';
                                 }
                               echo'
                               </center>
@@ -152,7 +151,7 @@
                                       echo'
                                           <td>
                                             <div class="foto-unit">
-                                              <img class="demo" src="../../asset/img/unit/'.$dir.'/'.$image[$x].'" style="width:100%" onclick="currentDiv('.$curdiv.')">
+                                              <img class="demo" src="../../../asset/img/unit/'.$dir.'/'.$image[$x].'" style="width:100%" onclick="currentDiv('.$curdiv.')">
                                             </div>
                                           </td>';
                                       $n = $n - 1;
@@ -175,30 +174,38 @@
                                       <td><h4>Detail Unit '.$data->no_unit.' ('.$data->nama_apt.')</h4></p></td>
                                       </tr>
                                       <tr style="border-bottom-width: 2px;border-bottom-style: solid;">
-                                      <td><strong>Info Pemilik</strong></td>
+                                      <td><strong>Informasi Dasar</strong></td>
                                       </tr>
-                                      <td>Nama Pemilik</td>
-                                      <td>: '.$data->nama.'</td>
+                                      <td>No Unit</td>
+                                      <td>: '.$data->no_unit.'</td>
+                                      </tr>
+                                      </tr>
+                                      <td>Apartemen</td>
+                                      <td>: '.$data->nama_apt.'</td>
                                       </tr>
                                       <tr>
+                                      </tr>
+                                      <td>Alamat</td>
+                                      <td>: '.$data->alamat_apt.'</td>
+                                      </tr>
                                         <td>
-                                           <a class="btn btn-small" style="margin-bottom: 12px;" href="#">Edit Info Pemilik</a>
+                                           <a class="btn btn-small" style="margin-bottom: 12px;" href="edit.php?edit_info_unit='.$data->kd_unit.'">Edit Informasi Dasar</a>
                                         </td>
                                       </tr>
                                       <tr style="border-bottom-width: 2px;border-bottom-style: solid;">
                                       <td><strong>Harga</strong></td>
                                       </tr>
                                       <tr>
-                                      <td>Harga Sewa WeekDay</td>
+                                      <td>Sewa WeekDay</td>
                                       <td>: '.number_format($data->h_owner_wd, 0, ".", ".").' IDR</td>
                                       </tr>
                                       <tr>
-                                      <td>Harga Sewa WeekEnd</td>
+                                      <td>Sewa WeekEnd</td>
                                       <td>: '.number_format($data->h_owner_we, 0, ".", ".").' IDR</td>
                                       </tr>
                                       <tr>
                                         <td>
-                                           <a class="btn btn-small" style="margin-bottom: 12px;" href="#">Edit Harga</a>
+                                           <a class="btn btn-small" style="margin-bottom: 12px;" href="edit.php?edit_harga_owner='.$data->kd_unit.'">Edit Harga</a>
                                         </td>
                                       </tr>
                                       <tr style="border-bottom-width: 2px;border-bottom-style: solid;">
@@ -254,7 +261,7 @@
                                           </tr>
                                           <tr>
                                             <td>
-                                               <a class="btn btn-small" style="margin-bottom: 12px;" href="#">Edit Info Fasilitas</a>
+                                               <a class="btn btn-small" style="margin-bottom: 12px;" href="'.$hreffasil.$data->kd_unit.'">Edit Info Fasilitas</a>
                                             </td>
                                           </tr>
                                           ';
@@ -265,7 +272,7 @@
                                           </tr>
                                           <tr>
                                             <td>
-                                               <a class="btn btn-small" style="margin-bottom: 12px;" href="#">Tambah Detail Fasilitas</a>
+                                               <a class="btn btn-small" style="margin-bottom: 12px;" href="'.$hreffasil.$data->kd_unit.'">Tambah Detail Fasilitas</a>
                                             </td>
                                           </tr>
                                         ';
@@ -294,18 +301,20 @@
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--End-Footer-part-->
-<script src="../../asset/js/slidegambar.js"></script>
+<script src="../../../asset/js/slidegambar.js"></script>
+<!--
 <script src="../../asset/js/bootstrap.min.js"></script>
 <script src="../../asset/js/jquery.gritter.min.js"></script>
 <script src="../../asset/js/jquery.peity.min.js"></script>
 <script src="../../asset/js/matrix.interface.js"></script>
 <script src="../../asset/js/matrix.popover.js"></script>
-<script src="../../asset/js/jquery.ui.custom.js"></script>
+<script src="../../asset/js/jquery.ui.custom.js"></script> -->
 <!--<script src="js/jquery.uniform.js"></script> -->
+<!--
 <script src="../../asset/js/select2.min.js"></script>
 <script src="../../asset/js/jquery.dataTables.min.js"></script>
 <script src="../../asset/js/matrix.js"></script>
 <script src="../../asset/js/matrix.tables.js"></script>
-
+-->
 </body>
 </html>

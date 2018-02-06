@@ -2,25 +2,25 @@
   session_start();
 
   if(!isset($_SESSION['username'])) {
-    header('location:index.php');
+    header('location:../index.php');
   }else {
     $username = $_SESSION['username'];
   }
 
-  include "template/head.php";
+  include "../template/head.php";
   $thisPage = "Dashboard";
 ?>
 <body>
 <?php
-  include "template/header.php";
-  include "template/sidebar.php";
+  include "../template/header.php";
+  include "../template/sidebar.php";
 ?>
 
 <!--main-container-part-->
 <div id="content">
 <!--breadcrumbs-->
   <div id="content-header">
-    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
+    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
   </div>
 <!--End-breadcrumbs-->
 
@@ -75,7 +75,7 @@
 <!--end-main-container-part-->
 
 <?php
-  include "template/footer.php";
+  include "../template/footer.php";
 ?>
 </body>
 </html>

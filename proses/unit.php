@@ -1,7 +1,8 @@
 <?php
 require("../config/database.php");
 require("../class/unit.php");
-
+session_start();
+$view = $_SESSION['hak_akses'];
 //Tambah Unit
 if(isset($_POST['addUnit'])){
   $kd_apt = $_POST['apartemen'];
@@ -18,7 +19,7 @@ if(isset($_POST['addUnit'])){
 	$add2 = $proses->updateJumlah_unit_owner($kd_owner);
 
   if(($add == "Success") || ($add2 == "Success")){
-	  header('Location:../view/superadmin/unit/unit.php');
+	  header('Location:../view/'.$view.'/unit/unit.php');
 	}else{
     echo 'error';
   }
@@ -42,7 +43,7 @@ if(isset($_POST['add_detail_unit'])){
   $add = $proses->addDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok, $type, 'None', 'Y');
 
   if($add == "Success"){
-    header('Location:../view/superadmin/unit/detail_unit.php?detail_unit='.$kd_unit);
+    header('Location:../view/'.$view.'/unit/detail_unit.php?detail_unit='.$kd_unit);
   }
   else echo "error";
 }
@@ -73,7 +74,7 @@ if(isset($_GET['delete_unit']) || isset($_GET['kurangi_ju'])){
       delete_files('../img/unit/'.$_GET['delete_unit']);
     }
   }
-  header("location:../view/superadmin/unit/unit.php");
+  header("location:../view/".$view."/unit/unit.php");
 }
 
 //update Unit
@@ -88,7 +89,6 @@ if(isset($_POST['updateUnit'])){
 	$h_sewa_wd= $_POST['h_sewa_wd'];
 	$h_sewa_we= $_POST['h_sewa_we'];
 	$ekstra_charge= $_POST['ekstra_charge'];
-
   $proses = new Unit($db);
   $add = $proses->updateUnit($kd_unit ,$kd_apt,$kd_owner, $no_unit, $h_owner_wd, $h_owner_we, $h_sewa_wd, $h_sewa_we, $ekstra_charge);
 	if($owner!=$kd_owner){
@@ -96,7 +96,46 @@ if(isset($_POST['updateUnit'])){
 		$add = $proses->updateKurangi_jumlah_unit_owner($owner);
 	}
   if($add == "Success"){
-	  header('Location:../view/superadmin/unit/unit.php');
+	  header('Location:../view/'.$view.'/unit/unit.php');
+  }else echo 'error';
+}
+
+//update informasi dasar unit
+if(isset($_POST['updateInfoUnit']) || isset($_POST['updateInfoUnitbyOwner'])){
+  $kd_owner = ''; $owner = '';
+  if(isset($_POST['updateInfoUnit'])){
+    $kd_owner = $_POST['owner'];
+    $owner= $_POST['kd_owner_lama'];
+  }
+  $kd_unit= $_POST['kd_unit'];
+  $no_unit = $_POST['no_unit'];
+  $kd_apt= $_POST['apartemen'];
+  $proses = new Unit($db);
+  $add = $proses->updateInfo_Unit($kd_unit ,$kd_apt, $no_unit, $kd_owner);
+  if($owner!=$kd_owner){
+    $add = $proses->updateJumlah_unit_owner($kd_owner);
+    $add = $proses->updateKurangi_jumlah_unit_owner($owner);
+  }
+  if($add == "Success"){
+    header('Location:../view/'.$view.'/unit/detail_unit.php?detail_unit='.$kd_unit);
+  }else echo 'error';
+}
+
+//update informasi dasar unit
+if(isset($_POST['updateHargaUnit']) || isset($_POST['updateHargaUnitbyOwner'])){
+  $kd_unit= $_POST['kd_unit'];
+  $h_owner_wd= $_POST['h_owner_wd'];
+  $h_owner_we= $_POST['h_owner_we'];
+  $h_sewa_wd = ''; $h_sewa_we=''; $ekstra_charge='';
+  if(isset($_POST['updateHargaUnit'])){
+      $h_sewa_wd= $_POST['h_sewa_wd'];
+    $h_sewa_we= $_POST['h_sewa_we'];
+  }
+  $ekstra_charge= $_POST['ekstra_charge'];
+  $proses = new Unit($db);
+  $add = $proses->updateHarga_Unit($kd_unit , $h_owner_wd, $h_owner_we, $h_sewa_wd, $h_owner_we, $ekstra_charge);
+  if($add == "Success"){
+    header('Location:../view/'.$view.'/unit/detail_unit.php?detail_unit='.$kd_unit);
   }else echo 'error';
 }
 
@@ -119,7 +158,7 @@ if(isset($_POST['update_detail_unit'])){
   $add = $proses->updateDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok, $type);
 
   if($add == "Success"){
-    header("Location:../view/superadmin/unit/detail_unit.php?detail_unit=".$kd_unit);
+    header("Location:../view/".$view."/unit/detail_unit.php?detail_unit=".$kd_unit);
   }else echo 'error';
 }
 ?>

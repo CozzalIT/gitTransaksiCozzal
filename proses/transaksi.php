@@ -1,7 +1,8 @@
 <?php
 require("../config/database.php");
 require("../class/transaksi.php");
-
+session_start();
+$view = $_SESSION['hak_akses'];
 //Tambah Transaksi
 if(isset($_POST['addTransaksi'])){
 	$kd_penyewa 	= $_POST['kd_penyewa'];
@@ -30,7 +31,7 @@ if(isset($_POST['addTransaksi'])){
   $add = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total, $sisa_pelunasan, $hari, $tgl_transaksi, $diskon);
 
   if($add == "Success"){
-	  header('Location:../view/superadmin/transaksi/laporan_transaksi.php');
+	  header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php');
   }else{
     echo 'gagal';
 	}
@@ -43,7 +44,7 @@ if (isset($_GET['addConfirm'])){
   $proses = new Transaksi($db);
   $add = $proses->addConfirm($kd_transaksi);
   if($add == "Success"){
-    header('Location:../view/superadmin/transaksi/confirm_transaksi.php');
+    header('Location:../view/'.$view.'/transaksi/confirm_transaksi.php');
   }
 }
 
@@ -62,7 +63,7 @@ if(isset($_POST['addPenyewaTransaksi'])){
   $data = $show->fetch(PDO::FETCH_OBJ);
 
   if($add == "Success"){
-	  header('Location:../view/superadmin/transaksi/transaksi.php?nama='.$nama.'&alamat='.$alamat.'&no_tlp='.$no_tlp.'&jenis_kelamin='.$jenis_kelamin.'&kd_penyewa='.$data->kd_penyewa);
+	  header('Location:../view/'.$view.'/transaksi/transaksi.php?nama='.$nama.'&alamat='.$alamat.'&no_tlp='.$no_tlp.'&jenis_kelamin='.$jenis_kelamin.'&kd_penyewa='.$data->kd_penyewa);
   }
 }
 
@@ -70,7 +71,7 @@ if(isset($_POST['addPenyewaTransaksi'])){
 if(isset($_GET['delete_transaksi'])){
   $proses = new Transaksi($db);
   $del = $proses->deleteTransaksi($_GET['delete_transaksi']);
-  header("location:../view/superadmin/transaksi/laporan_transaksi.php");
+  header("location:../view/".$view."/transaksi/laporan_transaksi.php");
 }
 
 //update Transaksi
@@ -99,7 +100,7 @@ if(isset($_POST['updateTransaksi'])){
   $proses = new Transaksi($db);
   $add = $proses->updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $diskon, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total_tagihan, $sisa_pelunasan, $hari);
   if($add == "Success"){
-    header('Location:../view/superadmin/transaksi/laporan_transaksi.php');
+    header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php');
   } else echo 'error';
 }
 ?>
