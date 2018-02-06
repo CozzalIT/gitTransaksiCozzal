@@ -1,5 +1,7 @@
 <?php
   session_start();
+  require("../../../config/database.php");
+  require("../../../class/transaksi.php");
 
   if(!isset($_SESSION['username'])) {
     header('location:index.php');
@@ -9,12 +11,12 @@
 
   $thisPage = "Transaksi";
 
-  include "template/head.php";
+  include "../template/head.php";
 ?>
 <body>
 <?php
-  include "template/header.php";
-  include "template/sidebar.php";
+  include "../template/header.php";
+  include "../template/sidebar.php";
 ?>
 <div id="content">
   <div id="content-header">
@@ -23,30 +25,32 @@
   </div>
   <div class="container-fluid"><hr>
     <div class="row-fluid">
-      <div class="span12">
+      <div class="span8">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-briefcase"></i> </span>
             <h5 >Kwitansi Pembayaran</h5>
           </div>
+          <?php
+            $proses = new Transaksi($db);
+            $show = $proses->showConfirmById($_GET['kwitansi']);
+            $data = $show->fetch(PDO::FETCH_OBJ);
+          ?>
           <div class="widget-content">
             <div class="row-fluid">
               <div class="span6">
                 <table class="">
                   <tbody>
                     <tr>
-                      <td><h4>Cozzal</h4></td>
+                      <td><h4><?php echo $data->nama; ?></h4></td>
                     </tr>
                     <tr>
-                      <td>Your Town</td>
+                      <td><?php echo $data->alamat; ?></td>
                     </tr>
                     <tr>
-                      <td>Your Region/State</td>
+                      <td>Mobile Phone: <?php echo $data->no_tlp; ?></td>
                     </tr>
                     <tr>
-                      <td>Mobile Phone: +4530422244</td>
-                    </tr>
-                    <tr>
-                      <td >me@company.com</td>
+                      <td><?php echo $data->email; ?></td>
                     </tr>
                   </tbody>
                 </table>
@@ -56,23 +60,29 @@
                   <tbody>
                     <tr>
                     <tr>
-                      <td class="width30">Invoice ID:</td>
-                      <td class="width70"><strong>TD-6546</strong></td>
+                      <td class="width30">Invoice ID</td>
+                      <td class="width70"><strong>COZ-<?php echo $data->kd_confirm_transaksi; ?></strong></td>
                     </tr>
                     <tr>
-                      <td>Issue Date:</td>
-                      <td><strong>March 23, 2013</strong></td>
+                      <td class="width30">Invoice Date</td>
+                      <td class="width70"><strong><?php echo $data->tgl_transaksi; ?></strong></td>
                     </tr>
                     <tr>
-                      <td>Due Date:</td>
-                      <td><strong>April 01, 2013</strong></td>
+                      <td class="width30">Check In</td>
+                      <td class="width70"><strong><?php echo $data->check_in; ?></strong></td>
                     </tr>
-                  <td class="width30">Client Address:</td>
-                    <td class="width70"><strong>Cliente Company name.</strong> <br>
-                      501 Mafia Street., washington, <br>
-                      NYNC 3654 <br>
-                      Contact No: 123 456-7890 <br>
-                      Email: youremail@companyname.com </td>
+                    <tr>
+                      <td class="width30">Check Out</td>
+                      <td class="width70"><strong><?php echo $data->check_out; ?></strong></td>
+                    </tr>
+                    <tr>
+                      <td class="width30">Apartemen</td>
+                      <td class="width70"><strong><?php echo $data->nama_apt; ?></strong></td>
+                    </tr>
+                    <tr>
+                      <td class="width30">No Unit</td>
+                      <td class="width70"><strong><?php echo $data->no_unit; ?></strong></td>
+                    </tr>
                   </tr>
                     </tbody>
 
@@ -82,50 +92,30 @@
             <div class="row-fluid">
               <div class="span12">
                 <table class="table table-bordered table-invoice-full">
-                  <thead>
-                    <tr>
-                      <th class="head0">Type</th>
-                      <th class="head1">Desc</th>
-                      <th class="head0 right">Qty</th>
-                      <th class="head1 right">Price</th>
-                      <th class="head0 right">Amount</th>
-                    </tr>
-                  </thead>
                   <tbody>
                     <tr>
-                      <td>Firefox</td>
-                      <td>Ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae</td>
-                      <td class="right">2</td>
-                      <td class="right">$150</td>
-                      <td class="right"><strong>$300</strong></td>
+                      <td>Price Per Night</td>
+                      <td><strong><?php echo number_format($data->harga_sewa,0, ".", "."); ?> IDR</td>
                     </tr>
                     <tr>
-                      <td>Chrome Plugin</td>
-                      <td>Tro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt u eos et accusamus et iusto odio dignissimos ducimus  deleniti atque</td>
-                      <td class="right">1</td>
-                      <td class="right">$1,200</td>
-                      <td class="right"><strong>$1,2000</strong></td>
+                      <td>No Of Guest</td>
+                      <td><strong><?php echo $data->tamu; ?> Person</td>
                     </tr>
                     <tr>
-                      <td>Safari App</td>
-                      <td>Rro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt u expedita distinctio</td>
-                      <td class="right">2</td>
-                      <td class="right">$850</td>
-                      <td class="right"><strong>$1,700</strong></td>
+                      <td>Ekstra Charge</td>
+                      <td><strong><?php echo number_format($data->ekstra_charge,0, ".", "."); ?> IDR</td>
                     </tr>
                     <tr>
-                      <td>Opera App</td>
-                      <td>Orro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut</td>
-                      <td class="right">3</td>
-                      <td class="right">$850</td>
-                      <td class="right"><strong>$2,550</strong></td>
+                      <td>Total No Of Days</td>
+                      <td><strong><?php echo $data->hari; ?> Day</td>
                     </tr>
                     <tr>
-                      <td>Netscape Template</td>
-                      <td>Vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</td>
-                      <td class="right">5</td>
-                      <td class="right">$50</td>
-                      <td class="right"><strong>$250</strong></td>
+                      <td>Payment</td>
+                      <td><strong><?php echo number_format($data->dp,0, ".", "."); ?> IDR</td>
+                    </tr>
+                    <tr>
+                      <td>Outstanding Balance</td>
+                      <td><strong><?php echo number_format($data->total_tagihan,0, ".", "."); ?> IDR</td>
                     </tr>
                   </tbody>
                 </table>
@@ -133,21 +123,48 @@
                   <tbody>
                     <tr>
                       <td class="msg-invoice" width="85%"><h4>Payment method: </h4>
-                        <a href="#" class="tip-bottom" title="Wire Transfer">Wire transfer</a> |  <a href="#" class="tip-bottom" title="Bank account">Bank account #</a> |  <a href="#" class="tip-bottom" title="SWIFT code">SWIFT code </a>|  <a href="#" class="tip-bottom" title="IBAN Billing address">IBAN Billing address </a></td>
-                      <td class="right"><strong>Subtotal</strong> <br>
-                        <strong>Tax (5%)</strong> <br>
-                        <strong>Discount</strong></td>
-                      <td class="right"><strong>$7,000 <br>
-                        $600 <br>
-                        $50</strong></td>
+                        Via Bank <?php echo $data->nama_bank; ?>
                     </tr>
                   </tbody>
                 </table>
                 <div class="pull-right">
-                  <h4><span>Amount Due:</span> $7,650.00</h4>
+                  <h4><span>Total Amount:</span> <?php echo number_format($data->total_tagihan,0, ".", "."); ?> IDR</h4>
                   <br>
                   <a class="btn btn-success btn-large pull-right" href="">Download / Print</a> </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="span4">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-briefcase"></i> </span>
+            <h5>Catatan 1</h5>
+          </div>
+          <div class="widget-content">
+            <div class="row-fluid">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="span4">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-briefcase"></i> </span>
+            <h5>Catatan 2</h5>
+          </div>
+          <div class="widget-content">
+            <div class="row-fluid">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="span4">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-briefcase"></i> </span>
+            <h5>Catatan 3</h5>
+          </div>
+          <div class="widget-content">
+            <div class="row-fluid">
             </div>
           </div>
         </div>
@@ -160,12 +177,8 @@
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery.ui.custom.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/matrix.js"></script>
-</body>
 <?php
-  include 'template/modal.php';
+  include("../template/footer.php");
 ?>
+</body>
 </html>

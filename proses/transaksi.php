@@ -66,11 +66,18 @@ if(isset($_POST['addPenyewaTransaksi'])){
   }
 }
 
-//Delete DP Transaksi
+//Delete Transaksi
 if(isset($_GET['delete_transaksi'])){
   $proses = new Transaksi($db);
   $del = $proses->deleteTransaksi($_GET['delete_transaksi']);
   header("location:../view/superadmin/transaksi/laporan_transaksi.php");
+}
+
+//Delete Confirm Transaksi
+if(isset($_GET['delete_confirm_transaksi'])){
+  $proses = new Transaksi($db);
+  $del = $proses->deleteConfirmTransaksi($_GET['delete_confirm_transaksi']);
+  header("location:../view/superadmin/transaksi/confirm_transaksi.php");
 }
 
 //update Transaksi

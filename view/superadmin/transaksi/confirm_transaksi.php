@@ -60,8 +60,8 @@
             						<td>$data->check_out</td>
             						<td>
                           <center>
-                            <a class='btn btn-primary'>Kwitansi</a>
-              						  <a class='btn btn-danger' href=''>Hapus</a>
+                            <a class='btn btn-primary' href='kwitansi.php?kwitansi=$data->kd_confirm_transaksi'>Kwitansi</a>
+              						  <a class='btn btn-danger' href='../../../proses/transaksi.php?delete_confirm_transaksi=$data->kd_confirm_transaksi'>Hapus</a>
                           </center>
                         </td>
           					  </tr>

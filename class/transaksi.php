@@ -72,6 +72,17 @@ class Transaksi {
     return $query;
   }
 
+  public function showConfirmById($kd_confirm_transaksi){
+    $sql = "SELECT * from tb_confirm_transaksi
+    INNER JOIN tb_penyewa ON tb_penyewa.kd_penyewa = tb_confirm_transaksi.kd_penyewa
+    INNER JOIN tb_apt ON tb_apt.kd_apt = tb_confirm_transaksi.kd_apt
+    INNER JOIN tb_unit ON tb_unit.kd_unit = tb_confirm_transaksi.kd_unit
+    INNER JOIN tb_bank ON tb_bank.kd_bank = tb_confirm_transaksi.kd_bank
+    WHERE kd_confirm_transaksi='$kd_confirm_transaksi'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
   //Proses Edit
   public function editApartemen($kd_apart){
     $sql = "SELECT * FROM tb_apt WHERE kd_apt='$kd_apart'";
@@ -116,6 +127,11 @@ class Transaksi {
   //Proses Delete
   public function deleteTransaksi($kd_transaksi){
     $sql = "DELETE FROM tb_transaksi WHERE kd_transaksi='$kd_transaksi'";
+    $query = $this->db->query($sql);
+  }
+
+  public function deleteConfirmTransaksi($kd_confirm_transaksi){
+    $sql = "DELETE FROM tb_confirm_transaksi WHERE kd_confirm_transaksi='$kd_confirm_transaksi'";
     $query = $this->db->query($sql);
   }
 
