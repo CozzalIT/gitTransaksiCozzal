@@ -1,12 +1,6 @@
 <?php
   session_start();
 
-  if(!isset($_SESSION['username'])) {
-    header('location:../index.php');
-  }else {
-    $username = $_SESSION['username'];
-  }
-
   include "../template/head.php";
   $thisPage = "Dashboard";
 ?>
@@ -20,7 +14,7 @@
 <div id="content">
 <!--breadcrumbs-->
   <div id="content-header">
-    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
+    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a></div>
   </div>
 <!--End-breadcrumbs-->
 

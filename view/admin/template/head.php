@@ -1,8 +1,12 @@
 <?php
   if(!isset($_SESSION['username'])) {
-    header('location:../../index.php');
+    header('location:../../../index.php');
   }else {
-    $username = $_SESSION['username'];
+  	if($_SESSION['hak_akses']=='admin'){
+  		$username = $_SESSION['username'];
+  	}else{
+  		header('location:../../'.$_SESSION['hak_akses'].'/home/home.php');
+  	}  
   }
 ?>
 <!DOCTYPE html>

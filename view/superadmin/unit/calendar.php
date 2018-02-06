@@ -3,12 +3,6 @@
   require("../../../class/transaksi.php");
   require("../../../config/database.php");
 
-  if(!isset($_SESSION['username'])) {
-    header('location:../../../index.php');
-  }else {
-    $username = $_SESSION['username'];
-  }
-
   $thisPage = "Unit";
 
   include "../template/head.php";
@@ -20,7 +14,7 @@
 ?>
 <div id="content">
   <div id="content-header">
-    <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Sample pages</a> <a href="#" class="current">Calendar</a></div>
+  <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="unit.php" title="Go to Data Unit" class="tip-bottom">Data Unit</a> <a href="#" class="current">Kalender Unit</a> </div>
     <h1>Calendar</h1>
   </div>
   <div class="container-fluid">

@@ -3,12 +3,6 @@
   require("../../../class/dp_via.php");
   require("../../../config/database.php");
 
-  if(!isset($_SESSION['username'])) {
-    header('location:../../../index.php');
-  }else {
-    $username = $_SESSION['username'];
-  }
-
   $thisPage = "Edit";
 
   include "../template/head.php";
@@ -21,7 +15,7 @@
 
 <div id="content">
   <div id="content-header">
-    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Tables</a> </div>
+  <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="dp_via.php" title="Go to DP Via" class="tip-bottom">DP Via</a> <a href="#" class="current">Edit</a> </div> 
   </div>
   <div class="container-fluid">
     <div class="row-fluid">

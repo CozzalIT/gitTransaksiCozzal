@@ -8,12 +8,6 @@
   require("../../../class/dp_via.php");
   require("../../../config/database.php");
 
-  if(!isset($_SESSION['username'])) {
-    header('location:../../../index.php');
-  }else {
-    $username = $_SESSION['username'];
-  }
-
   $thisPage = "Transaksi";
 
   include "../template/head.php";
@@ -25,7 +19,7 @@
 ?>
 <div id="content">
   <div id="content-header">
-    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Form elements</a> <a href="#" class="current">Form wizard</a> </div>
+   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Transaksi</a></div>
     <h1>Transaksi</h1>
 	<a href="laporan_transaksi.php" class="btn btn-success btn-add"><i class="icon-edit"></i> Laporan Transaksi</a>
   </div>

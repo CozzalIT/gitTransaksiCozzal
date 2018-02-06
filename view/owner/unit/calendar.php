@@ -1,12 +1,6 @@
 <?php
   session_start();
 
-  if(!isset($_SESSION['username'])) {
-    header('location:../../../index.php');
-  }else {
-    $username = $_SESSION['username'];
-  }
-
   $thisPage = "Unit";
 
   include "../template/head.php";
@@ -18,8 +12,8 @@
 ?>
 <div id="content">
   <div id="content-header">
-    <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Sample pages</a> <a href="#" class="current">Calendar</a></div>
-    <h1>Calendar</h1>
+  <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="unit.php" title="Go to Listing Unit" class="tip-bottom">Listing Unit</a> <a href="#" class="current">Kalender Unit</a> </div>    
+  <h1>Calendar</h1>
   </div>
   <div class="container-fluid">
     <!--

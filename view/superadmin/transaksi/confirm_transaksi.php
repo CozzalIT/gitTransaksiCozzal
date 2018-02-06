@@ -3,12 +3,6 @@
   require("../../../class/transaksi.php");
   require("../../../config/database.php");
 
-  if(!isset($_SESSION['username'])) {
-    header('location:../../../index.php');
-  }else {
-    $username = $_SESSION['username'];
-  }
-
   $thisPage = "Transaksi";
 
   include "../template/head.php";
@@ -20,7 +14,7 @@
 ?>
 <div id="content">
   <div id="content-header">
-    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Tables</a> </div>
+   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Konfirmasi Transaksi</a></div>
     <a href="transaksi.php" class="btn btn-success btn-add"><i class="icon-plus"></i> Transaksi Baru</a>
   </div>
   <div class="container-fluid">

@@ -97,10 +97,10 @@ class Unit {
   }
 
   //Proses Update harga unit
-  public function updateHarga_Unit($kd_unit , $h_owner_wd, $h_owner_we, $h_sewa_wd, $h_owner_we, $ekstra_charge){
+  public function updateHarga_Unit($kd_unit , $h_owner_wd, $h_owner_we, $h_sewa_wd, $h_sewa_we, $ekstra_charge){
     $sql = "update tb_unit SET h_owner_wd='$h_owner_wd', h_owner_we='$h_owner_we'";
     if($ekstra_charge!=''){
-      $sql = $sql.", kd_owner='$kd_owner'";
+      $sql = $sql.", h_sewa_we='$h_sewa_we', h_sewa_wd='$h_sewa_wd', ekstra_charge='$ekstra_charge'";
     }
     $sql = $sql." where kd_unit='$kd_unit'";
     $query = $this->db->query($sql);

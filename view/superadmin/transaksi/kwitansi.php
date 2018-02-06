@@ -2,13 +2,7 @@
   session_start();
   require("../../../config/database.php");
   require("../../../class/transaksi.php");
-
-  if(!isset($_SESSION['username'])) {
-    header('location:index.php');
-  }else {
-    $username = $_SESSION['username'];
-  }
-
+  
   $thisPage = "Transaksi";
 
   include "../template/head.php";

@@ -1,12 +1,6 @@
 <?php
   session_start();
 
-  if(!isset($_SESSION['username'])) {
-    header('location:login.php');
-  }else {
-    $username = $_SESSION['username'];
-  }
-
   $thisPage = "Unit";
 
   include "../template/head.php";
@@ -88,7 +82,7 @@
             <!--main-container-part-->
             <div id="content">
               <div id="content-header">
-                <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Tables</a> </div>
+              <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="unit.php" title="Go to Listing Unit" class="tip-bottom">Listing Unit</a> <a href="#" class="current">Kelola Unit</a> </div>
                 <form action="" onsubmit="return validasi_upload()" method="POST" enctype="multipart/form-data" style="padding-top: 20px;padding-left: 20px;">
                   <input type="text" name="kd_unit" value='.$data->kd_unit.' style="display:none">
                   <input type="text" id="kd_img" name="img" value='.$img_t.' style="display:none">
@@ -105,7 +99,7 @@
                       </div>
                       <div class="widget-content">
                         <div class="w3-container">
-                          <h2>Foto Unit '.$data->no_unit.' ('.$data->nama_apt.')</h2>
+                          <h2>Foto Unit</h2>
                         </div>
                         <div class="row-fluid" style="max-width:1200px">
                             <div class="span6">
@@ -171,23 +165,24 @@
                                   <table class="detail-unit">
                                     <tbody>
                                       <tr>
-                                      <td><h4>Detail Unit '.$data->no_unit.' ('.$data->nama_apt.')</h4></p></td>
+                                      <td><h4>Detail Unit</h4></p></td>
                                       </tr>
                                       <tr style="border-bottom-width: 2px;border-bottom-style: solid;">
                                       <td><strong>Informasi Dasar</strong></td>
                                       </tr>
+                                      <tr>
                                       <td>No Unit</td>
                                       <td>: '.$data->no_unit.'</td>
                                       </tr>
-                                      </tr>
+                                      <tr>
                                       <td>Apartemen</td>
                                       <td>: '.$data->nama_apt.'</td>
                                       </tr>
                                       <tr>
-                                      </tr>
                                       <td>Alamat</td>
                                       <td>: '.$data->alamat_apt.'</td>
                                       </tr>
+                                      <tr>
                                         <td>
                                            <a class="btn btn-small" style="margin-bottom: 12px;" href="edit.php?edit_info_unit='.$data->kd_unit.'">Edit Informasi Dasar</a>
                                         </td>
