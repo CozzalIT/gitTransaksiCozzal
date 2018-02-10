@@ -21,7 +21,7 @@
 
 <div id="content">
   <div id="content-header">
-  <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="laporan_transaksi.php" title="Go to Laporan Transaksi" class="tip-bottom">Laporan Transaksi</a> <a href="#" class="current">Edit</a> </div>  
+  <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="laporan_transaksi.php" title="Go to Laporan Transaksi" class="tip-bottom">Laporan Transaksi</a> <a href="#" class="current">Edit</a> </div>
   </div>
   <div class="container-fluid">
     <div class="row-fluid">
@@ -204,14 +204,14 @@
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
-<script src="../../../js/jquery.min.js"></script>
-<script src="../../../js/jquery.ui.custom.js"></script>
-<script src="../../../js/bootstrap.min.js"></script>
-<script src="../../../js/jquery.uniform.js"></script>
-<script src="../../../js/transaksi.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.ui.custom.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/jquery.uniform.js"></script>
+<script src="../../../asset/js/transaksi.js"></script>
 <!--<script src="js/select2.min.js"></script>-->
-<script src="../../../js/jquery.dataTables.min.js"></script>
-<script src="../../../js/matrix.js"></script>
-<script src="../../../js/matrix.tables.js"></script>
+<script src="../../../asset/js/jquery.dataTables.min.js"></script>
+<script src="../../../asset/js/matrix.js"></script>
+<script src="../../../asset/js/matrix.tables.js"></script>
 </body>
 </html>
