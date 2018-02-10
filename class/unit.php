@@ -59,6 +59,12 @@ class Unit {
     return $query;
   }
 
+  public function showRequestListing(){
+    $sql = "SELECT * FROM tb_request_listing";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
   //Proses Edit
   public function editUnit($kd_unit){
     $sql = "SELECT * from tb_unit

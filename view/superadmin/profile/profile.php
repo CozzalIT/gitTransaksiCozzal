@@ -18,21 +18,58 @@
     <h1>Profile </h1>
   </div>
   <div class="container-fluid">
-    <hr>
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5>Profile </h5>
+          <div class="control-group">
+            <div class="controls span2">
+              <img class="profile" src="../../../asset/img/profile.png">
+            </div>
+            <div class="controls span10 profile-detail">
+              <table>
+                <tr>
+                  <td class="span5">Nama</td>
+                  <td><input type="text"/></td>
+                </tr>
+                <tr>
+                  <td class="span5">Alamat</td>
+                  <td><input type="text"/></td>
+                </tr>
+                <tr>
+                  <td class="span5">No Telpon</td>
+                  <td><input type="text"/></td>
+                </tr>
+                <tr>
+                  <td class="span5">Email</td>
+                  <td><input type="text"/></td>
+                </tr>
+              </table>
           </div>
-          <div class="widget-content nopadding">
-            <img src="../../../asset/img/logo2.png">
-          </div>
+          <div class="controls span10 profile-detail">
+            <table>
+              <tr>
+                <td class="span5">Username</td>
+                <td><input type="text"/></td>
+              </tr>
+              <tr>
+                <td class="span5">Password</td>
+                <td><input type="password"/></td>
+              </tr>
+              <tr>
+                <td class="span5"></td>
+                <td><a class="btn btn-success">Update</a></td>
+              </tr>
+            </table>
+        </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<br>
+<br>
+<br>
+<br>
 
 <!--Footer-part-->
 <div class="row-fluid">

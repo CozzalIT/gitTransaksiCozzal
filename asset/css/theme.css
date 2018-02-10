@@ -22,3 +22,36 @@ margin-top: 20px;
 .detail-unit th, .detail-unit td{
  padding: 5px;
 }
+
+.profile {
+  margin-top: 5px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  width: 200px;
+  border:2px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-top-width: 2px;
+  border-top-style: solid;
+  border-right-width: 2px;
+  border-right-style: solid;
+  border-left-width: 2px;
+  border-left-style: solid;
+}
+
+.profile-detail {
+  margin-top: 5px;
+  width: 200px;
+  padding: 5px;
+  padding-top: 10px;
+  padding-left: 10px;
+  border:2px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-top-width: 2px;
+  border-top-style: solid;
+  border-right-width: 2px;
+  border-right-style: solid;
+  border-left-width: 2px;
+  border-left-style: solid;
+}
