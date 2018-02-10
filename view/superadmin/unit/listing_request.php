@@ -61,7 +61,7 @@
                         <td>$data->kondisi</td>
                         <td>$data->status</td>
             						<td>
-            						  <a class='btn btn-success' href=''>Transaksi</a>
+            						  <a class='btn btn-primary' href=''>Edit</a>
             						  <a class='btn btn-danger' href=''>Hapus</a>
             						</td>
           					  </tr>
