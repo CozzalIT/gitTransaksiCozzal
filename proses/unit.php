@@ -4,26 +4,19 @@ require("../class/unit.php");
 session_start();
 $view = $_SESSION['hak_akses'];
 
-//Tambah Unit
-if(isset($_POST['addUnit'])){
-  $kd_apt = $_POST['apartemen'];
-  $no_unit = $_POST['no_unit'];
-  $h_sewa_wd = $_POST['h_sewa_wd'];
-  $h_sewa_we = $_POST['h_sewa_we'];
-  $h_owner_wd = $_POST['h_owner_wd'];
-  $h_owner_we = $_POST['h_owner_we'];
-  $ekstra_charge = $_POST['ekstra_charge'];
-	$kd_owner = $_POST['kd_owner'];
+//fungsi untuk delete dir dan file nya
+function delete_files($target) {
+  if(is_dir($target)){
+    $files = glob( $target . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
 
-  $proses = new Unit($db);
-  $add = $proses->addUnit($kd_apt,$kd_owner, $no_unit, $h_sewa_wd, $h_sewa_we, $h_owner_wd, $h_owner_we, $ekstra_charge);
-	$add2 = $proses->updateJumlah_unit_owner($kd_owner);
-
-  if(($add == "Success") || ($add2 == "Success")){
-	  header('Location:../view/'.$view.'/unit/unit.php');
-	}else{
-    echo 'error';
-  }
+    foreach( $files as $file ){
+      delete_files( $file );
+    }
+    if(file_exists($target))
+      rmdir( $target );
+    }elseif(is_file($target)) {
+      unlink( $target );
+    }
 }
 
 //Tambah Detail Unit
@@ -48,38 +41,8 @@ if(isset($_POST['add_detail_unit'])){
   }
   else echo "error";
 }
-
-//fungsi untuk delete dir dan file nya
-function delete_files($target) {
-  if(is_dir($target)){
-    $files = glob( $target . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
-
-    foreach( $files as $file ){
-      delete_files( $file );
-    }
-    if(file_exists($target))
-      rmdir( $target );
-    }elseif(is_file($target)) {
-      unlink( $target );
-    }
-}
-
-//Delete Unit
-if(isset($_GET['delete_unit']) || isset($_GET['kurangi_ju'])){
-  $proses = new Unit($db);
-  $del = $proses->deleteUnit($_GET['delete_unit']);
-  if($del=='Success'){
-    $del = $proses->deleteDetail_Unit($_GET['delete_unit']);
-    $del = $proses->updateKurangi_jumlah_unit_owner($_GET['kurangi_ju']);
-    if(file_exists('../img/unit/'.$_GET['delete_unit'])){
-      delete_files('../img/unit/'.$_GET['delete_unit']);
-    }
-  }
-  header("location:../view/".$view."/unit/unit.php");
-}
-
 //Delete Gambar Unit
-if(isset($_GET['delete_gambar'])){
+elseif(isset($_GET['delete_gambar'])){
   $proses = new Unit($db); 
   $show = $proses->showDetail_Unit($_GET["kd_unit"]);
   while($data = $show->fetch(PDO::FETCH_OBJ)){
@@ -113,31 +76,8 @@ if(isset($_GET['delete_gambar'])){
   }
 }
 
-//update Unit
-if(isset($_POST['updateUnit'])){
-	$kd_unit= $_POST['kd_unit'];
-	$owner= $_POST['kd_owner_lama'];
-	$kd_apt= $_POST['apartemen'];
-	$kd_owner= $_POST['owner'];
-	$no_unit= $_POST['no_unit'];
-	$h_owner_wd= $_POST['h_owner_wd'];
-	$h_owner_we= $_POST['h_owner_we'];
-	$h_sewa_wd= $_POST['h_sewa_wd'];
-	$h_sewa_we= $_POST['h_sewa_we'];
-	$ekstra_charge= $_POST['ekstra_charge'];
-  $proses = new Unit($db);
-  $add = $proses->updateUnit($kd_unit ,$kd_apt,$kd_owner, $no_unit, $h_owner_wd, $h_owner_we, $h_sewa_wd, $h_sewa_we, $ekstra_charge);
-	if($owner!=$kd_owner){
-		$add = $proses->updateJumlah_unit_owner($kd_owner);
-		$add = $proses->updateKurangi_jumlah_unit_owner($owner);
-	}
-  if($add == "Success"){
-	  header('Location:../view/'.$view.'/unit/unit.php');
-  }else echo 'error';
-}
-
 //update informasi dasar unit
-if(isset($_POST['updateInfoUnit']) || isset($_POST['updateInfoUnitbyOwner'])){
+elseif(isset($_POST['updateInfoUnit']) || isset($_POST['updateInfoUnitbyOwner'])){
   $kd_owner = ''; $owner = '';
   if(isset($_POST['updateInfoUnit'])){
     $kd_owner = $_POST['owner'];
@@ -157,8 +97,8 @@ if(isset($_POST['updateInfoUnit']) || isset($_POST['updateInfoUnitbyOwner'])){
   }else echo 'error';
 }
 
-//update informasi dasar unit
-if(isset($_POST['updateHargaUnit']) || isset($_POST['updateHargaUnitbyOwner'])){
+//update harga unit
+elseif(isset($_POST['updateHargaUnit']) || isset($_POST['updateHargaUnitbyOwner'])){
   $kd_unit= $_POST['kd_unit'];
   $h_owner_wd= $_POST['h_owner_wd'];
   $h_owner_we= $_POST['h_owner_we'];
@@ -176,7 +116,7 @@ if(isset($_POST['updateHargaUnit']) || isset($_POST['updateHargaUnitbyOwner'])){
 }
 
 //Update Detail Unit
-if(isset($_POST['update_detail_unit'])){
+elseif(isset($_POST['update_detail_unit'])){
   $kd_unit = $_POST['kd_unit'];
   $lantai = $_POST['lantai'];
   $jml_kmr = $_POST['jml_kmr'];
@@ -198,7 +138,7 @@ if(isset($_POST['update_detail_unit'])){
   }else echo 'error';
 }
 
-    if (isset($_POST['upload_gambar'])){
+  elseif (isset($_POST['upload_gambar'])){
     $img_baru = ''; $img = '';
     $kd_unit = $_POST['kd_unit'];
     $jumlah = count($_FILES['gambar']['name']);
@@ -210,6 +150,7 @@ if(isset($_POST['update_detail_unit'])){
         $tmp_name = $_FILES['gambar']['tmp_name'][$i];
         $tmp2 = explode('.', $file_name);
         $file_name_new = $tanggal.$i.'.'.$tmp2[1];
+        move_uploaded_file($tmp_name, "../asset/img/unit/".$kd_unit.'/'.$file_name_new);
         if($img_baru==''){
           $img_baru = $file_name_new;
         } else {
@@ -232,9 +173,52 @@ if(isset($_POST['update_detail_unit'])){
       $proses = new Unit($db);
       $add = $proses->updateGambar_unit($kd_unit, $img);
       if($add == "Success"){
-        move_uploaded_file($tmp_name, "../asset/img/unit/".$kd_unit.'/'.$file_name_new);
         header("Location:../view/".$view."/unit/detail_unit.php?detail_unit=".$kd_unit);
       } else echo 'gagal upload gmbar';
     }
     }
+
+//hak akses untuk superadmin dan manager
+elseif($view=="superadmin" || $view=="manager"){
+    //Delete Unit
+    if(isset($_GET['delete_unit']) || isset($_GET['kurangi_ju'])){
+      $proses = new Unit($db);
+      $del = $proses->deleteUnit($_GET['delete_unit']);
+      if($del=='Success'){
+        $del = $proses->deleteDetail_Unit($_GET['delete_unit']);
+        $del = $proses->updateKurangi_jumlah_unit_owner($_GET['kurangi_ju']);
+        if(file_exists('../img/unit/'.$_GET['delete_unit'])){
+          delete_files('../img/unit/'.$_GET['delete_unit']);
+        }
+      }
+      header("location:../view/".$view."/unit/unit.php");
+    }
+
+}
+
+//hak akses untuk seluruh user kecuali owner
+elseif($view!="owner"){
+    //Tambah Unit
+    if(isset($_POST['addUnit'])){
+      $kd_apt = $_POST['apartemen'];
+      $no_unit = $_POST['no_unit'];
+      $h_sewa_wd = $_POST['h_sewa_wd'];
+      $h_sewa_we = $_POST['h_sewa_we'];
+      $h_owner_wd = $_POST['h_owner_wd'];
+      $h_owner_we = $_POST['h_owner_we'];
+      $ekstra_charge = $_POST['ekstra_charge'];
+      $kd_owner = $_POST['kd_owner'];
+
+      $proses = new Unit($db);
+      $add = $proses->addUnit($kd_apt,$kd_owner, $no_unit, $h_sewa_wd, $h_sewa_we, $h_owner_wd, $h_owner_we, $ekstra_charge);
+      $add2 = $proses->updateJumlah_unit_owner($kd_owner);
+
+      if(($add == "Success") || ($add2 == "Success")){
+        header('Location:../view/'.$view.'/unit/unit.php');
+      }else{
+        echo 'error';
+      }
+    }
+}
+else header('Location:../view/'.$view.'/home/home.php');
 ?>

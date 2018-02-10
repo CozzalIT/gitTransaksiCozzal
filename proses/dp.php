@@ -3,28 +3,23 @@ require("../config/database.php");
 require("../class/dp_via.php");
 session_start();
 $view = $_SESSION['hak_akses'];
+
 //Tambah DP Via
 if(isset($_POST['addDp_via'])){
   $kd_bank = $_POST['kd_bank'];
-	$nama_bank= $_POST['nama_bank'];
+  $nama_bank= $_POST['nama_bank'];
 
   $proses = new dpVia($db);
   $add = $proses->addDp_via($kd_bank, $nama_bank);
 
   if($add == "Success"){
-	  header('Location:../view/'.$view.'/dp/dp_via.php');
+    header('Location:../view/'.$view.'/dp/dp_via.php');
   }
 }
 
-//Delete DP Via
-if(isset($_GET['delete_dp'])){
-  $proses = new dpVia($db);
-  $del = $proses->deleteDp_via($_GET['delete_dp']);
-  header("location:../view/".$view."/dp/dp_via.php");
-}
 
 //Update Bank (DP Via)
-if(isset($_POST['updateBank'])){
+elseif(isset($_POST['updateBank'])){
   $kd_bank = $_POST['kd_bank'];
   $nama_bank = $_POST['nama_bank'];
 
@@ -32,9 +27,23 @@ if(isset($_POST['updateBank'])){
   $update = $proses->updateBank($kd_bank, $nama_bank);
 
   if($update == "Success"){
-  	header('Location:../view/'.$view.'/dp/dp_via.php');
+    header('Location:../view/'.$view.'/dp/dp_via.php');
   } else {
-  	echo 'error';
+    echo 'error';
   }
 }
+
+
+//hak akses untuk superadmin dan manager
+elseif($view=="superadmin" || $view=="manager"){
+    //Delete DP Via
+    if(isset($_GET['delete_dp'])){
+      $proses = new dpVia($db);
+      $del = $proses->deleteDp_via($_GET['delete_dp']);
+      header("location:../view/".$view."/dp/dp_via.php");
+    }
+}
+
+else header('Location:../view/'.$view.'/home/home.php');
+
 ?>
