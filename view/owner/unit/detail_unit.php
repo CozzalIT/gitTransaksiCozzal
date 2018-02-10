@@ -8,48 +8,8 @@
   include "../template/sidebar.php";
   require("../../../class/unit.php");
   require("../../../config/database.php");
-  $proses = new Unit($db);
-    if (isset($_POST['upload_gambar'])){
-    $img_baru = ''; $img = '';
-    $kd_unit = $_POST['kd_unit'];
-    $jumlah = count($_FILES['gambar']['name']);
-    $tanggal = date('dmyHis');
-    if ($jumlah > 0) {
-      for ($i=0; $i < $jumlah; $i++) {
-        if(!file_exists('../../../asset/img/unit/'.$kd_unit)) mkdir('../../../asset/img/unit/'.$kd_unit);
-        $file_name = $_FILES['gambar']['name'][$i];
-        $tmp_name = $_FILES['gambar']['tmp_name'][$i];
-        $tmp2 = explode('.', $file_name);
-        $file_name_new = $tanggal.$i.'.'.$tmp2[1];
-        move_uploaded_file($tmp_name, "../../../asset/img/unit/".$kd_unit.'/'.$file_name_new);
-        if($img_baru==''){
-          $img_baru = $file_name_new;
-        } else {
-          $img_baru = $img_baru.'+'.$file_name_new;
-        }
-      }
-      if(($_POST['img']=='None') ||($_POST['img']=='Nothing')){
-        $img = $img_baru;
-      }
-      else{
-        $img = $_POST['img'].'+'.$img_baru;
-      }
-
-      if(($_POST['img']=='Nothing')){
-        $add = $proses->addDetail_Unit($kd_unit, 0, 0, 0, 0, 'X', 'X' , 'X', 'X', 'X', 'X', 'X', $img, 'N');
-        if(!$add == "Success"){
-        die('gagal upload gambar');
-      }
-      }
-      $add = $proses->updateGambar_unit($kd_unit, $img);
-      if(!$add == "Success"){
-        die('gagal upload gambar');
-      }
-    }
-    }
-
+  $Proses = new Unit($db);
   if(isset($_GET['detail_unit'])){
-      $Proses = new Unit($db);
       $show2 = $Proses->showDetail_Unit($_GET['detail_unit']);
       $img_t = 'Nothing'; $flag = 0; $hreffasil = 'edit.php?tambah_detail_unit=';    
       while($data = $show2->fetch(PDO::FETCH_OBJ)){
@@ -83,8 +43,8 @@
             <div id="content">
               <div id="content-header">
               <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="unit.php" title="Go to Listing Unit" class="tip-bottom">Listing Unit</a> <a href="#" class="current">Kelola Unit</a> </div>
-                <form action="" onsubmit="return validasi_upload()" method="POST" enctype="multipart/form-data" style="padding-top: 20px;padding-left: 20px;">
-                  <input type="text" name="kd_unit" value='.$data->kd_unit.' style="display:none">
+                <form action="../../../proses/unit.php" onsubmit="return validasi_upload()" method="POST" enctype="multipart/form-data" style="padding-top: 20px;padding-left: 20px;">
+                  <input type="text" id="kd_unit" name="kd_unit" value='.$data->kd_unit.' style="display:none">
                   <input type="text" id="kd_img" name="img" value='.$img_t.' style="display:none">
                   <input type="file" id="img" name="gambar[]" multiple>
                   <input class="btn btn-success" type="submit" name="upload_gambar" value="Upload Gambar">
@@ -103,9 +63,10 @@
                         </div>
                         <div class="row-fluid" style="max-width:1200px">
                             <div class="span6">
-                              <center>';
+                            ';
                                 if(($img_t=='None') || ($img_t=='Nothing'))
                                   echo '
+                              <center>
                                 <img class="mySlides" src="../../../asset/img/none.png" style="width:100%; height:350px; padding-top:20px">
                               </center>
                                   <table class="">
@@ -126,6 +87,9 @@
                                 $image = explode('+', $img_t);
                                 $n = count($image); $j = 0 - 3;
                                 $dir = $data->kd_unit;
+                                echo ' 
+                                <a id="hapus_img" class="btn btn-danger" style="margin-bottom: 10px; margin-top: 5px;" href="../../../proses/unit.php?delete_gambar='.$image[0].'&kd_unit='.$dir.'">Hapus Gambar Terpilih</a>
+                                <center>';
                                 foreach ($image as $nama_file_gambar) {
                                   echo '<img class="mySlides" src="../../../asset/img/unit/'.$dir.'/'.$nama_file_gambar.'" style="width:100%; height:350px">';
                                 }

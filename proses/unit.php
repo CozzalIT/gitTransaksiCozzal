@@ -3,6 +3,7 @@ require("../config/database.php");
 require("../class/unit.php");
 session_start();
 $view = $_SESSION['hak_akses'];
+
 //Tambah Unit
 if(isset($_POST['addUnit'])){
   $kd_apt = $_POST['apartemen'];
@@ -75,6 +76,41 @@ if(isset($_GET['delete_unit']) || isset($_GET['kurangi_ju'])){
     }
   }
   header("location:../view/".$view."/unit/unit.php");
+}
+
+//Delete Gambar Unit
+if(isset($_GET['delete_gambar'])){
+  $proses = new Unit($db); 
+  $show = $proses->showDetail_Unit($_GET["kd_unit"]);
+  while($data = $show->fetch(PDO::FETCH_OBJ)){
+    $img_lama = $data->img;
+  }
+  
+  $arrayofimage = explode('+', $img_lama);
+  $jmlh_gambar = count($arrayofimage);
+  $img=''; $x=0;
+  if($jmlh_gambar>1){
+    for($i=0;$i<count($arrayofimage);$i++){
+      if($arrayofimage[$i]!=$_GET['delete_gambar']){
+          if($x==0){
+            $img = $arrayofimage[$i];
+            $x++;
+          }  
+          else{
+            $img = $img.'+'.$arrayofimage[$i];
+          }
+      }
+    }
+  }else{
+    $img = 'None';
+  }
+ 
+  $del = $proses->updateGambar_unit($_GET['kd_unit'], $img);
+  if($del == "Success"){
+    unlink('../asset/img/unit/'.$_GET['kd_unit'].'/'.$_GET['delete_gambar']);
+    if($jmlh_gambar==1) rmdir('../asset/img/unit/'.$_GET['kd_unit']);
+    header("location:../view/".$view."/unit/detail_unit.php?detail_unit=".$_GET["kd_unit"]);
+  }
 }
 
 //update Unit
@@ -161,4 +197,44 @@ if(isset($_POST['update_detail_unit'])){
     header("Location:../view/".$view."/unit/detail_unit.php?detail_unit=".$kd_unit);
   }else echo 'error';
 }
+
+    if (isset($_POST['upload_gambar'])){
+    $img_baru = ''; $img = '';
+    $kd_unit = $_POST['kd_unit'];
+    $jumlah = count($_FILES['gambar']['name']);
+    $tanggal = date('dmyHis');
+    if ($jumlah > 0) {
+      for ($i=0; $i < $jumlah; $i++) {
+        if(!file_exists('../asset/img/unit/'.$kd_unit)) mkdir('../asset/img/unit/'.$kd_unit);
+        $file_name = $_FILES['gambar']['name'][$i];
+        $tmp_name = $_FILES['gambar']['tmp_name'][$i];
+        $tmp2 = explode('.', $file_name);
+        $file_name_new = $tanggal.$i.'.'.$tmp2[1];
+        if($img_baru==''){
+          $img_baru = $file_name_new;
+        } else {
+          $img_baru = $img_baru.'+'.$file_name_new;
+        }
+      }
+      if(($_POST['img']=='None') ||($_POST['img']=='Nothing')){
+        $img = $img_baru;
+      }
+      else{
+        $img = $_POST['img'].'+'.$img_baru;
+      }
+
+      if(($_POST['img']=='Nothing')){
+        $add = $proses->addDetail_Unit($kd_unit, 0, 0, 0, 0, 'X', 'X' , 'X', 'X', 'X', 'X', 'X', $img, 'N');
+        if(!$add == "Success"){
+        die('gagal upload gambar');
+      }
+      }
+      $proses = new Unit($db);
+      $add = $proses->updateGambar_unit($kd_unit, $img);
+      if($add == "Success"){
+        move_uploaded_file($tmp_name, "../asset/img/unit/".$kd_unit.'/'.$file_name_new);
+        header("Location:../view/".$view."/unit/detail_unit.php?detail_unit=".$kd_unit);
+      } else echo 'gagal upload gmbar';
+    }
+    }
 ?>

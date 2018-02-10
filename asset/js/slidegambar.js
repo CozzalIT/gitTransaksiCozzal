@@ -43,6 +43,7 @@ function showDivs(n) {
   var i;
   var x = document.getElementsByClassName("mySlides");
   var dots = document.getElementsByClassName("foto-unit");
+  var dots2 = document.getElementsByClassName("demo");
   if (n > x.length) {
     slideIndex = 1
   }
@@ -57,4 +58,9 @@ function showDivs(n) {
   }
   x[slideIndex-1].style.display = "block";
   dots[slideIndex-1].style.borderColor = "green";
+  var kd_unit = $('#kd_unit').val();
+  var imgsrc = dots2[slideIndex-1].src;
+  imgsrc = imgsrc.split('/');
+  var srcimg = imgsrc[imgsrc.length-1];
+  $('#hapus_img').attr('href','../../../proses/unit.php?delete_gambar='+srcimg+'&kd_unit='+kd_unit);
 }

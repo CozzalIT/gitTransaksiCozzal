@@ -40,28 +40,4 @@ elseif(isset($_POST['id1'])){
 	$callback = array('ketersediaan'=>$hasil); 
 	echo json_encode($callback); 
 }
-
-//cek ketersediaan informasi detail unit
-elseif(isset($_POST['detail'])){
-	require("../class/unit.php");
-	$kd_unit = $_POST['detail'];
-	$flag = 0; 
-	$namaunit = '';
-	$hasil = "Ada";
-	$Proses = new Unit($db);
-	$show = $Proses->showDetail_Unit($kd_unit);
-	while($data = $show->fetch(PDO::FETCH_OBJ)){
-	$flag++; 	
-	}
-	if($flag==0) $hasil = "Tidak Ada";
-	$callback = array('ketersediaan'=>$hasil); 
-	echo json_encode($callback); 
-}
-
-else{
-	$hasil = '';
-		$callback = array('ketersediaan'=>$hasil); 
-	echo json_encode($callback); 
-}
-
 ?>
