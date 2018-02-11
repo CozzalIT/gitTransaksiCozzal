@@ -33,14 +33,11 @@ elseif(isset($_POST['addApartemen'])){
       }
     }
 
-//hak akses untuk superadmin dan manager
-elseif($view=="superadmin" || $view=="manager"){
-    //Delete Apartemen
-    if(isset($_GET['delete_apt'])){
-      $proses = new Apartemen($db);
-      $del = $proses->deleteApartemen($_GET['delete_apt']);
-      header("location:../view/".$view."/apartemen/apartemen.php");
-    }
+//Delete Apartemen
+elseif(isset($_GET['delete_apt'])&&($view=="superadmin" || $view=="manager")){
+  $proses = new Apartemen($db);
+  $del = $proses->deleteApartemen($_GET['delete_apt']);
+  header("location:../view/".$view."/apartemen/apartemen.php");
 }
 
 else header('Location:../view/'.$view.'/home/home.php');

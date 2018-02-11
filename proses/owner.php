@@ -43,14 +43,11 @@ elseif(isset($_POST['addOwner'])){
   	else echo 'error';
 }
 
-//hak akses untuk superadmin dan manager
-elseif($view=="superadmin" || $view=="manager"){
-	//Delete Owner
-	if(isset($_GET['delete_owner'])){
-	  $proses = new Owner($db);
-		$del = $proses->deleteOwner($_GET['delete_owner']);
-		header("Location:../view/".$view."/owner/owner.php");
-	}
+//Delete Owner
+elseif(isset($_GET['delete_owner']) && ($view=="superadmin" || $view=="manager")){
+  $proses = new Owner($db);
+	$del = $proses->deleteOwner($_GET['delete_owner']);
+	header("Location:../view/".$view."/owner/owner.php");
 }
 
 else header('Location:../view/'.$view.'/home/home.php');

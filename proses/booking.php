@@ -32,14 +32,11 @@ elseif(isset($_POST['updateBooking'])){
   }
 }
 
-//hak akses untuk superadmin dan manager
-elseif($view=="superadmin" || $view=="manager"){
-    //Delete Booking Via
-    if(isset($_GET['delete_booking'])){
-      $proses = new Booking($db);
-      $del = $proses->deleteBooking_via($_GET['delete_booking']);
-      header("location:../view/".$view."/booking/booking_via.php");
-    }
+//Delete Booking Via
+elseif(isset($_GET['delete_booking']) && ($view=="superadmin" || $view=="manager")){
+  $proses = new Booking($db);
+  $del = $proses->deleteBooking_via($_GET['delete_booking']);
+  header("location:../view/".$view."/booking/booking_via.php");
 }
 
 else header('Location:../view/'.$view.'/home/home.php');

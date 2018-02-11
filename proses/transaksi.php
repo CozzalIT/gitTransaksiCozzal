@@ -87,34 +87,28 @@ elseif(isset($_POST['updateTransaksi'])){
   } else echo 'error';
 }
 
-//hak akses untuk superadmin dan manager
-elseif($view=="superadmin" || $view=="manager"){
-  //Delete Transaksi
-  if(isset($_GET['delete_transaksi'])){
-    $proses = new Transaksi($db);
-    $del = $proses->deleteTransaksi($_GET['delete_transaksi']);
-    header("location:../view/".$view."/transaksi/laporan_transaksi.php");
-  }
-
-  //Delete Confirm Transaksi
-  if(isset($_GET['delete_confirm_transaksi'])){
-    $proses = new Transaksi($db);
-    $del = $proses->deleteConfirmTransaksi($_GET['delete_confirm_transaksi']);
-    header("location:../view/superadmin/transaksi/confirm_transaksi.php");
-  }
+//Delete Transaksi
+elseif(isset($_GET['delete_transaksi']) && ($view=="superadmin" || $view=="manager")){
+  $proses = new Transaksi($db);
+  $del = $proses->deleteTransaksi($_GET['delete_transaksi']);
+  header("location:../view/".$view."/transaksi/laporan_transaksi.php");
 }
 
-//hak akses untuk seluruh user kecuali owner
-elseif($view!="owner"){
-  //Tambah Confirm Transaksi
-  if (isset($_GET['addConfirm'])){
-    $kd_transaksi = $_GET['addConfirm'];
+//Delete Confirm Transaksi
+elseif(isset($_GET['delete_confirm_transaksi']) && ($view=="superadmin" || $view=="manager")){
+  $proses = new Transaksi($db);
+  $del = $proses->deleteConfirmTransaksi($_GET['delete_confirm_transaksi']);
+  header("location:../view/superadmin/transaksi/confirm_transaksi.php");
+}
 
-    $proses = new Transaksi($db);
-    $add = $proses->addConfirm($kd_transaksi);
-    if($add == "Success"){
-      header('Location:../view/'.$view.'/transaksi/confirm_transaksi.php');
-    }
+//Tambah Confirm Transaksi
+elseif (isset($_GET['addConfirm']) && $view!="owner"){
+  $kd_transaksi = $_GET['addConfirm'];
+
+  $proses = new Transaksi($db);
+  $add = $proses->addConfirm($kd_transaksi);
+  if($add == "Success"){
+    header('Location:../view/'.$view.'/transaksi/confirm_transaksi.php');
   }
 }
 

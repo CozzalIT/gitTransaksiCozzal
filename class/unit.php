@@ -162,6 +162,11 @@ class Unit {
   public function deleteUnit($kd_unit){
     $sql = "DELETE FROM tb_unit WHERE kd_unit='$kd_unit'";
     $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
   }
 
   public function deleteDetail_Unit($kd_unit){

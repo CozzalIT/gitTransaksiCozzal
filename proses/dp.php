@@ -33,15 +33,11 @@ elseif(isset($_POST['updateBank'])){
   }
 }
 
-
-//hak akses untuk superadmin dan manager
-elseif($view=="superadmin" || $view=="manager"){
-    //Delete DP Via
-    if(isset($_GET['delete_dp'])){
-      $proses = new dpVia($db);
-      $del = $proses->deleteDp_via($_GET['delete_dp']);
-      header("location:../view/".$view."/dp/dp_via.php");
-    }
+//Delete DP Via
+elseif(isset($_GET['delete_dp']) && ($view=="superadmin" || $view=="manager")){
+  $proses = new dpVia($db);
+  $del = $proses->deleteDp_via($_GET['delete_dp']);
+  header("location:../view/".$view."/dp/dp_via.php");
 }
 
 else header('Location:../view/'.$view.'/home/home.php');

@@ -41,14 +41,11 @@ elseif(isset($_POST['updatePenyewa'])){
 	}
 }
 
-//hak akses untuk superadmin dan manager
-elseif($view=="superadmin" || $view=="manager"){
-  //Delete Penyewa
-  if(isset($_GET['delete_penyewa'])){
-    $proses = new Penyewa($db);
-    $del = $proses->deletePenyewa($_GET['delete_penyewa']);
-    header("location:../view/".$view."/penyewa/penyewa.php");
-  }
+//Delete Penyewa
+elseif(isset($_GET['delete_penyewa']) && ($view=="superadmin" || $view=="manager")){
+  $proses = new Penyewa($db);
+  $del = $proses->deletePenyewa($_GET['delete_penyewa']);
+  header("location:../view/".$view."/penyewa/penyewa.php");
 }
 
 else header('Location:../view/'.$view.'/home/home.php');
