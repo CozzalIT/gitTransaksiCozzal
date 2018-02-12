@@ -3,6 +3,7 @@ require("../config/database.php");
 require("../class/penyewa.php");
 session_start();
 $view = $_SESSION['hak_akses'];
+
 //Tambah Penyewa
 if(isset($_POST['addPenyewa'])){
   $nama = $_POST['nama'];
@@ -20,15 +21,9 @@ if(isset($_POST['addPenyewa'])){
   }
 }
 
-//Delete Penyewa
-if(isset($_GET['delete_penyewa'])){
-  $proses = new Penyewa($db);
-  $del = $proses->deletePenyewa($_GET['delete_penyewa']);
-  header("location:../view/".$view."/penyewa/penyewa.php");
-}
 
 //Update Penyewa
-if(isset($_POST['updatePenyewa'])){
+elseif(isset($_POST['updatePenyewa'])){
 	$kd_penyewa = $_POST['kd_penyewa'];
   $nama = $_POST['nama'];
   $alamat = $_POST['alamat'];
@@ -45,4 +40,13 @@ if(isset($_POST['updatePenyewa'])){
   	echo 'error';
 	}
 }
+
+//Delete Penyewa
+elseif(isset($_GET['delete_penyewa']) && ($view=="superadmin" || $view=="manager")){
+  $proses = new Penyewa($db);
+  $del = $proses->deletePenyewa($_GET['delete_penyewa']);
+  header("location:../view/".$view."/penyewa/penyewa.php");
+}
+
+else header('Location:../view/'.$view.'/home/home.php');
 ?>

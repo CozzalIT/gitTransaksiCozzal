@@ -3,6 +3,7 @@ require("../config/database.php");
 require("../class/transaksi.php");
 session_start();
 $view = $_SESSION['hak_akses'];
+
 //Tambah Transaksi
 if(isset($_POST['addTransaksi'])){
 	$kd_penyewa 	= $_POST['kd_penyewa'];
@@ -37,19 +38,8 @@ if(isset($_POST['addTransaksi'])){
 	}
 }
 
-//Tambah Confirm Transaksi
-if (isset($_GET['addConfirm'])){
-  $kd_transaksi = $_GET['addConfirm'];
-
-  $proses = new Transaksi($db);
-  $add = $proses->addConfirm($kd_transaksi);
-  if($add == "Success"){
-    header('Location:../view/'.$view.'/transaksi/confirm_transaksi.php');
-  }
-}
-
 //Tambah Penyewa di Halaman Transaksi
-if(isset($_POST['addPenyewaTransaksi'])){
+elseif(isset($_POST['addPenyewaTransaksi'])){
   $nama = $_POST['nama'];
 	$alamat = $_POST['alamat'];
 	$no_tlp = $_POST['no_tlp'];
@@ -67,22 +57,8 @@ if(isset($_POST['addPenyewaTransaksi'])){
   }
 }
 
-//Delete Transaksi
-if(isset($_GET['delete_transaksi'])){
-  $proses = new Transaksi($db);
-  $del = $proses->deleteTransaksi($_GET['delete_transaksi']);
-  header("location:../view/".$view."/transaksi/laporan_transaksi.php");
-}
-
-//Delete Confirm Transaksi
-if(isset($_GET['delete_confirm_transaksi'])){
-  $proses = new Transaksi($db);
-  $del = $proses->deleteConfirmTransaksi($_GET['delete_confirm_transaksi']);
-  header("location:../view/superadmin/transaksi/confirm_transaksi.php");
-}
-
 //update Transaksi
-if(isset($_POST['updateTransaksi'])){
+elseif(isset($_POST['updateTransaksi'])){
   $kd_transaksi = $_POST['kd_transaksi'];
   $kd_apt     = $_POST['apartemen'];
   $kode = explode("+",$_POST['unit']);
@@ -110,4 +86,31 @@ if(isset($_POST['updateTransaksi'])){
     header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php');
   } else echo 'error';
 }
+
+//Delete Transaksi
+elseif(isset($_GET['delete_transaksi']) && ($view=="superadmin" || $view=="manager")){
+  $proses = new Transaksi($db);
+  $del = $proses->deleteTransaksi($_GET['delete_transaksi']);
+  header("location:../view/".$view."/transaksi/laporan_transaksi.php");
+}
+
+//Delete Confirm Transaksi
+elseif(isset($_GET['delete_confirm_transaksi']) && ($view=="superadmin" || $view=="manager")){
+  $proses = new Transaksi($db);
+  $del = $proses->deleteConfirmTransaksi($_GET['delete_confirm_transaksi']);
+  header("location:../view/superadmin/transaksi/confirm_transaksi.php");
+}
+
+//Tambah Confirm Transaksi
+elseif (isset($_GET['addConfirm']) && $view!="owner"){
+  $kd_transaksi = $_GET['addConfirm'];
+
+  $proses = new Transaksi($db);
+  $add = $proses->addConfirm($kd_transaksi);
+  if($add == "Success"){
+    header('Location:../view/'.$view.'/transaksi/confirm_transaksi.php');
+  }
+}
+
+else header('Location:../view/'.$view.'/home/home.php');
 ?>

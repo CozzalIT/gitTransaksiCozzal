@@ -279,7 +279,7 @@
     			    <div class="control-group">
       				  <div class="controls">
       				    <button data-parent="#collapse-group" href="#" id="btn2" data-toggle="collapse" class="btn btn-success">Lanjut</button>
-        				 </div>
+                </div>
       			   </div>
              </div>
            </div>
