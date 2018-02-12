@@ -10,6 +10,7 @@
       </ul>
     </li>
     <li <?php if($thisPage == "Booking Request") echo "class='active'"; ?>><a href="../booking/booking_request.php"><i class="icon icon-edit"></i> <span>Booking Request</span></a> </li>
+    <li <?php if($thisPage == "Listing Request") echo "class='active'"; ?>><a href="../unit/listing_request.php"><i class="icon icon-edit"></i> <span>Listing Request</span></a> </li>
 	  <li <?php if($thisPage == "Penyewa") echo "class='active'"; ?>><a href="../penyewa/penyewa.php"><i class="icon icon-user"></i> <span>Data Penyewa</span></a> </li>
     <li <?php if($thisPage == "Owner") echo "class='active'"; ?>><a href="../owner/owner.php"><i class="icon icon-th-large"></i> <span>Data Owner</span></a> </li>
     <li <?php if($thisPage == "Apartemen") echo "class='active'"; ?>><a href="../apartemen/apartemen.php"><i class="icon icon-columns"></i> <span>Data Apartemen</span></a> </li>

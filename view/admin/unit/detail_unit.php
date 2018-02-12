@@ -11,10 +11,10 @@
   $Proses = new Unit($db);
   if(isset($_GET['detail_unit'])){
       $show2 = $Proses->showDetail_Unit($_GET['detail_unit']);
-      $img_t = 'Nothing'; $flag = 0; $hreffasil = 'edit.php?tambah_detail_unit=';    
+      $img_t = 'Nothing'; $flag = 0; $hreffasil = 'edit.php?tambah_detail_unit=';
       while($data = $show2->fetch(PDO::FETCH_OBJ)){
-        $img_t = $data->img; 
-        $hreffasil = 'edit.php?edit_detail_unit=';   
+        $img_t = $data->img;
+        $hreffasil = 'edit.php?edit_detail_unit=';
         if($data->isi=='Y'){
           $flag = 1;
           $dapur ='Tersedia';
@@ -22,12 +22,12 @@
           $tv = 'Tersedia';
           $wifi = 'Tersedia';
           $amenities = 'Tersedia';
-          $merokok = 'Boleh';     
+          $merokok = 'Boleh';
           $lantai = $data->lantai;
           $jml_kmr = $data->jml_kmr;
           $jml_bed = $data->jml_bed;
           $jml_ac = $data->jml_ac;
-          $type = $data->type; 
+          $type = $data->type;
           if($data->dapur=='N') $dapur = 'Tidak Tersedia';
           if($data->water_heater=='N') $water_heater = 'Tidak Tersedia';
           if($data->tv=='N') $tv = 'Tidak Tersedia';
@@ -87,7 +87,7 @@
                                 $image = explode('+', $img_t);
                                 $n = count($image); $j = 0 - 3;
                                 $dir = $data->kd_unit;
-                                echo ' 
+                                echo '
                                 <a id="hapus_img" class="btn btn-danger" style="margin-bottom: 10px; margin-top: 5px;" href="../../../proses/unit.php?delete_gambar='.$image[0].'&kd_unit='.$dir.'">Hapus Gambar Terpilih</a>
                                 <center>';
                                 foreach ($image as $nama_file_gambar) {
@@ -150,6 +150,11 @@
                                       <td>Owner</td>
                                       <td>: '.$data->nama.'</td>
                                       </tr>
+                                      <tr>
+                                        <td>
+                                           <a class="btn btn-small" style="margin-bottom: 12px;" href="edit.php?edit_info_unit='.$data->kd_unit.'">Edit Informasi Dasar</a>
+                                        </td>
+                                      </tr>
                                       <tr style="border-bottom-width: 2px;border-bottom-style: solid;">
                                       <td><strong>Informasi Owner</strong></td>
                                       </tr>
@@ -168,6 +173,11 @@
                                       <tr>
                                       <td>No Telepon</td>
                                       <td>: '.$data->no_tlp.'</td>
+                                      </tr>
+                                      <tr>
+                                        <td>
+                                           <a class="btn btn-small" style="margin-bottom: 12px;" href="../owner/edit.php?edit_owner='.$data->kd_owner.'">Edit Data Owner</a>
+                                        </td>
                                       </tr>
                                       <tr style="border-bottom-width: 2px;border-bottom-style: solid;">
                                       <td><strong>Harga</strong></td>
@@ -191,6 +201,11 @@
                                       <tr>
                                       <td>Ekstra Charge</td>
                                       <td>: '.number_format($data->ekstra_charge, 0, ".", ".").' IDR</td>
+                                      </tr>
+                                      <tr>
+                                        <td>
+                                           <a class="btn btn-small" style="margin-bottom: 12px;" href="edit.php?edit_harga_owner='.$data->kd_unit.'">Edit Harga</a>
+                                        </td>
                                       </tr>
                                       <tr style="border-bottom-width: 2px;border-bottom-style: solid;">
                                         <td><strong>Fasilitas</strong></td>

@@ -40,7 +40,7 @@
                 <?php
                   if (isset($_GET['calendar_unit'])){
           				  $Proses = new Transaksi($db);
-            		    $show = $Proses->showTransaksiUnit($_GET['calendar_unit']);
+            		    $show = $Proses->showCalendar($_GET['calendar_unit']);
             		    while($data = $show->fetch(PDO::FETCH_OBJ)){
                       echo "
                       {
@@ -83,5 +83,10 @@
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
+
+<script src="../../../asset/js/select2.min.js"></script>
+<script src="../../../asset/js/jquery.dataTables.min.js"></script>
+<script src="../../../asset/js/matrix.js"></script>
+<script src="../../../asset/js/matrix.tables.js"></script>
 </body>
 </html>

@@ -2,7 +2,7 @@
   if(!isset($_SESSION['username'])) {
     header('location:../../../index.php');
   }else {
-  	if($_SESSION['hak_akses']=='manager'){
+  	if($_SESSION['hak_akses']=='superadmin'){
   		$username = $_SESSION['username'];
   	}else{
   		header('location:../../'.$_SESSION['hak_akses'].'/home/home.php');

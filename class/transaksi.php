@@ -34,10 +34,17 @@ class Transaksi {
 
   //Proses Show
   public function showTransaksi(){
-    $sql = "SELECT * from tb_transaksi
-    INNER JOIN tb_penyewa ON tb_penyewa.kd_penyewa = tb_transaksi.kd_penyewa
-    INNER JOIN tb_apt ON tb_apt.kd_apt = tb_transaksi.kd_apt
-    INNER JOIN tb_unit ON tb_unit.kd_unit = tb_transaksi.kd_unit";
+    $sql = "SELECT
+      tb_transaksi.kd_transaksi, tb_transaksi.kd_penyewa, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.tamu, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.harga_sewa, tb_transaksi.ekstra_charge, tb_transaksi.kd_booking, tb_transaksi.kd_bank, tb_transaksi.dp, tb_transaksi.total_tagihan, tb_transaksi.sisa_pelunasan, hari, tb_transaksi.tgl_transaksi, tb_transaksi.diskon,
+      tb_penyewa.kd_penyewa, tb_penyewa.nama,
+      tb_apt.kd_apt, tb_apt.nama_apt,
+      tb_bank.kd_bank, tb_bank.nama_bank,
+      tb_unit.kd_unit, tb_unit.no_unit
+        from tb_transaksi
+        INNER JOIN tb_penyewa ON tb_penyewa.kd_penyewa = tb_transaksi.kd_penyewa
+        INNER JOIN tb_apt ON tb_apt.kd_apt = tb_transaksi.kd_apt
+        INNER JOIN tb_bank ON tb_bank.kd_bank = tb_transaksi.kd_bank
+        INNER JOIN tb_unit ON tb_unit.kd_unit = tb_transaksi.kd_unit";
     $query = $this->db->query($sql);
     return $query;
   }
@@ -48,9 +55,11 @@ class Transaksi {
     return $query;
   }
 
-  public function showTransaksiUnit($kd_unit){
-    $sql = "SELECT * from tb_transaksi where kd_unit='$kd_unit'";
-    $query = $this->db->query($sql);
+  public function showCalendar($kd_unit){
+    $sql_laporan = "SELECT * from tb_transaksi where kd_unit='$kd_unit'";
+    $sql_confirm = "SELECT * from tb_confirm_transaksi where kd_unit='$kd_unit'";
+    $query = $this->db->query($sql_laporan);
+    $query1 = $this->db->query($sql_confirm);
     return $query;
   }
 
@@ -91,12 +100,19 @@ class Transaksi {
   }
 
   public function editTransaksi($kd_transaksi){
-    $sql = "SELECT * from tb_transaksi
-    INNER JOIN tb_penyewa ON tb_penyewa.kd_penyewa = tb_transaksi.kd_penyewa
-    INNER JOIN tb_apt ON tb_apt.kd_apt = tb_transaksi.kd_apt
-    INNER JOIN tb_bank ON tb_bank.kd_bank = tb_transaksi.kd_bank
-    INNER JOIN tb_booking_via ON tb_booking_via.kd_booking = tb_transaksi.kd_booking
-    INNER JOIN tb_unit ON tb_unit.kd_unit = tb_transaksi.kd_unit WHERE kd_transaksi='$kd_transaksi'";
+    $sql = "SELECT
+      tb_transaksi.kd_transaksi, tb_transaksi.kd_penyewa, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.tamu, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.harga_sewa, tb_transaksi.ekstra_charge, tb_transaksi.kd_booking, tb_transaksi.kd_bank, tb_transaksi.dp, tb_transaksi.total_tagihan, tb_transaksi.sisa_pelunasan, hari, tb_transaksi.tgl_transaksi, tb_transaksi.diskon,
+      tb_penyewa.kd_penyewa, tb_penyewa.nama, tb_penyewa.alamat, tb_penyewa.no_tlp, tb_penyewa.email, tb_penyewa.jenis_kelamin,
+      tb_apt.kd_apt, tb_apt.nama_apt,
+      tb_bank.kd_bank, tb_bank.nama_bank,
+      tb_unit.kd_unit, tb_unit.no_unit,
+      tb_booking_via.kd_booking, tb_booking_via.booking_via
+        from tb_transaksi
+        INNER JOIN tb_penyewa ON tb_penyewa.kd_penyewa = tb_transaksi.kd_penyewa
+        INNER JOIN tb_apt ON tb_apt.kd_apt = tb_transaksi.kd_apt
+        INNER JOIN tb_bank ON tb_bank.kd_bank = tb_transaksi.kd_bank
+        INNER JOIN tb_booking_via ON tb_booking_via.kd_booking = tb_transaksi.kd_booking
+        INNER JOIN tb_unit ON tb_unit.kd_unit = tb_transaksi.kd_unit WHERE kd_transaksi='$kd_transaksi'";
     $query = $this->db->query($sql);
     return $query;
   }
