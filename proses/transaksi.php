@@ -38,6 +38,25 @@ if(isset($_POST['addTransaksi'])){
 	}
 }
 
+//Tambah Pembayaran
+elseif(isset($_POST['addPembayaran'])){
+	$Proses = new Transaksi($db);
+	$show	= $Proses->editTransaksi($_POST['kd_transaksi']);
+	$data = $show->fetch(PDO::FETCH_OBJ);
+
+	$kd_transaksi = $_POST['kd_transaksi'];
+	$sisa_pelunasan_lama = $_POST['sisa_pelunasan'];
+	$pembayaran_lama = $data->pembayaran;
+	$pembayaran_masuk = $_POST['pembayaran'];
+	$pembayaran_baru = $pembayaran_lama + $pembayaran_masuk;
+	$sisa_pelunasan = $sisa_pelunasan_lama - $pembayaran_masuk;
+
+  $add = $Proses->addPembayaran($kd_transaksi, $pembayaran_baru, $sisa_pelunasan);
+  if($add == "Success"){
+    header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php?pembayaran='.$kd_transaksi);
+  } else echo 'error';
+}
+
 //Tambah Penyewa di Halaman Transaksi
 elseif(isset($_POST['addPenyewaTransaksi'])){
   $nama = $_POST['nama'];

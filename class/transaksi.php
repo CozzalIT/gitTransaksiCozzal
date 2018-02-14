@@ -32,6 +32,16 @@ class Transaksi {
     }
   }
 
+  public function addPembayaran($kd_transaksi, $pembayaran_baru, $sisa_pelunasan){
+    $sql = "UPDATE tb_transaksi SET pembayaran ='$pembayaran_baru', sisa_pelunasan='$sisa_pelunasan' WHERE kd_transaksi='$kd_transaksi'";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
+  }
+
   //Proses Show
   public function showTransaksi(){
     $sql = "SELECT
@@ -101,7 +111,7 @@ class Transaksi {
 
   public function editTransaksi($kd_transaksi){
     $sql = "SELECT
-      tb_transaksi.kd_transaksi, tb_transaksi.kd_penyewa, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.tamu, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.harga_sewa, tb_transaksi.ekstra_charge, tb_transaksi.kd_booking, tb_transaksi.kd_bank, tb_transaksi.dp, tb_transaksi.total_tagihan, tb_transaksi.sisa_pelunasan, hari, tb_transaksi.tgl_transaksi, tb_transaksi.diskon,
+      tb_transaksi.kd_transaksi, tb_transaksi.kd_penyewa, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.tamu, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.harga_sewa, tb_transaksi.ekstra_charge, tb_transaksi.kd_booking, tb_transaksi.kd_bank, tb_transaksi.dp, tb_transaksi.total_tagihan, tb_transaksi.sisa_pelunasan, tb_transaksi.pembayaran, tb_transaksi.tgl_transaksi, tb_transaksi.diskon,
       tb_penyewa.kd_penyewa, tb_penyewa.nama, tb_penyewa.alamat, tb_penyewa.no_tlp, tb_penyewa.email, tb_penyewa.jenis_kelamin,
       tb_apt.kd_apt, tb_apt.nama_apt,
       tb_bank.kd_bank, tb_bank.nama_bank,
@@ -119,7 +129,7 @@ class Transaksi {
 
   //Proses Update
   public function updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $diskon, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total_tagihan, $sisa_pelunasan, $hari){
-    $sql = "update tb_transaksi SET kd_apt ='$kd_apt', kd_unit='$kd_unit', tamu='$tamu', check_in='$check_in', check_out='$check_out',
+    $sql = "UPDATE tb_transaksi SET kd_apt ='$kd_apt', kd_unit='$kd_unit', tamu='$tamu', check_in='$check_in', check_out='$check_out',
     harga_sewa ='$harga_sewa', diskon ='$diskon', ekstra_charge='$ekstra_charge', kd_booking='$kd_booking', kd_bank='$kd_bank', dp='$dp',
     total_tagihan='$total_tagihan', sisa_pelunasan='$sisa_pelunasan', hari ='$hari' where kd_transaksi='$kd_transaksi'";
     $query = $this->db->query($sql);
