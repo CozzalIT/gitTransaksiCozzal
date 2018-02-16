@@ -40,14 +40,14 @@
               <tbody>
                 <?php
         				  $Proses = new Unit($db);
-        				  $show = $Proses->showUnit();
+        				  $show = $Proses->showUnitbyOwner( $_SESSION['pemilik']);
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
                     if ($data->kd_unit != 0){
             					echo "
             					  <tr class=gradeC'>
             					    <td>$data->no_unit</td>
             					    <td>$data->nama_apt</td>
-                          <td>$data->alamat</td>
+                          <td>$data->alamat_apt</td>
                           <td>".number_format($data->h_owner_wd, 0, ".", ".")." IDR</td>
                           <td>".number_format($data->h_owner_we, 0, ".", ".")." IDR</td>
             						  <td>

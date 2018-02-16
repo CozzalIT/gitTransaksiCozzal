@@ -54,7 +54,6 @@
         						<td>
         						  <a class='btn btn-success' href='../transaksi/transaksi.php?transaksi=$data->kd_penyewa'>Transaksi</a>
         						  <a class='btn btn-primary' href='edit.php?edit=$data->kd_penyewa'>Edit</a>
-        						  <a class='btn btn-danger' href='../../../proses/penyewa.php?delete_penyewa=$data->kd_penyewa'>Hapus</a>
         						</td>
         					  </tr>";
         				  }

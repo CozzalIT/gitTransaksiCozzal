@@ -49,7 +49,8 @@ elseif(isset($_GET['delete_gambar'])){
   while($data = $show->fetch(PDO::FETCH_OBJ)){
     $img_lama = $data->img;
   }
-  
+  $verif_unit = $_GET['delete_gambar'];
+  include "verifikasi.php";  
   $arrayofimage = explode('+', $img_lama);
   $jmlh_gambar = count($arrayofimage);
   $img=''; $x=0;

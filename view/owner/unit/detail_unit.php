@@ -10,6 +10,8 @@
   require("../../../config/database.php");
   $Proses = new Unit($db);
   if(isset($_GET['detail_unit'])){
+      $verif_unit = $_GET['detail_unit'];
+      include "../../../proses/verifikasi.php";
       $show2 = $Proses->showDetail_Unit($_GET['detail_unit']);
       $img_t = 'Nothing'; $flag = 0; $hreffasil = 'edit.php?tambah_detail_unit=';    
       while($data = $show2->fetch(PDO::FETCH_OBJ)){

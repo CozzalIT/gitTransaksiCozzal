@@ -71,5 +71,18 @@
 <?php
   include "../template/footer.php";
 ?>
+
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/unit.js"></script>
+<script src="../../../asset/js/jquery.gritter.min.js"></script>
+<script src="../../../asset/js/jquery.peity.min.js"></script>
+<script src="../../../asset/js/matrix.interface.js"></script>
+<script src="../../../asset/js/matrix.popover.js"></script>
+<script src="../../../asset/js/jquery.ui.custom.js"></script>
+<!--<script src="js/jquery.uniform.js"></script> -->
+<script src="../../../asset/js/select2.min.js"></script>
+<script src="../../../asset/js/jquery.dataTables.min.js"></script>
+<script src="../../../asset/js/matrix.js"></script>
+<script src="../../../asset/js/matrix.tables.js"></script>
 </body>
 </html>

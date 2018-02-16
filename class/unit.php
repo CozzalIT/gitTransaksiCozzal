@@ -29,10 +29,19 @@ class Unit {
   }
 
   //Proses Show
-  public function showUnit(){
+  public function showUnit($kd_apapun){
     $sql = "SELECT * FROM tb_unit
     INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt
     INNER JOIN tb_owner ON tb_owner.kd_owner = tb_unit.kd_owner";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
+  //Proses Show
+  public function showUnitbyOwner($kd_owner){
+    $sql = "SELECT * FROM tb_unit 
+    INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt
+    WHERE tb_unit.kd_owner='$kd_owner'";
     $query = $this->db->query($sql);
     return $query;
   }

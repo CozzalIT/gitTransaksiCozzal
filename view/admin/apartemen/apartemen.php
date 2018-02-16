@@ -49,7 +49,6 @@
             						  <td>$data->alamat_apt</td>
             						  <td>
             						    <a class='btn btn-primary' href='edit.php?edit_apt=$data->kd_apt'>Edit</a>
-            						    <a class='btn btn-danger' href='../../../proses/apartemen.php?delete_apt=$data->kd_apt'>Hapus</a>
             						  </td>
             					  </tr>";
             					$i++;

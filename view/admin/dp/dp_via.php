@@ -46,7 +46,6 @@
         					    <td>$data->nama_bank</td>
         						<td>
         						  <a class='btn btn-primary' href='edit.php?edit_bank=$data->kd_bank'>Edit</a>
-        						  <a class='btn btn-danger' href='../../../proses/dp.php?delete_dp=$data->kd_bank'>Hapus</a>
         						</td>
         					  </tr>";
         					$i++;

@@ -26,6 +26,8 @@
 //Edit informasi dasar unit
     if (isset($_GET['edit_info_unit']))
     {
+      $verif_unit = $_GET['edit_info_unit'];
+      include "../../../proses/verifikasi.php";
       $Proses = new Unit($db);
       $show = $Proses->editUnit($_GET['edit_info_unit']);
       $edit = $show->fetch(PDO::FETCH_OBJ);
@@ -81,6 +83,8 @@
 //Edit harga Unit by owner
     if (isset($_GET['edit_harga_owner']))
     {
+      $verif_unit = $_GET['edit_harga_owner'];
+      include "../../../proses/verifikasi.php";
       $Proses = new Unit($db);
       $show = $Proses->editUnit($_GET['edit_harga_owner']);
       $edit = $show->fetch(PDO::FETCH_OBJ);
@@ -130,6 +134,8 @@
       //Edit data fasilitas unit
       		if (isset($_GET['edit_detail_unit']) || isset($_GET['tambah_detail_unit']))
       		{
+            $verif_unit = $_GET['edit_detail_unit'];
+            include "../../../proses/verifikasi.php";
       		  $lantai = 0; $jml_kmr = 0; $jml_bed = 0; $jml_ac = 0; $water_heater='Tidak Tersedia';
       		  $dapur='Tidak Tersedia'; $wifi='Tidak Tersedia'; $tv='Tidak Tersedia'; $kd_unit=0; $act='';
       		  $amenities='Tidak Tersedia'; $merokok='Tidak Boleh'; $type='';

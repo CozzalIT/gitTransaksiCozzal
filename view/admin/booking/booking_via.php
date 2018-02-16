@@ -46,7 +46,6 @@
         					    <td>$data->booking_via</td>
         						<td>
         						  <a class='btn btn-primary' href='edit.php?edit_booking=$data->kd_booking'>Edit</a>
-        						  <a class='btn btn-danger' href='../../../proses/booking.php?delete_booking=$data->kd_booking'>Hapus</a>
         						</td>
         					  </tr>";
         					$i++;

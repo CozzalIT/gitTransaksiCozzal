@@ -9,8 +9,16 @@
     $user = new Login($db);
     $login = $user->loginuser($username, $password);
     if($login == true){
+      if($login['username']=='owner'){
+          $pemilik = $user->getOwner($username);
+          if($pemilik == true){
+            $_SESSION['pemilik'] = $pemilik['kd_owner'];
+          }
+          else die('Username tidak cocok dengan owner manapun');
+      }
       $_SESSION['username'] = $login['username'];
       $_SESSION['hak_akses'] = $login['hak_akses'];
+
 			header('Location: view/'.$login['hak_akses'].'/home/home.php');
     }else{
 			$error= "Username / Password Salah!";
