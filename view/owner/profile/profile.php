@@ -27,7 +27,7 @@
                             <div class="span6" style="width:25%">
                               <img class="profile" src="../../../asset/img/profile.png">
                               <ul id="me">
-                                <li class="active" onclick="alert('this')"><a href="#personal" class="tip-bottom" >Info Personal</a></li>
+                                <li class="active" onclick="alert(this.className)"><a href="#personal" class="tip-bottom" >Info Personal</a></li>
                                 <li class="non"><a href="#other" class="tip-bottom" >Lainnya</a></li>
                                 <li class="non"><a href="#username" class="tip-bottom" >Ubah Username</a></li>
                                 <li class="non"><a href="#password" class="tip-bottom" >Ubah Password</a></li>
