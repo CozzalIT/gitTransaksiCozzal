@@ -69,7 +69,7 @@
                           <td>
                             <center>
                               <a class='btn btn-info' href='calendar.php?calendar_unit=$data->kd_unit'>Calendar</a>
-                              <a class='btn btn-success' href='detail_unit.php?detail_unit=".$data->kd_unit."' >Kelola Unit</a>
+                              <a class='btn btn-success' href='detail_unit.php?detail_unit=".$data->kd_unit."' >Kelola</a>
                               <a class='btn btn-danger' href='../../../proses/unit.php?delete_unit=$data->kd_unit&kurangi_ju=$data->kd_owner'>Hapus</a>
                             </center>
                           </td>

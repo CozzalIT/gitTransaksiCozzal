@@ -122,11 +122,15 @@ if(isset($_GET['pembayaran'])){
           <hr>
           <div class="control-group">
             <label class="control-label">Sisa Pelunasan</label>
-            <label class="control-label">'.number_format($data1->sisa_pelunasan, 0, ".", ".").' IDR</label>
+            <label class="control-label">'.($data1->sisa_pelunasan <= 0 ? '0' : number_format($data1->sisa_pelunasan, 0, ".", ".") ).' IDR</label>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Kembalian</label>
+            <label class="control-label">'.($data1->sisa_pelunasan <= 0 ? number_format(abs($data1->sisa_pelunasan), 0, ".", ".") : '0' ).' IDR</label>
           </div>
           <div class="control-group">
             <label class="control-label">Satus</label>
-            <label class="control-label" style="color:red;">'.($data1->sisa_pelunasan == 0 ? 'LUNAS' : 'BELUM LUNAS').'</label>
+            <label class="control-label" style="color:red;">'.($data1->sisa_pelunasan <= 0 ? 'LUNAS' : 'BELUM LUNAS').'</label>
           </div>
           <div class="control-group">
       		  <label class="control-label">Jumlah Pembayaran</label>

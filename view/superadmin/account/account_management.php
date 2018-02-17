@@ -32,6 +32,7 @@
                   <th>No</th>
                   <th>Username</th>
                   <th>Hak Akses</th>
+                  <th>Status</th>
 				          <th>Action</th>
                 </tr>
               </thead>
@@ -46,12 +47,13 @@
         					    <td>$i</td>
         					    <td>$data->username</td>
         						  <td>$data->hak_akses</td>
-        						<td>
-                      <center>
-          						  <a class='btn btn-primary' href='#'>Edit</a>
-          						  <a class='btn btn-danger' href='#'>Hapus</a>
-                      </center>
-        						</td>
+                      <td>Terhubung dan Aktif</td>
+          						<td>
+                        <center>
+            						  <a class='btn btn-primary' href='#'>Edit</a>
+            						  <a class='btn btn-danger' href='#'>Hapus</a>
+                        </center>
+          						</td>
         					  </tr>";
                     $i++;
         				  }
