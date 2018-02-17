@@ -12,64 +12,60 @@
   include "../template/header.php";
   include "../template/sidebar.php";
 ?>
-<div id="content">
-  <div id="content-header">
-   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Data Penyewa</a></div>
-    <h1>Profile </h1>
-  </div>
-  <div class="container-fluid">
-    <div class="row-fluid">
-      <div class="span12">
-        <div class="widget-box">
-          <div class="control-group">
-            <div class="controls span2">
-              <img class="profile" src="../../../asset/img/profile.png">
+          <!--main-container-part-->
+            <div id="content">
+              <div id="content-header">
+                <div id="breadcrumb"> 
+                  <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="unit.php" title="Go to Listing Unit" class="tip-bottom">Listing Unit</a> <a href="#" class="current">Kelola Unit</a> 
+                </div>
+              </div>
+                <div class="row-fluid">
+                  <div class="span12">
+                    <div class="widget-box">
+                      <div class="widget-content">
+                        <div class="row-fluid" style="max-width:1200px">
+                            <div class="span6" style="width:25%">
+                              <img class="profile" src="../../../asset/img/profile.png">
+                              <ul id="me">
+                                <li class="active" onclick="alert('this')"><a href="#personal" class="tip-bottom" >Info Personal</a></li>
+                                <li class="non"><a href="#other" class="tip-bottom" >Lainnya</a></li>
+                                <li class="non"><a href="#username" class="tip-bottom" >Ubah Username</a></li>
+                                <li class="non"><a href="#password" class="tip-bottom" >Ubah Password</a></li>
+                              </ul>
+                            </div> 
+                            <div class="span5" style="width:60%; margin-top:20px; padding-left:10%">
+                              <div class="control-group">
+                                <label class="control-label">Check Out :</label>
+                                <div class="controls">
+                                  <input name="check_out" id="check_out" type="date" onchange="validasi2(this.form)"/>
+                                </div>
+                              </div>   
+                             <div class="control-group">
+                                <label class="control-label">Check Out :</label>
+                                <div class="controls">
+                                  <input name="check_out" id="check_out" type="date" onchange="validasi2(this.form)"/>
+                                </div>
+                              </div>        
+                              <div class="control-group">
+                                <label class="control-label">Check Out :</label>
+                                <div class="controls">
+                                  <input name="check_out" id="check_out" type="date" onchange="validasi2(this.form)"/>
+                                </div>
+                              </div>   
+                             <div class="control-group">
+                                <label class="control-label">Check Out :</label>
+                                <div class="controls">
+                                  <input name="check_out" id="check_out" type="date" onchange="validasi2(this.form)"/>
+                                </div>
+                              </div>                   
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </div>
-            <div class="controls span10 profile-detail">
-              <table>
-                <tr>
-                  <td class="span5">Nama</td>
-                  <td><input type="text"/></td>
-                </tr>
-                <tr>
-                  <td class="span5">Alamat</td>
-                  <td><input type="text"/></td>
-                </tr>
-                <tr>
-                  <td class="span5">No Telpon</td>
-                  <td><input type="text"/></td>
-                </tr>
-                <tr>
-                  <td class="span5">Email</td>
-                  <td><input type="text"/></td>
-                </tr>
-              </table>
-          </div>
-          <div class="controls span10 profile-detail">
-            <table>
-              <tr>
-                <td class="span5">Username</td>
-                <td><input type="text"/></td>
-              </tr>
-              <tr>
-                <td class="span5">Password</td>
-                <td><input type="text"/></td>
-              </tr>
-              <tr>
-                <td class="span5"></td>
-                <td><a class="btn btn-success">Update</a></td>
-              </tr>
-            </table>
-        </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<br>
-<br>
-<br>
-<br>
+<!--end-main-container-part-->
 
 <!--Footer-part-->
 <div class="row-fluid">
