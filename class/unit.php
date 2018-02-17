@@ -39,7 +39,7 @@ class Unit {
 
   //Proses Show
   public function showUnitbyOwner($kd_owner){
-    $sql = "SELECT * FROM tb_unit 
+    $sql = "SELECT * FROM tb_unit
     INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt
     WHERE tb_unit.kd_owner='$kd_owner'";
     $query = $this->db->query($sql);
