@@ -40,7 +40,7 @@
               <tbody>
                 <?php
         				  $Proses = new Unit($db);
-        				  $show = $Proses->showUnitbyOwner( $_SESSION['pemilik']);
+        				  $show = $Proses->showUnitbyOwner($_SESSION['pemilik']);
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
                     if ($data->kd_unit != 0){
             					echo "

@@ -3,7 +3,7 @@ class Apartemen {
   private $db;
 
   public function __construct($database){
-      $this->db = $database;
+    $this->db = $database;
   }
 
   //Proses Add

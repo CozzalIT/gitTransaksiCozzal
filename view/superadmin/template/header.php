@@ -12,7 +12,7 @@
         <li class="divider"></li>
         <li><a href="#"><i class="icon-check"></i> My Tasks</a></li>
         <li class="divider"></li>
-        <li><a href="login.html"><i class="icon-key"></i> Log Out</a></li>
+        <li><a href="../../../class/login/logout.php"><i class="icon-key"></i> Log Out</a></li>
       </ul>
     </li>
     <li class="dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text">Messages</span> <span class="label label-important">5</span> <b class="caret"></b></a>
@@ -27,7 +27,6 @@
       </ul>
     </li>
     <li class=""><a title="" href="#"><i class="icon icon-cog"></i> <span class="text">Settings</span></a></li>
-	  <li class=""><a title="" href="../../../class/login/logout.php"><i class="icon icon-share-alt"></i> <span class="text"> Logout</span></a></li>
   </ul>
 </div>
 <!--close-top-Header-menu-->

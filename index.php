@@ -9,7 +9,7 @@
     $user = new Login($db);
     $login = $user->loginuser($username, $password);
     if($login == true){
-      if($login['username']=='owner'){
+      if($login['hak_akses']=='owner'){
           $pemilik = $user->getOwner($username);
           if($pemilik == true){
             $_SESSION['pemilik'] = $pemilik['kd_owner'];
