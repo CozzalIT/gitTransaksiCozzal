@@ -27,37 +27,27 @@
                             <div class="span6" style="width:25%">
                               <img class="profile" src="../../../asset/img/profile.png">
                               <ul id="me">
-                                <li class="active" onclick="alert(this.className)"><a href="#personal" class="tip-bottom" >Info Personal</a></li>
-                                <li class="non"><a href="#other" class="tip-bottom" >Lainnya</a></li>
-                                <li class="non"><a href="#username" class="tip-bottom" >Ubah Username</a></li>
-                                <li class="non"><a href="#password" class="tip-bottom" >Ubah Password</a></li>
+                                <li id="info" class="active" onclick="changenav('info')"><a href="#" class="tip-bottom" >Info Personal</a></li>
+                                <li id="other" class="non" onclick="changenav('other')"><a href="#" class="tip-bottom" >Lainnya</a></li>
+                                <li id="user" class="non" onclick="changenav('user')"><a href="#" class="tip-bottom" >Ubah Username</a></li>
+                                <li id="pass" class="non" onclick="changenav('pass')"><a href="#" class="tip-bottom" >Ubah Password</a></li>
                               </ul>
                             </div> 
                             <div class="span5" style="width:60%; margin-top:20px; padding-left:10%">
-                              <div class="control-group">
-                                <label class="control-label">Check Out :</label>
-                                <div class="controls">
-                                  <input name="check_out" id="check_out" type="date" onchange="validasi2(this.form)"/>
-                                </div>
-                              </div>   
-                             <div class="control-group">
-                                <label class="control-label">Check Out :</label>
-                                <div class="controls">
-                                  <input name="check_out" id="check_out" type="date" onchange="validasi2(this.form)"/>
-                                </div>
-                              </div>        
-                              <div class="control-group">
-                                <label class="control-label">Check Out :</label>
-                                <div class="controls">
-                                  <input name="check_out" id="check_out" type="date" onchange="validasi2(this.form)"/>
-                                </div>
-                              </div>   
-                             <div class="control-group">
-                                <label class="control-label">Check Out :</label>
-                                <div class="controls">
-                                  <input name="check_out" id="check_out" type="date" onchange="validasi2(this.form)"/>
-                                </div>
-                              </div>                   
+                              <form id="form_profile" action="" method="POST">
+                                <div class="control-group">
+                                  <label class="control-label">Nama Lengkap :</label>
+                                  <div class="controls">
+                                    <input name="nama" type="text" value="<?php echo 'euy'; ?>" disabled/>
+                                  </div>
+                                </div>  
+                                <!-- button here --> 
+                                <div class="control-group">
+                                  <div class="controls">
+                                    <button name="updateInfoUnitbyOwner" type="submit" class="btn btn-success">Ubah data</button>
+                                  </div>
+                                </div>     
+                              </form>
                             </div>
                         </div>
                       </div>
@@ -79,6 +69,6 @@
 <script src="../../../asset/js/select2.min.js"></script>
 <script src="../../../asset/js/jquery.dataTables.min.js"></script>
 <script src="../../../asset/js/matrix.js"></script>
-<script src="../../../asset/js/matrix.tables.js"></script>
+<script src="../../../asset/js/profil.js"></script>
 </body>
 </html>
