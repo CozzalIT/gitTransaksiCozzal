@@ -44,4 +44,17 @@ elseif(isset($_POST['id1'])){
 	$callback = array('ketersediaan'=>$hasil); 
 	echo json_encode($callback); 
 }
+
+elseif(isset($_POST['owner'])){
+	require("../class/account.php");
+	$html = "<option value=''>-- Pilih Owner --</option>";
+	$Proses = new Account($db);
+	$show = $Proses->showOwner_byAccount();
+	while($data = $show->fetch(PDO::FETCH_OBJ)){
+		if($data->kd_owner!=0)
+		$html .= "<option value='$data->kd_owner'>$data->nama</option>"; // Tambahkan tag option ke variabel $html
+	}
+	$callback = array('pilihan_owner'=>$html); // Masukan variabel html tadi ke dalam array $callback dengan index array : data_kota
+	echo json_encode($callback); // konversi varibael $callback menjadi JSON
+}
 ?>

@@ -70,44 +70,51 @@
 <!-- Modal Popup Tambah Penyewa -->
 <div id="popup-penyewa" class="modal hide">
   <div class="modal-header">
-    <button data-dismiss="modal" class="close" type="button">×</button>
+    <button data-dismiss="modal" class="close" onclick="$('#reset').click()" type="button">×</button>
     <h3>Akun Baru</h3>
   </div>
   <div class="modal-body">
-	<form action="#" method="post" class="form-horizontal">
+	<form action="../../../proses/account.php" method="post" class="form-horizontal">
 	  <div class="control-group">
-		<label class="control-label">Username :</label>
-		<div class="controls">
-		  <input name="nama" type="text" class="span2" placeholder="Username" required/>
-		</div>
+  		<label class="control-label">Username :</label>
+  		<div class="controls">
+  		  <input name="username" type="text" class="span2" placeholder="Username" required/>
+  		</div>
+  	</div>
+	  <div class="control-group">
+  		<label class="control-label">Password :</label>
+  		<div class="controls">
+  		  <input name="password" type="password" class="span2" placeholder="Password" required/>
+  		</div>
 	  </div>
 	  <div class="control-group">
-		<label class="control-label">Password :</label>
-		<div class="controls">
-		  <input name="alamat" type="password" class="span2" placeholder="Password" required/>
-		</div>
+		  <label class="control-label">Hak Akses :</label>
+		  <div class="controls">
+        <select name="hak_akses" id="hak_akses" class="span2" required>
+          <option value="" >--Pilih Hak Akses--</option>
+          <option value="superadmin" >Superadmin</option>
+          <option value="admin" >Admin</option>
+          <option value="manager" >Property Manager</option>
+          <option value="owner" >Property Owner</option>
+        </select>
+		  </div>
 	  </div>
-	  <div class="control-group">
-		<label class="control-label">Hak Akses :</label>
-		<div class="controls">
-		  <label>
-			  <input type="radio" name="hak_akses" value="Superadmin" checked/> Superadmin
-		  </label>
-		  <label>
-			  <input type="radio" name="hak_akses" value="Admin"/> Admin
-		  </label>
-      <label>
-			  <input type="radio" name="hak_akses" value="Property Manager"/> Property Manager
-		  </label>
-		  <label>
-			  <input type="radio" name="hak_akses" value="Owner"/> Owner
-		  </label>
-		</div>
-	  </div>
+    <div class="control-group" id="owner">
+      <label class="control-label">Nama Owner :</label>
+      <div class="controls">
+        <select name="kd_owner" id="kd_owner" class="span2">
+          <option value="superadmin" >Superadmin</option>
+          <option value="admin" >Admin</option>
+          <option value="manager" >Property Manager</option>
+          <option value="owner" >Property Owner</option>
+        </select>
+      </div>
+    </div>
 	  <div class="control-group">
 		<div class="controls">
-		  <input type="submit" name="addPenyewa" class="btn btn-success">
-		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+		  <input type="submit" name="addAccount" value="Tambahkan Akun" class="btn btn-success">
+		  <button data-dismiss="modal" class="btn btn-inverse" onclick="$('#reset').click()">Batal</button>
+      <button type="reset" id="reset" style="display:none">Batal</button>
 		</div>
 	  </div>
 	</form>
@@ -124,9 +131,10 @@
 <script src="../../../asset/js/jquery.ui.custom.js"></script>
 <script src="../../../asset/js/bootstrap.min.js"></script>
 <script src="../../../asset/js/jquery.uniform.js"></script>
-<script src="../../../asset/js/select2.min.js"></script>
+<!--<script src="../../../asset/js/select2.min.js"></script> -->
 <script src="../../../asset/js/jquery.dataTables.min.js"></script>
 <script src="../../../asset/js/matrix.js"></script>
 <script src="../../../asset/js/matrix.tables.js"></script>
+<script src="../../../asset/js/account.js"></script>
 </body>
 </html>

@@ -206,9 +206,9 @@ elseif(isset($_POST['addUnit']) && $view!="owner"){
 
   $proses = new Unit($db);
   $add = $proses->addUnit($kd_apt,$kd_owner, $no_unit, $h_sewa_wd, $h_sewa_we, $h_owner_wd, $h_owner_we, $ekstra_charge);
-  $add2 = $proses->updateJumlah_unit_owner($kd_owner);
 
   if(($add == "Success") || ($add2 == "Success")){
+    $add2 = $proses->updateJumlah_unit_owner($kd_owner);
     header('Location:../view/'.$view.'/unit/unit.php');
   }else{
     echo 'error';

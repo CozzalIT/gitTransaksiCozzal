@@ -6,6 +6,35 @@ class Account{
     $this->db = $database;
   }
 
+// tambah Akun baur
+
+public function addAccount($username, $password, $hak_akses){
+    $sql = "INSERT INTO tb_user VALUES('$username', '$password', '$hak_akses', '3')";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
+}
+
+public function addRelasi($username, $kd_owner){
+    $sql = "UPDATE tb_owner SET username='$username' where kd_owner='$kd_owner'";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }  
+}
+
+//show seluruh owner
+  public function showOwner_byAccount(){
+    $sql = "SELECT kd_owner,nama from tb_owner where username is null";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
   //Show
   public function showAccount(){
     $sql = "SELECT tb_user.username, tb_user.hak_akses FROM tb_user";
