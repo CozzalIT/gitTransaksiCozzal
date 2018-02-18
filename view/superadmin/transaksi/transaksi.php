@@ -350,7 +350,7 @@
     <h3>Pelanggan Baru</h3>
   </div>
   <div class="modal-body">
-  <form action="" method="post" class="form-horizontal">
+  <form action="../../../proses/transaksi.php" method="post" class="form-horizontal">
     <div class="control-group">
     <label class="control-label">Nama :</label>
     <div class="controls">
@@ -364,21 +364,27 @@
     </div>
     </div>
     <div class="control-group">
-    <label class="control-label">No Telpon :</label>
-    <div class="controls">
-      <input name="no_tlp" type="text"  class="span2" placeholder="ex: 0812...." required/>
-    </div>
+      <label class="control-label">No Telpon :</label>
+      <div class="controls">
+        <input name="no_tlp" type="text"  class="span2" placeholder="ex: 0812...." required/>
+      </div>
     </div>
     <div class="control-group">
-    <label class="control-label">Jenis Kelamin :</label>
-    <div class="controls">
-      <label>
-      <input type="radio" name="jenis_kelamin" value="Laki-laki" checked/> Laki-laki
-      </label>
-      <label>
-      <input type="radio" name="jenis_kelamin" value="Perempuan" /> Perempuan
-      </label>
+      <label class="control-label">Jenis Kelamin :</label>
+      <div class="controls">
+        <label>
+          <input type="radio" name="jenis_kelamin" value="Laki-laki" checked/> Laki-laki
+        </label>
+        <label>
+          <input type="radio" name="jenis_kelamin" value="Perempuan" /> Perempuan
+        </label>
+      </div>
     </div>
+    <div class="control-group">
+      <label class="control-label">Email :</label>
+      <div class="controls">
+        <input name="email" type="text"  class="span2" placeholder="ex: abc@gmail.com" required/>
+      </div>
     </div>
     <div class="control-group">
     <div class="controls">

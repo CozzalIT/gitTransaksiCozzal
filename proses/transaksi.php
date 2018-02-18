@@ -1,6 +1,7 @@
 <?php
 require("../config/database.php");
 require("../class/transaksi.php");
+require("../class/penyewa.php");
 session_start();
 $view = $_SESSION['hak_akses'];
 
@@ -63,9 +64,11 @@ elseif(isset($_POST['addPenyewaTransaksi'])){
 	$alamat = $_POST['alamat'];
 	$no_tlp = $_POST['no_tlp'];
 	$jenis_kelamin = $_POST['jenis_kelamin'];
+	$email = $_POST['email'];
+	$tgl_gabung = date('y-m-d');
 
-  $proses = new Transaksi($db);
-  $add = $proses->addPenyewa($nama, $alamat, $no_tlp, $jenis_kelamin);
+  $proses = new Penyewa($db);
+  $add = $proses->addPenyewa($nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung);
 
   $Proses = new Transaksi($db);
   $show = $Proses->showPenyewaTransaksi();
