@@ -36,6 +36,10 @@ elseif(isset($_POST['id1'])){
 	while($data = $show->fetch(PDO::FETCH_OBJ)){
 	$flag++;	
 	}
+	$show2 = $Proses->showConfirmTransaksi_cek($CI,$CO,$kd_unit);
+	while($data = $show2->fetch(PDO::FETCH_OBJ)){
+	$flag++;	
+	}
 	if($flag==0) $hasil = "Ada";
 	$callback = array('ketersediaan'=>$hasil); 
 	echo json_encode($callback); 
