@@ -4,9 +4,6 @@ $(document).ready(function(){ // Ketika halaman sudah siap (sudah selesai di loa
 	$("#loading").hide();
 
 	$("#apartemen").change(function(){ // Ketika user mengganti atau memilih data apartemen
-		$("#unit").hide(); // Sembunyikan dulu combobox unit nya
-		$("#loading").show(); // Tampilkan loadingnya
-
 		$.ajax({
 			type: "POST", // Method pengiriman data bisa dengan GET atau POST
 			url: "../../../proses/option_unit.php", // Isi dengan url/path file php yang dituju
@@ -18,14 +15,7 @@ $(document).ready(function(){ // Ketika halaman sudah siap (sudah selesai di loa
 				}
 			},
 			success: function(response){ // Ketika proses pengiriman berhasil
-				setTimeout(function(){
-					$("#loading").hide(); // Sembunyikan loadingnya
-
-					// set isi dari combobox unit
-					// lalu munculkan kembali combobox unitnya
-					$("#unit").html(response.data_unit).show();
-
-				}, 1250);
+					$("#unit").html(response.data_unit);
 			},
 			error: function (xhr, ajaxOptions, thrownError) { // Ketika ada error
 				alert(thrownError); // Munculkan alert error

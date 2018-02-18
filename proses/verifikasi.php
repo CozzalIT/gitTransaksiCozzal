@@ -6,5 +6,4 @@
   	$pemilik = $data->kd_owner;
   }
   if($_SESSION['pemilik']!=$pemilik) header('location:../../'.$_SESSION['hak_akses'].'/home/home.php');
-
 ?>
