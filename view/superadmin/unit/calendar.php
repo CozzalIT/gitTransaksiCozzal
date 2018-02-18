@@ -16,6 +16,8 @@
   <div id="content-header">
   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="unit.php" title="Go to Data Unit" class="tip-bottom">Data Unit</a> <a href="#" class="current">Kalender Unit</a> </div>
     <h1>Calendar</h1>
+    <a href="#popup-blok" data-toggle="modal" class="btn btn-danger btn-add"><i class="icon-minus-sign"></i> Blok Tanggal</a>
+    <a href="#popup-maintenance" data-toggle="modal" class="btn btn-warning btn-add" style="color:black;"><i class="icon-cogs"></i> Maintenance</a>
   </div>
   <div class="container-fluid">
     <!--
@@ -58,7 +60,7 @@
                         title: 'Confirm',
                         start: '$data->check_in',
                         end: '$data->check_out',
-                        color: '#ff9f89'
+                        color: '#359b20'
                       },
                       ";
                     }
@@ -81,7 +83,6 @@
                 }
               ]
             });
-
           });
         </script>
 
@@ -90,15 +91,85 @@
     </div>
   </div>
 </div>
+
+<div id="popup-blok" class="modal hide">
+  <div class="modal-header">
+    <button data-dismiss="modal" class="close" type="button">×</button>
+    <h3>Blok Tanggal</h3>
+  </div>
+  <div class="modal-body">
+	<form action="../../../proses/penyewa.php" method="post" class="form-horizontal">
+	  <div class="control-group">
+		<label class="control-label">Awal :</label>
+		<div class="controls">
+		  <input name="awal" type="date" class="span2" placeholder="Nama" required/>
+		</div>
+	  <div class="control-group">
+    </div>
+		<label class="control-label">Akhir :</label>
+		<div class="controls">
+		  <input name="akhir" type="date" class="span2" placeholder="Alamat" required/>
+      <?php
+        if(isset($_GET['calendar_unit'])){}
+      ?>
+    </div>
+	  </div>
+	  <div class="control-group">
+		<div class="controls">
+		  <input type="submit" name="addPenyewa" class="btn btn-success">
+		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+		</div>
+	  </div>
+	</form>
+</div>
+</div>
+
+<div id="popup-maintenance" class="modal hide">
+  <div class="modal-header">
+    <button data-dismiss="modal" class="close" type="button">×</button>
+    <h3>Maintenance</h3>
+  </div>
+  <div class="modal-body">
+	<form action="../../../proses/unit.php" method="post" class="form-horizontal">
+	  <div class="control-group">
+		<label class="control-label">Awal :</label>
+		<div class="controls">
+		  <input name="awal" type="date" class="span2" required/>
+		</div>
+	  <div class="control-group">
+    </div>
+		<label class="control-label">Akhir :</label>
+		<div class="controls">
+		  <input name="akhir" type="date" class="span2" required/>
+		</div>
+	  </div>
+    <div class="control-group">
+		<label class="control-label">Catatan :</label>
+		<div class="controls">
+		  <input name="catatan" type="text" class="span2" placeholder="" required/>
+    </div>
+		</div>
+	  <div class="control-group">
+		<div class="controls">
+		  <input type="submit" name="addMaintenance" class="btn btn-success">
+		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+		</div>
+	  </div>
+	</form>
+</div>
+</div>
+
 <!--Footer-part-->
 <div class="row-fluid">
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
-
 <script src="../../../asset/js/select2.min.js"></script>
 <script src="../../../asset/js/jquery.dataTables.min.js"></script>
 <script src="../../../asset/js/matrix.js"></script>
 <script src="../../../asset/js/matrix.tables.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/jquery.uniform.js"></script>
+<script src="../../../asset/js/select2.min.js"></script>
 </body>
 </html>

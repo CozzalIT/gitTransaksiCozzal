@@ -28,6 +28,16 @@ class Unit {
     }
   }
 
+  public function addMaintenance($kd_unit, $awal, $akhir, $catatan){
+    $sql = "INSERT INTO tb_maintenance (kd_unit, start_date, end_date, note)VALUES('$kd_unit', '$awal', '$akhir', '$catatan')";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
+  }
+
   //Proses Show
   public function showUnit(){
     $sql = "SELECT * FROM tb_unit

@@ -39,14 +39,26 @@
               events: [
                 <?php
                   if (isset($_GET['calendar_unit'])){
-          				  $Proses = new Transaksi($db);
-            		    $show = $Proses->showCalendar($_GET['calendar_unit']);
+          				  $booked = new Transaksi($db);
+            		    $show = $booked->showCalendarBooked($_GET['calendar_unit']);
             		    while($data = $show->fetch(PDO::FETCH_OBJ)){
                       echo "
                       {
                         title: 'Booked',
                         start: '$data->check_in',
                         end: '$data->check_out',
+                      },
+                      ";
+                    }
+                    $confirm = new Transaksi($db);
+            		    $show = $confirm->showCalendarConfirm($_GET['calendar_unit']);
+            		    while($data = $show->fetch(PDO::FETCH_OBJ)){
+                      echo "
+                      {
+                        title: 'Confirm',
+                        start: '$data->check_in',
+                        end: '$data->check_out',
+                        color: '#ff9f89'
                       },
                       ";
                     }

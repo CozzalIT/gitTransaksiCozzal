@@ -44,13 +44,13 @@ if(isset($_POST['add_detail_unit'])){
 
 //Delete Gambar Unit
 elseif(isset($_GET['delete_gambar'])){
-  $proses = new Unit($db); 
+  $proses = new Unit($db);
   $show = $proses->showDetail_Unit($_GET["kd_unit"]);
   while($data = $show->fetch(PDO::FETCH_OBJ)){
     $img_lama = $data->img;
   }
   $verif_unit = $_GET['delete_gambar'];
-  include "verifikasi.php";  
+  include "verifikasi.php";
   $arrayofimage = explode('+', $img_lama);
   $jmlh_gambar = count($arrayofimage);
   $img=''; $x=0;
@@ -60,7 +60,7 @@ elseif(isset($_GET['delete_gambar'])){
           if($x==0){
             $img = $arrayofimage[$i];
             $x++;
-          }  
+          }
           else{
             $img = $img.'+'.$arrayofimage[$i];
           }
@@ -69,7 +69,7 @@ elseif(isset($_GET['delete_gambar'])){
   }else{
     $img = 'None';
   }
- 
+
   $del = $proses->updateGambar_unit($_GET['kd_unit'], $img);
   if($del == "Success"){
     unlink('../asset/img/unit/'.$_GET['kd_unit'].'/'.$_GET['delete_gambar']);
@@ -176,7 +176,7 @@ elseif (isset($_POST['upload_gambar'])){
     $add = $proses->updateGambar_unit($kd_unit, $img);
     if($add == "Success"){
       header("Location:../view/".$view."/unit/detail_unit.php?detail_unit=".$kd_unit);
-    } 
+    }
     else echo 'gagal upload gmbar';
   }
 }
@@ -209,6 +209,23 @@ elseif(isset($_POST['addUnit']) && $view!="owner"){
   $add2 = $proses->updateJumlah_unit_owner($kd_owner);
 
   if(($add == "Success") || ($add2 == "Success")){
+    header('Location:../view/'.$view.'/unit/unit.php');
+  }else{
+    echo 'error';
+  }
+}
+
+//Tambah Maintenance
+elseif(isset($_POST['addMaintenance'])){
+  $kd_unit = $_POST['kd_unit'];
+  $awal = $_POST['awal'];
+  $akhir = $_POST['akhir'];
+  $catatan = $_POST['catatan'];
+
+  $proses = new Unit($db);
+  $add = $proses->addMaintenance($kd_unit, $awal, $akhir, $catatan);
+
+  if(($add == "Success")){
     header('Location:../view/'.$view.'/unit/unit.php');
   }else{
     echo 'error';
