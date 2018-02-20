@@ -77,7 +77,7 @@ if ($jenis_error!='none')
                                 <div class="control-group">
                                   <label class="control-label">Hak Akses</label>
                                   <div class="controls">
-                                    <input class="form1" name="alamat"  id="alamat" type="text" value="Superadmin" disabled/>
+                                    <input class="form1" name="alamat"  id="alamat" type="text" value="Property Manager" disabled/>
                                   </div>
                                 </div>  
                                 <div class="control-group">

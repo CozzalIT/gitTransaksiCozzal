@@ -32,8 +32,8 @@
                   <th>No Unit</th>
                   <th>Nama Apartemen</th>
 				          <th>Alamat</th>
-                  <th>Sewa WeekDay</th>
-                  <th>Sewa WeekEnd</th>
+                  <th class="hiderespons">Sewa WeekDay</th>
+                  <th class="hiderespons">Sewa WeekEnd</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -48,8 +48,8 @@
             					    <td>$data->no_unit</td>
             					    <td>$data->nama_apt</td>
                           <td>$data->alamat_apt</td>
-                          <td>".number_format($data->h_owner_wd, 0, ".", ".")." IDR</td>
-                          <td>".number_format($data->h_owner_we, 0, ".", ".")." IDR</td>
+                          <td class='hiderespons'>".number_format($data->h_owner_wd, 0, ".", ".")." IDR</td>
+                          <td class='hiderespons'>".number_format($data->h_owner_we, 0, ".", ".")." IDR</td>
             						  <td>
                             <center>
                               <a class='btn btn-info' href='calendar.php?calendar_unit=$data->kd_unit'>Calendar</a>

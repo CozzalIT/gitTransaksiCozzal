@@ -36,7 +36,10 @@ margin-top: 20px;
 }
 
 #me li{
-background-color:#2E363F;
+  background-color:#2E363F;
+  border-color: #F9F9F9;
+  border-width: 1px;
+  border-style: solid;
 }
 
 #me li:hover{
@@ -53,4 +56,35 @@ background-color: blue;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+}
+
+.headprof {
+    width:25%;
+    float : left;
+}
+
+@media (max-width: 768px) {
+    .headprof {
+        width:100%;
+        float: none;
+    }
+    #me li{
+        font-size: 10px;
+        height: 30px;
+    }
+    #me li a {
+      padding: 5px 12px;
+    }
+    .table th, .table td, .table td a {
+      font-size: 10px;
+    }
+    .table td a {
+      line-height: 10px;
+    }
+    .hiderespons{
+      display: none;
+    }
+    .error_alert{
+      width: 100%;
+    }
 }

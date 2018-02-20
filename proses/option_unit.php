@@ -45,7 +45,7 @@ elseif(isset($_POST['id1'])){
 	echo json_encode($callback); 
 }
 
-elseif(isset($_POST['owner'])){
+elseif(isset($_POST['owner']) || isset($_POST['get_owner'])){
 	require("../class/account.php");
 	$html = "<option value=''>-- Pilih Owner --</option>";
 	$Proses = new Account($db);
@@ -54,6 +54,7 @@ elseif(isset($_POST['owner'])){
 		if($data->kd_owner!=0)
 		$html .= "<option value='$data->kd_owner'>$data->nama</option>"; // Tambahkan tag option ke variabel $html
 	}
+	if (isset($_POST['owner'])) $html .= "<option value='null'>Relasikan Nanti</option>";
 	$callback = array('pilihan_owner'=>$html); // Masukan variabel html tadi ke dalam array $callback dengan index array : data_kota
 	echo json_encode($callback); // konversi varibael $callback menjadi JSON
 }

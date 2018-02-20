@@ -9,17 +9,20 @@
     $user = new Login($db);
     $login = $user->loginuser($username, $password);
     if($login == true){
+      $masuk = true;
       if($login['hak_akses']=='owner'){
           $pemilik = $user->getOwner($username);
           if($pemilik == true){
             $_SESSION['pemilik'] = $pemilik['kd_owner'];
           }
-          else die('Username tidak cocok dengan owner manapun');
+          else {$error= "Username tidak terelasi dengan owner"; $masuk=false;}
       }
-      $_SESSION['username'] = $login['username'];
-      $_SESSION['hak_akses'] = $login['hak_akses'];
-
-			header('Location: view/'.$login['hak_akses'].'/home/home.php');
+      if($login['status']=='2'){$error = "Akun sedang dinon-aktifkan sementara"; $masuk=false;} 
+      if($masuk){
+          $_SESSION['username'] = $login['username'];
+          $_SESSION['hak_akses'] = $login['hak_akses'];
+          header('Location: view/'.$login['hak_akses'].'/home/home.php');
+      }
     }else{
 			$error= "Username / Password Salah!";
 		}
