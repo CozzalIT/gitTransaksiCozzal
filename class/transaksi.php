@@ -45,7 +45,7 @@ class Transaksi {
   //Proses Show
   public function showTransaksi(){
     $sql = "SELECT
-      tb_transaksi.kd_transaksi, tb_transaksi.kd_penyewa, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.tamu, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.harga_sewa, tb_transaksi.ekstra_charge, tb_transaksi.kd_booking, tb_transaksi.kd_bank, tb_transaksi.dp, tb_transaksi.total_tagihan, tb_transaksi.sisa_pelunasan, hari, tb_transaksi.tgl_transaksi, tb_transaksi.diskon,
+      tb_transaksi.kd_transaksi, tb_transaksi.kd_penyewa, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.tamu, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.harga_sewa, tb_transaksi.ekstra_charge, tb_transaksi.kd_booking, tb_transaksi.kd_bank, tb_transaksi.dp, tb_transaksi.total_tagihan, tb_transaksi.sisa_pelunasan, tb_transaksi.hari, tb_transaksi.tgl_transaksi, tb_transaksi.diskon,
       tb_penyewa.kd_penyewa, tb_penyewa.nama,
       tb_apt.kd_apt, tb_apt.nama_apt,
       tb_bank.kd_bank, tb_bank.nama_bank,
@@ -61,20 +61,6 @@ class Transaksi {
 
   public function showPenyewaTransaksi(){
     $sql = "SELECT * FROM tb_penyewa WHERE kd_penyewa IN (SELECT MAX(kd_penyewa) FROM tb_penyewa)";
-    $query = $this->db->query($sql);
-    return $query;
-  }
-
-  public function showCalendarBooked($kd_unit){
-    $sql = "SELECT check_in, check_out from tb_transaksi where kd_unit='$kd_unit'";
-    //$sql_confirm = "SELECT * from tb_confirm_transaksi where kd_unit='$kd_unit'";
-    $query = $this->db->query($sql);
-    //$query1 = $this->db->query($sql_confirm);
-    return $query;
-  }
-
-  public function showCalendarConfirm($kd_unit){
-    $sql = "SELECT check_in, check_out from tb_confirm_transaksi where kd_unit='$kd_unit'";
     $query = $this->db->query($sql);
     return $query;
   }
@@ -98,7 +84,7 @@ class Transaksi {
   }
 
   public function showConfirmTransaksi_cek($CI,$CO,$kd_unit){
-    $sql = "SELECT kd_confirm_transaksi from tb_confirm_transaksi 
+    $sql = "SELECT kd_confirm_transaksi from tb_confirm_transaksi
     where ((check_in<='$CI' and check_out>='$CO')
     or (check_in>='$CI' and check_in<'$CO')
     or (check_out>'$CI' and check_out<='$CO'))
@@ -127,7 +113,7 @@ class Transaksi {
 
   public function editTransaksi($kd_transaksi){
     $sql = "SELECT
-      tb_transaksi.kd_transaksi, tb_transaksi.kd_penyewa, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.tamu, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.harga_sewa, tb_transaksi.ekstra_charge, tb_transaksi.kd_booking, tb_transaksi.kd_bank, tb_transaksi.dp, tb_transaksi.total_tagihan, tb_transaksi.sisa_pelunasan, tb_transaksi.pembayaran, tb_transaksi.tgl_transaksi, tb_transaksi.diskon,
+      tb_transaksi.kd_transaksi, tb_transaksi.kd_penyewa, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.tamu, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.harga_sewa, tb_transaksi.ekstra_charge, tb_transaksi.kd_booking, tb_transaksi.kd_bank, tb_transaksi.dp, tb_transaksi.total_tagihan, tb_transaksi.sisa_pelunasan, tb_transaksi.pembayaran, tb_transaksi.tgl_transaksi, tb_transaksi.diskon, tb_transaksi.hari,
       tb_penyewa.kd_penyewa, tb_penyewa.nama, tb_penyewa.alamat, tb_penyewa.no_tlp, tb_penyewa.email, tb_penyewa.jenis_kelamin,
       tb_apt.kd_apt, tb_apt.nama_apt,
       tb_bank.kd_bank, tb_bank.nama_bank,

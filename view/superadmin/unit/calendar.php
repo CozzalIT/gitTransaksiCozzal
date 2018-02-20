@@ -1,6 +1,6 @@
 <?php
   session_start();
-  require("../../../class/transaksi.php");
+  require("../../../class/calendar.php");
   require("../../../config/database.php");
 
   $thisPage = "Unit";
@@ -15,7 +15,18 @@
 <div id="content">
   <div id="content-header">
   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="unit.php" title="Go to Data Unit" class="tip-bottom">Data Unit</a> <a href="#" class="current">Kalender Unit</a> </div>
-    <h1>Calendar</h1>
+    <?php
+      if (isset($_GET['calendar_unit'])){
+        $calendar = new Calendar($db);
+        $show = $calendar->showNoUnit($_GET['calendar_unit']);
+        $data = $show->fetch(PDO::FETCH_OBJ);
+        $kd_unit = $_GET['calendar_unit'];
+        $no_unit = $data->no_unit;
+        $nama_apt = $data->nama_apt;
+      }
+    ?>
+    <h1>Calendar Unit <?php echo $no_unit.' ('.$nama_apt.')'; ?></h1>
+    <a href="unit.php" class="btn btn-primary btn-add"><i class="icon-chevron-left"></i> Kembali</a>
     <a href="#popup-blok" data-toggle="modal" class="btn btn-danger btn-add"><i class="icon-minus-sign"></i> Blok Tanggal</a>
     <a href="#popup-maintenance" data-toggle="modal" class="btn btn-warning btn-add" style="color:black;"><i class="icon-cogs"></i> Maintenance</a>
   </div>
@@ -41,8 +52,7 @@
               events: [
                 <?php
                   if (isset($_GET['calendar_unit'])){
-          				  $booked = new Transaksi($db);
-            		    $show = $booked->showCalendarBooked($_GET['calendar_unit']);
+            		    $show = $calendar->showCalendarBooked($_GET['calendar_unit']);
             		    while($data = $show->fetch(PDO::FETCH_OBJ)){
                       echo "
                       {
@@ -52,8 +62,7 @@
                       },
                       ";
                     }
-                    $confirm = new Transaksi($db);
-            		    $show = $confirm->showCalendarConfirm($_GET['calendar_unit']);
+            		    $show = $calendar->showCalendarConfirm($_GET['calendar_unit']);
             		    while($data = $show->fetch(PDO::FETCH_OBJ)){
                       echo "
                       {
@@ -63,6 +72,38 @@
                         color: '#359b20'
                       },
                       ";
+                    }
+                    $show = $calendar->showModCalendar($_GET['calendar_unit']);
+            		    while($data = $show->fetch(PDO::FETCH_OBJ)){
+                      if($data->jenis == 1 ){
+                        echo "
+                        {
+                          title: 'Maintenance',
+                          start: '$data->start_date',
+                          end: '$data->end_date',
+                          color: '#faa732',
+                          textColor: '#000000'
+                        },
+                        ";
+                      }elseif($data->jenis == 2){
+                        echo "
+                        {
+                          title: 'Block by Owner',
+                          start: '$data->start_date',
+                          end: '$data->end_date',
+                          color: '#da4f49',
+                        },
+                        ";
+                      }elseif($data->jenis == 3){
+                        echo "
+                        {
+                          title: 'Block by Admin',
+                          start: '$data->start_date',
+                          end: '$data->end_date',
+                          color: '#da4f49',
+                        },
+                        ";
+                      }
                     }
                   }
                 ?>
@@ -98,30 +139,30 @@
     <h3>Blok Tanggal</h3>
   </div>
   <div class="modal-body">
-	<form action="../../../proses/penyewa.php" method="post" class="form-horizontal">
-	  <div class="control-group">
-		<label class="control-label">Awal :</label>
-		<div class="controls">
-		  <input name="awal" type="date" class="span2" placeholder="Nama" required/>
-		</div>
-	  <div class="control-group">
-    </div>
-		<label class="control-label">Akhir :</label>
-		<div class="controls">
-		  <input name="akhir" type="date" class="span2" placeholder="Alamat" required/>
-      <?php
-        if(isset($_GET['calendar_unit'])){}
-      ?>
-    </div>
-	  </div>
-	  <div class="control-group">
-		<div class="controls">
-		  <input type="submit" name="addPenyewa" class="btn btn-success">
-		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
-		</div>
-	  </div>
-	</form>
-</div>
+  	<form action="../../../proses/calendar.php" method="post" class="form-horizontal">
+  	  <div class="control-group">
+  		  <label class="control-label">Awal :</label>
+    		<div class="controls">
+    		  <input name="awal" type="date" class="span2" required/>
+    		</div>
+        <label class="control-label">Akhir :</label>
+        <div class="controls">
+          <input name="akhir" type="date" class="span2" required/>
+        </div>
+        <label class="control-label">Catatan :</label>
+        <div class="controls">
+          <input name="catatan" type="text" class="span2" required/>
+          <input name="kd_unit" type="text" class="span2 hide" value="<?php echo $kd_unit; ?>" required/>
+        </div>
+  	  </div>
+  	  <div class="control-group">
+    		<div class="controls">
+    		  <input type="submit" name="blokCalendar" class="btn btn-success">
+    		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+    		</div>
+  	  </div>
+  	</form>
+  </div>
 </div>
 
 <div id="popup-maintenance" class="modal hide">
@@ -130,33 +171,30 @@
     <h3>Maintenance</h3>
   </div>
   <div class="modal-body">
-	<form action="../../../proses/unit.php" method="post" class="form-horizontal">
-	  <div class="control-group">
-		<label class="control-label">Awal :</label>
-		<div class="controls">
-		  <input name="awal" type="date" class="span2" required/>
-		</div>
-	  <div class="control-group">
-    </div>
-		<label class="control-label">Akhir :</label>
-		<div class="controls">
-		  <input name="akhir" type="date" class="span2" required/>
-		</div>
-	  </div>
-    <div class="control-group">
-		<label class="control-label">Catatan :</label>
-		<div class="controls">
-		  <input name="catatan" type="text" class="span2" placeholder="" required/>
-    </div>
-		</div>
-	  <div class="control-group">
-		<div class="controls">
-		  <input type="submit" name="addMaintenance" class="btn btn-success">
-		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
-		</div>
-	  </div>
-	</form>
-</div>
+  	<form action="../../../proses/calendar.php" method="post" class="form-horizontal">
+  	  <div class="control-group">
+  		  <label class="control-label">Awal : </label>
+    		<div class="controls">
+    		  <input name="awal" type="date" class="span2" required/>
+    		</div>
+        <label class="control-label">Akhir :</label>
+        <div class="controls">
+          <input name="akhir" type="date" class="span2" required/>
+        </div>
+        <label class="control-label">Catatan :</label>
+        <div class="controls">
+          <input name="catatan" type="text" class="span2" required/>
+          <input name="kd_unit" type="text" class="span2 hide" value="<?php echo $kd_unit; ?>" required/>
+        </div>
+  	  </div>
+  	  <div class="control-group">
+    		<div class="controls">
+    		  <input type="submit" name="addMaintenance" class="btn btn-success">
+    		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+    		</div>
+  	  </div>
+  	</form>
+  </div>
 </div>
 
 <!--Footer-part-->
