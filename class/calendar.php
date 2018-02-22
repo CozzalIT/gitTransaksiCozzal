@@ -46,5 +46,30 @@
       }
     }
 
+    //Edit
+    public function editModCalendar($kd_mod_calendar){
+      $sql = "SELECT * FROM tb_mod_calendar where kd_mod_calendar='$kd_mod_calendar'";
+      $query = $this->db->query($sql);
+      return $query;
+    }
+
+    //Delete
+    public function deleteModCalendar($kd_mod_calendar){
+      $sql = "DELETE FROM tb_mod_calendar WHERE kd_mod_calendar='$kd_mod_calendar'";
+      $query = $this->db->query($sql);
+      return $query;
+    }
+
+    //Proses Update
+    public function updateModCal($kd_mod_calendar, $awal, $akhir, $catatan){
+      $sql = "UPDATE tb_mod_calendar SET start_date='$awal', end_date='$akhir', note='$catatan' WHERE kd_mod_calendar='$kd_mod_calendar'";
+      $query = $this->db->query($sql);
+      if(!$query){
+        return "Failed";
+      }else{
+        return "Success";
+      }
+    }
+
   }
 ?>
