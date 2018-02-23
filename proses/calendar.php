@@ -60,7 +60,7 @@ elseif(isset($_POST['updateModCal'])){
   $akhir = $_POST['akhir'];
   $catatan = $_POST['catatan'];
 
-  $proses = new Calender($db);
+  $proses = new Calendar($db);
   $show = $proses->editModCalendar($_POST['id']);
   $data = $show->fetch(PDO::FETCH_OBJ);
   $kd_unit = $data->kd_unit;

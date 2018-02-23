@@ -28,7 +28,9 @@ if(isset($_POST['addTransaksi'])){
   $sisa_pelunasan = $total - $dp;
   $hari = $_POST['jumhari'];
   $tgl_transaksi = date('y-m-d');
-
+  if($total<$harga_sewa_asli*$hari){
+     $diskon = $harga_sewa_asli*$hari-$total;
+  }
   $proses = new Transaksi($db);
   $add = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total, $sisa_pelunasan, $hari, $tgl_transaksi, $diskon);
 
@@ -94,14 +96,18 @@ elseif(isset($_POST['updateTransaksi'])){
   if($harga_sewa<$harga_sewa_asli){
     $diskon = $harga_sewa_asli-$harga_sewa;
   }
+
   $ekstra_charge  = $_POST['ekstra_charge'];
   $kd_booking   = $_POST['booking_via'];
   $kd_bank    = $_POST['dp_via'];
   $dp       = $_POST['dp'];
   $total_tagihan  = $_POST['total'];
+
   $sisa_pelunasan = $total_tagihan - $dp;
   $hari = $_POST['jumhari'];
-
+  if($total_tagihan<$harga_sewa_asli*$hari){
+     $diskon = $harga_sewa_asli*$hari-$total_tagihan;
+  }
   $proses = new Transaksi($db);
   $add = $proses->updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $diskon, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total_tagihan, $sisa_pelunasan, $hari);
   if($add == "Success"){
