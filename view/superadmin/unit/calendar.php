@@ -309,7 +309,7 @@
         $show = $calendar->editModCalendar($_POST['id']);
         $data = $show->fetch(PDO::FETCH_OBJ);
         echo '
-        <form action="" class="form-horizontal">
+        <form action="" method="post" class="form-horizontal">
           <div class="control-group">
             <div class="control-group">
               <label class="control-label hide">ID :</label>
@@ -331,7 +331,7 @@
             </div>
             <div class="control-group">
               <div class="controls">
-                <input type="submit" name="" class="btn btn-success" value="Update" />
+                <button type="submit" name="" class="btn btn-success">tes button</button>
               </div>
             </div>
           </div>
