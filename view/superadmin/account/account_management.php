@@ -53,6 +53,7 @@ rmdir('../../../proses/gagal');
         case "superadmin": return "Superadmin"; break;
         case "manager"; return "Property Manager"; break;
         case "owner": return "Property Owner"; break;
+        case "cleaner": return "Cleaner"; break;
         default: return "Undefined";
         }
       }
@@ -170,6 +171,7 @@ rmdir('../../../proses/gagal');
           <option value="admin" >Admin</option>
           <option value="manager" >Property Manager</option>
           <option value="owner" >Property Owner</option>
+          <option value="cleaner" >Cleaner</option>
         </select>
 		  </div>
 	  </div>

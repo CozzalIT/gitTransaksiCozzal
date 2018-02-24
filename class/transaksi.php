@@ -17,6 +17,11 @@ class Transaksi {
     }
   }
 
+  public function addUnit_kotor($kd_unit, $check_in, $check_out){
+    $sql = "INSERT INTO tb_unit_kotor VALUES ('$kd_unit','$check_in','$check_out')";
+    $query = $this->db->query($sql);
+  }
+
   public function addConfirm($kd_transaksi){
     $sql = "INSERT INTO tb_confirm_transaksi (kd_penyewa, kd_apt, kd_unit, tamu, check_in, check_out, harga_sewa, ekstra_charge, kd_booking, kd_bank, dp, total_tagihan, sisa_pelunasan, hari, tgl_transaksi, diskon)
     SELECT kd_penyewa, kd_apt, kd_unit, tamu, check_in, check_out, harga_sewa, ekstra_charge, kd_booking, kd_bank, dp, total_tagihan, sisa_pelunasan, hari, tgl_transaksi, diskon
@@ -152,11 +157,28 @@ class Transaksi {
     }
   }
 
+  public function updateUnit_kotor($kd_transaksi ,$kd_unit, $check_in, $check_out){
+    $locsql = "SELECT check_in, check_out from tb_transaksi where kd_transaksi='$kd_transaksi' and kd_unit='$kd_unit'";
+    $locq = $this->db->query($locsql);
+    $trx = $locq->fetch();
+    $sql = "UPDATE tb_unit_kotor SET check_in='$check_in', check_out='$check_out' 
+    WHERE kd_unit='$kd_unit' and check_in='".$trx["check_in"]."' and check_out='".$trx["check_out"]."'";
+    $query = $this->db->query($sql);
+  }
+
   //Proses Delete
   public function deleteTransaksi($kd_transaksi){
     $sql = "DELETE FROM tb_transaksi WHERE kd_transaksi='$kd_transaksi'";
     $query = $this->db->query($sql);
   }
+
+  public function deleteUnit_kotor($kd_transaksi){
+    $locsql = "SELECT kd_unit, check_in, check_out from tb_transaksi where kd_transaksi='$kd_transaksi'";
+    $locq = $this->db->query($locsql);
+    $trx = $locq->fetch();
+    $sql = "DELETE FROM tb_unit_kotor WHERE kd_unit='".$trx["kd_unit"]."' and check_in='".$trx["check_in"]."' and check_out='".$trx["check_out"]."'";
+    $query = $this->db->query($sql);
+  }  
 
   public function deleteConfirmTransaksi($kd_confirm_transaksi){
     $sql = "DELETE FROM tb_confirm_transaksi WHERE kd_confirm_transaksi='$kd_confirm_transaksi'";

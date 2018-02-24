@@ -58,4 +58,23 @@ elseif(isset($_POST['owner']) || isset($_POST['get_owner'])){
 	$callback = array('pilihan_owner'=>$html); // Masukan variabel html tadi ke dalam array $callback dengan index array : data_kota
 	echo json_encode($callback); // konversi varibael $callback menjadi JSON
 }
+
+elseif(isset($_POST['status'])){
+	require("../class/cleaner.php");
+	$kd_unit = $_POST['status'];
+    date_default_timezone_set('Asia/Jakarta');
+    $sekarang = date('Y-m-d'); 
+	$Proses = new Cleaner($db);
+	$status = "Kosong";
+	$show1 = $Proses->showStatus_check_in($kd_unit, $sekarang);
+	if($show1==true){
+		$status = "Check In";
+	}
+	else{
+		$show2 = $Proses->showStatus_terisi($kd_unit, $sekarang);
+		if($show2==true) $status = "Terisi";
+	}
+	$callback = array('stat'=>$status); 
+	echo json_encode($callback); 
+}
 ?>
