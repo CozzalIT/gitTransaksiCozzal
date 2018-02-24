@@ -33,8 +33,8 @@ if(isset($_POST['addTransaksi'])){
   }
   $proses = new Transaksi($db);
   $add = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total, $sisa_pelunasan, $hari, $tgl_transaksi, $diskon);
-
   if($add == "Success"){
+    $add2 = $proses->addUnit_kotor($kd_unit, $check_in, $check_out);
 	  header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php');
   }else{
     echo 'gagal';
@@ -109,6 +109,7 @@ elseif(isset($_POST['updateTransaksi'])){
      $diskon = $harga_sewa_asli*$hari-$total_tagihan;
   }
   $proses = new Transaksi($db);
+  $update = $proses->updateUnit_kotor($kd_transaksi ,$kd_unit, $check_in, $check_out);
   $add = $proses->updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $diskon, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total_tagihan, $sisa_pelunasan, $hari);
   if($add == "Success"){
     header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php');
@@ -118,6 +119,7 @@ elseif(isset($_POST['updateTransaksi'])){
 //Delete Transaksi
 elseif(isset($_GET['delete_transaksi']) && ($view=="superadmin" || $view=="manager")){
   $proses = new Transaksi($db);
+  $delete = $proses->deleteUnit_kotor($_GET['delete_transaksi']);
   $del = $proses->deleteTransaksi($_GET['delete_transaksi']);
   header("location:../view/".$view."/transaksi/laporan_transaksi.php");
 }
@@ -130,9 +132,8 @@ elseif(isset($_GET['delete_confirm_transaksi']) && ($view=="superadmin" || $view
 }
 
 //Tambah Confirm Transaksi
-elseif (isset($_GET['addConfirm']) && $view!="owner"){
+elseif (isset($_GET['addConfirm']) && $view!="owner" && $view!="cleaner"){
   $kd_transaksi = $_GET['addConfirm'];
-
   $proses = new Transaksi($db);
   $add = $proses->addConfirm($kd_transaksi);
   if($add == "Success"){

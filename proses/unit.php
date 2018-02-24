@@ -193,6 +193,16 @@ elseif(isset($_GET['delete_unit']) || isset($_GET['kurangi_ju']) && ($view=="sup
   }
 }
 
+//Delete Unit kotor
+elseif(isset($_GET['unit_kotor']) && $view=="cleaner" ){
+  require("../class/cleaner.php");
+  $proses = new Cleaner($db);
+  $kd_unit = $_GET['unit_kotor'];
+  $sekarang = $sekarang = date('Y-m-d'); 
+  $del = $proses->deleteUnit_kotor($kd_unit, $sekarang);
+  header("location:../view/".$view."/unit/unit.php");
+}
+
 //Tambah Unit
 elseif(isset($_POST['addUnit']) && $view!="owner"){
   $kd_apt = $_POST['apartemen'];
