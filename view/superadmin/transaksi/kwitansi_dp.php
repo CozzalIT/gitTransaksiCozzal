@@ -92,6 +92,10 @@
                       <td><strong><?php echo number_format($data->harga_sewa,0, ".", "."); ?> IDR</td>
                     </tr>
                     <tr>
+                      <td>Discount</td>
+                      <td><strong><?php echo number_format($data->diskon,0, ".", "."); ?> IDR</td>
+                    </tr>
+                    <tr>
                       <td>No Of Guest</td>
                       <td><strong><?php echo $data->tamu; ?> Person</td>
                     </tr>
@@ -109,7 +113,7 @@
                     </tr>
                     <tr>
                       <td>Outstanding Balance</td>
-                      <td><strong><?php echo number_format($data->total_tagihan,0, ".", "."); ?> IDR</td>
+                      <td><strong><?php echo number_format($data->sisa_pelunasan,0, ".", "."); ?> IDR</td>
                     </tr>
                   </tbody>
                 </table>
@@ -166,11 +170,11 @@
     </div>
   </div>
 </div>
-<!--Footer-part-->
+<!--Footer-part
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
+<div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
-<!--end-Footer-part-->
+end-Footer-part-->
 <?php
   include("../template/footer.php");
 ?>
