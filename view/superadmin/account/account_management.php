@@ -175,7 +175,7 @@ rmdir('../../../proses/gagal');
         </select>
 		  </div>
 	  </div>
-    <div class="control-group" id="owner">
+    <div class="control-group" id="ow">
       <label class="control-label">Nama Owner :</label>
       <div class="controls">
         <select name="kd_owner" id="kd_owner" class="span2">
