@@ -47,17 +47,6 @@ rmdir('../../../proses/gagal');
               <tbody>
                 <?php
 //-------------------------
-<<<<<<< HEAD
-                function getHakAkses($name){
-                  switch ($name) {
-                  case "admin": return "Admin"; break;
-                  case "superadmin": return "Superadmin"; break;
-                  case "manager"; return "Property Manager"; break;
-                  case "owner": return "Property Owner"; break;
-                  default: return "Undefined";
-                  }
-                }
-=======
       function getHakAkses($name){
         switch ($name) {
         case "admin": return "Admin"; break;
@@ -68,7 +57,6 @@ rmdir('../../../proses/gagal');
         default: return "Undefined";
         }
       }
->>>>>>> dc2080769c898b7193fd26e53b353299a7383439
 //-------------------------
         				  $Proses = new Account($db);
         				  $show = $Proses->showAccount_owner();
@@ -187,7 +175,7 @@ rmdir('../../../proses/gagal');
         </select>
 		  </div>
 	  </div>
-    <div class="control-group" id="owner">
+    <div class="control-group" id="ow">
       <label class="control-label">Nama Owner :</label>
       <div class="controls">
         <select name="kd_owner" id="kd_owner" class="span2">

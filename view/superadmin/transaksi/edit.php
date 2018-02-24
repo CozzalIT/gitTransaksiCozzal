@@ -52,13 +52,13 @@
                   <div class="control-group">
                     <label class="control-label">Check In :</label>
                     <div class="controls">
-                    <input name="check_in" id="check_in" type="date" class="span11" required placeholder="" value="'.$edit->check_in.'" onchange="validasi(this.form)"/>
+                    <input name="check_in" id="check_in" type="date" class="span11" required placeholder="" value="'.$edit->check_in.'" onchange="keepvalid(this.form)"/>
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label">Check Out :</label>
                     <div class="controls">
-                    <input name="check_out" id="check_out" type="date" class="span11" required placeholder="" value="'.$edit->check_out.'" onchange="validasi2(this.form)"/>
+                    <input name="check_out" id="check_out" type="date" class="span11" required placeholder="" value="'.$edit->check_out.'" onchange="keepvalid2(this.form)"/>
                     </div>
                   </div>
                   <div class="control-group">

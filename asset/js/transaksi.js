@@ -54,6 +54,26 @@ function biaya(form)
 	hasil(form);
 }
 
+function keepvalid(form){
+	var a = form.check_in.value;
+	var b = new Date(a);
+	form.check_out.value = nilaitanggal(b,1);
+	biaya(form); ECH(form); 
+	updateselisih(form); hasil(form); 	
+}
+
+function keepvalid2(form){
+	if (form.check_in.value!="")
+	{
+		updateselisih(form); hasil(form);
+	}
+	else
+	{
+		form.check_out.value="";
+		alert("Isi terlebih dahulu tanggal check in");
+	}	
+}
+
 function validasi(form)
 {
 	var a = form.check_in.value;
@@ -71,6 +91,7 @@ function validasi(form)
 	biaya(form); ECH(form); 
 	updateselisih(form); hasil(form); 
 }
+
 function validasi2(form)
 {
 	if (form.check_in.value!="")
