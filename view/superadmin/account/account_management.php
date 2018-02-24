@@ -47,21 +47,21 @@ rmdir('../../../proses/gagal');
               <tbody>
                 <?php
 //-------------------------
-      function getHakAkses($name){
-        switch ($name) {
-        case "admin": return "Admin"; break;
-        case "superadmin": return "Superadmin"; break;
-        case "manager"; return "Property Manager"; break;
-        case "owner": return "Property Owner"; break;
-        default: return "Undefined";
-        }
-      }
+                function getHakAkses($name){
+                  switch ($name) {
+                  case "admin": return "Admin"; break;
+                  case "superadmin": return "Superadmin"; break;
+                  case "manager"; return "Property Manager"; break;
+                  case "owner": return "Property Owner"; break;
+                  default: return "Undefined";
+                  }
+                }
 //-------------------------
         				  $Proses = new Account($db);
         				  $show = $Proses->showAccount_owner();
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
                     if($data->status==1) {
-                     $status_aktif = 'Aktif'; 
+                     $status_aktif = 'Aktif';
                      $button1 = "<a class='btn btn-warning' href='../../../proses/account.php?non_aktif=".$data->username."'>Non Aktifkan</a>";
                      $button2 = "<a class='btn btn-primary' href='../../../proses/account.php?delete_rel=".$data->username."'>Hapus Relasi</a>";
                     }

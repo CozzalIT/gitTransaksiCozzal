@@ -17,7 +17,7 @@
           }
           else {$error= "Username tidak terelasi dengan owner"; $masuk=false;}
       }
-      if($login['status']=='2'){$error = "Akun sedang dinon-aktifkan sementara"; $masuk=false;} 
+      if($login['status']=='2'){$error = "Akun sedang dinon-aktifkan sementara"; $masuk=false;}
       if($masuk){
           $_SESSION['username'] = $login['username'];
           $_SESSION['hak_akses'] = $login['hak_akses'];
@@ -46,7 +46,11 @@
           <div class="control-group">
             <?php
               if(isset($error)){
-                echo '<div align="center" style="color:white;">'.$error.'</div>';
+                echo '
+                <div class="alert alert-danger" role="alert">
+                  <strong>'.$error.'</strong>
+                </div>
+                ';
               }
             ?>
             <div class="controls">
