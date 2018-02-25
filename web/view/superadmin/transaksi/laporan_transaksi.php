@@ -57,12 +57,12 @@
                           <center>
                             <a class='btn btn-success' id='detail' name='detail' href='laporan_transaksi.php?detail=$data->kd_transaksi'>Detail</a>
                             <a class='btn btn-info' href='../../../proses/transaksi.php?addConfirm=$data->kd_transaksi'>Confirm</a>
-                            <a class='btn btn-primary' href='kwitansi_dp.php?kwitansi=$data->kd_transaksi'>Kwitansi DP</a>
+                            <a class='btn btn-primary' href='kwitansi_dp.php?kwitansi=$data->kd_transaksi'>Slip DP</a>
                           </center>
                         </td>
             						<td>
                           <center>
-                            <a class='btn btn-success' id='pembayaran' name='pembayaran' href='laporan_transaksi.php?pembayaran=$data->kd_transaksi'>Pembayaran</a>
+                            <a class='btn btn-success' id='pembayaran' name='pembayaran' href='laporan_transaksi.php?pembayaran=$data->kd_transaksi'>Bayar</a>
               						  <a class='btn btn-primary' href='edit.php?edit_transaksi=$data->kd_transaksi'>Edit</a>
               						  <a class='btn btn-danger' href='../../../proses/transaksi.php?delete_transaksi=$data->kd_transaksi'>Hapus</a>
                           </center>
