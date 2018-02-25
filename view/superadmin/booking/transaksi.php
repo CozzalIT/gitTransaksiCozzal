@@ -21,11 +21,11 @@
       if (isset($_GET['kd_reservasi']))
       {
         require("../../../class/penyewa.php");
-        require("../../../config/database.php");
+        require("../../../../config/database.php");
         require("../../../class/unit.php");
         require("../../../class/apartemen.php");
         require("../../../class/booking.php");
-        require("../../../class/dp_via.php");        
+        require("../../../class/dp_via.php");
         $Proses = new Booking($db);
         $show = $Proses->showRequestBook_byId($_GET['kd_reservasi']);
         $edit = $show->fetch(PDO::FETCH_OBJ);
@@ -83,7 +83,7 @@
                   <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
                     <h5>Data Transaksi</h5>
                   </div>
- 
+
                   <div class="control-group">
                     <label class="control-label">Check In :</label>
                     <div class="controls">
@@ -168,7 +168,7 @@
                   </div>
                   <div class="control-group">
                     <label class="control-label">Ekstra Charge :</label>
-                    <div class="controls"> 
+                    <div class="controls">
                     <input name="ekstra_charge" min="0" step="1000" placeholder="Ekstra Charge" type="number" onChange="hasil(this.form)" required class="span11"/>
                     </div>
                   </div>

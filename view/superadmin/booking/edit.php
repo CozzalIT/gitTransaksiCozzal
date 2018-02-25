@@ -1,7 +1,7 @@
 <?php
   session_start();
   require("../../../class/booking.php");
-  require("../../../config/database.php");
+  require("../../../../config/database.php");
 
   $thisPage = "Edit";
 
@@ -15,7 +15,7 @@
 
 <div id="content">
   <div id="content-header">
-  <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="booking_via.php" title="Go to Booking Via" class="tip-bottom">Booking Via</a> <a href="#" class="current">Edit</a> </div>  
+  <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="booking_via.php" title="Go to Booking Via" class="tip-bottom">Booking Via</a> <a href="#" class="current">Edit</a> </div>
   </div>
   <div class="container-fluid">
     <div class="row-fluid">

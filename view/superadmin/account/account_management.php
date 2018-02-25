@@ -1,7 +1,7 @@
 <?php
   session_start();
   require("../../../class/account.php");
-  require("../../../config/database.php");
+  require("../../../../config/database.php");
 
   $thisPage = "Account Management";
 
