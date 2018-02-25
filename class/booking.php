@@ -32,6 +32,12 @@ class Booking {
     return $query;
   }
 
+  public function showRequestBook_byId($kd_reservasi){
+    $sql = "SELECT * from tb_reservasi WHERE kd_reservasi='$kd_reservasi'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
   //Proses Edit
   public function editBooking_via($kd_booking){
     $sql = "SELECT * FROM tb_booking_via where kd_booking='$kd_booking'";
@@ -55,5 +61,12 @@ class Booking {
     $sql = "DELETE FROM tb_booking_via WHERE kd_booking='$kd_booking'";
     $query = $this->db->query($sql);
   }
+
+ //delete reservasi
+  public function deleteReservasi($kd_reservasi){
+    $sql = "DELETE FROM tb_reservasi where kd_reservasi='$kd_reservasi'";
+    $query = $this->db->query($sql);
+  }
+
 }
 ?>

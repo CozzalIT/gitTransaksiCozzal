@@ -41,6 +41,56 @@ if(isset($_POST['addTransaksi'])){
 	}
 }
 
+//Move (Dari booking ke transaksi) Transaksi
+elseif(isset($_POST['moveTransaksi'])){
+//namabah penyewa dulu
+  $nama = $_POST['nama'];
+  $alamat = $_POST['alamat'];
+  $no_tlp = $_POST['no_tlp'];
+  $jenis_kelamin = $_POST['jenis_kelamin'];
+  $email = $_POST['email'];
+  $tgl_gabung = date('Y-m-d');
+  $proses2 = new Penyewa($db);
+  $add2 = $proses2->addPenyewa($nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung);
+//baru namabah trx
+  $proses = new Transaksi($db);
+  $show = $proses->showPenyewaTransaksi();
+  $penyewa = $show->fetch(PDO::FETCH_OBJ);
+  $kd_penyewa = $penyewa->kd_penyewa;
+  $kd_reservasi = $_POST['kd_reservasi'];
+  $kd_apt     = $_POST['apartemen'];
+  $kode = explode("+",$_POST['unit']);
+  $kd_unit    = $kode[0];
+  $tamu       = $_POST['tamu'];
+  $check_in     = $_POST['check_in'];
+  $check_out    = $_POST['check_out'];
+  $harga_sewa   = $_POST['harga_sewa'];
+  $harga_sewa_asli   = $_POST['harga_sewa_asli'];
+  $diskon = 0;
+  if($harga_sewa<$harga_sewa_asli){
+     $diskon = $harga_sewa_asli-$harga_sewa;
+  }
+  $ekstra_charge  = $_POST['ekstra_charge'];
+  $kd_booking   = $_POST['booking_via'];
+  $kd_bank    = $_POST['dp_via'];
+  $dp       = $_POST['dp'];
+  $total  = $_POST['total'];
+  $sisa_pelunasan = $total - $dp;
+  $hari = $_POST['jumhari'];
+  $tgl_transaksi = date('y-m-d');
+  if($total<$harga_sewa_asli*$hari){
+     $diskon = $harga_sewa_asli*$hari-$total;
+  }
+  $add = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total, $sisa_pelunasan, $hari, $tgl_transaksi, $diskon);
+  if($add == "Success"){
+    $delete = $proses->deleteReservasi($kd_reservasi);
+    $add2 = $proses->addUnit_kotor($kd_unit, $check_in, $check_out);
+    header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php');
+  }else{
+    echo 'gagal';
+  }
+}
+
 //Tambah Pembayaran
 elseif(isset($_POST['addPembayaran'])){
 	$Proses = new Transaksi($db);

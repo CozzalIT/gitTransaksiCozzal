@@ -56,9 +56,9 @@
           						  <td>$data->check_in</td>
                         <td>$data->check_out</td>
                         <td>$data->tgl_reservasi</td>
-            						<td>
-            						  <a class='btn btn-success' href=''>Transaksi</a>
-            						</td>
+                        <td>
+                          <a class='btn btn-success' href='transaksi.php?kd_reservasi=$data->kd_reservasi'>Transaksi</a>
+                        </td>
           					  </tr>
                     ";
                     $i++;

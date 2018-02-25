@@ -39,5 +39,12 @@ elseif(isset($_GET['delete_booking']) && ($view=="superadmin" || $view=="manager
   header("location:../view/".$view."/booking/booking_via.php");
 }
 
+//Delete Booking resquest
+elseif(isset($_GET['delete_booking_rq']) && ($view=="superadmin" || $view=="manager")){
+  $proses = new Booking($db);
+  $del = $proses->deleteReservasi($_GET['delete_booking_rq']);
+  header("location:../view/".$view."/booking/booking_request.php");
+}
+
 else header('Location:../view/'.$view.'/home/home.php');
 ?>
