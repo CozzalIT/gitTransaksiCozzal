@@ -2,7 +2,7 @@
   session_start();
   require("../../../class/cleaner.php");
   require("../../../class/apartemen.php");
-  require("../../../config/database.php");
+  require("../../../../config/database.php");
 
   $thisPage = "Unit";
 
@@ -44,7 +44,7 @@
               <tbody>
                 <?php
                   date_default_timezone_set('Asia/Jakarta');
-                  $sekarang = date('Y-m-d'); 
+                  $sekarang = date('Y-m-d');
                   $jam_now = strtotime(date('H:i'));
                   $jam12 = strtotime('12:00');
                   $i=0;
@@ -54,7 +54,7 @@
                     if ($data->kd_unit != 0){ $i++;
                       if($data->check_out!=$sekarang || ($data->check_out==$sekarang && $jam_now>$jam12)){
                           $status = 'Kosong';
-                          $button = "<a class='btn btn-success' href='../../../proses/unit.php?unit_kotor=".$data->kd_unit."' >Bersihkan</a>"; 
+                          $button = "<a class='btn btn-success' href='../../../proses/unit.php?unit_kotor=".$data->kd_unit."' >Bersihkan</a>";
                       }
                       elseif($data->check_out==$sekarang && $jam_now<$jam12){
                           $status = 'Check Out';
@@ -70,7 +70,7 @@
                           <td>Kotor</td>
                           <td>
                             <center>
-                               $button 
+                               $button
                             </center>
                           </td>
             					  </tr>
@@ -98,7 +98,7 @@
                           </tr>
                         ";
                       }
-                    };    
+                    };
                     $Proses = new Cleaner($db);
                     $show3 = $Proses->showUnit3($sekarang);
                     while($data = $show3->fetch(PDO::FETCH_OBJ)){
@@ -119,7 +119,7 @@
                           </tr>
                         ";
                       }
-                    };                 
+                    };
                   }
                   $Proses = new Cleaner($db);
                   $show3 = $Proses->showUnit_normal($sekarang);
@@ -141,7 +141,7 @@
                         </tr>
                       ";
                     }
-                    };                 
+                    };
         				?>
               </tbody>
             </table>

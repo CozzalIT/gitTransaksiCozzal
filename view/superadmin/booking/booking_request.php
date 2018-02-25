@@ -1,7 +1,7 @@
 <?php
   session_start();
   require("../../../class/booking.php");
-  require("../../../config/database.php");
+  require("../../../../config/database.php");
 
   $thisPage = "Booking Request";
 

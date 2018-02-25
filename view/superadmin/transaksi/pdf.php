@@ -2,7 +2,7 @@
 require('../../../asset/fpdf/fpdf.php');
 require('../../../asset/fpdf/invoice.php');
 require("../../../class/transaksi.php");
-require("../../../config/database.php");
+require("../../../../config/database.php");
 
 class PDF extends FPDF
 {

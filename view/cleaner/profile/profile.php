@@ -2,7 +2,7 @@
   session_start();
   require("../../../class/owner.php");
   require("../../../class/dp_via.php");
-  require("../../../config/database.php");
+  require("../../../../config/database.php");
 
   $thisPage = "Dashboard";
 
@@ -16,8 +16,8 @@
           <!--main-container-part-->
             <div id="content">
               <div id="content-header">
-                <div id="breadcrumb"> 
-                  <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">My Profile</a> 
+                <div id="breadcrumb">
+                  <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">My Profile</a>
                 </div>
               </div>
                 <div class="row-fluid">
@@ -32,7 +32,7 @@
                                 <li id="user" class="non a" onclick="changenav('user')"><a href="#" class="tip-bottom" >Ubah Username</a></li>
                                 <li id="pass" class="non a" onclick="changenav('pass')"><a href="#" class="tip-bottom" >Ubah Password</a></li>
                               </ul>
-                            </div> 
+                            </div>
 <?php
 $jenis_error = 'none';
 if(file_exists('../../../proses/gagalpass1')) {
@@ -73,19 +73,19 @@ if ($jenis_error!='none')
                                   <div class="controls">
                                     <input class="form1" name="nama" id="nama" type="text" value="<?php echo $_SESSION['username']; ?>" disabled/>
                                   </div>
-                                </div>  
+                                </div>
                                 <div class="control-group">
                                   <label class="control-label">Hak Akses</label>
                                   <div class="controls">
                                     <input class="form1" name="alamat"  id="alamat" type="text" value="Cleaner" disabled/>
                                   </div>
-                                </div>  
+                                </div>
                                 <div class="control-group">
                                   <label class="control-label">Status :</label>
                                   <div class="controls">
                                     <input class="form1" name="no_tlp"  id="no_tlp" type="text" value="Aktif" disabled/>
                                   </div>
-                                </div>     
+                                </div>
                               </form>
 
                               <form id="form_user" action="../../../proses/account.php" onsubmit="return validasi3()" method="POST">
@@ -94,26 +94,26 @@ if ($jenis_error!='none')
                                   <div class="controls">
                                     <input name="username" type="text" value="<?php echo $username ?>" disabled/>
                                   </div>
-                                </div>  
+                                </div>
                                 <div class="control-group">
                                   <label class="control-label">Request Username baru :</label>
                                   <div class="controls">
                                     <input class="remote" id="user_new" name="user_new" type="text" value="" required/>
                                   </div>
-                                </div>  
+                                </div>
                                 <div class="control-group">
                                   <label class="control-label">Konfirmasi Password :</label>
                                   <div class="controls">
                                     <input class="remote" name="konfr_pass1" type="password" value="" required/>
                                   </div>
-                                </div>  
-                                <!-- button here --> 
+                                </div>
+                                <!-- button here -->
                                 <div class="control-group">
                                   <div class="controls">
                                     <button name="updateuser" type="submit" class="btn btn-success">Update</button>
                                     <button onclick="has_change=false; $('#info').click();" type="reset" class="btn btn-warning">Batal</button>
                                   </div>
-                                </div>     
+                                </div>
                               </form>
 
                               <form id="form_pass" action="../../../proses/account.php" method="POST" onsubmit="return validasi4()">
@@ -122,26 +122,26 @@ if ($jenis_error!='none')
                                   <div class="controls">
                                     <input class="remote" name="old_pass" type="password" required/>
                                   </div>
-                                </div>  
+                                </div>
                                 <div class="control-group">
                                   <label class="control-label">Password Baru</label>
                                   <div class="controls">
                                     <input class="remote" id="new_pass" name="new_pass" type="password" required/>
                                   </div>
-                                </div>  
+                                </div>
                                 <div class="control-group">
                                   <label class="control-label">Konfirmasi Password Baru</label>
                                   <div class="controls">
                                     <input class="remote" id="konfr_pass2" name="konfr_pass2" type="password" required/>
                                   </div>
-                                </div>  
-                                <!-- button here --> 
+                                </div>
+                                <!-- button here -->
                                 <div class="control-group">
                                   <div class="controls">
                                     <button name="updatepass" type="submit" class="btn btn-success">Update</button>
                                     <button type="reset" onclick="has_change=false; $('#info').click();" class="btn btn-warning">Batal</button>
                                   </div>
-                                </div>     
+                                </div>
                               </form>
                             </div>
                         </div>

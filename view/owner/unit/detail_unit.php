@@ -7,16 +7,16 @@
   include "../template/header.php";
   include "../template/sidebar.php";
   require("../../../class/unit.php");
-  require("../../../config/database.php");
+  require("../../../../config/database.php");
   $Proses = new Unit($db);
   if(isset($_GET['detail_unit'])){
       $verif_unit = $_GET['detail_unit'];
       include "../../../proses/verifikasi.php";
       $show2 = $Proses->showDetail_Unit($_GET['detail_unit']);
-      $img_t = 'Nothing'; $flag = 0; $hreffasil = 'edit.php?tambah_detail_unit=';    
+      $img_t = 'Nothing'; $flag = 0; $hreffasil = 'edit.php?tambah_detail_unit=';
       while($data = $show2->fetch(PDO::FETCH_OBJ)){
-        $img_t = $data->img; 
-        $hreffasil = 'edit.php?edit_detail_unit=';   
+        $img_t = $data->img;
+        $hreffasil = 'edit.php?edit_detail_unit=';
         if($data->isi=='Y'){
           $flag = 1;
           $dapur ='Tersedia';
@@ -24,12 +24,12 @@
           $tv = 'Tersedia';
           $wifi = 'Tersedia';
           $amenities = 'Tersedia';
-          $merokok = 'Boleh';     
+          $merokok = 'Boleh';
           $lantai = $data->lantai;
           $jml_kmr = $data->jml_kmr;
           $jml_bed = $data->jml_bed;
           $jml_ac = $data->jml_ac;
-          $type = $data->type; 
+          $type = $data->type;
           if($data->dapur=='N') $dapur = 'Tidak Tersedia';
           if($data->water_heater=='N') $water_heater = 'Tidak Tersedia';
           if($data->tv=='N') $tv = 'Tidak Tersedia';
@@ -89,7 +89,7 @@
                                 $image = explode('+', $img_t);
                                 $n = count($image); $j = 0 - 3;
                                 $dir = $data->kd_unit;
-                                echo ' 
+                                echo '
                                 <a id="hapus_img" class="btn btn-danger" style="margin-bottom: 10px; margin-top: 5px;" href="../../../proses/unit.php?delete_gambar='.$image[0].'&kd_unit='.$dir.'">Hapus Gambar Terpilih</a>
                                 <center>';
                                 foreach ($image as $nama_file_gambar) {

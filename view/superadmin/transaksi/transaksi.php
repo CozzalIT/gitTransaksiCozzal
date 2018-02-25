@@ -6,7 +6,7 @@
   require("../../../class/apartemen.php");
   require("../../../class/booking.php");
   require("../../../class/dp_via.php");
-  require("../../../config/database.php");
+  require("../../../../config/database.php");
 
   $thisPage = "Transaksi";
 
