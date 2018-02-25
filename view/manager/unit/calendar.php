@@ -1,7 +1,7 @@
 <?php
   session_start();
   require("../../../class/calendar.php");
-  require("../../../config/database.php");
+  require("../../../../config/database.php");
 
   $thisPage = "Unit";
 
@@ -184,7 +184,7 @@
 
 <div id="popup-blok" class="modal hide">
   <div class="modal-header">
-    <button data-dismiss="modal" class="close" type="button">Ã—</button>
+    <button data-dismiss="modal" class="close" type="button">×</button>
     <h3>Blok Tanggal</h3>
   </div>
   <form action="../../../proses/calendar.php" method="post" class="form-horizontal">
@@ -214,7 +214,7 @@
 
 <div id="popup-maintenance" class="modal hide">
   <div class="modal-header">
-    <button data-dismiss="modal" class="close" type="button">Ã—</button>
+    <button data-dismiss="modal" class="close" type="button">×</button>
     <h3>Maintenance</h3>
   </div>
   <div class="modal-body">
@@ -247,7 +247,7 @@
 <div id="popup-editEvent" class="hapus modal hide <?php if(isset($_POST['editBlok'])){ echo 'show'; }?>">
   <div class="modal-header">
     <form action="" method="post">
-      <button id="close" name="close" data-dismiss="modal" class="close" type="submit">Ã—</button>
+      <button id="close" name="close" data-dismiss="modal" class="close" type="submit">×</button>
     </form>
     <?php
       if(isset($_POST['close'])){

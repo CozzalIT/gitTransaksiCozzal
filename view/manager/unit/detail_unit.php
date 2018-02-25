@@ -7,7 +7,7 @@
   include "../template/header.php";
   include "../template/sidebar.php";
   require("../../../class/unit.php");
-  require("../../../config/database.php");
+  require("../../../../config/database.php");
   $Proses = new Unit($db);
   if(isset($_GET['detail_unit'])){
       $show2 = $Proses->showDetail_Unit($_GET['detail_unit']);

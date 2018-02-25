@@ -21,7 +21,7 @@
       if (isset($_GET['kd_reservasi']))
       {
         require("../../../class/penyewa.php");
-        require("../../../config/database.php");
+        require("../../../../config/database.php");
         require("../../../class/unit.php");
         require("../../../class/apartemen.php");
         require("../../../class/booking.php");

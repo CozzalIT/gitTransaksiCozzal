@@ -2,7 +2,7 @@
   session_start();
   require("../../../class/owner.php");
   require("../../../class/dp_via.php");
-  require("../../../config/database.php");
+  require("../../../../config/database.php");
 
   $thisPage = "Owner";
 

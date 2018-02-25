@@ -1,7 +1,7 @@
 <?php
   session_start();
   require("../../../class/unit.php");
-  require("../../../config/database.php");
+  require("../../../../config/database.php");
 
   $thisPage = "Listing Request";
 

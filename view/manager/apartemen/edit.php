@@ -1,7 +1,7 @@
 <?php
   session_start();
   require("../../../class/apartemen.php");
-  require("../../../config/database.php");
+  require("../../../../config/database.php");
   
   $thisPage = "Edit";
 

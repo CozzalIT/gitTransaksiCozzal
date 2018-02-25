@@ -3,7 +3,7 @@
   require("../../../class/unit.php");
   require("../../../class/apartemen.php");
   require("../../../class/owner.php");
-  require("../../../config/database.php");
+  require("../../../../config/database.php");
 
   $thisPage = "Edit";
 

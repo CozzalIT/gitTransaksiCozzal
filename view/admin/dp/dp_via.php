@@ -1,7 +1,7 @@
 <?php
   session_start();
   require("../../../class/dp_via.php");
-  require("../../../config/database.php");
+  require("../../../../config/database.php");
 
   $thisPage = "Dp_via";
 
