@@ -62,7 +62,7 @@
         <script>
           function popupEdit(id, title, awal, akhir){
             $('#popup-editEvent').modal('show');
-            arrayNote = id.split("+")
+            arrayNote = id.split("+");
             document.editEvent.id.value = arrayNote[0];
             document.editEvent.jenis.value = title;
             document.editEvent.awal.value = awal;
@@ -129,8 +129,8 @@
                         {
                           id: '$data->kd_mod_calendar+$data->note',
                           title: 'Maintenance',
-                          start: '$data->start_date',
-                          end: '$data->end_date',
+                          start: '".$data->start_date."T12:00:00',
+                          end: '".$data->end_date."T13:00:00',
                           color: '#faa732',
                           textColor: '#000000'
                         },
@@ -140,8 +140,8 @@
                         {
                           id: '$data->kd_mod_calendar+$data->note',
                           title: 'Block by Owner',
-                          start: '$data->start_date',
-                          end: '$data->end_date',
+                          start: '".$data->start_date."T12:00:00',
+                          end: '".$data->end_date."T13:00:00',
                           color: '#da4f49',
                         },
                         ";
@@ -150,8 +150,8 @@
                         {
                           id: '$data->kd_mod_calendar+$data->note',
                           title: 'Block by Admin',
-                          start: '$data->start_date',
-                          end: '$data->end_date',
+                          start: '".$data->start_date."T12:00:00',
+                          end: '".$data->end_date."T13:00:00',
                           color: '#da4f49',
                         },
                         ";

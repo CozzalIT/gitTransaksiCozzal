@@ -49,7 +49,7 @@ elseif(isset($_POST['updateuser'])){
           if($view=='owner') {
           $create = $proses->addRelasi($username_new, $_SESSION['pemilik']);}
           $_SESSION['username'] = $username_new;
-          mkdir('succesuser'); 
+          mkdir('succesuser');
         }
     } else mkdir('gagalpass1');
   } else mkdir('gagaluser');
@@ -68,9 +68,9 @@ elseif(isset($_POST['updatepass'])){
     $proses = new Account($db);
     $add = $proses->updatePassword($password, $username);
     if($add=="Success") mkdir('succespass');
-  } else mkdir('gagalpass1'); 
+  } else mkdir('gagalpass1');
   header('Location:../view/'.$view.'/profile/profile.php');
-} 
+}
 
 // delete akun
 elseif(isset($_GET['delete_akun']) && $view=='superadmin'){
@@ -86,12 +86,12 @@ elseif(isset($_GET['delete_akun']) && $view=='superadmin'){
 elseif((isset($_GET['non_aktif']) || isset($_GET['aktif'])) && $view=='superadmin'){
   $proses = new Account($db);
   if (isset($_GET['non_aktif'])){
-    $status = '2';   
+    $status = '2';
     $username = $_GET['non_aktif'];
   } else {
     if ($_GET['ha']=='owner') $status = '1'; else $status = '3';
     $username = $_GET['aktif'];
-  } 
+  }
   $add = $proses->set_status_akun($username, $status);
   if($add == "Success"){
     header('Location:../view/'.$view.'/account/account_management.php');
@@ -114,7 +114,7 @@ elseif(isset($_POST['addRelasi']) && $view=='superadmin'){
   $status = $_POST['status'];
   $proses = new Account($db);
   $add = $proses->addRelasi($username, $kd_owner);
-  $add2 = $proses->set_status_akun($username, $status);  
+  $add2 = $proses->set_status_akun($username, $status);
   header('Location:../view/'.$view.'/account/account_management.php');
 }
 
@@ -137,7 +137,7 @@ elseif(isset($_POST['addAccount']) && $view=='superadmin'){
             header('Location:../view/'.$view.'/account/account_management.php');
           }
           else die('gagal merelasikan akun');
-        } else header('Location:../view/'.$view.'/account/account_management.php'); 
+        } else header('Location:../view/'.$view.'/account/account_management.php');
       } else die('gagal menambahkan akun');
   } else {
     mkdir('gagal'); header('Location:../view/'.$view.'/account/account_management.php');

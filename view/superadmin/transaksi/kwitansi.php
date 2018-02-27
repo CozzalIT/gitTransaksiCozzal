@@ -92,6 +92,10 @@
                       <td><strong><?php echo number_format($data->harga_sewa,0, ".", "."); ?> IDR</td>
                     </tr>
                     <tr>
+                      <td>Discount</td>
+                      <td><strong><?php echo number_format($data->diskon,0, ".", "."); ?> IDR</td>
+                    </tr>
+                    <tr>
                       <td>No Of Guest</td>
                       <td><strong><?php echo $data->tamu; ?> Person</td>
                     </tr>
