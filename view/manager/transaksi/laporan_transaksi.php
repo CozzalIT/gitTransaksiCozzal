@@ -21,7 +21,7 @@
     <hr>
     <div class="row-fluid">
       <div class="span12">
-        <div class="widget-box">
+        <div class="widget-box" style="overflow-x:auto;">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
             <h5>Laporan Transaksi</h5>
           </div>
@@ -64,7 +64,7 @@
                           <center>
                             <a class='btn btn-success' id='pembayaran' name='pembayaran' href='laporan_transaksi.php?pembayaran=$data->kd_transaksi'>Pembayaran</a>
               						  <a class='btn btn-primary' href='edit.php?edit_transaksi=$data->kd_transaksi'>Edit</a>
-              						  <a class='btn btn-danger' href='../../../proses/transaksi.php?delete_transaksi=$data->kd_transaksi'>Hapus</a>
+              						  <a class='btn btn-danger hapus' href='../../../proses/transaksi.php?delete_transaksi=$data->kd_transaksi'>Hapus</a>
                           </center>
                         </td>
           					  </tr>
@@ -273,6 +273,8 @@ if(isset($_GET['pembayaran'])){
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
+<script src="../../../asset/js/sweetalert.min.js"></script>
+<script src="../../../asset/js/hapus.js"></script>
 <script src="../../../asset/js/jquery.min.js"></script>
 <script src="../../../asset/js/jquery.ui.custom.js"></script>
 <script src="../../../asset/js/bootstrap.min.js"></script>

@@ -17,11 +17,18 @@
    <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Laporan Transaksi</a></div>
     <a href="transaksi.php" class="btn btn-success btn-add"><i class="icon-plus"></i> Transaksi Baru</a>
   </div>
+<script type="text/javascript" language="JavaScript">
+ function hapus()
+ {
+ tanya = window.confirm("Anda Yakin Akan Menghapus Data ?");
+ if (tanya == true) return true;
+ else return false;
+ }</script>
   <div class="container-fluid">
     <hr>
     <div class="row-fluid">
       <div class="span12">
-        <div class="widget-box">
+        <div class="widget-box" style="overflow-x:auto;">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
             <h5>Laporan Transaksi</h5>
           </div>
@@ -64,7 +71,7 @@
                           <center>
                             <a class='btn btn-success' id='pembayaran' name='pembayaran' href='laporan_transaksi.php?pembayaran=$data->kd_transaksi'>Bayar</a>
               						  <a class='btn btn-primary' href='edit.php?edit_transaksi=$data->kd_transaksi'>Edit</a>
-              						  <a class='btn btn-danger' href='../../../proses/transaksi.php?delete_transaksi=$data->kd_transaksi'>Hapus</a>
+              						  <a class='btn btn-danger hapus' href='../../../proses/transaksi.php?delete_transaksi=$data->kd_transaksi' onclick='return hapus()'>Hapus</a>
                           </center>
                         </td>
           					  </tr>
@@ -292,6 +299,8 @@ if(isset($_GET['pembayaran'])){
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
+<script src="../../../asset/js/sweetalert.min.js"></script>
+<script src="../../../asset/js/hapus.js"></script>
 <script src="../../../asset/js/jquery.min.js"></script>
 <script src="../../../asset/js/jquery.ui.custom.js"></script>
 <script src="../../../asset/js/bootstrap.min.js"></script>

@@ -21,7 +21,7 @@
     <hr>
     <div class="row-fluid">
       <div class="span12">
-        <div class="widget-box">
+        <div class="widget-box" style="overflow-x:auto;">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
             <h5>Laporan Transaksi</h5>
           </div>

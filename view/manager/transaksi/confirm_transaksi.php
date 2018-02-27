@@ -21,7 +21,7 @@
     <hr>
     <div class="row-fluid">
       <div class="span12">
-        <div class="widget-box">
+        <div class="widget-box" style="overflow-x:auto;">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
             <h5>Confirm Transaksi</h5>
           </div>
@@ -55,7 +55,7 @@
             						<td>
                           <center>
                             <a class='btn btn-primary' href='kwitansi.php?kwitansi=$data->kd_confirm_transaksi'>Kwitansi</a>
-              						  <a class='btn btn-danger' href='../../../proses/transaksi.php?delete_confirm_transaksi=$data->kd_confirm_transaksi'>Hapus</a>
+              						  <a class='btn btn-danger hapus' href='../../../proses/transaksi.php?delete_confirm_transaksi=$data->kd_confirm_transaksi'>Hapus</a>
                           </center>
                         </td>
           					  </tr>
@@ -77,6 +77,8 @@
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
+<script src="../../../asset/js/sweetalert.min.js"></script>
+<script src="../../../asset/js/hapus.js"></script>
 <script src="../../../asset/js/jquery.min.js"></script>
 <script src="../../../asset/js/jquery.ui.custom.js"></script>
 <script src="../../../asset/js/bootstrap.min.js"></script>

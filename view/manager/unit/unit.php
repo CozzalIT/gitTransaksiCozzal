@@ -70,7 +70,7 @@
                             <center>
                               <a class='btn btn-info' href='calendar.php?calendar_unit=$data->kd_unit'>Calendar</a>
                               <a class='btn btn-success' href='detail_unit.php?detail_unit=".$data->kd_unit."' >Kelola</a>
-                              <a class='btn btn-danger' href='../../../proses/unit.php?delete_unit=$data->kd_unit&kurangi_ju=$data->kd_owner'>Hapus</a>
+                              <a class='btn btn-danger hapus' href='../../../proses/unit.php?delete_unit=$data->kd_unit&kurangi_ju=$data->kd_owner'>Hapus</a>
                             </center>
                           </td>
             					  </tr>
@@ -181,6 +181,8 @@
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--End-Footer-part-->
+<script src="../../../asset/js/sweetalert.min.js"></script>
+<script src="../../../asset/js/hapus.js"></script>
 <script src="../../../asset/js/bootstrap.min.js"></script>
 <script src="../../../asset/js/unit.js"></script>
 <script src="../../../asset/js/jquery.gritter.min.js"></script>

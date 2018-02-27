@@ -21,7 +21,7 @@
     <hr>
     <div class="row-fluid">
       <div class="span12">
-        <div class="widget-box">
+        <div class="widget-box" style="overflow-x:auto;">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
             <h5>Data Penyewa</h5>
           </div>
@@ -49,7 +49,7 @@
             						  <td>$data->alamat_apt</td>
             						  <td>
             						    <a class='btn btn-primary' href='edit.php?edit_apt=$data->kd_apt'>Edit</a>
-            						    <a class='btn btn-danger' href='../../../proses/apartemen.php?delete_apt=$data->kd_apt'>Hapus</a>
+            						    <a class='btn btn-danger hapus' href='../../../proses/apartemen.php?delete_apt=$data->kd_apt'>Hapus</a>
             						  </td>
             					  </tr>";
             					$i++;
@@ -101,6 +101,8 @@
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
+<script src="../../../asset/js/sweetalert.min.js"></script>
+<script src="../../../asset/js/hapus.js"></script>
 <script src="../../../asset/js/jquery.min.js"></script>
 <script src="../../../asset/js/jquery.ui.custom.js"></script>
 <script src="../../../asset/js/bootstrap.min.js"></script>
