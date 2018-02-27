@@ -19,7 +19,7 @@
   </div>
   <div class="container-fluid"><hr>
     <div class="row-fluid">
-      <div class="span8">
+      <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-briefcase"></i> </span>
             <h5 >Kwitansi Pembayaran</h5>
@@ -130,39 +130,6 @@
                   <br>
                   <a class="btn btn-success btn-large pull-right" href="pdf.php?kwitansi=<?php echo $data->kd_confirm_transaksi; ?>">Download / Print</a> </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="span4">
-        <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-briefcase"></i> </span>
-            <h5>Catatan 1</h5>
-          </div>
-          <div class="widget-content">
-            <div class="row-fluid">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="span4">
-        <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-briefcase"></i> </span>
-            <h5>Catatan 2</h5>
-          </div>
-          <div class="widget-content">
-            <div class="row-fluid">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="span4">
-        <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-briefcase"></i> </span>
-            <h5>Catatan 3</h5>
-          </div>
-          <div class="widget-content">
-            <div class="row-fluid">
             </div>
           </div>
         </div>

@@ -87,28 +87,28 @@ $pdf->SetFont('Arial','',12);
 $pdf->Cell(90 ,5,'Price Per Night',1,0);
 $pdf->Cell(90 ,5,number_format($data->harga_sewa,0, ".", ".").' IDR',1,1);
 
-$pdf->Cell(90 ,5,'Discount',1,0);
-$pdf->Cell(90 ,5,number_format($data->diskon,0, ".", ".").' IDR',1,1);
-
 $pdf->Cell(90 ,5,'No Of Guest',1,0);
 $pdf->Cell(90 ,5,$data->tamu.' Person',1,1);
 
 $pdf->Cell(90 ,5,'Ekstra Charge',1,0);
 $pdf->Cell(90 ,5,number_format($data->ekstra_charge,0, ".", ".").' IDR',1,1);
 
-$pdf->Cell(90 ,5,'Total No Of Days',1,0);
-$pdf->Cell(90 ,5,$data->hari.' Days',1,1);
+$pdf->Cell(90 ,5,'Total No of Stay',1,0);
+$pdf->Cell(90 ,5,$data->hari.' Nights',1,1);
 
-$pdf->Cell(90 ,5,'Payment',1,0);
-$pdf->Cell(90 ,5,number_format($data->dp,0, ".", ".").' IDR',1,1);
+$pdf->Cell(90 ,5,'Total Discount',1,0);
+$pdf->Cell(90 ,5,number_format($data->diskon,0, ".", ".").' IDR',1,1);
 
-$pdf->Cell(90 ,5,'Outstanding Balance',1,0);
+$pdf->Cell(90 ,5,'Total Price',1,0);
 $pdf->Cell(90 ,5,number_format($data->total_tagihan,0, ".", ".").' IDR',1,1);
+
+$pdf->Cell(90 ,5,'Outstanding Payment',1,0);
+$pdf->Cell(90 ,5,number_format($data->sisa_pelunasan,0, ".", ".").' IDR',1,1);
 
 $pdf->Cell(189 ,10,'',0,1);
 
 $pdf->Cell(120 ,5,'',0,0);
-$pdf->Cell(59 ,5,'Total Amount: '.number_format($data->total_tagihan,0, ".", ".").' IDR',0,1);
+$pdf->Cell(59 ,5,'Payment: '.number_format($data->pembayaran + $data->dp,0, ".", ".").' IDR',0,1);
 
 $pdf->Output();
 ?>
