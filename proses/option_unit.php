@@ -1,5 +1,5 @@
 <?php
-require("../config/database.php");
+require("../../config/database.php");
 
 if(isset($_POST['apartement'])){
 require("../class/unit.php");
@@ -34,15 +34,15 @@ elseif(isset($_POST['id1'])){
 	$Proses = new Transaksi($db);
 	$show = $Proses->showTransaksi_cek($CI,$CO,$kd_unit);
 	while($data = $show->fetch(PDO::FETCH_OBJ)){
-	$flag++;	
+	$flag++;
 	}
 	$show2 = $Proses->showConfirmTransaksi_cek($CI,$CO,$kd_unit);
 	while($data = $show2->fetch(PDO::FETCH_OBJ)){
-	$flag++;	
+	$flag++;
 	}
 	if($flag==0) $hasil = "Ada";
-	$callback = array('ketersediaan'=>$hasil); 
-	echo json_encode($callback); 
+	$callback = array('ketersediaan'=>$hasil);
+	echo json_encode($callback);
 }
 
 elseif(isset($_POST['owner']) || isset($_POST['get_owner'])){
@@ -63,7 +63,7 @@ elseif(isset($_POST['status'])){
 	require("../class/cleaner.php");
 	$kd_unit = $_POST['status'];
     date_default_timezone_set('Asia/Jakarta');
-    $sekarang = date('Y-m-d'); 
+    $sekarang = date('Y-m-d');
 	$Proses = new Cleaner($db);
 	$status = "Kosong";
 	$show1 = $Proses->showStatus_check_in($kd_unit, $sekarang);
@@ -74,7 +74,7 @@ elseif(isset($_POST['status'])){
 		$show2 = $Proses->showStatus_terisi($kd_unit, $sekarang);
 		if($show2==true) $status = "Terisi";
 	}
-	$callback = array('stat'=>$status); 
-	echo json_encode($callback); 
+	$callback = array('stat'=>$status);
+	echo json_encode($callback);
 }
 ?>

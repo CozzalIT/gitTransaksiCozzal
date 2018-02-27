@@ -1,5 +1,5 @@
 <?php
-require("../config/database.php");
+require("../../config/database.php");
 require("../class/booking.php");
 session_start();
 $view = $_SESSION['hak_akses'];

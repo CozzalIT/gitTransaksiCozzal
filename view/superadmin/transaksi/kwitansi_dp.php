@@ -128,7 +128,7 @@
                 <div class="pull-right">
                   <h4><span>Total Amount:</span> <?php echo number_format($data->total_tagihan,0, ".", "."); ?> IDR</h4>
                   <br>
-                  <a class="btn btn-success btn-large pull-right" href="">Download / Print</a> </div>
+                  <a class="btn btn-success btn-large pull-right" href="pdf_dp.php?kwitansi=<?php echo $data->kd_transaksi; ?>">Download / Print</a> </div>
               </div>
             </div>
           </div>
