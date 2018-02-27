@@ -1,6 +1,7 @@
 $('#ow').hide();
 var has_click = false;
 
+
 $("#hak_akses").change(function(){
 	if($("#hak_akses").val()=="owner"){
 		$('#ow').show();

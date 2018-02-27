@@ -21,7 +21,7 @@
       <div class="span12">
         <h3>Listing Request</h3>
         <hr>
-        <div class="widget-box">
+        <div class="widget-box" style="overflow-x:auto;">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
             <h5>Listing Request</h5>
           </div>

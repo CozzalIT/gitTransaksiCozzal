@@ -21,7 +21,7 @@
     <hr>
     <div class="row-fluid">
       <div class="span12">
-        <div class="widget-box">
+        <div class="widget-box" style="overflow-x:auto;">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
             <h5>Data Penyewa</h5>
           </div>
@@ -54,7 +54,7 @@
         						<td>
         						  <a class='btn btn-success' href='../transaksi/transaksi.php?transaksi=$data->kd_penyewa'>Transaksi</a>
         						  <a class='btn btn-primary' href='edit.php?edit=$data->kd_penyewa'>Edit</a>
-        						  <a class='btn btn-danger' href='../../../proses/penyewa.php?delete_penyewa=$data->kd_penyewa'>Hapus</a>
+        						  <a class='btn btn-danger hapus' href='../../../proses/penyewa.php?delete_penyewa=$data->kd_penyewa'>Hapus</a>
         						</td>
         					  </tr>";
         				  }
@@ -127,6 +127,8 @@
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
+<script src="../../../asset/js/sweetalert.min.js"></script>
+<script src="../../../asset/js/hapus.js"></script>
 <script src="../../../asset/js/jquery.min.js"></script>
 <script src="../../../asset/js/jquery.ui.custom.js"></script>
 <script src="../../../asset/js/bootstrap.min.js"></script>

@@ -21,7 +21,7 @@
       <div class="span12">
         <h3>Booking Request</h3>
         <hr>
-        <div class="widget-box">
+        <div class="widget-box" style="overflow-x:auto;">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
             <h5>Data Penyewa</h5>
           </div>
@@ -58,7 +58,7 @@
                         <td>$data->tgl_reservasi</td>
             						<td>
             						  <a class='btn btn-success' href='transaksi.php?kd_reservasi=$data->kd_reservasi'>Transaksi</a>
-            						  <a class='btn btn-danger' href='../../../proses/booking.php?delete_booking_rq=$data->kd_reservasi'>Hapus</a>
+            						  <a class='btn btn-danger hapus' href='../../../proses/booking.php?delete_booking_rq=$data->kd_reservasi'>Hapus</a>
             						</td>
           					  </tr>
                     ";
@@ -79,6 +79,8 @@
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
+<script src="../../../asset/js/sweetalert.min.js"></script>
+<script src="../../../asset/js/hapus.js"></script>
 <script src="../../../asset/js/jquery.min.js"></script>
 <script src="../../../asset/js/jquery.ui.custom.js"></script>
 <script src="../../../asset/js/bootstrap.min.js"></script>

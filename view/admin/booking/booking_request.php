@@ -21,7 +21,7 @@
       <div class="span12">
         <h3>Booking Request</h3>
         <hr>
-        <div class="widget-box">
+        <div class="widget-box" style="overflow-x:auto;">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
             <h5>Data Penyewa</h5>
           </div>
