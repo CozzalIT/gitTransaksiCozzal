@@ -3,7 +3,7 @@
   <ul>
     <li <?php if($thisPage == "Dashboard") echo "class='active'"; ?>><a href="../home/home.php"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
     <li <?php if($thisPage == "Unit") echo "class='active'"; ?>><a href="../unit/unit.php"><i class="icon icon-edit"></i> <span>Listing Unit</span></a> </li>
-    <li <?php if($thisPage == "Booking") echo "class='active'"; ?>><a href="../booking/booking.php"><i class="icon icon-th-large"></i> <span>Laporan Booking</span></a> </li>
+    <li <?php if($thisPage == "Booking") echo "class='active'"; ?>><a href="../booking/laporan_booking.php"><i class="icon icon-th-large"></i> <span>Laporan Booking</span></a> </li>
 	  <li <?php if($thisPage == "Request Unit") echo "class='active'"; ?>><a href="#" onclick="alert('Dalam tahap pengembangan')"><i class="icon icon-pencil"></i> <span>Request Unit</span></a> </li>
   </ul>
 </div>
