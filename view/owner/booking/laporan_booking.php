@@ -17,6 +17,7 @@
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Laporan Booking</a></div>
+    <a class="btn btn-success btn-add"><i class="icon-check"></i> Detail Pendapatan</a>
   </div>
   <div class="container-fluid">
     <hr>
@@ -36,6 +37,8 @@
                   <th>Unit</th>
                   <th>Check In</th>
         				  <th>Check Out</th>
+                  <th>Pendapatan</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -43,32 +46,31 @@
                   $Proses = new Unit($db);
                   $show = $Proses->showUnitbyOwner($_SESSION['pemilik']);
                   $i = 1;
+                  $j = 0;
                   while($data = $show->fetch(PDO::FETCH_OBJ)){
-                    $kd_unit = $data->kd_unit;
+                    $kd_unit[$j] = $data->kd_unit;
                     $proses = new Owner($db);
-                    //View booking berdasarkan unit milik owner
-                    $sql = "SELECT COUNT(kd_unit) AS num FROM tb_transaksi WHERE kd_unit = :kd_unit";
-                    $stmt = $db->prepare($sql);
-                    $stmt->bindValue(':kd_unit', $kd_unit);
-                    $stmt->execute();
-                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if($row['num'] > 0){
-                      $show1 = $proses->showConfirm($kd_unit);
-            				  while($data1 = $show1->fetch(PDO::FETCH_OBJ)){
-                					echo "
-                					  <tr class='gradeC'>
-                					    <td>$i</td>
-                					    <td>$data1->nama</td>
-                					    <td>$data1->nama_apt</td>
-                  						<td>$data1->no_unit</td>
-                  						<td>$data1->check_in</td>
-                  						<td>$data1->check_out</td>
-                					  </tr>
-                          ";
-                				$i++;
-                      }
+                    $show1 = $proses->showConfirm($kd_unit[$j]);
+            				while($data1 = $show1->fetch(PDO::FETCH_OBJ)){
+                      $check_in = $data1->check_in;
+                      $check_out = $data1->check_out;
+                      $pendapatan = ($data1->hari_weekend * $data1->h_owner_we) + ($data1->hari_weekday * $data1->h_owner_wd);
+                  		echo "
+                  			<tr class='gradeC'>
+                  				<td>$i</td>
+                  				<td>$data1->nama</td>
+                  				<td>$data1->nama_apt</td>
+                    		  <td>$data1->no_unit</td>
+                    			<td>$check_in</td>
+                    			<td>$check_out</td>
+                          <td>".number_format($pendapatan, 0, ".",".")." IDR</td>
+                          <td>
+                            <a class='btn btn-success'>Detail</a>
+                          </td>
+                  			</tr>
+                      ";
+                  		$i++;
                     }
-                    //==========
                   }
       				  ?>
               </tbody>
@@ -84,7 +86,7 @@
             <h5 style="color:blue;">Booked</h5>
           </div>
           <div class="widget-content nopadding">
-			      <table class="table table-bordered data-table">
+            <table class="table table-bordered data-table">
               <thead>
                 <tr>
                   <th>No</th>
@@ -92,42 +94,40 @@
                   <th>Apartemen</th>
                   <th>Unit</th>
                   <th>Check In</th>
-        				  <th>Check Out</th>
+                  <th>Check Out</th>
+                  <th>Pendapatan</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-      			    <?php
+                <?php
                   $Proses = new Unit($db);
                   $show = $Proses->showUnitbyOwner($_SESSION['pemilik']);
                   $i = 1;
                   while($data = $show->fetch(PDO::FETCH_OBJ)){
                     $kd_unit = $data->kd_unit;
                     $proses = new Owner($db);
-                    //View booking berdasarkan unit milik owner
-                    $sql = "SELECT COUNT(kd_unit) AS num FROM tb_transaksi WHERE kd_unit = :kd_unit";
-                    $stmt = $db->prepare($sql);
-                    $stmt->bindValue(':kd_unit', $kd_unit);
-                    $stmt->execute();
-                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if($row['num'] > 0){
-                      $show1 = $proses->showBooking($kd_unit);
-            				  while($data1 = $show1->fetch(PDO::FETCH_OBJ)){
-                					echo "
-                					  <tr class='gradeC'>
-                					    <td>$i</td>
-                					    <td>$data1->nama</td>
-                					    <td>$data1->nama_apt</td>
-                  						<td>$data1->no_unit</td>
-                  						<td>$data1->check_in</td>
-                  						<td>$data1->check_out</td>
-                					  </tr>
-                          ";
-                				$i++;
-                      }
+                    $show1 = $proses->showBooking($kd_unit);
+                    while($data1 = $show1->fetch(PDO::FETCH_OBJ)){
+                      $pendapatan = ($data1->hari_weekend * $data1->h_owner_we) + ($data1->hari_weekday * $data1->h_owner_wd);
+                      echo "
+                        <tr class='gradeC'>
+                          <td>$i</td>
+                          <td>$data1->nama</td>
+                          <td>$data1->nama_apt</td>
+                          <td>$data1->no_unit</td>
+                          <td>$data1->check_in</td>
+                          <td>$data1->check_out</td>
+                          <td>".number_format($pendapatan, 0, ".",".")." IDR</td>
+                          <td>
+                            <a class='btn btn-success'>Detail</a>
+                          </td>
+                        </tr>
+                      ";
+                      $i++;
                     }
-                    //==========
                   }
-      				  ?>
+                ?>
               </tbody>
             </table>
           </div>
