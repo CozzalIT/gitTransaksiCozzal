@@ -29,18 +29,22 @@ elseif(isset($_POST['id1'])){
 	$kd_unit = $_POST['id1'];
 	$CI = $_POST['tci1'];
 	$CO = $_POST['tco1'];
-	$hasil = "Tidak Ada";
-	$flag = 0;
+	$hasil = "Ada"; //tidak ada, maintenance, admin_block, owner_block
 	$Proses = new Transaksi($db);
 	$show = $Proses->showTransaksi_cek($CI,$CO,$kd_unit);
-	while($data = $show->fetch(PDO::FETCH_OBJ)){
-	$flag++;
+	if($show) $hasil="Unit yang dipilih telah terisi"; 
+	else{
+		$show = $Proses->is_blocked($CI,$CO,$kd_unit,'1');
+		if($show) $hasil = "Unit yang dipilih sedang dalam maintenance";
+		else{
+			$show = $Proses->is_blocked($CI,$CO,$kd_unit,'2');
+			if($show) $hasil = "Unit yang dipilih telah diblok oleh owner";
+			else{
+				$show = $Proses->is_blocked($CI,$CO,$kd_unit,'3');
+				if($show) $hasil = "Unit yang dipilih telah diblok oleh admin";
+			}
+		}
 	}
-	$show2 = $Proses->showConfirmTransaksi_cek($CI,$CO,$kd_unit);
-	while($data = $show2->fetch(PDO::FETCH_OBJ)){
-	$flag++;
-	}
-	if($flag==0) $hasil = "Ada";
 	$callback = array('ketersediaan'=>$hasil);
 	echo json_encode($callback);
 }

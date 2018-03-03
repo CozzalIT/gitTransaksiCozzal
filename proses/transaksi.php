@@ -52,6 +52,11 @@ if(isset($_POST['addTransaksi'])){
 	function isWeekend($date) {
     return (date('N', strtotime($date)) >= 5 && date('N', strtotime($date)) >= 4 && date('N', strtotime($date)) != 6);
 	}
+
+  function isNew($date){
+    if(strtotime($date)>=strtotime((date('Y-m-d')))) return true;
+    else return false;
+  }
 	$y = 0;
 	if($jumlah_hari = 1){
 		$weekend[999] = 'null';
@@ -62,13 +67,15 @@ if(isset($_POST['addTransaksi'])){
 	  }
 	  $y++;
 	}
+
+die(isNew($check_in));  
 	$jumlah_weekend = count($weekend) - 1;
 	$jumlah_weekday = $hari - $jumlah_weekend;
 
   $proses = new Transaksi($db);
   $add = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total, $sisa_pelunasan, $hari, $tgl_transaksi, $diskon, $jumlah_weekend, $jumlah_weekday);
   if($add == "Success"){
-    $add2 = $proses->addUnit_kotor($kd_unit, $check_in, $check_out);
+    if(isNew($check_in)) $add2 = $proses->addUnit_kotor($kd_unit, $check_in, $check_out);
 	  header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php');
   }else{
     echo 'gagal';

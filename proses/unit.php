@@ -111,7 +111,7 @@ elseif(isset($_POST['updateHargaUnit']) || isset($_POST['updateHargaUnitbyOwner'
   }
   $ekstra_charge= $_POST['ekstra_charge'];
   $proses = new Unit($db);
-  $add = $proses->updateHarga_Unit($kd_unit , $h_owner_wd, $h_owner_we, $h_sewa_wd, $h_owner_we, $ekstra_charge);
+  $add = $proses->updateHarga_Unit($kd_unit , $h_owner_wd, $h_owner_we, $h_sewa_wd, $h_sewa_we, $ekstra_charge);
   if($add == "Success"){
     header('Location:../view/'.$view.'/unit/detail_unit.php?detail_unit='.$kd_unit);
   }else echo 'error';

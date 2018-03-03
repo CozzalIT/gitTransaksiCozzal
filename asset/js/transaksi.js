@@ -146,12 +146,12 @@ $(document).ready(function(){
 				}
 			},
 			success: function(response){ 
-					$ret = response.ketersediaan;
-					if ($ret=="Ada"){
+					ret = response.ketersediaan;
+					if (ret=="Ada"){
 						$("#col2").attr("href","#collapseGFive");$("#col2").click(); 
 						$("#col2").attr("href","#");
 					}
-					else alert("Unit Telah Terisi, Silahkan pilih unit lain");
+					else alert(ret);
 			},
 			error: function (xhr, ajaxOptions, thrownError) { 
 				alert(thrownError); 
