@@ -71,8 +71,7 @@ if(isset($_POST['addTransaksi'])){
 	  }
 	  $y++;
 	}
-
-die(isNew($check_in));  
+ 
 	$jumlah_weekend = count($weekend) - 1;
 	$jumlah_weekday = $hari - $jumlah_weekend;
 
