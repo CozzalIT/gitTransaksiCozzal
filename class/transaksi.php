@@ -7,8 +7,8 @@ class Transaksi {
   }
 
   //Proses Add
-  public function addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total, $sisa_pelunasan, $hari, $tgl_transaksi, $diskon){
-    $sql = "INSERT INTO tb_transaksi (kd_penyewa, kd_apt, kd_unit, tamu, check_in, check_out, harga_sewa, ekstra_charge, kd_booking, kd_bank, dp, total_tagihan, sisa_pelunasan, hari, tgl_transaksi, diskon) VALUES('$kd_penyewa', '$kd_apt', '$kd_unit', '$tamu', '$check_in', '$check_out', '$harga_sewa', '$ekstra_charge', '$kd_booking', '$kd_bank', '$dp', '$total', '$sisa_pelunasan', '$hari', '$tgl_transaksi', '$diskon')";
+  public function addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total, $sisa_pelunasan, $hari, $tgl_transaksi, $diskon, $jumlah_weekend, $jumlah_weekday){
+    $sql = "INSERT INTO tb_transaksi (kd_penyewa, kd_apt, kd_unit, tamu, check_in, check_out, harga_sewa, ekstra_charge, kd_booking, kd_bank, dp, total_tagihan, sisa_pelunasan, hari, tgl_transaksi, diskon, hari_weekend, hari_weekday) VALUES('$kd_penyewa', '$kd_apt', '$kd_unit', '$tamu', '$check_in', '$check_out', '$harga_sewa', '$ekstra_charge', '$kd_booking', '$kd_bank', '$dp', '$total', '$sisa_pelunasan', '$hari', '$tgl_transaksi', '$diskon', '$jumlah_weekend', '$jumlah_weekday')";
     $query = $this->db->query($sql);
     if(!$query){
       return "Failed";
@@ -23,8 +23,8 @@ class Transaksi {
   }
 
   public function addConfirm($kd_transaksi){
-    $sql = "INSERT INTO tb_confirm_transaksi (kd_penyewa, kd_apt, kd_unit, tamu, check_in, check_out, harga_sewa, ekstra_charge, kd_booking, kd_bank, dp, total_tagihan, sisa_pelunasan, hari, tgl_transaksi, diskon)
-    SELECT kd_penyewa, kd_apt, kd_unit, tamu, check_in, check_out, harga_sewa, ekstra_charge, kd_booking, kd_bank, dp, total_tagihan, sisa_pelunasan, hari, tgl_transaksi, diskon
+    $sql = "INSERT INTO tb_confirm_transaksi (kd_penyewa, kd_apt, kd_unit, tamu, check_in, check_out, harga_sewa, ekstra_charge, kd_booking, kd_bank, dp, total_tagihan, sisa_pelunasan, hari, tgl_transaksi, diskon, hari_weekend, hari_weekday)
+    SELECT kd_penyewa, kd_apt, kd_unit, tamu, check_in, check_out, harga_sewa, ekstra_charge, kd_booking, kd_bank, dp, total_tagihan, sisa_pelunasan, hari, tgl_transaksi, diskon, hari_weekend, hari_weekday
     FROM tb_transaksi WHERE kd_transaksi='$kd_transaksi'";
     $sql_delete = "DELETE FROM tb_transaksi WHERE kd_transaksi='$kd_transaksi'";
 
@@ -135,10 +135,10 @@ class Transaksi {
   }
 
   //Proses Update
-  public function updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $diskon, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total_tagihan, $sisa_pelunasan, $hari){
+  public function updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $diskon, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total_tagihan, $sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday){
     $sql = "UPDATE tb_transaksi SET kd_apt ='$kd_apt', kd_unit='$kd_unit', tamu='$tamu', check_in='$check_in', check_out='$check_out',
     harga_sewa ='$harga_sewa', diskon ='$diskon', ekstra_charge='$ekstra_charge', kd_booking='$kd_booking', kd_bank='$kd_bank', dp='$dp',
-    total_tagihan='$total_tagihan', sisa_pelunasan='$sisa_pelunasan', hari ='$hari' where kd_transaksi='$kd_transaksi'";
+    total_tagihan='$total_tagihan', sisa_pelunasan='$sisa_pelunasan', hari ='$hari', hari_weekend='$jumlah_weekend', hari_weekday='$jumlah_weekday' where kd_transaksi='$kd_transaksi'";
     $query = $this->db->query($sql);
     if(!$query){
       return "Failed";
@@ -161,7 +161,7 @@ class Transaksi {
     $locsql = "SELECT check_in, check_out from tb_transaksi where kd_transaksi='$kd_transaksi' and kd_unit='$kd_unit'";
     $locq = $this->db->query($locsql);
     $trx = $locq->fetch();
-    $sql = "UPDATE tb_unit_kotor SET check_in='$check_in', check_out='$check_out' 
+    $sql = "UPDATE tb_unit_kotor SET check_in='$check_in', check_out='$check_out'
     WHERE kd_unit='$kd_unit' and check_in='".$trx["check_in"]."' and check_out='".$trx["check_out"]."'";
     $query = $this->db->query($sql);
   }
@@ -178,7 +178,7 @@ class Transaksi {
     $trx = $locq->fetch();
     $sql = "DELETE FROM tb_unit_kotor WHERE kd_unit='".$trx["kd_unit"]."' and check_in='".$trx["check_in"]."' and check_out='".$trx["check_out"]."'";
     $query = $this->db->query($sql);
-  }  
+  }
 
   public function deleteConfirmTransaksi($kd_confirm_transaksi){
     $sql = "DELETE FROM tb_confirm_transaksi WHERE kd_confirm_transaksi='$kd_confirm_transaksi'";
@@ -208,6 +208,7 @@ class Transaksi {
     $sql = "DELETE FROM tb_reservasi where kd_reservasi='$kd_reservasi'";
     $query = $this->db->query($sql);
   }
+
 
 }
 ?>

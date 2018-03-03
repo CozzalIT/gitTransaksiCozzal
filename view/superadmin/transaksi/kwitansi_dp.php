@@ -19,7 +19,7 @@
   </div>
   <div class="container-fluid"><hr>
     <div class="row-fluid">
-      <div class="span8">
+      <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-briefcase"></i> </span>
             <h5 >Kwitansi Pembayaran</h5>
@@ -92,10 +92,6 @@
                       <td><strong><?php echo number_format($data->harga_sewa,0, ".", "."); ?> IDR</td>
                     </tr>
                     <tr>
-                      <td>Discount</td>
-                      <td><strong><?php echo number_format($data->diskon,0, ".", "."); ?> IDR</td>
-                    </tr>
-                    <tr>
                       <td>No Of Guest</td>
                       <td><strong><?php echo $data->tamu; ?> Person</td>
                     </tr>
@@ -104,16 +100,20 @@
                       <td><strong><?php echo number_format($data->ekstra_charge,0, ".", "."); ?> IDR</td>
                     </tr>
                     <tr>
-                      <td>Total No Of Days</td>
+                      <td>Total No of Stay</td>
                       <td><strong><?php echo $data->hari; ?> Day</td>
                     </tr>
                     <tr>
-                      <td>Payment</td>
-                      <td><strong><?php echo number_format($data->dp,0, ".", "."); ?> IDR</td>
+                      <td>Discount</td>
+                      <td><strong><?php echo number_format($data->diskon,0, ".", "."); ?> IDR</td>
                     </tr>
                     <tr>
-                      <td>Outstanding Balance</td>
-                      <td><strong><?php echo number_format($data->sisa_pelunasan,0, ".", "."); ?> IDR</td>
+                      <td>Price</td>
+                      <td><strong><?php echo number_format($data->total_tagihan,0, ".", "."); ?> IDR</td>
+                    </tr>
+                    <tr>
+                      <td>Payment</td>
+                      <td><strong><?php echo number_format($data->dp + $data->pembayaran,0, ".", "."); ?> IDR</td>
                     </tr>
                   </tbody>
                 </table>
@@ -126,43 +126,10 @@
                   </tbody>
                 </table>
                 <div class="pull-right">
-                  <h4><span>Total Amount:</span> <?php echo number_format($data->total_tagihan,0, ".", "."); ?> IDR</h4>
+                  <h4><span>Outstanding Payment:</span> <?php echo number_format($data->sisa_pelunasan,0, ".", "."); ?> IDR</h4>
                   <br>
                   <a class="btn btn-success btn-large pull-right" href="pdf_dp.php?kwitansi=<?php echo $data->kd_transaksi; ?>">Download / Print</a> </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="span4">
-        <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-briefcase"></i> </span>
-            <h5>Catatan 1</h5>
-          </div>
-          <div class="widget-content">
-            <div class="row-fluid">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="span4">
-        <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-briefcase"></i> </span>
-            <h5>Catatan 2</h5>
-          </div>
-          <div class="widget-content">
-            <div class="row-fluid">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="span4">
-        <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-briefcase"></i> </span>
-            <h5>Catatan 3</h5>
-          </div>
-          <div class="widget-content">
-            <div class="row-fluid">
             </div>
           </div>
         </div>

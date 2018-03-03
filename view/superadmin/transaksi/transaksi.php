@@ -254,7 +254,7 @@
               <div class="control-group">
       				  <label class="control-label">Harga Sewa Unit:</label>
       				  <div class="controls">
-      				    <input name="harga_sewa" min="0" step="1000" id="harga_sewa" type="number" onChange="hasil(this.form)" />
+      				    <input name="harga_sewa" min="0"  id="harga_sewa" type="number" onChange="hasil(this.form)" />
                 </div>
       			  </div>
       				<div class="control-group">
@@ -267,13 +267,13 @@
               <div class="control-group">
                 <label class="control-label">Ekstra Charge :</label>
                 <div class="controls">
-                  <input name="ekstra_charge" min="0" step="1000" type="number" onChange="hasil(this.form)" />
+                  <input name="ekstra_charge" min="0"  type="number" onChange="hasil(this.form)" />
                 </div>
               </div>
 		          <div class="control-group">
                 <label class="control-label">Total Biaya :</label>
                 <div class="controls">
-                  <input name="total" id="total" min="0" step="1000" type="number" />
+                  <input name="total" id="total" min="0"  type="number" />
                 </div>
               </div>
     			    <div class="control-group">
@@ -325,7 +325,7 @@
   				<div class="control-group">
   				  <label class="control-label">Jumlah DP :</label>
   				  <div class="controls">
-  				    <input name="dp" min="0" step="1000" type="number" required/>
+  				    <input name="dp" min="0"  type="number" required/>
   				  </div>
   			  </div>
 			    <div class="control-group" >

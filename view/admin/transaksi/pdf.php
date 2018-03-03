@@ -87,6 +87,9 @@ $pdf->SetFont('Arial','',12);
 $pdf->Cell(90 ,5,'Price Per Night',1,0);
 $pdf->Cell(90 ,5,number_format($data->harga_sewa,0, ".", ".").' IDR',1,1);
 
+$pdf->Cell(90 ,5,'Discount',1,0);
+$pdf->Cell(90 ,5,number_format($data->diskon,0, ".", ".").' IDR',1,1);
+
 $pdf->Cell(90 ,5,'No Of Guest',1,0);
 $pdf->Cell(90 ,5,$data->tamu.' Person',1,1);
 

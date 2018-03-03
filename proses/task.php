@@ -79,11 +79,13 @@ elseif(isset($_POST['id'])){
 
 elseif(isset($_POST['NewTask'])){
   $kd_unit = $_POST['NewTask'];
-  $Proses = new Task($db); $stmp = '10000';
+  $Proses = new Task($db); 
   $show = $Proses->getStmp_unit($kd_unit);
   if($show) $stmp = $show["stmp_task"]; 
+  else $stmp = '10000';
   $all_task = ""; $jumlah=0;
-  $update = $Proses->update_new_task($kd_unit, $stmp);
+//  $update2 = $Proses->update_stmp_unit($kd_unit);
+//  $update = $Proses->update_new_task($kd_unit, $stmp);
   $jumlah2=0; $html2=""; $all_task="0";
   $show = $Proses->showTask_byunit($kd_unit);
   while($data = $show->fetch(PDO::FETCH_OBJ)){

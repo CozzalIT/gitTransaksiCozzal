@@ -15,7 +15,7 @@ function notecap(jumlah){
 function updateelementtask(konten2, jumlah2, task){
 	$('#task-anak-isi').html(konten2);
 	$("#task-cap").text('Task Tersisa ('+jumlah2+')');	
-	if(jumlah2==0) $("#btn-bersihkan").hide();				
+	//if(jumlah2==0) $("#btn-bersihkan").hide();				
 	$("#task-temp").val(task);
 }
 

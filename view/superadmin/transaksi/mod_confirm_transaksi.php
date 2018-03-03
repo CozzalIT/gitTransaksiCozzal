@@ -3,7 +3,7 @@
   require("../../../class/transaksi.php");
   require("../../../../config/database.php");
 
-  $thisPage = "Confirm Transaksi";
+  $thisPage = "Transaksi";
 
   include "../template/head.php";
 ?>
@@ -55,6 +55,7 @@
             						<td>$data->check_out</td>
             						<td>
                           <center>
+                            <a class='btn btn-success' href='proses_mod.php?mod=$data->kd_confirm_transaksi&check_in=$data->check_in&check_out=$data->check_out&hari=$data->hari'>Modifikasi</a>
                             <a class='btn btn-primary' href='kwitansi.php?kwitansi=$data->kd_confirm_transaksi'>Kwitansi</a>
               						  <a class='btn btn-danger hapus' href='../../../proses/transaksi.php?delete_confirm_transaksi=$data->kd_confirm_transaksi'>Hapus</a>
                           </center>
