@@ -84,8 +84,8 @@ elseif(isset($_POST['NewTask'])){
   if($show) $stmp = $show["stmp_task"]; 
   else $stmp = '10000';
   $all_task = ""; $jumlah=0;
-//  $update2 = $Proses->update_stmp_unit($kd_unit);
-//  $update = $Proses->update_new_task($kd_unit, $stmp);
+  $show2 = $Proses->max_stmp($kd_unit); $stmp_new = $show2['MAX(stmp)'];
+  $update = $Proses->update_new_task($kd_unit, $stmp, $stmp_new);
   $jumlah2=0; $html2=""; $all_task="0";
   $show = $Proses->showTask_byunit($kd_unit);
   while($data = $show->fetch(PDO::FETCH_OBJ)){

@@ -86,14 +86,19 @@ class Task {
       return $rows;
   }  
 
-  public function update_stmp_unit($kd_unit){
-    $sql = "UPDATE tb_unit SET stmp_task = stmp IN(SELECT MAX(stmp) FROM tb_task where unit='$kd_unit' or unit='Semua')";
-    $query = $this->db->query($sql);
-  }   
+  public function max_stmp($kd_unit){
+   $result = $this->db->prepare("SELECT MAX(stmp) FROM tb_task where unit= ? or unit='Semua'");
+      $result->bindParam(1, $kd_unit);
+      $result->execute();
+      $rows = $result->fetch();
+      return $rows;
+  } 
 
-  public function update_new_task($kd_unit, $stmp){
+  public function update_new_task($kd_unit, $stmp, $stmp_new){
     $sql = "INSERT INTO tb_task_unit (kd_unit, kd_task)
     SELECT '$kd_unit' As kd, kd_task FROM tb_task WHERE stmp > $stmp AND (unit='$kd_unit' or unit='Semua')";
+    $sql2 = "UPDATE tb_unit SET stmp_task='$stmp_new' where kd_unit='$kd_unit'";
+    $query = $this->db->query($sql2);
     $query = $this->db->query($sql);
   }    
  
