@@ -50,7 +50,9 @@ if(isset($_GET['mod'])){
     return (date('N', strtotime($date)) >= 5 && date('N', strtotime($date)) >= 4 && date('N', strtotime($date)) != 6);
 	}
 	$y = 0;
-	$weekend[99] = 'null';
+  if($jumlah_hari = 1){
+		$weekend[999] = 'null';
+	}
 	while($y != ($jumlah_hari)){
 	  if(isWeekend($range_hari[$y])){
 	    $weekend[$y] = $range_hari[$y];
