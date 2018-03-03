@@ -19,7 +19,6 @@
 <link rel="stylesheet" href="../../../asset/css/bootstrap.min.css" />
 <link rel="stylesheet" href="../../../asset/css/bootstrap-responsive.min.css" />
 <link rel="stylesheet" href="../../../asset/css/uniform.css" />
-<link rel="stylesheet" href="../../../asset/css/theme.css" />
 <link rel="stylesheet" href="../../../asset/css/select2.css" />
 <link rel="stylesheet" href="../../../asset/css/new.css" />
 <link rel="stylesheet" href="../../../asset/css/matrix-style.css" />
@@ -27,6 +26,7 @@
 <link href="../../../asset/font-awesome/css/font-awesome.css" rel="stylesheet" />
 <link rel="stylesheet" href="../../../asset/css/jquery.gritter.css" />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="../../../asset/css/theme.css" />
 <script src="../../../asset/js/jquery.min.js" type="text/javascript"></script>
 <script src="../../../asset/js/config.js" type="text/javascript"></script>
 

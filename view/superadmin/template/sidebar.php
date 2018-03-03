@@ -19,12 +19,18 @@
     <li <?php if($thisPage == "Account Management") echo "class='active'"; ?>><a href="../account/account_management.php"><i class="icon icon-sitemap"></i> <span>Account Management</span></a> </li>
     <li <?php if($thisPage == "Booking Request") echo "class='active'"; ?>><a href="../booking/booking_request.php"><i class="icon icon-file"></i> <span>Booking Request</span></a> </li>
     <li <?php if($thisPage == "Listing Request") echo "class='active'"; ?>><a href="../unit/listing_request.php"><i class="icon icon-edit"></i> <span>Listing Request</span></a> </li>
+    <li class="submenu <?php if($thisPage == "Unit") echo " active"; ?>"> <a href="#"><i class="icon icon-money"></i> <span>Data Unit</span></a>
+      <ul>
+        <li><a href="../unit/unit.php">List Unit</a></li>
+        <li><a href="../unit/task.php">Task Cleaner</a></li>
+        <li><a href="../unit/status.php">Status Unit</a></li>
+      </ul>
+    </li>
     <li class="submenu <?php if($thisPage == "Data") echo " active"; ?>"> <a href="#"><i class="icon icon-th-large"></i> <span>Data</span></a>
       <ul>
         <li <?php if($thisPage == "Penyewa") echo "class='active'"; ?>><a href="../penyewa/penyewa.php"> <span>Penyewa</span></a> </li>
         <li <?php if($thisPage == "Owner") echo "class='active'"; ?>><a href="../owner/owner.php"> <span>Owner</span></a> </li>
         <li <?php if($thisPage == "Apartemen") echo "class='active'"; ?>><a href="../apartemen/apartemen.php"> <span>Apartemen</span></a> </li>
-        <li <?php if($thisPage == "Unit") echo "class='active'"; ?>><a href="../unit/unit.php"> <span>Unit</span></a> </li>
       </ul>
     </li>
 	  <li <?php if($thisPage == "Booking_via") echo "class='active'"; ?>><a href="../booking/booking_via.php"><i class="icon icon-pencil"></i> <span>Booking Via</span></a> </li>
