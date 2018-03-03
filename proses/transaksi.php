@@ -28,8 +28,12 @@ if(isset($_POST['addTransaksi'])){
   $sisa_pelunasan = $total - $dp;
   $hari = $_POST['jumhari'];
   $tgl_transaksi = date('y-m-d');
-  if($total<$harga_sewa_asli*$hari){
-     $diskon = $harga_sewa_asli*$hari-$total;
+  if($total<($harga_sewa*$hari)){
+     if($harga_sewa<$harga_sewa_asli){
+		 $diskon = $harga_sewa_asli*$hari-$total;
+	 }else {
+		 $diskon = $harga_sewa*$hari-$total;
+	 }
   }
 
  	//==== Memasukkan tiap tanggal mulai dari CheckIn sampai CheckOut kedalam Array ====
@@ -184,9 +188,9 @@ elseif(isset($_POST['updateTransaksi'])){
   $harga_sewa   = $_POST['harga_sewa'];
   $harga_sewa_asli   = $_POST['harga_sewa_asli'];
   $diskon = 0;
-  if($harga_sewa<$harga_sewa_asli){
-    $diskon = $harga_sewa_asli-$harga_sewa;
-  }
+  //if($harga_sewa<$harga_sewa_asli){
+   // $diskon = $harga_sewa_asli-$harga_sewa;
+  //}
 
   $ekstra_charge  = $_POST['ekstra_charge'];
   $kd_booking   = $_POST['booking_via'];
@@ -196,8 +200,12 @@ elseif(isset($_POST['updateTransaksi'])){
 
   $sisa_pelunasan = $total_tagihan - $dp;
   $hari = $_POST['jumhari'];
-  if($total_tagihan<$harga_sewa_asli*$hari){
+  if($total_tagihan<$harga_sewa*$hari){
+	  if ($harga_sewa < $harga_sewa_asli){
      $diskon = $harga_sewa_asli*$hari-$total_tagihan;
+	  } else {
+		  $diskon = $harga_sewa*$hari-$total_tagihan;
+	  }
   }
 
 	//==== Memasukkan tiap tanggal mulai dari CheckIn sampai CheckOut kedalam Array ====
