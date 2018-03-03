@@ -20,7 +20,8 @@ class Cleaner {
     $sql = "SELECT * FROM tb_unit
     INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt
     INNER JOIN tb_unit_kotor ON tb_unit_kotor.kd_unit = tb_unit.kd_unit
-    WHERE tb_unit_kotor.check_out='$sekarang' and tb_unit_kotor.check_in='$sekarang'";
+    WHERE tb_unit_kotor.check_out='$sekarang' and tb_unit_kotor.kd_unit
+    IN (SELECT kd_unit FROM tb_unit_kotor WHERE check_in='$sekarang')";
     $query = $this->db->query($sql);
     return $query;
   }
@@ -29,7 +30,7 @@ class Cleaner {
     $sql = "SELECT * FROM tb_unit
     INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt
     INNER JOIN tb_unit_kotor ON tb_unit_kotor.kd_unit = tb_unit.kd_unit
-    WHERE tb_unit_kotor.check_in<='$sekarang' 
+    WHERE tb_unit_kotor.check_in='$sekarang' 
     and tb_unit_kotor.kd_unit in (SELECT kd_unit from tb_unit_kotor where check_out<'$sekarang')";
     $query = $this->db->query($sql);
     return $query;
@@ -62,10 +63,10 @@ class Cleaner {
         return $rows;
     }
 
-  public function deleteUnit_kotor($kd_unit, $sekarang){
-    $sql = "DELETE FROM tb_unit_kotor where kd_unit='$kd_unit' and check_out<='$sekarang'";
-    $query = $this->db->query($sql);
-  }    
+    public function deleteUnit_kotor($kd_unit, $sekarang){
+      $sql = "DELETE FROM tb_unit_kotor where kd_unit='$kd_unit' and check_out<='$sekarang'";
+      $query = $this->db->query($sql);
+    } 
 
 }
 ?>

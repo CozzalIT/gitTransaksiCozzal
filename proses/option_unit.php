@@ -74,7 +74,14 @@ elseif(isset($_POST['status'])){
 		$show2 = $Proses->showStatus_terisi($kd_unit, $sekarang);
 		if($show2==true) $status = "Terisi";
 	}
-	$callback = array('stat'=>$status);
+	require("../class/catatan.php");
+	$proses2 = new Catatan($db); $catatan = 0;
+	$migrate = $proses2->catatanToTask($kd_unit);
+	$delete = $Proses->deleteUnit_kotor($kd_unit, $sekarang);
+	$show = $proses2->showCatatanUnit($kd_unit);
+	while($data = $show->fetch(PDO::FETCH_OBJ))
+		$catatan++; 
+	$callback = array('stat'=>$status, 'catatan'=>$catatan);
 	echo json_encode($callback);
 }
 ?>

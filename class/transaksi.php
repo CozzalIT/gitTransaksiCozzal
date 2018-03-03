@@ -202,6 +202,7 @@ class Transaksi {
     $query = $this->db->query($sql);
     return $query;
   }
+  
 //nitip delete reservasi
   public function deleteReservasi($kd_reservasi){
     $sql = "DELETE FROM tb_reservasi where kd_reservasi='$kd_reservasi'";

@@ -63,6 +63,28 @@ background-color: blue;
     float : left;
 }
 
+.form-horizontal .my {
+  margin-left: 8%;
+  padding-top: 9px;
+  padding-bottom: 0px;
+}
+
+.newpadd{
+  max-height: 150px;
+  overflow-y: scroll;
+}
+
+.form-horizontal .my .ck {
+  margin: 0px;
+  margin-right: 5px;
+  margin-bottom: 2px;
+}
+
+.note{
+  padding:8px 15px;
+  border-bottom-style: solid;
+  border-bottom-color: #f1f1f1;
+}
 @media (max-width: 768px) {
     .headprof {
         width:100%;
@@ -86,5 +108,8 @@ background-color: blue;
     }
     .error_alert{
       width: 100%;
+    }
+    .form-horizontal .my {
+      margin-left: 0px;
     }
 }
