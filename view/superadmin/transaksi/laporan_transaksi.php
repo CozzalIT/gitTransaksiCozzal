@@ -3,7 +3,7 @@
   require("../../../class/transaksi.php");
   require("../../../../config/database.php");
 
-  $thisPage = "Transaksi";
+  $thisPage = "Laporan Transaksi";
 
   include "../template/head.php";
 ?>
@@ -18,13 +18,6 @@
     <a href="transaksi.php" class="btn btn-success btn-add"><i class="icon-plus"></i> Transaksi Baru</a>
     <a href="confirm_transaksi.php" class="btn btn-primary btn-add"><i class="icon-edit"></i> Confirm Transaksi</a>
   </div>
-<script type="text/javascript" language="JavaScript">
- function hapus()
- {
- tanya = window.confirm("Anda Yakin Akan Menghapus Data ?");
- if (tanya == true) return true;
- else return false;
- }</script>
   <div class="container-fluid">
     <hr>
     <div class="row-fluid">

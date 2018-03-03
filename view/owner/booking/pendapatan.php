@@ -49,15 +49,17 @@
                     $i++;
                   }
                 ?>
-                <tr class='gradeC'>
-                  <td>1</td>
-                  <td>Newton Hybrid Residence</td>
-                  <td></td>
-                  <td>5 Hari</td>
-                  <td>26 Hari</td>
-                  <td>31 Hari</td>
-                  <td>15.000.000 IDR</td>
-                </tr>
+                <!--
+                  <tr class='gradeC'>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                -->
               </tbody>
             </table>
           </div>

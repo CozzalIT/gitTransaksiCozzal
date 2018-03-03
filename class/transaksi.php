@@ -135,10 +135,10 @@ class Transaksi {
   }
 
   //Proses Update
-  public function updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $diskon, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total_tagihan, $sisa_pelunasan, $hari){
+  public function updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $diskon, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total_tagihan, $sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday){
     $sql = "UPDATE tb_transaksi SET kd_apt ='$kd_apt', kd_unit='$kd_unit', tamu='$tamu', check_in='$check_in', check_out='$check_out',
     harga_sewa ='$harga_sewa', diskon ='$diskon', ekstra_charge='$ekstra_charge', kd_booking='$kd_booking', kd_bank='$kd_bank', dp='$dp',
-    total_tagihan='$total_tagihan', sisa_pelunasan='$sisa_pelunasan', hari ='$hari' where kd_transaksi='$kd_transaksi'";
+    total_tagihan='$total_tagihan', sisa_pelunasan='$sisa_pelunasan', hari ='$hari', hari_weekend='$jumlah_weekend', hari_weekday='$jumlah_weekday' where kd_transaksi='$kd_transaksi'";
     $query = $this->db->query($sql);
     if(!$query){
       return "Failed";

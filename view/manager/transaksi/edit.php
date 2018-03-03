@@ -118,7 +118,7 @@
                     <label class="control-label">Harga Sewa :</label>
                     <div class="controls">
                     <input name="harga_sewa_asli" type="number" style="display:none;" value="'.$harga_asal.'"/>
-                    <input name="harga_sewa" min="0" step="1000" required id="harga_sewa" type="number" class="span11" placeholder="Harga Sewa" value="'.$edit->harga_sewa.'" onChange="hasil(this.form)"/>
+                    <input name="harga_sewa" min="0"  required id="harga_sewa" type="number" class="span11" placeholder="Harga Sewa" value="'.$edit->harga_sewa.'" onChange="hasil(this.form)"/>
                     </div>
                   </div>
                   <div class="control-group">
@@ -130,13 +130,13 @@
                   <div class="control-group">
                     <label class="control-label">Ekstra Charge :</label>
                     <div class="controls">
-                    <input name="ekstra_charge" min="0" step="1000" type="number" onChange="hasil(this.form)" required class="span11" value="'.$edit->ekstra_charge.'"/>
+                    <input name="ekstra_charge" min="0"  type="number" onChange="hasil(this.form)" required class="span11" value="'.$edit->ekstra_charge.'"/>
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label">Total Biaya :</label>
                     <div class="controls">
-                    <input name="total" min="0" step="1000" class="span11" type="number" required value="'.$edit->total_tagihan.'"/>
+                    <input name="total" min="0"  class="span11" type="number" required value="'.$edit->total_tagihan.'"/>
                     </div>
                   </div>
                   <div class="control-group">
