@@ -17,9 +17,9 @@ if(isset($_POST['addTransaksi'])){
 	$harga_sewa 	= $_POST['harga_sewa'];
   $harga_sewa_asli   = $_POST['harga_sewa_asli'];
   $diskon = 0;
-  if($harga_sewa<$harga_sewa_asli){
-     $diskon = $harga_sewa_asli-$harga_sewa;
-  }
+  //if($harga_sewa<$harga_sewa_asli){
+   //  $diskon = $harga_sewa_asli-$harga_sewa;
+ // }
 	$ekstra_charge 	= $_POST['ekstra_charge'];
 	$kd_booking 	= $_POST['booking_via'];
 	$kd_bank 		= $_POST['dp_via'];
