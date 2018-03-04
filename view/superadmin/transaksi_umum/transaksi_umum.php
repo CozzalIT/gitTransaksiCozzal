@@ -1,6 +1,7 @@
 <?php
   session_start();
   require("../../../class/transaksi.php");
+  require("../../../class/kas.php");
   require("../../../class/unit.php");
   require("../../../class/apartemen.php");
   require("../../../../config/database.php");
@@ -151,10 +152,16 @@
                     <label class="control-label">Sumber Dana :</label>
                     <div class="controls">
                       <select>
-                        <option>-- Pilih Sumber Dana --</option>
-                        <option>BRI</option>
-                        <option>Mandiri</option>
-                        <option>Cash</option>
+                        <option name="" value="">-- Pilih Apartemen --</option>
+                        ';
+                          $Proses = new Kas($db);
+                          $show = $Proses->showKas();
+                          while($data = $show->fetch(PDO::FETCH_OBJ)){
+                            if ($data->kd_kas != 0){
+                              echo "<option name='kd_kas' value='$data->kd_kas'>$data->sumber_dana</option>";
+                            }
+                          }
+                        echo '
                       </select>
                     </div>
                   </div>

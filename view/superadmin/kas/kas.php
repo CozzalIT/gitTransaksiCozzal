@@ -15,6 +15,8 @@
 <div id="content">
   <div id="content-header">
    <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Kas</a></div>
+   <a class="btn btn-success btn-add">Tambah Saldo</a>
+   <a class="btn btn-success btn-add">Mutasi Dana</a>
   </div>
   <div class="container-fluid">
     <hr>

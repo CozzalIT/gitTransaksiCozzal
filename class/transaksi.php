@@ -71,29 +71,31 @@ class Transaksi {
   }
 
   public function showTransaksi_cek($CI,$CO,$kd_unit){
-    $sql = "SELECT * from tb_transaksi where ((check_in<='$CI' and check_out>='$CO')
+   $result = $this->db->prepare("SELECT * from tb_unit_kotor where ((check_in<='$CI' and check_out>='$CO')
     or (check_in>='$CI' and check_in<'$CO')
     or (check_out>'$CI' and check_out<='$CO'))
-    and (kd_unit ='$kd_unit')" ;
-    $query = $this->db->query($sql);
-    return $query;
-  }
+    and (kd_unit ='$kd_unit')");
+    $result->execute();
+    $rows = $result->fetch();
+    return $rows;
+  }  
+
+  public function is_blocked($CI,$CO,$kd_unit,$jenis){
+   $result = $this->db->prepare("SELECT kd_mod_calendar from tb_mod_calendar 
+    where ((start_date<='$CI' and end_date>='$CO')
+    or (start_date>='$CI' and start_date<'$CO')
+    or (end_date>'$CI' and end_date<='$CO'))
+    and (kd_unit ='$kd_unit' and jenis='$jenis')");
+    $result->execute();
+    $rows = $result->fetch();
+    return $rows;
+  }     
 
   public function showConfirmTransaksi(){
     $sql = "SELECT * from tb_confirm_transaksi
     INNER JOIN tb_penyewa ON tb_penyewa.kd_penyewa = tb_confirm_transaksi.kd_penyewa
     INNER JOIN tb_apt ON tb_apt.kd_apt = tb_confirm_transaksi.kd_apt
     INNER JOIN tb_unit ON tb_unit.kd_unit = tb_confirm_transaksi.kd_unit";
-    $query = $this->db->query($sql);
-    return $query;
-  }
-
-  public function showConfirmTransaksi_cek($CI,$CO,$kd_unit){
-    $sql = "SELECT kd_confirm_transaksi from tb_confirm_transaksi
-    where ((check_in<='$CI' and check_out>='$CO')
-    or (check_in>='$CI' and check_in<'$CO')
-    or (check_out>'$CI' and check_out<='$CO'))
-    and (kd_unit ='$kd_unit')";
     $query = $this->db->query($sql);
     return $query;
   }
