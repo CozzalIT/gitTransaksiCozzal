@@ -6,7 +6,7 @@
   require("../../../class/apartemen.php");
   require("../../../../config/database.php");
 
-  $thisPage = "Transaksi";
+  $thisPage = "Transaksi Umum";
 
   include "../template/head.php";
 ?>
@@ -56,7 +56,7 @@
               if(isset($_POST['kebutuhanUmum'])){
                 echo '
                 <div class="widget-content">
-                  <form class="form-horizontal">
+                  <form action="../../../proses/transaksi_umum.php" method="POST" class="form-horizontal">
                     <div class="control-group">
                       <label class="control-label">Harga : </label>
                       <div class="controls">
@@ -73,22 +73,29 @@
                       <label class="control-label">Keterangan :</label>
                       <div class="controls">
                         <input name="keterangan" type="Text"/>
+                        <input name="kebutuhan" type="Text" value="umum" class="hide"/>
                       </div>
                     </div>
                     <div class="control-group">
                       <label class="control-label">Sumber Dana :</label>
                       <div class="controls">
-                        <select>
-                          <option>-- Pilih Sumber Dana --</option>
-                          <option>BRI</option>
-                          <option>Mandiri</option>
-                          <option>Cash</option>
+                        <select name="kd_kas">
+                          <option name="kd_kas" value="">-- Pilih Sumber Dana --</option>
+                          ';
+                            $Proses = new Kas($db);
+                            $show = $Proses->showKas();
+                            while($data = $show->fetch(PDO::FETCH_OBJ)){
+                              if ($data->kd_kas != 0){
+                                echo "<option name='kd_kas' value='$data->kd_kas'>$data->sumber_dana</option>";
+                              }
+                            }
+                          echo '
                         </select>
                       </div>
                     </div>
                     <div class="control-group">
                       <div class="controls">
-                        <button class="btn btn-success" type="submit">Submit</button>
+                        <button class="btn btn-success" name="addTransaksiUmum" type="submit">Submit</button>
                         <a href="transaksi_umum.php" class="btn btn-inverse">Kembali</a>
                       </div>
                     </div>
@@ -152,7 +159,7 @@
                     <label class="control-label">Sumber Dana :</label>
                     <div class="controls">
                       <select>
-                        <option name="" value="">-- Pilih Apartemen --</option>
+                        <option name="" value="">-- Pilih Sumber Dana --</option>
                         ';
                           $Proses = new Kas($db);
                           $show = $Proses->showKas();

@@ -16,7 +16,7 @@
   <div id="content-header">
    <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Kas</a></div>
    <a class="btn btn-success btn-add">Tambah Saldo</a>
-   <a class="btn btn-success btn-add">Mutasi Dana</a>
+   <a href="#popup-mutasi" data-toggle="modal" class="btn btn-success btn-add">Mutasi Dana</a>
   </div>
   <div class="container-fluid">
     <hr>
@@ -151,6 +151,43 @@
     </div>
   </div>
 </div>
+
+<!-- Modal Popup Tambah Penyewa -->
+<div id="popup-mutasi" class="modal hide">
+  <div class="modal-header">
+    <button data-dismiss="modal" class="close" type="button">×</button>
+    <h3>Mutasi Dana</h3>
+  </div>
+  <div class="modal-body">
+    <form action="../../../proses/kas.php" method="post" class="form-horizontal">
+	    <div class="control-group">
+		    <label class="control-label">Sumber :</label>
+		    <div class="controls">
+    		  <input name="sumber" type="text" class="span2" placeholder="Nama" required/>
+    		</div>
+	    </div>
+	    <div class="control-group">
+		    <label class="control-label">Tujuan :</label>
+		    <div class="controls">
+		      <input name="tujuan" type="text" class="span2" placeholder="Alamat" required/>
+		    </div>
+	    </div>
+      <div class="control-group">
+        <label class="control-label">Saldo :</label>
+        <div class="controls">
+          <input name="saldo" type="text" class="span2" placeholder="Saldo" required/>
+        </div>
+      </div>
+	    <div class="control-group">
+		    <div class="controls">
+		      <input type="submit" name="addPenyewa" class="btn btn-success">
+		      <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+		    </div>
+	    </div>
+	  </form>
+  </div>
+</div>
+<!-- //Modal Popup Tambah Penyewa -->
 
 <!--Footer-part-->
 <div class="row-fluid">

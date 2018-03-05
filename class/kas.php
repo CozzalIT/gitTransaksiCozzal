@@ -45,5 +45,24 @@ class Kas {
     $query = $this->db->query($sql);
     return $query;
   }
+
+  //Edit
+  public function editSaldo($kd_kas){
+    $sql = "SELECT saldo FROM tb_kas WHERE kd_kas='$kd_kas'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
+  //Update
+  public function updateKas($kd_kas, $saldo, $tanggal){
+    $sql = "UPDATE tb_kas SET saldo='$saldo', tanggal='$tanggal' WHERE kd_kas='$kd_kas'";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
+  }
+
 }
 ?>
