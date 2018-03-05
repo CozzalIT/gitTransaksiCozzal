@@ -98,6 +98,7 @@
                 <tr>
                   <th>No</th>
                   <th>Tanggal</th>
+                  <th>Kas</th>
                   <th>Mutasi Dana</th>
                   <th>Jenis Mutasi</th>
                   <th>Keterangan</th>
@@ -135,8 +136,9 @@
                     <tr class='gradeC'>
                       <td>$i</td>
                       <td>$data->tanggal</td>
-                      <td>".number_format($data->mutasi_dana, 0, ".", ".")." IDR</td>
-                      <td>$jenis</td>
+                      <td>$data->sumber_dana</td>
+                      <td ".($jenis == 'Masuk' ? 'style="color:green;"' : 'style="background-color:red;color:white;"')."><strong>".number_format($data->mutasi_dana, 0, ".", ".")." IDR</strong></td>
+                      <td ".($jenis == 'Masuk' ? 'style="color:green;"' : 'style="background-color:red;color:white;"')."><strong>$jenis</strong></td>
                       <td>$keterangan</td>
                     </tr>
                     ";
@@ -164,7 +166,7 @@
 		    <label class="control-label">Sumber :</label>
         <div class="controls">
           <select name="sumber">
-            <option name="kd_kas" value="">-- Pilih Sumber Dana --</option>
+            <option name="kd_kas" value="">-- Pilih Kas --</option>
             <?php
               $Proses = new Kas($db);
               $show = $Proses->showKas();
@@ -181,7 +183,7 @@
 		    <label class="control-label">Tujuan :</label>
         <div class="controls">
           <select name="tujuan">
-            <option name="kd_kas" value="">-- Pilih Sumber Dana --</option>
+            <option name="kd_kas" value="">-- Pilih Kas --</option>
             <?php
               $Proses = new Kas($db);
               $show = $Proses->showKas();
@@ -195,9 +197,9 @@
         </div>
 	    </div>
       <div class="control-group">
-        <label class="control-label">Saldo :</label>
+        <label class="control-label">Jumlah Mutasi :</label>
         <div class="controls">
-          <input name="saldo" type="number" class="span2" placeholder="Saldo" required/>
+          <input name="mutasi" type="number" class="span2" placeholder="Jumlah Mutasi" required/>
         </div>
       </div>
 	    <div class="control-group">
