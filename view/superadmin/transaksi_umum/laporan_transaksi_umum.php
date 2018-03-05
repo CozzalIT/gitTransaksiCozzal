@@ -1,6 +1,7 @@
 <?php
   session_start();
   require("../../../class/transaksi_umum.php");
+  require("../../../class/unit.php");
   require("../../../../config/database.php");
 
   $thisPage = "Laporan Transaksi";
@@ -45,19 +46,28 @@
         				  $show = $Proses->showTransaksiUmum();
         				  $i = 1;
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
+                    if($data->kebutuhan == "umum"){
+                      $kebutuhan = $data->kebutuhan;
+                    }else{
+                      $arrayKebutuhan = explode("/",$data->kebutuhan);
+                      $kebutuhan = $arrayKebutuhan[0];
+
+                      $proses_unit = new Unit($db);
+                      $show_unit = $proses_unit->editUnit($arrayKebutuhan[1]);
+                      $data_unit = $show_unit->fetch(PDO::FETCH_OBJ);
+                    }
           					echo "
           					  <tr class='gradeC'>
-          					    <td></td>
-          					    <td></td>
-          					    <td></td>
-            						<td></td>
-            						<td></td>
-            						<td></td>
-                        <td></td>
+          					    <td>$i</td>
+          					    <td>$data->sumber_dana</td>
+          					    <td>".($kebutuhan == 'umum' ? 'Umum' : 'Unit '.$data_unit->no_unit)."</td>
+            						<td>".number_format($data->harga, 0, ".", ".")." IDR</td>
+            						<td>$data->jumlah</td>
+            						<td>".number_format($data->harga*$data->jumlah, 0, ".", ".")." IDR</td>
+                        <td>$data->keterangan</td>
             						<td>
                           <center>
               						  <a class='btn btn-primary' href='#'>Edit</a>
-              						  <a class='btn btn-danger hapus' href='#'>Hapus</a>
                           </center>
                         </td>
           					  </tr>

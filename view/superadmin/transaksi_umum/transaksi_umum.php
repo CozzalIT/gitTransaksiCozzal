@@ -105,7 +105,7 @@
               }elseif(isset($_POST['kebutuhanUnit'])){
                 echo '
                 <div class="widget-content">
-                <form class="form-horizontal">
+                <form action="../../../proses/transaksi_umum.php" method="POST" class="form-horizontal">
 
                   <div class="control-group">
                     <label class="control-label">Apartemen :</label>
@@ -158,7 +158,7 @@
                   <div class="control-group">
                     <label class="control-label">Sumber Dana :</label>
                     <div class="controls">
-                      <select>
+                      <select name="kd_kas">
                         <option name="" value="">-- Pilih Sumber Dana --</option>
                         ';
                           $Proses = new Kas($db);
@@ -174,7 +174,7 @@
                   </div>
                   <div class="control-group">
                     <div class="controls">
-                      <button class="btn btn-success" type="submit">Submit</button>
+                      <button class="btn btn-success" name="addTransaksiUmum" type="submit">Submit</button>
                       <a href="transaksi_umum.php" class="btn btn-inverse">Kembali</a>
                     </div>
                   </div>
