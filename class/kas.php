@@ -41,8 +41,11 @@ class Kas {
   }
 
   public function showMutasiKas(){
-    $sql = "SELECT * FROM tb_mutasi_kas
-    INNER JOIN tb_kas ON tb_mutasi_kas.kd_kas = tb_kas.kd_kas";
+    $sql = "SELECT
+      tb_mutasi_kas.kd_mutasi_kas, tb_mutasi_kas.kd_kas, tb_mutasi_kas.mutasi_dana, tb_mutasi_kas.jenis, tb_mutasi_kas.tanggal, tb_mutasi_kas.keterangan,
+      tb_kas.kd_kas, tb_kas.sumber_dana
+      FROM tb_mutasi_kas
+      INNER JOIN tb_kas ON tb_mutasi_kas.kd_kas = tb_kas.kd_kas";
     $query = $this->db->query($sql);
     return $query;
   }

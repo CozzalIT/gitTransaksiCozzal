@@ -56,5 +56,28 @@ elseif(isset($_POST['mutasiDana'])){
   }
 }
 
+elseif(isset($_POST['addSaldo'])){
+  $kd_kas = $_POST['kas'];
+  $jumlah_dana = $_POST['jumlah'];
+  $tanggal = date('Y-m-d');
+
+  $proses = new Kas($db);
+  $show = $proses->editSaldo($kd_kas);
+  $data = $show->fetch(PDO::FETCH_OBJ);
+  $saldo_baru = $data->saldo + $jumlah_dana;
+
+  $update_kas = $proses->updateKas($kd_kas, $saldo_baru, $tanggal);
+  if($update_kas == "Success"){
+    $add_mutasi = $proses->addMutasiKas($kd_kas, $jumlah_dana, 1, $tanggal, 2);
+    if($add_mutasi == "Success"){
+      header('location:../view/'.$view.'/kas/kas.php');
+    }else{
+      echo "Proses mutasi dana gagal";
+    }
+  }else{
+    echo "Proses penambahan saldo gagal!!";
+  }
+}
+
 else header('Location:../view/'.$view.'/home/home.php');
 ?>

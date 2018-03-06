@@ -217,7 +217,7 @@
 <div id="popup-saldo" class="modal hide">
   <div class="modal-header">
     <button data-dismiss="modal" class="close" type="button">×</button>
-    <h3>Mutasi Dana</h3>
+    <h3>Tambah Saldo</h3>
   </div>
   <div class="modal-body">
     <form action="../../../proses/kas.php" method="post" class="form-horizontal">
