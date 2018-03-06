@@ -1,14 +1,16 @@
 <?php
 require("../../config/database.php");
 require("../class/kas.php");
+
 session_start();
+date_default_timezone_set('Asia/Jakarta');
 $view = $_SESSION['hak_akses'];
 
 //Tambah Kas
 if(isset($_POST['addKas'])){
   $sumber_dana = $_POST['sumber_dana'];
 	$saldo = $_POST['saldo'];
-  $tanggal = date('Y-m-d');
+  $tanggal = date('Y-m-d H:i:s');
 
   $proses = new Kas($db);
   $add = $proses->addKas($sumber_dana, $saldo, $tanggal);
@@ -33,7 +35,7 @@ elseif(isset($_POST['mutasiDana'])){
   $kas_sumber = $_POST['sumber'];
   $kas_tujuan = $_POST['tujuan'];
   $jumlah_mutasi = $_POST['mutasi'];
-  $tanggal = date('Y-m-d');
+  $tanggal = date('Y-m-d H:i:s');
 
   $proses = new Kas($db);
   $show = $proses->editSaldo($kas_sumber);
@@ -59,7 +61,7 @@ elseif(isset($_POST['mutasiDana'])){
 elseif(isset($_POST['addSaldo'])){
   $kd_kas = $_POST['kas'];
   $jumlah_dana = $_POST['jumlah'];
-  $tanggal = date('Y-m-d');
+  $tanggal = date('Y-m-d H:i:s');
 
   $proses = new Kas($db);
   $show = $proses->editSaldo($kd_kas);

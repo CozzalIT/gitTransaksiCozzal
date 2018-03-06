@@ -2,7 +2,9 @@
 require("../../config/database.php");
 require("../class/transaksi_umum.php");
 require("../class/kas.php");
+
 session_start();
+date_default_timezone_set('Asia/Jakarta');
 $view = $_SESSION['hak_akses'];
 
 //Tambah Transaksi Umum
@@ -26,7 +28,7 @@ if(isset($_POST['addTransaksiUmum'])){
   $jumlah = $_POST['jumlah'];
   $keterangan = $_POST['keterangan'];
   $keterangan_mutasi = 3;
-  $tanggal = date('Y-m-d');
+  $tanggal = date('Y-m-d H:i:s');
   $mutasi_dana = $harga*$jumlah;
   $jenis = 2;
 

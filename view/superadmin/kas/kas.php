@@ -60,7 +60,8 @@
                   <th>No</th>
                   <th>Sumber Dana</th>
                   <th>Saldo</th>
-                  <th>Mutasi Terakhir</th>
+                  <th>Tgl. Mutasi Terakhir</th>
+                  <th>Jam</jam>
                 </tr>
               </thead>
               <tbody>
@@ -69,12 +70,14 @@
                   $show = $proses->showKas();
                   $i = 1;
                   while($data = $show->fetch(PDO::FETCH_OBJ)){
+                    $dateTime = explode(" ",$data->tanggal);
                     echo "
                     <tr class='gradeC'>
                       <td>$i</td>
                       <td>$data->sumber_dana</td>
                       <td>".number_format($data->saldo, 0, ".", ".")." IDR</td>
-                      <td>$data->tanggal</td>
+                      <td>".$dateTime[0]."</td>
+                      <td>".$dateTime[1]." WIB</td>
                     </tr>
                     ";
                     $i++;
@@ -98,6 +101,7 @@
                 <tr>
                   <th>No</th>
                   <th>Tanggal</th>
+                  <th>Jam</th>
                   <th>Kas</th>
                   <th>Mutasi Dana</th>
                   <th>Jenis Mutasi</th>
@@ -132,10 +136,12 @@
                         $keterangan = "Penggajian Karyawan";
                         break;
                     }
+                    $dateTime = explode(" ",$data->tanggal);
                     echo "
                     <tr class='gradeC'>
                       <td>$i</td>
-                      <td>$data->tanggal</td>
+                      <td>".$dateTime[0]."</td>
+                      <td>".$dateTime[1]." WIB</td>
                       <td>$data->sumber_dana</td>
                       <td ".($jenis == 'Masuk' ? 'style="color:green;"' : 'style="background-color:red;color:white;"')."><strong>".number_format($data->mutasi_dana, 0, ".", ".")." IDR</strong></td>
                       <td ".($jenis == 'Masuk' ? 'style="color:green;"' : 'style="background-color:red;color:white;"')."><strong>$jenis</strong></td>

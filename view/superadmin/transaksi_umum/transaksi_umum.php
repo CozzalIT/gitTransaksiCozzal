@@ -60,13 +60,13 @@
                     <div class="control-group">
                       <label class="control-label">Harga : </label>
                       <div class="controls">
-                        <input name="harga" type="number"/>
+                        <input name="harga" type="number" value="0"/>
                       </div>
                     </div>
                     <div class="control-group">
                       <label class="control-label">Jumlah :</label>
                       <div class="controls">
-                        <input name="jumlah" type="number"/>
+                        <input name="jumlah" type="number" value="1"/>
                       </div>
                     </div>
                     <div class="control-group">
@@ -140,13 +140,13 @@
                   <div class="control-group">
                     <label class="control-label">Harga : </label>
                     <div class="controls">
-                      <input name="harga" type="number"/>
+                      <input name="harga" type="number" value="0"/>
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label">Jumlah :</label>
                     <div class="controls">
-                      <input name="jumlah" type="number"/>
+                      <input name="jumlah" type="number" value="1"/>
                     </div>
                   </div>
                   <div class="control-group">
