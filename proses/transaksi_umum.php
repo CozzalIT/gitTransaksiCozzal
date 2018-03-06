@@ -35,24 +35,31 @@ if(isset($_POST['addTransaksiUmum'])){
   $proses = new TransaksiUmum($db);
   $proses2 = new Kas($db);
 
-  $add = $proses->addTransaksiUmum($kd_kas, $kebutuhan, $harga, $jumlah, $keterangan, $tanggal);
+	$edit = $proses2->editSaldo($kd_kas);
+	$data = $edit->fetch(PDO::FETCH_OBJ);
+	if($mutasi_dana < $data->saldo){
+		$add = $proses->addTransaksiUmum($kd_kas, $kebutuhan, $harga, $jumlah, $keterangan, $tanggal);
+	  if($add == "Success"){
+	    $add_mutasi = $proses2->addMutasiKas($kd_kas, $mutasi_dana, $jenis, $tanggal, $keterangan_mutasi);
+	    $saldo = $data->saldo - ($harga*$jumlah);
+	    $update = $proses2->updateKas($kd_kas, $saldo, $tanggal);
 
-  if($add == "Success"){
-    $edit = $proses2->editSaldo($kd_kas);
-    $add_mutasi = $proses2->addMutasiKas($kd_kas, $mutasi_dana, $jenis, $tanggal, $keterangan_mutasi);
-    $data = $edit->fetch(PDO::FETCH_OBJ);
-    $saldo = $data->saldo - ($harga*$jumlah);
-    $update = $proses2->updateKas($kd_kas, $saldo, $tanggal);
+	    if($add_mutasi == "Failed"){
+	      echo 'Penambahan Mutasi Dana Gagal!!';
+	    }elseif($update == "Failed"){
+	      echo 'Saldo Kas Gagal di Update!!';
+	    }
 
-    if($add_mutasi == "Failed"){
-      echo 'Penambahan Mutasi Dana Gagal!!';
-    }elseif($update == "Failed"){
-      echo 'Saldo Kas Gagal di Update!!';
-    }
-
-    header('Location:../view/'.$view.'/transaksi_umum/laporan_transaksi_umum.php');
-  }elseif($add == "Failed"){
-    echo 'Proses Gagal!!';
+	    header('Location:../view/'.$view.'/transaksi_umum/laporan_transaksi_umum.php');
+	  }elseif($add == "Failed"){
+	    echo 'Proses Gagal!!';
+		}
+	}elseif($mutasi_dana > $data->saldo){
+		if($kebutuhan == 'umum'){
+			header('Location:../view/'.$view.'/transaksi_umum/transaksi_umum.php?umum');
+		}else{
+			header('Location:../view/'.$view.'/transaksi_umum/transaksi_umum.php?unit');
+		}
 	}
 }
 

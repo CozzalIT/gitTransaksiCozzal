@@ -26,21 +26,18 @@
       <div class="span12">
         <div class="widget-box" style="overflow-x:auto;">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5>
-              <?php
-                if(isset($_POST['kebutuhanUmum'])){
-                  echo "Kebutuhan Umum";
-                }elseif(isset($_POST['kebutuhanUnit'])){
-                  echo "Kebutuhan Unit";
-                }else{
-                  echo "Input Transaksi Umum";
-                }
-              ?>
-            </h5>
+            <h5>Transaksi Umum</h5>
           </div>
           <div class="widget-content nopadding">
             <?php
-              if(!isset($_POST['kebutuhanUmum']) && !isset($_POST['kebutuhanUnit'])){
+              if(isset($_GET['umum']) || isset($_GET['unit'])){
+                echo '
+                <div class="alert alert-danger" role="alert">
+                  <strong>Saldo Tidak Mencukupi !</strong>
+                </div>
+                ';
+              }
+              if((!isset($_POST['kebutuhanUmum']) && !isset($_POST['kebutuhanUnit'])) and !isset($_GET['umum']) and !isset($_GET['unit'])){
                 echo '
                   <div class="widget-content center" style="text-align:center"> Jenis Transaksi </div>
                   <div class="widget-content">
@@ -53,7 +50,7 @@
                   </div>
                 ';
               }
-              if(isset($_POST['kebutuhanUmum'])){
+              if(isset($_POST['kebutuhanUmum']) || isset($_GET['umum'])){
                 echo '
                 <div class="widget-content">
                   <form action="../../../proses/transaksi_umum.php" method="POST" class="form-horizontal">
@@ -102,7 +99,7 @@
                   </form>
                 </div>
                 ';
-              }elseif(isset($_POST['kebutuhanUnit'])){
+              }elseif(isset($_POST['kebutuhanUnit']) || isset($_GET['unit'])){
                 echo '
                 <div class="widget-content">
                 <form action="../../../proses/transaksi_umum.php" method="POST" class="form-horizontal">
@@ -249,6 +246,7 @@
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
+<script src="../../../asset/js/sweetalert.min.js"></script>
 <script src="../../../asset/js/jquery.min.js"></script>
 <script src="../../../asset/js/jquery.ui.custom.js"></script>
 <script src="../../../asset/js/bootstrap.min.js"></script>
