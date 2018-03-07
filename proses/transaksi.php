@@ -11,7 +11,7 @@ function getDisCount($harga_sewa, $harga_sewa_we, $harga_sewa_asli, $wd, $we, $t
      return ($harga_asli[0]*$wd)+($harga_asli[1]*$we)-$total;
   }else {
     return ($harga_sewa*$wd)+($harga_sewa_we*$we)-$total;
-  } 
+  }
 }
 
 function isNew($date){
@@ -23,9 +23,9 @@ function startinweekend($hari, $week, $jumlah_weekday, $jumlah_weekend){
   $we =0; $wd = $hari+5;
   while($wd>5){
     $we = 8-$week; $hari = $wd-5;
-    if($hari==1) $we=1; $wd=$hari-$we; 
-    $jumlah_weekend = $jumlah_weekend+$we; 
-    if($wd>5) $jumlah_weekday = $jumlah_weekday+5; else $jumlah_weekday = $jumlah_weekday+$wd;     
+    if($hari==1) $we=1; $wd=$hari-$we;
+    $jumlah_weekend = $jumlah_weekend+$we;
+    if($wd>5) $jumlah_weekday = $jumlah_weekday+5; else $jumlah_weekday = $jumlah_weekday+$wd;
   }
   return $jumlah_weekday."/".$jumlah_weekend;
 }
@@ -53,14 +53,14 @@ if(isset($_POST['addTransaksi'])){
   $week = date("w",strtotime($check_in))+1;
   if($week>5){ //jika dimuai dari weekend
     $week_kind = explode("/",startinweekend($hari, $week, 0, 0));
-    $jumlah_weekday = $week_kind[0]; $jumlah_weekend = $week_kind[1]; 
+    $jumlah_weekday = $week_kind[0]; $jumlah_weekend = $week_kind[1];
   }
   else{ //jika dimulai dri weekday
     if($week+$hari<7) {$jumlah_weekday=$hari;$jumlah_weekend=0;}
     else {
       $wd = 6 - $week;
       $week_kind = explode("/",startinweekend($hari-$wd, 6, $wd, 0));
-      $jumlah_weekday = $week_kind[0]; $jumlah_weekend = $week_kind[1]; 
+      $jumlah_weekday = $week_kind[0]; $jumlah_weekend = $week_kind[1];
     }
   }
   $harga_asli = explode("/", $harga_sewa_asli);
@@ -188,14 +188,14 @@ elseif(isset($_POST['updateTransaksi'])){
   $week = date("w",strtotime($check_in))+1;
   if($week>5){ //jika dimuai dari weekend
     $week_kind = explode("/",startinweekend($hari, $week, 0, 0));
-    $jumlah_weekday = $week_kind[0]; $jumlah_weekend = $week_kind[1]; 
+    $jumlah_weekday = $week_kind[0]; $jumlah_weekend = $week_kind[1];
   }
   else{ //jika dimulai dri weekday
     if($week+$hari<7) {$jumlah_weekday=$hari;$jumlah_weekend=0;}
     else {
       $wd = 6 - $week;
       $week_kind = explode("/",startinweekend($hari-$wd, 6, $wd, 0));
-      $jumlah_weekday = $week_kind[0]; $jumlah_weekend = $week_kind[1]; 
+      $jumlah_weekday = $week_kind[0]; $jumlah_weekend = $week_kind[1];
     }
   }
   $harga_asli = explode("/", $harga_sewa_asli);
