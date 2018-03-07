@@ -6,7 +6,7 @@
   require("../../../class/apartemen.php");
   require("../../../../config/database.php");
 
-  $thisPage = "Transaksi";
+  $thisPage = "Transaksi Umum";
 
   include "../template/head.php";
 ?>
@@ -26,21 +26,18 @@
       <div class="span12">
         <div class="widget-box" style="overflow-x:auto;">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5>
-              <?php
-                if(isset($_POST['kebutuhanUmum'])){
-                  echo "Kebutuhan Umum";
-                }elseif(isset($_POST['kebutuhanUnit'])){
-                  echo "Kebutuhan Unit";
-                }else{
-                  echo "Input Transaksi Umum";
-                }
-              ?>
-            </h5>
+            <h5>Transaksi Umum</h5>
           </div>
           <div class="widget-content nopadding">
             <?php
-              if(!isset($_POST['kebutuhanUmum']) && !isset($_POST['kebutuhanUnit'])){
+              if(isset($_GET['umum']) || isset($_GET['unit'])){
+                echo '
+                <div class="alert alert-danger" role="alert">
+                  <strong>Saldo Tidak Mencukupi !</strong>
+                </div>
+                ';
+              }
+              if((!isset($_POST['kebutuhanUmum']) && !isset($_POST['kebutuhanUnit'])) and !isset($_GET['umum']) and !isset($_GET['unit'])){
                 echo '
                   <div class="widget-content center" style="text-align:center"> Jenis Transaksi </div>
                   <div class="widget-content">
@@ -53,52 +50,59 @@
                   </div>
                 ';
               }
-              if(isset($_POST['kebutuhanUmum'])){
+              if(isset($_POST['kebutuhanUmum']) || isset($_GET['umum'])){
                 echo '
                 <div class="widget-content">
-                  <form class="form-horizontal">
+                  <form action="../../../proses/transaksi_umum.php" method="POST" class="form-horizontal">
                     <div class="control-group">
                       <label class="control-label">Harga : </label>
                       <div class="controls">
-                        <input name="harga" type="number"/>
+                        <input name="harga" type="number" value="0"/>
                       </div>
                     </div>
                     <div class="control-group">
                       <label class="control-label">Jumlah :</label>
                       <div class="controls">
-                        <input name="jumlah" type="number"/>
+                        <input name="jumlah" type="number" value="1"/>
                       </div>
                     </div>
                     <div class="control-group">
                       <label class="control-label">Keterangan :</label>
                       <div class="controls">
                         <input name="keterangan" type="Text"/>
+                        <input name="kebutuhan" type="Text" value="umum" class="hide"/>
                       </div>
                     </div>
                     <div class="control-group">
                       <label class="control-label">Sumber Dana :</label>
                       <div class="controls">
-                        <select>
-                          <option>-- Pilih Sumber Dana --</option>
-                          <option>BRI</option>
-                          <option>Mandiri</option>
-                          <option>Cash</option>
+                        <select name="kd_kas">
+                          <option name="kd_kas" value="">-- Pilih Sumber Dana --</option>
+                          ';
+                            $Proses = new Kas($db);
+                            $show = $Proses->showKas();
+                            while($data = $show->fetch(PDO::FETCH_OBJ)){
+                              if ($data->kd_kas != 0){
+                                echo "<option name='kd_kas' value='$data->kd_kas'>$data->sumber_dana</option>";
+                              }
+                            }
+                          echo '
                         </select>
                       </div>
                     </div>
                     <div class="control-group">
                       <div class="controls">
-                        <button class="btn btn-success" type="submit">Submit</button>
+                        <button class="btn btn-success" name="addTransaksiUmum" type="submit">Submit</button>
                         <a href="transaksi_umum.php" class="btn btn-inverse">Kembali</a>
                       </div>
                     </div>
                   </form>
                 </div>
                 ';
-              }elseif(isset($_POST['kebutuhanUnit'])){
+              }elseif(isset($_POST['kebutuhanUnit']) || isset($_GET['unit'])){
                 echo '
                 <div class="widget-content">
-                <form class="form-horizontal">
+                <form action="../../../proses/transaksi_umum.php" method="POST" class="form-horizontal">
 
                   <div class="control-group">
                     <label class="control-label">Apartemen :</label>
@@ -133,13 +137,13 @@
                   <div class="control-group">
                     <label class="control-label">Harga : </label>
                     <div class="controls">
-                      <input name="harga" type="number"/>
+                      <input name="harga" type="number" value="0"/>
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label">Jumlah :</label>
                     <div class="controls">
-                      <input name="jumlah" type="number"/>
+                      <input name="jumlah" type="number" value="1"/>
                     </div>
                   </div>
                   <div class="control-group">
@@ -151,8 +155,8 @@
                   <div class="control-group">
                     <label class="control-label">Sumber Dana :</label>
                     <div class="controls">
-                      <select>
-                        <option name="" value="">-- Pilih Apartemen --</option>
+                      <select name="kd_kas">
+                        <option name="" value="">-- Pilih Sumber Dana --</option>
                         ';
                           $Proses = new Kas($db);
                           $show = $Proses->showKas();
@@ -167,7 +171,7 @@
                   </div>
                   <div class="control-group">
                     <div class="controls">
-                      <button class="btn btn-success" type="submit">Submit</button>
+                      <button class="btn btn-success" name="addTransaksiUmum" type="submit">Submit</button>
                       <a href="transaksi_umum.php" class="btn btn-inverse">Kembali</a>
                     </div>
                   </div>
@@ -242,6 +246,7 @@
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
+<script src="../../../asset/js/sweetalert.min.js"></script>
 <script src="../../../asset/js/jquery.min.js"></script>
 <script src="../../../asset/js/jquery.ui.custom.js"></script>
 <script src="../../../asset/js/bootstrap.min.js"></script>

@@ -66,8 +66,6 @@ if(isset($_POST['addTransaksi'])){
   $harga_asli = explode("/", $harga_sewa_asli);
   if($total<(($harga_asli[0]*$jumlah_weekday)+($harga_asli[1]*$jumlah_weekend))) $diskon = getDisCount($harga_sewa, $harga_sewa_we, $harga_sewa_asli, $jumlah_weekday, $jumlah_weekend, $total);
   else $diskon = 0;
-  $oto = ($harga_asli[0]*$jumlah_weekday)+($harga_asli[1]*$jumlah_weekend);
-//  echo "$oto >> $total"; die("$diskon");
   $proses = new Transaksi($db);
   $add = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $check_in, $check_out, $jumlah_weekend, $jumlah_weekday, $hari, $harga_sewa, $harga_sewa_we, $tgl_transaksi, $diskon, $ekstra_charge, $kd_bank, $tamu, $kd_booking, $dp, $total, $sisa_pelunasan);
   if($add == "Success"){

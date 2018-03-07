@@ -41,9 +41,32 @@ class Kas {
   }
 
   public function showMutasiKas(){
-    $sql = "SELECT * FROM tb_mutasi_kas";
+    $sql = "SELECT
+      tb_mutasi_kas.kd_mutasi_kas, tb_mutasi_kas.kd_kas, tb_mutasi_kas.mutasi_dana, tb_mutasi_kas.jenis, tb_mutasi_kas.tanggal, tb_mutasi_kas.keterangan,
+      tb_kas.kd_kas, tb_kas.sumber_dana
+      FROM tb_mutasi_kas
+      INNER JOIN tb_kas ON tb_mutasi_kas.kd_kas = tb_kas.kd_kas ORDER BY tb_mutasi_kas.tanggal DESC";
     $query = $this->db->query($sql);
     return $query;
   }
+
+  //Edit
+  public function editSaldo($kd_kas){
+    $sql = "SELECT saldo FROM tb_kas WHERE kd_kas='$kd_kas'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
+  //Update
+  public function updateKas($kd_kas, $saldo, $tanggal){
+    $sql = "UPDATE tb_kas SET saldo='$saldo', tanggal='$tanggal' WHERE kd_kas='$kd_kas'";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
+  }
+
 }
 ?>
