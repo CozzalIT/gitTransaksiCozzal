@@ -5,6 +5,31 @@ require("../class/penyewa.php");
 session_start();
 $view = $_SESSION['hak_akses'];
 
+function getDisCount($harga_sewa, $harga_sewa_we, $harga_sewa_asli, $wd, $we, $total){
+  $harga_asli = explode("/", $harga_sewa_asli);
+  if(($harga_sewa+$harga_sewa_we)<($harga_asli[0]+$harga_asli[1])){ //0 = weekday, 1 = weekend
+     return ($harga_asli[0]*$wd)+($harga_asli[1]*$we)-$total;
+  }else {
+    return ($harga_sewa*$wd)+($harga_sewa_we*$we)-$total;
+  } 
+}
+
+function isNew($date){
+  if(strtotime($date)>=strtotime((date('Y-m-d')))) return true;
+  else return false;
+}
+
+function startinweekend($hari, $week, $jumlah_weekday, $jumlah_weekend){
+  $we =0; $wd = $hari+5;
+  while($wd>5){
+    $we = 8-$week; $hari = $wd-5;
+    if($hari==1) $we=1; $wd=$hari-$we; 
+    $jumlah_weekend = $jumlah_weekend+$we; 
+    if($wd>5) $jumlah_weekday = $jumlah_weekday+5; else $jumlah_weekday = $jumlah_weekday+$wd;     
+  }
+  return $jumlah_weekday."/".$jumlah_weekend;
+}
+
 //Tambah Transaksi
 if(isset($_POST['addTransaksi'])){
 	$kd_penyewa 	= $_POST['kd_penyewa'];
@@ -15,11 +40,8 @@ if(isset($_POST['addTransaksi'])){
 	$check_in 		= $_POST['check_in'];
 	$check_out 		= $_POST['check_out'];
 	$harga_sewa 	= $_POST['harga_sewa'];
+  $harga_sewa_we = $_POST['harga_sewa_we'];
   $harga_sewa_asli   = $_POST['harga_sewa_asli'];
-  $diskon = 0;
-  //if($harga_sewa<$harga_sewa_asli){
-   //  $diskon = $harga_sewa_asli-$harga_sewa;
- // }
 	$ekstra_charge 	= $_POST['ekstra_charge'];
 	$kd_booking 	= $_POST['booking_via'];
 	$kd_bank 		= $_POST['dp_via'];
@@ -28,55 +50,26 @@ if(isset($_POST['addTransaksi'])){
   $sisa_pelunasan = $total - $dp;
   $hari = $_POST['jumhari'];
   $tgl_transaksi = date('y-m-d');
-  if($total<($harga_sewa*$hari)){
-     if($harga_sewa<$harga_sewa_asli){
-		 $diskon = $harga_sewa_asli*$hari-$total;
-	 }else {
-		 $diskon = $harga_sewa*$hari-$total;
-	 }
+  $week = date("w",strtotime($check_in))+1;
+  if($week>5){ //jika dimuai dari weekend
+    $week_kind = explode("/",startinweekend($hari, $week, 0, 0));
+    $jumlah_weekday = $week_kind[0]; $jumlah_weekend = $week_kind[1]; 
   }
-
- 	//==== Memasukkan tiap tanggal mulai dari CheckIn sampai CheckOut kedalam Array ====
-	$i = 1;
-	$tmp = '0000-00-00';
-	$range_hari[0] = $check_in;
-	$mod_check_out = date('Y-m-d', strtotime('-1 days', strtotime($check_out)));
-
-	if($check_in != $mod_check_out){
-		$check_out = $mod_check_out;
-		while($tmp != $check_out){
-			$range_hari[$i] = date('Y-m-d', strtotime('+'.$i.' days', strtotime($check_in)));
-			$tmp = $range_hari[$i];
-			$i++;
-		}
-	}
-	$jumlah_hari = count($range_hari);
-
-	//==== Menghitung jumlah Weekend dan Weekday dari CheckIn sampai CheckOut ====
-	function isWeekend($date) {
-    return (date('N', strtotime($date)) >= 5 && date('N', strtotime($date)) >= 4 && date('N', strtotime($date)) != 6);
-	}
-
-  function isNew($date){
-    if(strtotime($date)>=strtotime((date('Y-m-d')))) return true;
-    else return false;
+  else{ //jika dimulai dri weekday
+    if($week+$hari<7) {$jumlah_weekday=$hari;$jumlah_weekend=0;}
+    else {
+      $wd = 6 - $week;
+      $week_kind = explode("/",startinweekend($hari-$wd, 6, $wd, 0));
+      $jumlah_weekday = $week_kind[0]; $jumlah_weekend = $week_kind[1]; 
+    }
   }
-	$y = 0;
-	if($jumlah_hari = 1){
-		$weekend[999] = 'null';
-	}
-	while($y != ($jumlah_hari)){
-	  if(isWeekend($range_hari[$y])){
-	    $weekend[$y] = $range_hari[$y];
-	  }
-	  $y++;
-	}
- 
-	$jumlah_weekend = count($weekend) - 1;
-	$jumlah_weekday = $hari - $jumlah_weekend;
-
+  $harga_asli = explode("/", $harga_sewa_asli);
+  if($total<(($harga_asli[0]*$jumlah_weekday)+($harga_asli[1]*$jumlah_weekend))) $diskon = getDisCount($harga_sewa, $harga_sewa_we, $harga_sewa_asli, $jumlah_weekday, $jumlah_weekend, $total);
+  else $diskon = 0;
+  $oto = ($harga_asli[0]*$jumlah_weekday)+($harga_asli[1]*$jumlah_weekend);
+//  echo "$oto >> $total"; die("$diskon");
   $proses = new Transaksi($db);
-  $add = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total, $sisa_pelunasan, $hari, $tgl_transaksi, $diskon, $jumlah_weekend, $jumlah_weekday);
+  $add = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $check_in, $check_out, $jumlah_weekend, $jumlah_weekday, $hari, $harga_sewa, $harga_sewa_we, $tgl_transaksi, $diskon, $ekstra_charge, $kd_bank, $tamu, $kd_booking, $dp, $total, $sisa_pelunasan);
   if($add == "Success"){
     if(isNew($check_in)) $add2 = $proses->addUnit_kotor($kd_unit, $check_in, $check_out);
 	  header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php');
@@ -185,61 +178,31 @@ elseif(isset($_POST['updateTransaksi'])){
   $check_in     = $_POST['check_in'];
   $check_out    = $_POST['check_out'];
   $harga_sewa   = $_POST['harga_sewa'];
+  $harga_sewa_we   = $_POST['harga_sewa_we'];
   $harga_sewa_asli   = $_POST['harga_sewa_asli'];
-  $diskon = 0;
-  //if($harga_sewa<$harga_sewa_asli){
-   // $diskon = $harga_sewa_asli-$harga_sewa;
-  //}
-
   $ekstra_charge  = $_POST['ekstra_charge'];
   $kd_booking   = $_POST['booking_via'];
   $kd_bank    = $_POST['dp_via'];
   $dp       = $_POST['dp'];
   $total_tagihan  = $_POST['total'];
-
   $sisa_pelunasan = $total_tagihan - $dp;
   $hari = $_POST['jumhari'];
-  if($total_tagihan<$harga_sewa*$hari){
-	  if ($harga_sewa < $harga_sewa_asli){
-     $diskon = $harga_sewa_asli*$hari-$total_tagihan;
-	  } else {
-		  $diskon = $harga_sewa*$hari-$total_tagihan;
-	  }
+  $week = date("w",strtotime($check_in))+1;
+  if($week>5){ //jika dimuai dari weekend
+    $week_kind = explode("/",startinweekend($hari, $week, 0, 0));
+    $jumlah_weekday = $week_kind[0]; $jumlah_weekend = $week_kind[1]; 
   }
-
-	//==== Memasukkan tiap tanggal mulai dari CheckIn sampai CheckOut kedalam Array ====
-	$i = 1;
-	$tmp = '0000-00-00';
-	$range_hari[0] = $check_in;
-	$mod_check_out = date('Y-m-d', strtotime('-1 days', strtotime($check_out)));
-
-	if($check_in != $mod_check_out){
-		$check_out = $mod_check_out;
-		while($tmp != $check_out){
-			$range_hari[$i] = date('Y-m-d', strtotime('+'.$i.' days', strtotime($check_in)));
-			$tmp = $range_hari[$i];
-			$i++;
-		}
-	}
-	$jumlah_hari = count($range_hari);
-
-	//==== Menghitung jumlah Weekend dan Weekday dari CheckIn sampai CheckOut ====
-	function isWeekend($date) {
-    return (date('N', strtotime($date)) >= 5 && date('N', strtotime($date)) >= 4 && date('N', strtotime($date)) != 6);
-	}
-	$y = 0;
-	if($jumlah_hari = 1){
-		$weekend[999] = 'null';
-	}
-	while($y != ($jumlah_hari)){
-	  if(isWeekend($range_hari[$y])){
-	    $weekend[$y] = $range_hari[$y];
-	  }
-	  $y++;
-	}
-	$jumlah_weekend = count($weekend) - 1;
-	$jumlah_weekday = $hari - $jumlah_weekend;
-
+  else{ //jika dimulai dri weekday
+    if($week+$hari<7) {$jumlah_weekday=$hari;$jumlah_weekend=0;}
+    else {
+      $wd = 6 - $week;
+      $week_kind = explode("/",startinweekend($hari-$wd, 6, $wd, 0));
+      $jumlah_weekday = $week_kind[0]; $jumlah_weekend = $week_kind[1]; 
+    }
+  }
+  $harga_asli = explode("/", $harga_sewa_asli);
+  if($total_tagihan<(($harga_asli[0]*$jumlah_weekday)+($harga_asli[1]*$jumlah_weekend))) $diskon = getDisCount($harga_sewa, $harga_sewa_we, $harga_sewa_asli, $jumlah_weekday, $jumlah_weekend, $total_tagihan);
+  else $diskon = 0;
   $proses = new Transaksi($db);
   $update = $proses->updateUnit_kotor($kd_transaksi ,$kd_unit, $check_in, $check_out);
   $add = $proses->updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $diskon, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total_tagihan, $sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday);

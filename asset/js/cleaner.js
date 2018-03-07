@@ -19,14 +19,6 @@ function updateelementtask(konten2, jumlah2, task){
 	$("#task-temp").val(task);
 }
 
-function getNewTask(unit){
-    $.post('../../../proses/task.php', {NewTask : unit},
-    function (data) {
-      response = JSON.parse(data);
-      updateelementtask(response.konten2, response.jumlah2, response.task);
-    });
-}
-
 	$(".status").click(function(){
 	  var a = $(this).attr('id');
 	    $.post('../../../proses/option_unit.php', {status : a},
@@ -72,7 +64,6 @@ function getNewTask(unit){
 				current_jml = response.jumlah;notecap(current_jml);
 				if(jenis!='lihat'){
 					updateelementtask(response.konten2, response.jumlah2, response.task);
-					getNewTask(id);
 				}
 		    });
 		}

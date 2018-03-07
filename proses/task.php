@@ -11,9 +11,8 @@ if(isset($_POST['addTask'])){
   $task = $_POST['task'];
   $unit = $_POST['unit'];
   $sifat = $_POST['sifat'];
-  $stmp = date('U');
   $proses = new Task($db);
-  $add = $proses->addTask($task, $unit, $sifat, $stmp);
+  $add = $proses->addTask($task, $unit, $sifat);
   if($add == "Success"){
     header('Location:../view/'.$view.'/unit/task.php');
   }
@@ -77,30 +76,6 @@ elseif(isset($_POST['id'])){
   echo json_encode($callback);  
 }
 
-elseif(isset($_POST['NewTask'])){
-  $kd_unit = $_POST['NewTask'];
-  $Proses = new Task($db); 
-  $show = $Proses->getStmp_unit($kd_unit);
-  if($show) $stmp = $show["stmp_task"]; 
-  else $stmp = '10000';
-  $all_task = ""; $jumlah=0;
-  $show2 = $Proses->max_stmp($kd_unit); $stmp_new = $show2['MAX(stmp)'];
-  $update = $Proses->update_new_task($kd_unit, $stmp, $stmp_new);
-  $jumlah2=0; $html2=""; $all_task="0";
-  $show = $Proses->showTask_byunit($kd_unit);
-  while($data = $show->fetch(PDO::FETCH_OBJ)){
-  $jumlah2++; $all_task .= "/".$data->kd_task;
-    $html2 .= '<div class="controls my">';
-    $html2 .= '<input type="checkbox" class="ck" name="'.$data->kd_task.'-ck">'.$data->task.'</div>';
-  }
-  if($jumlah2==0){
-  $html2 = '<div id="empty-task" class="note">Task belum tersedia.';
-  $html2.= 'Silahkan isi terlebih dahulu pada menu <a style="color:#169595;" href="task.php">Task Cleaner</a></div>';
-  } 
-  $callback = array('konten2'=>$html2, 'jumlah2'=>$jumlah2, 'task'=>$all_task);
-  echo json_encode($callback);  
-}
-
 elseif(isset($_POST['updateTask_unit'])){
   $kd_unit = $_POST['updateTask_unit'];
   $Proses = new Task($db);
@@ -142,7 +117,6 @@ elseif(isset($_POST['ajx_id'])){
     $html2 = '<div id="empty-task" class="note">Task belum tersedia.';
     $html2.= 'Silahkan isi terlebih dahulu pada menu <a style="color:#169595;" href="task.php">Task Cleaner</a></div>';
   } 
-  $html2 .= '<div id="search-task" class="note">Memuat task terbaru ...</div>';
   $callback = array('konten'=>$html, 'jumlah'=>$jumlah, 'konten2'=>$html2, 'jumlah2'=>$jumlah2, 'task'=>$all_task);
   echo json_encode($callback);
 }

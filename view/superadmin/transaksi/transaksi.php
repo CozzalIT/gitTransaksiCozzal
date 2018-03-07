@@ -251,17 +251,23 @@
         					</div>
 				        </div>
 			        </div>
-              <div class="control-group">
-      				  <label class="control-label">Harga Sewa Unit:</label>
+              <div class="control-group" id="harga_sewa-C">
+      				  <label class="control-label">Harga Sewa Weekday:</label>
       				  <div class="controls">
       				    <input name="harga_sewa" min="0"  id="harga_sewa" type="number" onChange="hasil(this.form)" />
                 </div>
       			  </div>
+              <div class="control-group" id="harga_sewa_we-C">
+                <label class="control-label">Harga Sewa Weekend:</label>
+                <div class="controls">
+                  <input name="harga_sewa_we" min="0"  id="harga_sewa_we" type="number" onChange="hasil(this.form)" />
+                </div>
+              </div>
       				<div class="control-group">
       				  <label class="control-label">Jumlah Tamu :</label>
       				  <div class="controls">
       				    <input name="tamu" min="0" type="number" value="5" onChange="ECH(this.form)"/>
-                  <input name="harga_sewa_asli" type="number" style="display:none;"/>
+                  <input name="harga_sewa_asli" type="text" style="display:none;"/>
       				  </div>
       			  </div>
               <div class="control-group">

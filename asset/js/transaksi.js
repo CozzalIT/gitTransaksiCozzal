@@ -1,3 +1,18 @@
+var we_G = 0;
+var wd_G = 0;
+
+function startinweekend(hari, week, jumlah_weekday, jumlah_weekend){
+  var we =0; var wd =hari+5;
+  while(wd>5){
+    we = 8-week; hari = wd-5; 
+    if(hari==1) we=1; wd=hari-we; 
+    jumlah_weekend = jumlah_weekend+we; 
+    if(wd>5) jumlah_weekday = jumlah_weekday+55; else jumlah_weekday = jumlah_weekday+wd;     
+  }
+  we_G = jumlah_weekend; wd_G = jumlah_weekday;
+}
+
+
 function updateselisih(form)
 {
  	var CI = new Date(form.check_in.value);
@@ -8,6 +23,7 @@ function updateselisih(form)
 	x = x/86400000;
 	if(x>=0) form.jumhari.value=x;
 	else form.jumhari.value=0;
+
 }
 
 function nilaitanggal(t, b)
@@ -22,7 +38,7 @@ function nilaitanggal(t, b)
 
 function hasil(form)
 {
-	form.total.value= (Number(form.harga_sewa.value)*Number(form.jumhari.value)) + Number(form.ekstra_charge.value);
+	form.total.value= ($("#harga_sewa").val()*wd_G) + ($("#harga_sewa_we").val()*we_G) + Number(form.ekstra_charge.value);
 }
 
 function ECH(form)
@@ -43,29 +59,40 @@ function ECH(form)
 
 function biaya(form)
 {
-	var a= form.unit.value;
+	var week = new Date(form.check_in.value).getDay(); 
+	var we =0; var hari= Number(form.jumhari.value);
+	var a= form.unit.value; var wd; week++;
+	if(week>5){ //jika dimuai dari weekend
+		startinweekend(hari, week, 0, 0);
+	}
+	else{ //jika dimulai dri weekday
+	  if((week+hari)<7) {wd_G=hari;we_G=0;}
+	  else {
+	    wd = 6 - week;
+	    startinweekend(hari-wd, 6, wd, 0);
+	  }
+	}
 	a = a.split("+");
-	var b = new Date(form.check_in.value).getDay();
-	i = 1;
-	if (b>4) {i++;}
-	form.harga_sewa.value=a[i];
-	form.harga_sewa_asli.value = a[i];
-	form.ekstra_charge.value=0; 
-	hasil(form);
+	if(we_G!=0) {$("#harga_sewa_we").val(a[2]); $("#harga_sewa_we-C").show();} 
+	else {$("#harga_sewa_we").val("0"); $("#harga_sewa_we-C").hide();};
+	if(wd_G!=0) {$("#harga_sewa").val(a[1]); $("#harga_sewa-C").show();} 
+	else {$("#harga_sewa").val("0"); $("#harga_sewa-C").hide();};
+	form.harga_sewa_asli.value = a[1]+"/"+a[2];
+	form.ekstra_charge.value=0; hasil(form);
 }
 
 function keepvalid(form){
 	var a = form.check_in.value;
 	var b = new Date(a);
 	form.check_out.value = nilaitanggal(b,1);
-	biaya(form); ECH(form); 
-	updateselisih(form); hasil(form); 	
+	updateselisih(form);
+	ECH(form); biaya(form); 
 }
 
 function keepvalid2(form){
 	if (form.check_in.value!="")
 	{
-		updateselisih(form); hasil(form);
+		updateselisih(form); biaya(form);
 	}
 	else
 	{
@@ -88,8 +115,8 @@ function validasi(form)
 		form.check_out.value = nilaitanggal(c,1);
 	} else
 	form.check_out.value = nilaitanggal(b,1);
-	biaya(form); ECH(form); 
-	updateselisih(form); hasil(form); 
+	updateselisih(form);
+	ECH(form); biaya(form); 
 }
 
 function validasi2(form)
@@ -103,7 +130,7 @@ function validasi2(form)
 			alert("Pilih tanggal setelah tanggal check in");
 			form.check_out.value="";
 		}
-		updateselisih(form); hasil(form);
+		updateselisih(form); biaya(form);
 	}
 	else
 	{
@@ -116,7 +143,7 @@ function tambah(form)
 {
 	var d = new Date(form.check_in.value);
 	var h = nilaitanggal(d,Number(form.jumhari.value));
-    form.check_out.value=h; hasil(form);
+    form.check_out.value=h; biaya(form); hasil(form);
 }
 
 function valid1(form)

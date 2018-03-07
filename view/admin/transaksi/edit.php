@@ -102,8 +102,7 @@
                                 echo "<option name='kd_unit' value='$val'>$data->no_unit</option>";
                               }else{
                                 echo "<option name='kd_unit' value='$val' selected='true'>$data->no_unit</option>";
-                                $hari_ke = Date('w',strtotime($edit->check_in))+1;
-                                if($hari_ke>5) $harga_asal = $data->h_sewa_we; else $harga_asal = $data->h_sewa_wd;
+                                $harga_asal = $data->h_sewa_wd."/".$data->h_sewa_we;
                               }
                             }
                           }
@@ -114,19 +113,25 @@
             					</div>
                     </div>
                   </div>
-                  <div class="control-group">
-                    <label class="control-label">Harga Sewa :</label>
+                  <div class="control-group" id="harga_sewa-C">
+                    <label class="control-label">Harga Sewa Weekday:</label>
                     <div class="controls">
-                    <input name="harga_sewa_asli" type="number" style="display:none;" value="'.$harga_asal.'"/>
-                    <input name="harga_sewa" min="0"  required id="harga_sewa" type="number" class="span11" placeholder="Harga Sewa" value="'.$edit->harga_sewa.'" onChange="hasil(this.form)"/>
+                      <input name="harga_sewa" min="0" value="'.$edit->harga_sewa.'" required class="span11" id="harga_sewa" type="number" onChange="hasil(this.form)" />
+                    </div>
+                  </div>
+                  <div class="control-group" id="harga_sewa_we-C">
+                    <label class="control-label">Harga Sewa Weekend:</label>
+                    <div class="controls">
+                      <input name="harga_sewa_we" min="0" value="'.$edit->harga_sewa_weekend.'" required class="span11" id="harga_sewa_we" type="number" onChange="hasil(this.form)" />
                     </div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label">Tamu :</label>
+                    <label class="control-label">Jumlah Tamu :</label>
                     <div class="controls">
-                    <input name="tamu" onChange="ECH(this.form)" type="number" required min="0" class="span11" value="'.$edit->tamu.'"/>
+                      <input name="tamu" min="0" type="number" value="'.$edit->tamu.'" onChange="ECH(this.form)"/>
+                      <input name="harga_sewa_asli" type="text" style="display:none;" value="'.$harga_asal.'"/>
                     </div>
-                  </div>
+                  </div>    
                   <div class="control-group">
                     <label class="control-label">Ekstra Charge :</label>
                     <div class="controls">

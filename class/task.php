@@ -21,9 +21,12 @@ class Task {
     return $query;
   }
 
-  public function addTask($task, $unit, $sifat, $stmp){
-    $sql = "INSERT INTO tb_task(task,unit,sifat,stmp) VALUES('$task', '$unit', '$sifat', '$stmp')";
+  public function addTask($task, $unit, $sifat){
+    $sql = "INSERT INTO tb_task(task,unit,sifat) VALUES('$task', '$unit', '$sifat')";
     $query = $this->db->query($sql);
+    if($sifat=="Rutin"){
+      $sql = "INSERT INTO tb_task_unit (kd_unit, kd_task) SELECT unit, kd_task FROM tb_task ";
+    }
     if(!$query){
       return "Failed";
     }else{
@@ -76,31 +79,7 @@ class Task {
     IN (SELECT MAX(check_out) FROM tb_unit_kotor Where kd_unit='$kd_unit' AND check_out<='$sekarang')";
     $query = $this->db->query($sql);
     return $query;
-  }    
-
-  public function getStmp_unit($kd_unit) {
-   $result = $this->db->prepare("SELECT stmp_task FROM tb_unit WHERE kd_unit= ? AND stmp_task is not null");
-      $result->bindParam(1, $kd_unit);
-      $result->execute();
-      $rows = $result->fetch();
-      return $rows;
-  }  
-
-  public function max_stmp($kd_unit){
-   $result = $this->db->prepare("SELECT MAX(stmp) FROM tb_task where unit= ? or unit='Semua'");
-      $result->bindParam(1, $kd_unit);
-      $result->execute();
-      $rows = $result->fetch();
-      return $rows;
-  } 
-
-  public function update_new_task($kd_unit, $stmp, $stmp_new){
-    $sql = "INSERT INTO tb_task_unit (kd_unit, kd_task)
-    SELECT '$kd_unit' As kd, kd_task FROM tb_task WHERE stmp > $stmp AND (unit='$kd_unit' or unit='Semua')";
-    $sql2 = "UPDATE tb_unit SET stmp_task='$stmp_new' where kd_unit='$kd_unit'";
-    $query = $this->db->query($sql2);
-    $query = $this->db->query($sql);
-  }    
+  }       
  
   public function isTask_updated($kd_unit, $CO) {
    $result = $this->db->prepare("SELECT kd_unit FROM tb_unit WHERE kd_unit= ? AND tgl_task=?");
@@ -115,7 +94,7 @@ class Task {
     $sql1 = "INSERT INTO tb_task_unit(kd_unit, kd_task) 
     SELECT '$kd_unit' As kd, kd_task FROM tb_task WHERE unit='$kd_unit' or unit='Semua'";
     $sql2 = "UPDATE tb_unit SET tgl_task='$CO' where kd_unit='$kd_unit'";
-    $delete = "DELETE FROM tb_task where sifat='Sekali'";
+    $delete = "DELETE FROM tb_task WHERE sifat='Sekali' AND (unit='$kd_unit' or unit='Semua')";
     $query = $this->db->query($sql1);
     $query = $this->db->query($sql2);
     $query = $this->db->query($delete);
