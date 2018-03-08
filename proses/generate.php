@@ -61,7 +61,9 @@ if(isset($_SESSION["username"])){
 			  $diskon = 0;
 			}			
 			// ----------------- Update data we wd ------------------
-			$Proses->updateTransaksi_gen($kd_transaksi,$harga_asli[0]*$jumlah_weekday,$harga_asli[1]*$jumlah_weekend, $diskon, $jumlah_weekend, $jumlah_weekday);
+			$harga_sewa = $harga_asli[0];
+			$harga_sewa_we = $harga_asli[1];
+			$Proses->updateTransaksi_gen($kd_transaksi,$harga_sewa,$harga_sewa_we, $diskon, $jumlah_weekend, $jumlah_weekday);
 		}
 
 		$show = $Proses->showConfrim_gen();
@@ -91,7 +93,7 @@ if(isset($_SESSION["username"])){
 			  $diskon = 0;
 			}			
 			// ----------------- Update data we wd ------------------
-			$Proses->updateConfrim_gen($kd_confirm_transaksi,$harga_asli[0]*$jumlah_weekday,$harga_asli[1]*$jumlah_weekend, $diskon, $jumlah_weekend, $jumlah_weekday);
+			$Proses->updateConfrim_gen($kd_confirm_transaksi,$harga_asli[0],$harga_asli[1], $diskon, $jumlah_weekend, $jumlah_weekday);
 		}
 		header('Location:../view/'.$view.'/home/home.php');
 } else header('location:../index.php');
