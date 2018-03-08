@@ -217,7 +217,7 @@ public function showTransaksi_gen(){
     tb_transaksi.kd_transaksi, tb_transaksi.check_in, tb_transaksi.harga_sewa,tb_transaksi.hari, tb_transaksi.harga_sewa_weekend, tb_transaksi.total_tagihan, tb_transaksi.diskon,
     tb_unit.h_sewa_we, tb_unit.h_sewa_wd
     FROM tb_transaksi INNER JOIN tb_unit ON tb_unit.kd_unit = tb_transaksi.kd_unit
-    WHERE tb_transaksi.harga_sewa_weekend is null";
+    WHERE tb_transaksi.harga_sewa_weekend is NULL OR tb_transaksi.harga_sewa_weekend=0";
   $query = $this->db->query($sql);
   return $query;
 }
@@ -234,7 +234,7 @@ public function showConfrim_gen(){
     tb_confirm_transaksi.harga_sewa_weekend, tb_confirm_transaksi.total_tagihan, tb_confirm_transaksi.diskon,
     tb_unit.h_sewa_we, tb_unit.h_sewa_wd
     FROM tb_confirm_transaksi INNER JOIN tb_unit ON tb_unit.kd_unit = tb_confirm_transaksi.kd_unit
-    WHERE tb_confirm_transaksi.harga_sewa_weekend is null";
+    WHERE tb_confirm_transaksi.harga_sewa_weekend is NULL OR tb_confirm_transaksi.harga_sewa_weekend=0";
   $query = $this->db->query($sql);
   return $query;
 }
