@@ -55,6 +55,11 @@
                 <div class="widget-content">
                   <form action="../../../proses/transaksi_umum.php" method="POST" class="form-horizontal">
                     <div class="control-group">
+                      <div class="controls">
+                        <label class="control-label"><strong>KEBUTUHAN UMUM</strong></label>
+                      </div>
+                    </div>
+                    <div class="control-group">
                       <label class="control-label">Harga : </label>
                       <div class="controls">
                         <input name="harga" type="number" value="0"/>
@@ -103,7 +108,11 @@
                 echo '
                 <div class="widget-content">
                 <form action="../../../proses/transaksi_umum.php" method="POST" class="form-horizontal">
-
+                  <div class="control-group">
+                    <div class="controls">
+                      <label class="control-label"><strong>KEBUTUHAN UNIT</strong></label>
+                    </div>
+                  </div>
                   <div class="control-group">
                     <label class="control-label">Apartemen :</label>
                     <div class="controls" id="form_apt" name="form_apt">
