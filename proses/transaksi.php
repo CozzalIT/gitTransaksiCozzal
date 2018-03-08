@@ -25,14 +25,14 @@ function startinweekend($hari, $week, $jumlah_weekday, $jumlah_weekend){
     $we = 8-$week; $hari = $wd-5;
     if($hari==1){
       $we=1;
-    }  
-    $wd=$hari-$we; 
-    $jumlah_weekend = $jumlah_weekend+$we; 
+    }
+    $wd=$hari-$we;
+    $jumlah_weekend = $jumlah_weekend+$we;
     if($wd>5) {
-      $jumlah_weekday = $jumlah_weekday+5; 
+      $jumlah_weekday = $jumlah_weekday+5;
     } else{
-      $jumlah_weekday = $jumlah_weekday+$wd; 
-    }     
+      $jumlah_weekday = $jumlah_weekday+$wd;
+    }
   }
   return $jumlah_weekday."/".$jumlah_weekend;
 }
@@ -213,7 +213,7 @@ elseif(isset($_POST['updateTransaksi'])){
   else $diskon = 0;
   $proses = new Transaksi($db);
   $update = $proses->updateUnit_kotor($kd_transaksi ,$kd_unit, $check_in, $check_out);
-  $add = $proses->updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $diskon, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total_tagihan, $sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday);
+  $add = $proses->updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $harga_sewa_we, $diskon, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total_tagihan, $sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday);
   if($add == "Success"){
     header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php');
   } else echo 'error';
