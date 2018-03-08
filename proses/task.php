@@ -13,10 +13,21 @@ if(isset($_POST['addTask'])){
   $sifat = $_POST['sifat'];
   $proses = new Task($db);
   $add = $proses->addTask($task, $unit, $sifat);
-  if($add == "Success"){
-    header('Location:../view/'.$view.'/unit/task.php');
+  if($sifat!="Sekali"){
+    $kd_unit_base = "0";
+    while($data = $add->fetch(PDO::FETCH_OBJ)){$kd_unit_base .= "/".$data->kd_unit;}
+    if($kd_unit_base=="0"){
+      $show_kotor = $proses->showUnit_kotor($sekarang);
+      while($data = $show_kotor->fetch(PDO::FETCH_OBJ)){$kd_unit_base .= "/".$data->kd_unit;}
+    }
+    if($kd_unit_base!="0"){
+      $kd_unit = explode("/", $kd_unit_base);
+      for($i=1; $i<count($kd_unit); $i++) {
+        $proses->updateTask_Unit2($kd_unit[$i]);
+      }
+    }
   }
-  else echo "error";
+  header('Location:../view/'.$view.'/unit/task.php');
 }
 
 elseif(isset($_POST['updateTask'])){

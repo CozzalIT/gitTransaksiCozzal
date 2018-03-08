@@ -23,9 +23,16 @@ function startinweekend($hari, $week, $jumlah_weekday, $jumlah_weekend){
   $we =0; $wd = $hari+5;
   while($wd>5){
     $we = 8-$week; $hari = $wd-5;
-    if($hari==1) $we=1; $wd=$hari-$we;
-    $jumlah_weekend = $jumlah_weekend+$we;
-    if($wd>5) $jumlah_weekday = $jumlah_weekday+5; else $jumlah_weekday = $jumlah_weekday+$wd;
+    if($hari==1){
+      $we=1;
+    }  
+    $wd=$hari-$we; 
+    $jumlah_weekend = $jumlah_weekend+$we; 
+    if($wd>5) {
+      $jumlah_weekday = $jumlah_weekday+5; 
+    } else{
+      $jumlah_weekday = $jumlah_weekday+$wd; 
+    }     
   }
   return $jumlah_weekday."/".$jumlah_weekend;
 }
@@ -64,8 +71,11 @@ if(isset($_POST['addTransaksi'])){
     }
   }
   $harga_asli = explode("/", $harga_sewa_asli);
-  if($total<(($harga_asli[0]*$jumlah_weekday)+($harga_asli[1]*$jumlah_weekend))) $diskon = getDisCount($harga_sewa, $harga_sewa_we, $harga_sewa_asli, $jumlah_weekday, $jumlah_weekend, $total);
-  else $diskon = 0;
+  if($total<(($harga_asli[0]*$jumlah_weekday)+($harga_asli[1]*$jumlah_weekend))){
+    $diskon = getDisCount($harga_sewa, $harga_sewa_we, $harga_sewa_asli, $jumlah_weekday, $jumlah_weekend, $total);
+  } else {
+    $diskon = 0;
+  }
   $proses = new Transaksi($db);
   $add = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $check_in, $check_out, $jumlah_weekend, $jumlah_weekday, $hari, $harga_sewa, $harga_sewa_we, $tgl_transaksi, $diskon, $ekstra_charge, $kd_bank, $tamu, $kd_booking, $dp, $total, $sisa_pelunasan);
   if($add == "Success"){

@@ -11,6 +11,12 @@ class Task {
     $query = $this->db->query($sql);
     return $query;
   }
+
+  public function showUnit_kotor($sekarang){
+    $sql = "SELECT DISTINCT kd_unit FROM tb_unit_kotor WHERE check_out<='$sekarang'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
   
   public function showTask_unit(){
     $sql = "SELECT tb_task.kd_task, tb_task.task, tb_task.sifat, tb_unit.no_unit, tb_apt.nama_apt FROM tb_task 
@@ -23,15 +29,10 @@ class Task {
 
   public function addTask($task, $unit, $sifat){
     $sql = "INSERT INTO tb_task(task,unit,sifat) VALUES('$task', '$unit', '$sifat')";
+    $sql2 = "SELECT DISTINCT kd_unit FROM tb_task_unit";
     $query = $this->db->query($sql);
-    if($sifat=="Rutin"){
-      $sql = "INSERT INTO tb_task_unit (kd_unit, kd_task) SELECT unit, kd_task FROM tb_task ";
-    }
-    if(!$query){
-      return "Failed";
-    }else{
-      return "Success";
-    }
+    $query2 = $this->db->query($sql2);
+    return $query2;
   }  
 
   public function updateTask($kd_task ,$task, $unit, $sifat){
@@ -46,7 +47,7 @@ class Task {
 
   public function deleteTask($kd_task){
     $sql = "DELETE FROM tb_task where kd_task='$kd_task'";
-    $sql2= "DELETE FROM tb_task_unit WHERE kd_task='$kd_unit'";
+    $sql2= "DELETE FROM tb_task_unit WHERE kd_task='$kd_task'";
     $query = $this->db->query($sql2);
     $query = $this->db->query($sql);
     if(!$query){
@@ -99,6 +100,12 @@ class Task {
     $query = $this->db->query($sql2);
     $query = $this->db->query($delete);
   }    
+
+  public function updateTask_Unit2($kd_unit){
+    $sql1 = "INSERT INTO tb_task_unit(kd_unit, kd_task) 
+    SELECT '$kd_unit' As kd, MAX(kd_task) FROM tb_task WHERE unit='$kd_unit' or unit='Semua'";
+    $query = $this->db->query($sql1);
+  }  
 
 }
 ?>

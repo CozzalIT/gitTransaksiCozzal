@@ -60,7 +60,7 @@
                       }
                       echo "
                         <tr>
-                          <td>$i</td>
+                          <td class='show1'>$i</td>
                           <td>$data->no_unit</td>
                           <td>$data->nama_apt</td>
                           <td class='hiderespons'>$data->alamat_apt</td>
