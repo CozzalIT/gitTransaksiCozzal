@@ -210,7 +210,7 @@ if(isset($_GET['pembayaran'])){
                 <th colspan="2">Detail Kwitansi Penyewaan</th>
                 <tr>
                 <td class="width30">Kwitansi ID:</td>
-                <td class="width70"><strong>COZ-'.$detail->kd_transaksi.'</strong></td>
+                <td class="width70"><strong>COZ-'.strtoupper(dechex($detail->kd_transaksi)).'</strong></td>
                 </tr>
                 <tr>
                 <td>Invoice Date:</td>
@@ -245,8 +245,12 @@ if(isset($_GET['pembayaran'])){
                 <td class="width70"><strong>'.$detail->tamu.'</strong></td>
                 </tr>
                 <tr>
-                <td class="width30">Sewa Perhari:</td>
+                <td class="width30">Sewa Perhari (WD):</td>
                 <td class="width70"><strong>'.number_format($detail->harga_sewa, 0, ".", ".").' IDR</strong></td>
+                </tr>
+                <tr>
+                <td class="width30">Sewa Perhari (WE):</td>
+                <td class="width70"><strong>'.number_format($detail->harga_sewa_weekend, 0, ".", ".").' IDR</strong></td>
                 </tr>
                 <tr>
                 <td class="width30">Diskon:</td>
@@ -266,7 +270,7 @@ if(isset($_GET['pembayaran'])){
                 </tr>
                 <tr>
                 <td class="width30">DP Via:</td>
-                <td class="width70"><strong>'.$detail->nama_bank.'</strong></td>
+                <td class="width70"><strong>'.$detail->sumber_dana.'</strong></td>
                 </tr>
                 <tr>
                 <td class="width30">Sisa Pelunasan:</td>

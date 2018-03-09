@@ -5,7 +5,7 @@
   require("../../../class/penyewa.php");
   require("../../../class/apartemen.php");
   require("../../../class/booking.php");
-  require("../../../class/dp_via.php");
+  require("../../../class/kas.php");
   require("../../../../config/database.php");
 
   $thisPage = "Transaksi";
@@ -316,13 +316,13 @@
 			    <div class="control-group">
   				  <label class="control-label">DP Via :</label>
   				  <div class="controls">
-  				    <select id="dp_via" name="dp_via" class="span4" required>
+  				    <select id="kas" name="kas" class="span4" required>
   					  <option value="">-- Bank --</option>
     					  <?php
-                  $Proses = new dpVia($db);
-        				  $show = $Proses->showDp_via();
+                  $Proses = new Kas($db);
+        				  $show = $Proses->showKas();
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-      						  echo "<option name='kd_bank' value='$data->kd_bank'>$data->nama_bank</option>";
+      						  echo "<option name='kd_kas' value='$data->kd_kas'>$data->sumber_dana</option>";
       						}
     					  ?>
   					  </select>

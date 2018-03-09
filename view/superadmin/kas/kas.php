@@ -119,7 +119,15 @@
                     }else{
                       $jenis = "Keluar";
                     }
-                    switch ($data->keterangan) {
+
+                    if(strlen($data->keterangan > 1)){
+                      $arrayKeterangan = explode("/",$data->keterangan);
+                      $indikator = $arrayKeterangan[0];
+                    }elseif(strlen($data->keterangan == 1)){
+                      $indikator = $data->keterangan;
+                    }
+
+                    switch($indikator){
                       case 1:
                         $keterangan = "Dari Kas";
                         break;
@@ -132,8 +140,14 @@
                       case 4:
                         $keterangan = "Pembayaran Owner";
                         break;
-                      default:
+                      case 5:
                         $keterangan = "Penggajian Karyawan";
+                        break;
+                      case 6:
+                        $keterangan = "Transaksi : COZ-".strtoupper(dechex($arrayKeterangan[1]));
+                        break;
+                      case 7:
+                        $keterangan = "Pembayaran : COZ-".strtoupper(dechex($arrayKeterangan[1]));
                         break;
                     }
                     $dateTime = explode(" ",$data->tanggal);

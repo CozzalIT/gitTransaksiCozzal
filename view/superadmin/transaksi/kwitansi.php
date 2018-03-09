@@ -55,7 +55,7 @@
                     <tr>
                     <tr>
                       <td class="width30">Invoice ID</td>
-                      <td class="width70"><strong>COZ-<?php echo $data->kd_confirm_transaksi; ?></strong></td>
+                      <td class="width70"><strong>COZ-<?php echo strtoupper(dechex($data->kd_confirm_transaksi)); ?></strong></td>
                     </tr>
                     <tr>
                       <td class="width30">Invoice Date</td>

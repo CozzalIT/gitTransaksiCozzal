@@ -5,7 +5,7 @@
   require("../../../class/unit.php");
   require("../../../class/apartemen.php");
   require("../../../class/booking.php");
-  require("../../../class/dp_via.php");
+  require("../../../class/kas.php");
   require("../../../class/owner.php");
   require("../../../class/transaksi.php");
 
@@ -131,7 +131,7 @@
                       <input name="tamu" min="0" type="number" value="'.$edit->tamu.'" onChange="ECH(this.form)"/>
                       <input name="harga_sewa_asli" type="text" style="display:none;" value="'.$harga_asal.'"/>
                     </div>
-                  </div>                  
+                  </div>
                   <div class="control-group">
                     <label class="control-label">Ekstra Charge :</label>
                     <div class="controls">
@@ -165,15 +165,15 @@
                   <div class="control-group">
                     <label class="control-label">DP Via :</label>
                     <div class="controls">
-                    <select name="dp_via" required>
-                      <option>-- Pilih DP Via --</option>';
-                        $Proses = new dpVia($db);
-                        $show = $Proses->showDp_via();
+                    <select name="kas" required>
+                      <option>-- Pilih Kas --</option>';
+                        $Proses = new Kas($db);
+                        $show = $Proses->showKas();
                         while($data = $show->fetch(PDO::FETCH_OBJ)){
-                          if ($edit->kd_bank!=$data->kd_bank){
-                            echo "<option name='kd_bank' value='$data->kd_bank'>$data->nama_bank</option>";
+                          if ($edit->kd_kas!=$data->kd_kas){
+                            echo "<option name='kd_kas' value='$data->kd_kas'>$data->sumber_dana</option>";
                           }else{
-                            echo "<option name='kd_bank' value='$data->kd_bank' selected='true'>$data->nama_bank</option>";
+                            echo "<option name='kd_kas' value='$data->kd_kas' selected='true'>$data->sumber_dana</option>";
                           }
                         }
                         echo '
