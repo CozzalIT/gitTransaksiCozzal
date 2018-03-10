@@ -1,22 +1,28 @@
 <?php
 require("../../config/database.php");
 require("../class/transaksi.php");
+require("../class/kas.php");
 require("../class/penyewa.php");
+
+date_default_timezone_set('Asia/Jakarta');
 session_start();
 $view = $_SESSION['hak_akses'];
 
 function getDisCount($harga_sewa, $harga_sewa_we, $harga_sewa_asli, $wd, $we, $total){
   $harga_asli = explode("/", $harga_sewa_asli);
   if(($harga_sewa+$harga_sewa_we)<($harga_asli[0]+$harga_asli[1])){ //0 = weekday, 1 = weekend
-     return ($harga_asli[0]*$wd)+($harga_asli[1]*$we)-$total;
+    return ($harga_asli[0]*$wd)+($harga_asli[1]*$we)-$total;
   }else {
     return ($harga_sewa*$wd)+($harga_sewa_we*$we)-$total;
   }
 }
 
 function isNew($date){
-  if(strtotime($date)>=strtotime((date('Y-m-d')))) return true;
-  else return false;
+  if(strtotime($date)>=strtotime((date('Y-m-d')))){
+    return true;
+  }else{
+    return false;
+  }
 }
 
 function startinweekend($hari, $week, $jumlah_weekday, $jumlah_weekend){
@@ -25,64 +31,88 @@ function startinweekend($hari, $week, $jumlah_weekday, $jumlah_weekend){
     $we = 8-$week; $hari = $wd-5;
     if($hari==1){
       $we=1;
-    }  
-    $wd=$hari-$we; 
-    $jumlah_weekend = $jumlah_weekend+$we; 
+    }
+    $wd=$hari-$we;
+    $jumlah_weekend = $jumlah_weekend+$we;
     if($wd>5) {
-      $jumlah_weekday = $jumlah_weekday+5; 
+      $jumlah_weekday = $jumlah_weekday+5;
     } else{
-      $jumlah_weekday = $jumlah_weekday+$wd; 
-    }     
+      $jumlah_weekday = $jumlah_weekday+$wd;
+    }
   }
   return $jumlah_weekday."/".$jumlah_weekend;
 }
 
 //Tambah Transaksi
 if(isset($_POST['addTransaksi'])){
-	$kd_penyewa 	= $_POST['kd_penyewa'];
-	$kd_apt 		= $_POST['apartemen'];
+	$kd_penyewa = $_POST['kd_penyewa'];
+	$kd_apt = $_POST['apartemen'];
 	$kode = explode("+",$_POST['unit']);
-	$kd_unit 		= $kode[0];
-	$tamu 			= $_POST['tamu'];
-	$check_in 		= $_POST['check_in'];
-	$check_out 		= $_POST['check_out'];
-	$harga_sewa 	= $_POST['harga_sewa'];
+	$kd_unit = $kode[0];
+	$tamu = $_POST['tamu'];
+	$check_in = $_POST['check_in'];
+	$check_out = $_POST['check_out'];
+	$harga_sewa = $_POST['harga_sewa'];
   $harga_sewa_we = $_POST['harga_sewa_we'];
-  $harga_sewa_asli   = $_POST['harga_sewa_asli'];
-	$ekstra_charge 	= $_POST['ekstra_charge'];
-	$kd_booking 	= $_POST['booking_via'];
-	$kd_bank 		= $_POST['dp_via'];
-	$dp 			= $_POST['dp'];
+  $harga_sewa_asli = $_POST['harga_sewa_asli'];
+	$ekstra_charge = $_POST['ekstra_charge'];
+	$kd_booking = $_POST['booking_via'];
+	$kd_kas = $_POST['kas'];
+	$dp = $_POST['dp'];
   $total  = $_POST['total'];
   $sisa_pelunasan = $total - $dp;
   $hari = $_POST['jumhari'];
   $tgl_transaksi = date('y-m-d');
+  $tanggal = date('y-m-d H:i:s');
   $week = date("w",strtotime($check_in))+1;
+
   if($week>5){ //jika dimuai dari weekend
     $week_kind = explode("/",startinweekend($hari, $week, 0, 0));
     $jumlah_weekday = $week_kind[0]; $jumlah_weekend = $week_kind[1];
-  }
-  else{ //jika dimulai dri weekday
-    if($week+$hari<7) {$jumlah_weekday=$hari;$jumlah_weekend=0;}
-    else {
+  }else{ //jika dimulai dri weekday
+    if($week+$hari<7){
+      $jumlah_weekday=$hari;$jumlah_weekend=0;
+    }else{
       $wd = 6 - $week;
       $week_kind = explode("/",startinweekend($hari-$wd, 6, $wd, 0));
-      $jumlah_weekday = $week_kind[0]; $jumlah_weekend = $week_kind[1];
+      $jumlah_weekday = $week_kind[0];
+      $jumlah_weekend = $week_kind[1];
     }
   }
+
   $harga_asli = explode("/", $harga_sewa_asli);
   if($total<(($harga_asli[0]*$jumlah_weekday)+($harga_asli[1]*$jumlah_weekend))){
     $diskon = getDisCount($harga_sewa, $harga_sewa_we, $harga_sewa_asli, $jumlah_weekday, $jumlah_weekend, $total);
-  } else {
+  }else{
     $diskon = 0;
   }
+
   $proses = new Transaksi($db);
-  $add = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $check_in, $check_out, $jumlah_weekend, $jumlah_weekday, $hari, $harga_sewa, $harga_sewa_we, $tgl_transaksi, $diskon, $ekstra_charge, $kd_bank, $tamu, $kd_booking, $dp, $total, $sisa_pelunasan);
-  if($add == "Success"){
-    if(isNew($check_in)) $add2 = $proses->addUnit_kotor($kd_unit, $check_in, $check_out);
-	  header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php');
+  $proses2 = new Kas($db);
+
+  $add_transaksi = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $check_in, $check_out, $jumlah_weekend, $jumlah_weekday, $hari, $harga_sewa, $harga_sewa_we, $tgl_transaksi, $diskon, $ekstra_charge, $kd_kas, $tamu, $kd_booking, $dp, $total, $sisa_pelunasan);
+  if($add_transaksi == "Success"){
+    if(isNew($check_in)){
+      $add2 = $proses->addUnit_kotor($kd_unit, $check_in, $check_out);
+    }
+
+    $show = $proses->showMaxTransaksi();
+    $data = $show->fetch(PDO::FETCH_OBJ);
+    $keterangan_mutasi = "6/".$data->kd_transaksi;
+
+    $add_mutasi = $proses2->addMutasiKas($kd_kas, $dp, 1, $tanggal, $keterangan_mutasi);
+    if($add_mutasi == 'Success'){
+      $show1 = $proses2->editSaldo($kd_kas);
+      $data1 = $show1->fetch(PDO::FETCH_OBJ);
+      $saldo = $dp + $data1->saldo;
+
+      $update_kas = $proses2->updateKas($kd_kas, $saldo, $tanggal);
+      if($update_kas == 'Success'){
+        header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php');
+      }
+    }
   }else{
-    echo 'gagal';
+    echo 'Tambah Transaksi Gagal !';
 	}
 }
 
@@ -103,30 +133,30 @@ elseif(isset($_POST['moveTransaksi'])){
   $penyewa = $show->fetch(PDO::FETCH_OBJ);
   $kd_penyewa = $penyewa->kd_penyewa;
   $kd_reservasi = $_POST['kd_reservasi'];
-  $kd_apt     = $_POST['apartemen'];
+  $kd_apt = $_POST['apartemen'];
   $kode = explode("+",$_POST['unit']);
-  $kd_unit    = $kode[0];
-  $tamu       = $_POST['tamu'];
-  $check_in     = $_POST['check_in'];
-  $check_out    = $_POST['check_out'];
-  $harga_sewa   = $_POST['harga_sewa'];
-  $harga_sewa_asli   = $_POST['harga_sewa_asli'];
+  $kd_unit = $kode[0];
+  $tamu = $_POST['tamu'];
+  $check_in = $_POST['check_in'];
+  $check_out = $_POST['check_out'];
+  $harga_sewa = $_POST['harga_sewa'];
+  $harga_sewa_asli = $_POST['harga_sewa_asli'];
   $diskon = 0;
   if($harga_sewa<$harga_sewa_asli){
      $diskon = $harga_sewa_asli-$harga_sewa;
   }
-  $ekstra_charge  = $_POST['ekstra_charge'];
-  $kd_booking   = $_POST['booking_via'];
-  $kd_bank    = $_POST['dp_via'];
-  $dp       = $_POST['dp'];
-  $total  = $_POST['total'];
+  $ekstra_charge = $_POST['ekstra_charge'];
+  $kd_booking = $_POST['booking_via'];
+  $kd_kas = $_POST['kas'];
+  $dp = $_POST['dp'];
+  $total = $_POST['total'];
   $sisa_pelunasan = $total - $dp;
   $hari = $_POST['jumhari'];
   $tgl_transaksi = date('y-m-d');
   if($total<$harga_sewa_asli*$hari){
      $diskon = $harga_sewa_asli*$hari-$total;
   }
-  $add = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total, $sisa_pelunasan, $hari, $tgl_transaksi, $diskon);
+  $add = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total, $sisa_pelunasan, $hari, $tgl_transaksi, $diskon);
   if($add == "Success"){
     $delete = $proses->deleteReservasi($kd_reservasi);
     $add2 = $proses->addUnit_kotor($kd_unit, $check_in, $check_out);
@@ -179,41 +209,74 @@ elseif(isset($_POST['addPenyewaTransaksi'])){
 //update Transaksi
 elseif(isset($_POST['updateTransaksi'])){
   $kd_transaksi = $_POST['kd_transaksi'];
-  $kd_apt     = $_POST['apartemen'];
+  $kd_apt = $_POST['apartemen'];
   $kode = explode("+",$_POST['unit']);
-  $kd_unit    = $kode[0];
-  $tamu       = $_POST['tamu'];
-  $check_in     = $_POST['check_in'];
-  $check_out    = $_POST['check_out'];
-  $harga_sewa   = $_POST['harga_sewa'];
-  $harga_sewa_we   = $_POST['harga_sewa_we'];
-  $harga_sewa_asli   = $_POST['harga_sewa_asli'];
-  $ekstra_charge  = $_POST['ekstra_charge'];
-  $kd_booking   = $_POST['booking_via'];
-  $kd_bank    = $_POST['dp_via'];
-  $dp       = $_POST['dp'];
-  $total_tagihan  = $_POST['total'];
+  $kd_unit = $kode[0];
+  $tamu = $_POST['tamu'];
+  $check_in = $_POST['check_in'];
+  $check_out = $_POST['check_out'];
+  $harga_sewa = $_POST['harga_sewa'];
+  $harga_sewa_we = $_POST['harga_sewa_we'];
+  $harga_sewa_asli = $_POST['harga_sewa_asli'];
+  $ekstra_charge = $_POST['ekstra_charge'];
+  $kd_booking = $_POST['booking_via'];
+  $kd_kas = $_POST['kas'];
+  $dp = $_POST['dp'];
+  $total_tagihan = $_POST['total'];
   $sisa_pelunasan = $total_tagihan - $dp;
   $hari = $_POST['jumhari'];
   $week = date("w",strtotime($check_in))+1;
+  $tanggal = date('Y-m-d H:i:s');
+  $keterangan = '6/'.$kd_transaksi;
+
   if($week>5){ //jika dimuai dari weekend
     $week_kind = explode("/",startinweekend($hari, $week, 0, 0));
     $jumlah_weekday = $week_kind[0]; $jumlah_weekend = $week_kind[1];
-  }
-  else{ //jika dimulai dri weekday
-    if($week+$hari<7) {$jumlah_weekday=$hari;$jumlah_weekend=0;}
-    else {
+  }else{ //jika dimulai dri weekday
+    if($week+$hari<7){
+      $jumlah_weekday=$hari;$jumlah_weekend=0;
+    }else{
       $wd = 6 - $week;
       $week_kind = explode("/",startinweekend($hari-$wd, 6, $wd, 0));
-      $jumlah_weekday = $week_kind[0]; $jumlah_weekend = $week_kind[1];
+      $jumlah_weekday = $week_kind[0];
+      $jumlah_weekend = $week_kind[1];
     }
   }
+
   $harga_asli = explode("/", $harga_sewa_asli);
-  if($total_tagihan<(($harga_asli[0]*$jumlah_weekday)+($harga_asli[1]*$jumlah_weekend))) $diskon = getDisCount($harga_sewa, $harga_sewa_we, $harga_sewa_asli, $jumlah_weekday, $jumlah_weekend, $total_tagihan);
-  else $diskon = 0;
+  if($total_tagihan<(($harga_asli[0]*$jumlah_weekday)+($harga_asli[1]*$jumlah_weekend))){
+    $diskon = getDisCount($harga_sewa, $harga_sewa_we, $harga_sewa_asli, $jumlah_weekday, $jumlah_weekend, $total_tagihan);
+  }else{
+    $diskon = 0;
+  }
+
   $proses = new Transaksi($db);
+  $proses_kas = new Kas($db);
+
+
+  $show = $proses_kas->showKdKas($keterangan);
+  $data_mutasi = $show->fetch(PDO::FETCH_OBJ);
+  $kd_kas_lama = $data_mutasi->kd_kas;
+  $mutasi_dana = $data_mutasi->mutasi_dana;
+
+  //Mengembalikan Saldo kas yang diganti
+  $show_saldo_lama = $proses_kas->editSaldo($kd_kas_lama);
+  $data_saldo_lama = $show_saldo_lama->fetch(PDO::FETCH_OBJ);
+  $saldo_kas_lama = $data_saldo_lama->saldo - $mutasi_dana;
+
+  //Merubah Saldo kas pengganti
+  $show_saldo_baru = $proses_kas->editSaldo($kd_kas);
+  $data_saldo_baru = $show_saldo_baru->fetch(PDO::FETCH_OBJ);
+  $saldo_kas_baru = $data_saldo_baru->saldo + $dp;
+
+  $update_kas_lama = $proses_kas->updateKas($kd_kas_lama, $saldo_kas_lama, $tanggal);
+  $update_kas_baru = $proses_kas->updateKas($kd_kas, $saldo_kas_baru, $tanggal);
+
+  $delete_mutasi = $proses_kas->deleteMutasi($keterangan);
+  $add_mutasi = $proses_kas->addMutasiKas($kd_kas, $dp, 1, $tanggal, $keterangan);
+
   $update = $proses->updateUnit_kotor($kd_transaksi ,$kd_unit, $check_in, $check_out);
-  $add = $proses->updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $diskon, $ekstra_charge, $kd_booking, $kd_bank, $dp, $total_tagihan, $sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday);
+  $add = $proses->updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $harga_sewa_we, $diskon, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total_tagihan, $sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday);
   if($add == "Success"){
     header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php');
   } else echo 'error';
@@ -222,8 +285,25 @@ elseif(isset($_POST['updateTransaksi'])){
 //Delete Transaksi
 elseif(isset($_GET['delete_transaksi']) && ($view=="superadmin" || $view=="manager")){
   $proses = new Transaksi($db);
+  $proses_kas = new Kas($db);
+
+  $show = $proses->showTransaksi();
+  $data = $show->fetch(PDO::FETCH_OBJ);
+  $keterangan = '6/'.$data->kd_transaksi;
+
+  $show_kas = $proses_kas->showKdKas($keterangan);
+  $data_kas = $show_kas->fetch(PDO::FETCH_OBJ);
+
+  $show_kas1 = $proses_kas->editSaldo($data_kas->kd_kas);
+  $data_kas1 = $show_kas1->fetch(PDO::FETCH_OBJ);
+  $saldo = $data_kas1->saldo - $data_kas->mutasi_dana;
+
+  $tanggal = date('Y-m-d H:i:s');
+  $update = $proses_kas->updateKas($data_kas->kd_kas, $saldo, $tanggal);
+
   $delete = $proses->deleteUnit_kotor($_GET['delete_transaksi']);
   $del = $proses->deleteTransaksi($_GET['delete_transaksi']);
+  $delete_mutasi = $proses_kas->deleteMutasi($keterangan);
   header("location:../view/".$view."/transaksi/laporan_transaksi.php");
 }
 

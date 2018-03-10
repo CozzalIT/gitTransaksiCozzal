@@ -57,6 +57,12 @@ class Kas {
     return $query;
   }
 
+  public function showKdKas($keterangan){
+    $sql = "SELECT kd_kas, mutasi_dana FROM tb_mutasi_kas WHERE keterangan='$keterangan'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
   //Update
   public function updateKas($kd_kas, $saldo, $tanggal){
     $sql = "UPDATE tb_kas SET saldo='$saldo', tanggal='$tanggal' WHERE kd_kas='$kd_kas'";
@@ -66,6 +72,12 @@ class Kas {
     }else{
       return "Success";
     }
+  }
+
+  //Proses Delete
+  public function deleteMutasi($keterangan){
+    $sql = "DELETE FROM tb_mutasi_kas WHERE keterangan='$keterangan'";
+    $query = $this->db->query($sql);
   }
 
 }
