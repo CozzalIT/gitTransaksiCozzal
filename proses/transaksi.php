@@ -271,16 +271,29 @@ elseif(isset($_POST['updateTransaksi'])){
 
     $update_kas_lama = $proses_kas->updateKas($kd_kas_lama, $saldo_kas_lama, $tanggal);
     $update_kas_baru = $proses_kas->updateKas($kd_kas, $saldo_kas_baru, $tanggal);
+    $delete_mutasi = $proses_kas->deleteMutasi($keterangan);
+    $add_mutasi = $proses_kas->addMutasiKas($kd_kas, $dp, 1, $tanggal, $keterangan);
+  }elseif($kd_kas == $kd_kas_lama){
+    $show_saldo = $proses_kas->editSaldo($kd_kas);
+    $show_mutasi_dana = $proses_kas->showMutasiKas($keterangan);
+
+    $data_saldo = $show_saldo->fetch(PDO::FETCH_OBJ);
+    $data_mutasi_dana = $show_mutasi_dana->fetch(PDO::FETCH_OBJ);
+
+    $saldo_kas = ($data_saldo->saldo - $data_mutasi_dana->mutasi_dana) + $dp;
+    $update_kas = $proses_kas->updateKas($kd_kas, $saldo_kas, $tanggal);
 
     $delete_mutasi = $proses_kas->deleteMutasi($keterangan);
     $add_mutasi = $proses_kas->addMutasiKas($kd_kas, $dp, 1, $tanggal, $keterangan);
   }
-  
+
   $update = $proses->updateUnit_kotor($kd_transaksi ,$kd_unit, $check_in, $check_out);
   $add = $proses->updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $harga_sewa_we, $diskon, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total_tagihan, $sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday);
   if($add == "Success"){
     header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php');
-  } else echo 'error';
+  }else{
+    echo 'error';
+  };
 }
 
 //Delete Transaksi
