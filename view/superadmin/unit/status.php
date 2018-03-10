@@ -49,7 +49,7 @@
                   $show1 = $Proses->showUnit1($sekarang);
                   while($data = $show1->fetch(PDO::FETCH_OBJ)){
                     if ($data->kd_unit != 0){ 
-                      if($data->check_out!=$sekarang || ($data->check_out==$sekarang && $jam_now=>$jam12)){
+                      if($data->check_out!=$sekarang || ($data->check_out==$sekarang && $jam_now>=$jam12)){
                           $status = 'Kosong'; $i = 4;
                           $button = "<a class='btn btn-success popup' data-toggle='modal' id='$data->kd_unit"."-bersih' href='#popup-task'>Bersihkan</a>";
                       }
