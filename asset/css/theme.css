@@ -64,7 +64,8 @@ background-color: blue;
 }
 
 .form-horizontal .my {
-  margin-left: 8%;
+  margin-left: 0px;
+  padding-left: 8%;
   padding-top: 9px;
   padding-bottom: 0px;
 }

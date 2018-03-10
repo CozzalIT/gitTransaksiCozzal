@@ -61,12 +61,31 @@ class Cleaner {
       $result->execute();
       $rows = $result->fetch();
       return $rows;
-  }
+  }  
+
+  public function updateUnit_ready($kd_unit, $ready){
+    $sql = "UPDATE tb_unit SET ready='$ready' WHERE kd_unit='$kd_unit'";
+    $query = $this->db->query($sql);
+  }    
+
+  public function updateLihat($kd_unit, $sekarang){
+    $sql = "UPDATE tb_unit SET tgl_lihat ='$sekarang', ready = null 
+    WHERE kd_unit='$kd_unit' AND (tgl_lihat!='$sekarang' or tgl_lihat is null)";
+    $sql2 = "SELECT tgl_lihat, ready FROM tb_unit WHERE kd_unit='$kd_unit'";
+    $query = $this->db->query($sql);
+    $query = $this->db->query($sql2);
+    return $query; 
+  } 
 
   public function deleteUnit_kotor($kd_unit, $sekarang){
     $sql = "DELETE FROM tb_unit_kotor where kd_unit='$kd_unit' and check_out<='$sekarang'";
     $query = $this->db->query($sql);
   } 
+
+  public function kosongkan_unit($kd_unit, $sekarang){
+    $sql = "UPDATE tb_unit_kotor SET check_out='0000-00-00' WHERE check_out='$sekarang'";
+    $query = $this->db->query($sql);
+  }
 
 }
 ?>

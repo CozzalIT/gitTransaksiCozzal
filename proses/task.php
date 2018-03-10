@@ -53,6 +53,25 @@ elseif(isset($_GET['delete_task'])){
   else echo "error";
 }
 
+// ------- Cleaner Part -----------
+//kosongkan unit ketika mau membersihkan unit
+elseif(isset($_GET['kosongkan_unit'])){
+  $kd_unit = $_GET['kosongkan_unit'];
+  require("../class/cleaner.php");
+  $proses = new Cleaner($db);
+  $proses->kosongkan_unit($kd_unit, $sekarang);
+  header('Location:../view/'.$view.'/unit/status.php');
+}
+
+elseif(isset($_GET['set_ready'])){
+  $ready = $_GET['set_ready'];
+  $kd_unit = $_GET['kd_unit'];
+  require("../class/cleaner.php");
+  $proses = new Cleaner($db);
+  $proses->updateUnit_ready($kd_unit, $ready);
+  header('Location:../view/'.$view.'/unit/status.php');
+}
+
 elseif(isset($_POST['bersih_task'])){
   $kd_unit = $_POST["unit"];
   $task1 = $_POST["task-temp"];
@@ -74,7 +93,9 @@ elseif(isset($_POST['bersih_task'])){
   header('Location:../view/'.$view.'/unit/status.php');
 }
 
+// ------------- JSON PART -----------------------
 
+// edit task with popup 
 elseif(isset($_POST['id'])){
   $kd_task = $_POST['id'];
   $Proses = new Task($db);
@@ -87,6 +108,7 @@ elseif(isset($_POST['id'])){
   echo json_encode($callback);  
 }
 
+//update task unit pada status kotor saat memuat data
 elseif(isset($_POST['updateTask_unit'])){
   $kd_unit = $_POST['updateTask_unit'];
   $Proses = new Task($db);

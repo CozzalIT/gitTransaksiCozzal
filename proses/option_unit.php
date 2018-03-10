@@ -67,9 +67,10 @@ elseif(isset($_POST['status'])){
 	require("../class/cleaner.php");
 	$kd_unit = $_POST['status'];
     date_default_timezone_set('Asia/Jakarta');
-    $sekarang = date('Y-m-d');
+    $sekarang = date('Y-m-d'); 
+    $jam12 = strtotime('12:00'); $jam_now = strtotime(date('H:i'));
 	$Proses = new Cleaner($db);
-	$status = "Kosong";
+	$status = "Kosong"; $lihat = "Null"; $catatan = 0;
 	$show1 = $Proses->showStatus_check_in($kd_unit, $sekarang);
 	if($show1==true){
 		$status = "Check In";
@@ -78,14 +79,26 @@ elseif(isset($_POST['status'])){
 		$show2 = $Proses->showStatus_terisi($kd_unit, $sekarang);
 		if($show2==true) $status = "Terisi";
 	}
-	require("../class/catatan.php");
-	$proses2 = new Catatan($db); $catatan = 0;
-	$migrate = $proses2->catatanToTask($kd_unit);
-	$delete = $Proses->deleteUnit_kotor($kd_unit, $sekarang);
-	$show = $proses2->showCatatanUnit($kd_unit);
-	while($data = $show->fetch(PDO::FETCH_OBJ))
-		$catatan++; 
-	$callback = array('stat'=>$status, 'catatan'=>$catatan);
+	if($status=="Check In" && $jam_now<$jam12){
+		$show = $Proses->updateLihat($kd_unit, $sekarang);
+		$data = $show->fetch(PDO::FETCH_OBJ);
+		if($data->ready=="Y"){
+			$lihat = "Y";
+		}
+		elseif($data->ready=="N"){
+			$lihat = "N";
+		}
+	} else {
+		require("../class/catatan.php");
+		$proses2 = new Catatan($db); 
+		$migrate = $proses2->catatanToTask($kd_unit);
+		$delete = $Proses->deleteUnit_kotor($kd_unit, $sekarang);
+		$show = $proses2->showCatatanUnit($kd_unit);
+		while($data = $show->fetch(PDO::FETCH_OBJ)){
+			$catatan++; 
+		}			
+	}
+	$callback = array('stat'=>$status, 'catatan'=>$catatan, 'lihat'=>$lihat);
 	echo json_encode($callback);
 }
 ?>
