@@ -69,8 +69,8 @@ elseif(isset($_POST['status'])){
     date_default_timezone_set('Asia/Jakarta');
     $sekarang = date('Y-m-d'); 
     $jam12 = strtotime('12:00'); $jam_now = strtotime(date('H:i'));
-	$Proses = new Cleaner($db);
-	$status = "Kosong"; $lihat = "Null"; $catatan = 0;
+	$Proses = new Cleaner($db); $lihat = "Tidak Ada";
+	$status = "Kosong"; $catatan = 0;
 	$show1 = $Proses->showStatus_check_in($kd_unit, $sekarang);
 	if($show1==true){
 		$status = "Check In";
@@ -82,6 +82,7 @@ elseif(isset($_POST['status'])){
 	if($status=="Check In" && $jam_now<$jam12){
 		$show = $Proses->updateLihat($kd_unit, $sekarang);
 		$data = $show->fetch(PDO::FETCH_OBJ);
+		$lihat = "Null";
 		if($data->ready=="Y"){
 			$lihat = "Y";
 		}

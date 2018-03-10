@@ -19,11 +19,13 @@ function updateelementtask(konten2, jumlah2, task){
 }
 
 	$(".status").click(function(){
-	  var a = $(this).attr('id');
+		var id = $(this).attr('id'); id = id.split("-");
+		var a = id[0];
 	    $.post('../../../proses/option_unit.php', {status : a},
         function (data) {
           response = JSON.parse(data);
-          ret = response.stat; $("#"+a).text(ret);
+          //alert(data);
+          ret = response.stat; $("#"+a+"-muatstat").text(ret);
 		  if (response.catatan!=0){
 		  	$("#"+a+"-none").text('Tidak Ada ('+response.catatan+')');
 		  } else if(ret=="Check In") {
@@ -43,7 +45,8 @@ function updateelementtask(konten2, jumlah2, task){
 	});	
 
 	$(".kotor").click(function(){
-		var a = $(this).attr('id');
+		var id = $(this).attr('id'); id = id.split("-");
+		var a = id[0];
 	    $.post('../../../proses/task.php', {updateTask_unit : a},
         function (data) {
           response = JSON.parse(data);
@@ -150,7 +153,7 @@ $("#del-note").click(function(){
 	$("#popup-task").hide();
 		swal({
 		title:'KONFIRMASI',
-		text :'Apakah anda yakin manghapus catatan ',
+		text :'Apakah anda yakin manghapus catatan ?',
 		icon : 'warning',
 		buttons: true,
 		dangerMode: true,
