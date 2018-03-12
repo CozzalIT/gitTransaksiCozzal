@@ -57,6 +57,12 @@ class Kas {
     return $query;
   }
 
+  public function showMutasiDana($keterangan){
+    $sql = "SELECT mutasi_dana FROM tb_mutasi_kas WHERE kd_mutasi_kas='$kd_mutasi_kas'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
   public function showKdKas($keterangan){
     $sql = "SELECT kd_kas, mutasi_dana FROM tb_mutasi_kas WHERE keterangan='$keterangan'";
     $query = $this->db->query($sql);
