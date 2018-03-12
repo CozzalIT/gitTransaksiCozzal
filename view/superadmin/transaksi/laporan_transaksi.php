@@ -1,6 +1,7 @@
 <?php
   session_start();
   require("../../../class/transaksi.php");
+  require("../../../class/kas.php");
   require("../../../../config/database.php");
 
   $thisPage = "Laporan Transaksi";
@@ -141,6 +142,21 @@ if(isset($_GET['pembayaran'])){
               <input name="sisa_pelunasan" type="text" class="hide" value="'.$data1->sisa_pelunasan.'" />
             </div>
       	  </div>
+          <div class="control-group">
+            <label class="control-label">Via</label>
+            <div class="controls">
+              <select id="kas" name="kas" class="span2" required>
+                <option value="">-- Kas --</option>
+                ';
+                  $Proses = new Kas($db);
+                  $show = $Proses->showKas();
+                  while($data = $show->fetch(PDO::FETCH_OBJ)){
+                    echo "<option name='kd_kas' value='$data->kd_kas'>$data->sumber_dana</option>";
+                  }
+                echo '
+              </select>
+            </div>
+          </div>
       	  <div class="control-group">
         		<div class="controls">
         		  <input type="submit" name="addPembayaran" id="addPembayaran" class="btn btn-success" value="Tambah Pembayaran">
@@ -303,7 +319,6 @@ if(isset($_GET['pembayaran'])){
 <script src="../../../asset/js/jquery.ui.custom.js"></script>
 <script src="../../../asset/js/bootstrap.min.js"></script>
 <script src="../../../asset/js/jquery.uniform.js"></script>
-<script src="../../../asset/js/select2.min.js"></script>
 <script src="../../../asset/js/jquery.dataTables.min.js"></script>
 <script src="../../../asset/js/matrix.js"></script>
 <script src="../../../asset/js/matrix.tables.js"></script>

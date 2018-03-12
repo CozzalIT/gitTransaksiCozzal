@@ -34,7 +34,6 @@
       </ul>
     </li>
 	  <li <?php if($thisPage == "Booking_via") echo "class='active'"; ?>><a href="../booking/booking_via.php"><i class="icon icon-pencil"></i> <span>Booking Via</span></a> </li>
-	  <li <?php if($thisPage == "Dp_via") echo "class='active'"; ?>><a href="../dp/dp_via.php"><i class="icon icon-strikethrough"></i> <span>Dp Via</span></a> </li>
-  </ul>
+	</ul>
 </div>
 <!--sidebar-menu-->
