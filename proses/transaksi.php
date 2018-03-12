@@ -189,7 +189,7 @@ elseif(isset($_POST['addPembayaran'])){
     $show_saldo = $proses_kas->editSaldo($kd_kas);
     $edit_saldo = $show_saldo->fetch(PDO::FETCH_OBJ);
     $saldo_baru = $edit_saldo->saldo + $pembayaran_masuk;
-    
+
     $update_kas = $proses_kas->updateKas($kd_kas, $saldo_baru, $tanggal);
     $add_mutasi = $proses_kas->addMutasiKas($kd_kas, $pembayaran_masuk, 1, $tanggal, $keterangan);
 
@@ -317,21 +317,37 @@ elseif(isset($_GET['delete_transaksi']) && ($view=="superadmin" || $view=="manag
   $data = $show->fetch(PDO::FETCH_OBJ);
   $keterangan_transaksi = '6/'.$data->kd_transaksi;
   $keterangan_pembayaran = '7/'.$data->kd_transaksi;
-
-  $show_kas = $proses_kas->showKdKas($keterangan);
-  $data_kas = $show_kas->fetch(PDO::FETCH_OBJ);
-
-  $show_kas1 = $proses_kas->editSaldo($data_kas->kd_kas);
-  $data_kas1 = $show_kas1->fetch(PDO::FETCH_OBJ);
-  $saldo = $data_kas1->saldo - $data_kas->mutasi_dana;
-
   $tanggal = date('Y-m-d H:i:s');
-  $update = $proses_kas->updateKas($data_kas->kd_kas, $saldo, $tanggal);
+
+  //Mengembalikan saldo kas hasil dp transaksi
+  $show_kas_t = $proses_kas->showKdKas($keterangan_transaksi);
+  $data_kas_t = $show_kas_t->fetch(PDO::FETCH_OBJ);
+
+  $show_kas = $proses_kas->editSaldo($data_kas_t->kd_kas);
+  $data_kas = $show_kas->fetch(PDO::FETCH_OBJ);
+  $saldo = $data_kas->saldo - $data_kas_t->mutasi_dana;
+  $update_kt = $proses_kas->updateKas($data_kas_t->kd_kas, $saldo, $tanggal);
+  //End
+
+  //Mengembalikan saldo kas hasil Pembayaran
+  $show_kas_p = $proses_kas->showKdKas($keterangan_pembayaran);
+  while($data_kas_p = $show_kas_p->fetch(PDO::FETCH_OBJ)){
+    $kd_kas = $data_kas_p->kd_kas;
+    $mutasi_dana = $data_kas_p->mutasi_dana;
+    $show_kas = $proses_kas->editSaldo($kd_kas);
+    $data_kas = $show_kas->fetch(PDO::FETCH_OBJ);
+    $saldo = $data_kas->saldo - $mutasi_dana;
+    $update_kt = $proses_kas->updateKas($kd_kas, $saldo, $tanggal);
+  }
+  //End
+
+  if($update_kt == 'Success'){
+    $delete_mutasi_transaksi = $proses_kas->deleteMutasi($keterangan_transaksi);
+  }
+  $delete_mutasi_pembayaran = $proses_kas->deleteMutasi($keterangan_pembayaran);
 
   $delete = $proses->deleteUnit_kotor($_GET['delete_transaksi']);
   $del = $proses->deleteTransaksi($_GET['delete_transaksi']);
-  $delete_mutasi_transaksi = $proses_kas->deleteMutasi($keterangan_transaksi);
-  $delete_mutasi_pembayaran = $proses_kas->deleteMutasi($keterangan_pembayaran);
   header("location:../view/".$view."/transaksi/laporan_transaksi.php");
 }
 
