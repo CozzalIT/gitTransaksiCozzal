@@ -7,6 +7,12 @@ var current_jml = 0;
 $('#note-anak').hide();
 $(".newnote").hide();
 
+function onpopup(){
+	$("#task-cap").text("Memuat Task ...");
+	$("#note-cap").text("Memuat Catatan ...");
+	$("#head-cap").text("Memuat Infromasi ...");
+}
+
 function getButtonText(jenis){
 	if (jenis=='none') return 'Tidak Ada';
 	else if (jenis=='belum') return 'Belum Ada';
@@ -37,15 +43,17 @@ function updateelementtask(konten2, jumlah2, task){
           ret = response.stat; $("#"+a+"-muatstat").text(ret);
 		  if(ret=="Check In") {
 		  	if(response.lihat=="Null"){
-		  		$("#"+a+"-none").attr("class", "btn btn-primary popup"); //set warna button biru
-		  		$("#"+a+"-none").text("Lihat Unit"); $("#"+a+"-none").attr("id", a+"-lihat"); //set button jadi lihat
-		  		$("#"+a+"-nourut").text("3"); jenis = 'lihat';
+		  		if($(this).text()=="Memuat..."){
+			  		$("#"+a+"-none").attr("class", "btn btn-primary popup"); //set warna button biru
+			  		$("#"+a+"-none").text("Lihat Unit"); $("#"+a+"-none").attr("id", a+"-lihat"); //set button jadi lihat
+			  		$("#"+a+"-nourut").text("3"); jenis = 'lihat';
+		  		}
 		  	} else {
 		  		if(response.lihat == "N"){
-			  		$("#"+a+"-none").attr("class", "btn btn-danger popup"); $("#"+a).text('Belum Siap');
+			  		$("#"+a+"-none").attr("class", "btn btn-danger popup"); $("#"+a+"-muatstat").text('Belum Siap');
 			  		$("#"+a+"-none").text("Ubah Status"); $("#"+a+"-none").attr("id", a+"-ubah");	
-			  		$("#"+a+"-nourut").text("2"); jenis = 'ubah';	  			
-		  		} else {$($("#"+a)).text('Siap Pakai');}
+			  		$("#"+a+"-nourut").text("2"); jenis = 'ubah';  			
+		  		} else {$("#"+a+"-muatstat").text('Siap Pakai');}
 		  	}
 		  }
 		  if (response.catatan!=0){
@@ -85,11 +93,10 @@ function updateelementtask(konten2, jumlah2, task){
 		var data_id = $(this).attr('id');
 		data_id = data_id.split('-');
 		var id = data_id[0]; $("#unit").val(id);
-		$("#head-cap").text($("#"+id+"-nounit").text()+" "+$("#"+id+"-nameapt").text());
 		if(id!=idpopup){
-		  var jenis = data_id[1]; idpopup = id;
+		  var jenis = data_id[1]; idpopup = id; 
 		  var url_id = "../../../proses/task.php";
-		  jenisglob = jenis;
+		  jenisglob = jenis; onpopup();
 		  if (jenis=='none' || jenis=='ubah' || jenis=='lihat') 
 		  	url_id = "../../../proses/catatan.php"; 
 		  if(jenis=='none'){ //kalo action = Tidak ada
@@ -124,6 +131,7 @@ function updateelementtask(konten2, jumlah2, task){
 		  }
 		    $.post(url_id, {ajx_id : id},
 		    function (data) {
+		    $("#head-cap").text($("#"+id+"-nounit").text()+" "+$("#"+id+"-nameapt").text());
 		      response = JSON.parse(data);
 				$("#note-anak-isi").html(response.konten); 
 				current_jml = response.jumlah;notecap(current_jml, jenisglob);

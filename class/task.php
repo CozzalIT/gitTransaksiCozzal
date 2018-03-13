@@ -83,7 +83,7 @@ class Task {
   }       
  
   public function isTask_updated($kd_unit, $CO) {
-   $result = $this->db->prepare("SELECT kd_unit FROM tb_unit WHERE kd_unit = ? AND (tgl_task >= ? OR tgl_task is not null)");
+   $result = $this->db->prepare("SELECT kd_unit FROM tb_unit WHERE kd_unit = ? AND tgl_task >= ?");
       $result->bindParam(1, $kd_unit);
       $result->bindParam(2, $CO);
       $result->execute();

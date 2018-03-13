@@ -71,6 +71,11 @@ class Cleaner {
     $query = $this->db->query($sql);
   }    
 
+  public function updateLihat_ready($kd_unit, $sekarang){
+    $sql = "UPDATE tb_unit SET ready='Y', tgl_lihat='$sekarang' WHERE kd_unit='$kd_unit'";
+    $query = $this->db->query($sql);    
+  }
+
   public function updateLihat($kd_unit, $sekarang){
     $sql = "UPDATE tb_unit SET tgl_lihat ='$sekarang', ready = null 
     WHERE kd_unit='$kd_unit' AND (tgl_lihat!='$sekarang' or tgl_lihat is null)";

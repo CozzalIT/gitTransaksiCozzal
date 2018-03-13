@@ -119,7 +119,7 @@
                         } elseif($jam_now >= jam_co($data->jam_check_out)+$injury_bersih) {
                           $status = "<td>Bersih</td>"; $i=6;
                           $button = "<a class='btn btn-basic popup' data-toggle='modal' id='$data->kd_unit"."-none' href='#popup-task' >Tidak Ada</a>";
-                          $tersedia = "<td class='status' id='$data->kd_unit-muatstat'>Memuat...</td>";
+                          $tersedia = "<td class='status' id='$data->kd_unit-muatstat'>Memuat..</td>";
                         } else { $i=0;
                           $status = "<td class='kotor' id='$data->kd_unit-stat-bersih'>Kotor</td>";
                           $button = "<a class='btn btn-success popup' data-toggle='modal' id='$data->kd_unit"."-bersih' href='#popup-task' >Bersihkan</a>";
@@ -143,12 +143,12 @@
                         } else {
                           $status = "<td>Bersih</td>"; $i=6;
                           $button = "<a class='btn btn-basic popup' data-toggle='modal' id='$data->kd_unit"."-none' href='#popup-task' >Tidak Ada</a>";
-                          $tersedia = "<td class='status' id='$data->kd_unit-muatstat'>Memuat...</td>";
+                          $tersedia = "<td class='status' id='$data->kd_unit-muatstat'>Memuat..</td>";
                         }
                       $no_unit = "<td id='$data->kd_unit-nounit'>$data->no_unit</td>";
                       $nama_apt = "<td id='$data->kd_unit-nameapt'>$data->nama_apt</td>";
                       $alamat_apt = "<td class='hiderespons'>$data->alamat_apt</td>";
-                      printtable($i, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $kd_unit);
+                      printtable($i, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $data->kd_unit);
                       }
                     };
                   $Proses = new Cleaner($db);

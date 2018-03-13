@@ -81,7 +81,6 @@ elseif(isset($_POST['bersih_task'])){
   $proses = new Task($db);
   $task = explode('/', $task1);
   $hit = count($task); $hit_del = 1;
-  $hapuskah = false;
   for($i=1; $i<count($task); $i++){
     if(isset($_POST[$task[$i]."-ck"])){
         $del = $proses->deleteTask_unit($kd_unit,$task[$i]);
@@ -91,7 +90,8 @@ elseif(isset($_POST['bersih_task'])){
   if($hit==$hit_del){
     require("../class/cleaner.php");
     $Proses2 = new Cleaner($db);
-    $delete = $Proses2->deleteUnit_kotor($kd_unit, $sekarang);
+    $Proses2->updateLihat_ready($kd_unit, $sekarang);
+    $Proses2->deleteUnit_kotor($kd_unit, $sekarang);
   }
   header('Location:../view/'.$view.'/unit/status.php');
 }
@@ -114,10 +114,11 @@ elseif(isset($_POST['id'])){
 //update task unit pada status kotor saat memuat data
 elseif(isset($_POST['updateTask_unit'])){
   $kd_unit = $_POST['updateTask_unit'];
-  $Proses = new Task($db);
+  $Proses = new Task($db); $CO = "0000-00-00";
   $show = $Proses->getCOdate($kd_unit, $sekarang);
-  $data = $show->fetch(PDO::FETCH_OBJ);
-  $CO = $data->check_out;
+  while($data = $show->fetch(PDO::FETCH_OBJ)){
+    $CO = $data->check_out;
+  }
   $is_updated = $Proses->isTask_updated($kd_unit, $CO);
   if($is_updated==false){
     $update = $Proses->updateTask_Unit($kd_unit, $CO);
