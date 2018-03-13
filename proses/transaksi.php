@@ -368,5 +368,16 @@ elseif (isset($_GET['addConfirm']) && $view!="owner" && $view!="cleaner"){
   }
 }
 
+//Tambah Cancel Transaksi
+elseif (isset($_GET['addCancel']) && $view!="owner" && $view!="cleaner"){
+  $kd_transaksi = $_GET['addCancel'];
+  $proses = new Transaksi($db);
+  $add = $proses->addCancel($kd_transaksi);
+  if($add == "Success"){
+    $delete = $proses->deleteUnit_kotor($kd_transaksi);
+    header('Location:../view/'.$view.'/transaksi/cancel_transaksi.php');
+  }
+}
+
 else header('Location:../view/'.$view.'/home/home.php');
 ?>

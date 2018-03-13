@@ -6,6 +6,7 @@
       <ul>
         <li <?php if($thisPage == "Transaksi") echo "class='active'"; ?>><a href="../transaksi/transaksi.php">Input Transaksi</a></li>
         <li <?php if($thisPage == "Laporan Transaksi") echo "class='active'"; ?>><a href="../transaksi/laporan_transaksi.php">Laporan Transaksi</a></li>
+        <li <?php if($thisPage == "Cancel Transaksi") echo "class='active'"; ?>><a href="../transaksi/cancel_transaksi.php">Cancel Transaksi</a></li>
         <li <?php if($thisPage == "Confirm Transaksi") echo "class='active'"; ?>><a href="../transaksi/confirm_transaksi.php">Confirm Transaksi</a></li>
       </ul>
     </li>
