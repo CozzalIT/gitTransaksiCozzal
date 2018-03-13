@@ -58,8 +58,11 @@ elseif(isset($_GET['delete_task'])){
 elseif(isset($_GET['kosongkan_unit'])){
   $kd_unit = $_GET['kosongkan_unit'];
   require("../class/cleaner.php");
+  $jam_sekarang = strtotime(date("H:i:s"));
+  $jam_sekarang -= 60;
+  $jam = date("H:i:s",$jam_sekarang);
   $proses = new Cleaner($db);
-  $proses->kosongkan_unit($kd_unit, $sekarang);
+  $proses->kosongkan_unit($kd_unit, $sekarang, $jam);
   header('Location:../view/'.$view.'/unit/status.php');
 }
 
@@ -119,7 +122,13 @@ elseif(isset($_POST['updateTask_unit'])){
   if($is_updated==false){
     $update = $Proses->updateTask_Unit($kd_unit, $CO);
   }
-  $callback = array('done'=>$CO);
+  require("../class/catatan.php"); $i=0;
+  $Proses2 = new Catatan($db);
+  $show2 = $Proses2->showCatatanUnit($kd_unit);
+  while($data2 = $show2->fetch(PDO::FETCH_OBJ)){
+    $i++;
+  } 
+  $callback = array('done'=>$CO,'catatan'=>$i);
   echo json_encode($callback);  
 }
 

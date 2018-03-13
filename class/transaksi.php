@@ -18,7 +18,7 @@ class Transaksi {
   }
 
   public function addUnit_kotor($kd_unit, $check_in, $check_out){
-    $sql = "INSERT INTO tb_unit_kotor VALUES ('$kd_unit','$check_in','$check_out')";
+    $sql = "INSERT INTO tb_unit_kotor(kd_unit, check_in, check_out) VALUES ('$kd_unit','$check_in','$check_out')";
     $query = $this->db->query($sql);
   }
 

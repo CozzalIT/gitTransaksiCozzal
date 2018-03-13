@@ -41,37 +41,70 @@
               </thead>
               <tbody>
                 <?php
-                  date_default_timezone_set('Asia/Jakarta');
-                  $sekarang = date('Y-m-d');
-                  $jam_now = strtotime(date('H:i'));
-                  $jam12 = strtotime('12:00');
-                  $Proses = new Cleaner($db);
-                  $show1 = $Proses->showUnit1($sekarang);
-                  while($data = $show1->fetch(PDO::FETCH_OBJ)){
-                    if ($data->kd_unit != 0){ 
-                      if($data->check_out!=$sekarang || ($data->check_out==$sekarang && $jam_now>=$jam12)){
-                          $status = 'Kosong'; $i = 4;
-                          $button = "<a class='btn btn-success popup' data-toggle='modal' id='$data->kd_unit"."-bersih' href='#popup-task'>Bersihkan</a>";
-                      }
-                      elseif($data->check_out==$sekarang && $jam_now<$jam12){
-                          $status = 'Check Out'; $i = 5;
-                          $button = "<a class='btn btn-info popup' data-toggle='modal' id='$data->kd_unit"."-belum' href='#popup-task' >Belum Ada</a>";
-                      }
+                function printtable($i, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $kd_unit){
                       echo "
                         <tr>
-                          <td class='hide'>$i</td>
-                          <td id='$data->kd_unit-nounit'>$data->no_unit</td>
-                          <td id='$data->kd_unit-nameapt'>$data->nama_apt</td>
-                          <td class='hiderespons'>$data->alamat_apt</td>
-                          <td>$status</td>
-                          <td class='kotor' id='$data->kd_unit-kotorstat'>Kotor</td>
+                          <td id='$kd_unit-nourut' class='hide'>$i</td>
+                          $no_unit
+                          $nama_apt
+                          $alamat_apt
+                          $tersedia
+                          $status
                           <td>
                             <center>
                                $button
                             </center>
                           </td>
                         </tr>
-                      ";
+                      ";                  
+                }
+
+              function get_value_config($parameter){
+                  $myfile = fopen("../../../config.ini", "r") or die("Unable to open file!");
+                  while(!feof($myfile)){
+                    $string = fgets($myfile);
+                    $arr = explode("=", $string);
+                    if($arr[0]==$parameter){
+                      fclose($myfile);
+                      return $arr[1];
+                    }
+                  }
+                  fclose($myfile);
+                  return "Undefined";
+                }  
+
+                function jam_co($data_jam){
+                  if($data_jam==""){
+                    $data_jam = get_value_config("jam_check_out");
+                  } 
+                  return strtotime($data_jam);
+                }
+                
+                //-------------------------------------------------
+
+                  date_default_timezone_set('Asia/Jakarta');
+                  $sekarang = date('Y-m-d');
+                  $jam_now = strtotime(date('H:i'));
+                  $injury_bersih = get_value_config("extra_time_bersihkan");
+
+                  $Proses = new Cleaner($db);
+                  $show1 = $Proses->showUnit1($sekarang);
+                  while($data = $show1->fetch(PDO::FETCH_OBJ)){
+                    if ($data->kd_unit != 0){ 
+                      if($data->check_out!=$sekarang || ($data->check_out==$sekarang && $jam_now>=jam_co($data->jam_check_out))){
+                          $status = "<td class='kotor' id='$data->kd_unit-stat-bersih'>Kotor</td>";
+                          $tersedia = '<td>Kosong</td>'; $i = 4;
+                          $button = "<a class='btn btn-success popup' data-toggle='modal' id='$data->kd_unit"."-bersih' href='#popup-task'>Bersihkan</a>";
+                      }
+                      elseif($data->check_out==$sekarang && $jam_now<jam_co($data->jam_check_out)){
+                          $status = "<td class='kotor' id='$data->kd_unit-stat-belum'>Kotor</td>";
+                          $tersedia = '<td>Check Out</td>'; $i = 5;
+                          $button = "<a class='btn btn-info popup' data-toggle='modal' id='$data->kd_unit"."-belum' href='#popup-task' >Belum Ada</a>";
+                      }
+                      $no_unit = "<td id='$data->kd_unit-nounit'>$data->no_unit</td>";
+                      $nama_apt = "<td id='$data->kd_unit-nameapt'>$data->nama_apt</td>";
+                      $alamat_apt = "<td class='hiderespons'>$data->alamat_apt</td>";
+                      printtable($i, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $data->kd_unit);
                     }
                   };
 
@@ -79,30 +112,23 @@
                     $show2 = $Proses->showUnit2($sekarang);
                     while($data = $show2->fetch(PDO::FETCH_OBJ)){
                       if ($data->kd_unit != 0){ 
-                        if($jam_now<$jam12){ $i=1;
-                          $status = "<td class='kotor' id='$data->kd_unit'>Bersih</td>";
+                        if($jam_now<jam_co($data->jam_check_out)){ $i=1;
+                          $status = "<td class='kotor' id='$data->kd_unit-stat-prepare'>Bersih</td>";
                           $button = "<a class='btn btn-warning popup' data-toggle='modal' id='$data->kd_unit"."-prepare' href='#popup-task' >Persiapkan</a>";
                           $tersedia = "<td>Ck_Out & Ck_In</td>";
-                        } else {
+                        } elseif($jam_now >= jam_co($data->jam_check_out)+$injury_bersih) {
                           $status = "<td>Bersih</td>"; $i=6;
                           $button = "<a class='btn btn-basic popup' data-toggle='modal' id='$data->kd_unit"."-none' href='#popup-task' >Tidak Ada</a>";
                           $tersedia = "<td class='status' id='$data->kd_unit-muatstat'>Memuat...</td>";
-                        }                        
-                        echo "
-                          <tr>
-                            <td class='hide'>$i</td>
-                            <td id='$data->kd_unit-nounit'>$data->no_unit</td>
-                            <td id='$data->kd_unit-nameapt'>$data->nama_apt</td>
-                            <td class='hiderespons'>$data->alamat_apt</td>
-                            $tersedia
-                            $status
-                            <td>
-                              <center>
-                                $button
-                              </center>
-                            </td>
-                          </tr>
-                        ";
+                        } else { $i=0;
+                          $status = "<td class='kotor' id='$data->kd_unit-stat-bersih'>Kotor</td>";
+                          $button = "<a class='btn btn-success popup' data-toggle='modal' id='$data->kd_unit"."-bersih' href='#popup-task' >Bersihkan</a>";
+                          $tersedia = "<td>Check In</td>";                         
+                        }                       
+                      $no_unit = "<td id='$data->kd_unit-nounit'>$data->no_unit</td>";
+                      $nama_apt = "<td id='$data->kd_unit-nameapt'>$data->nama_apt</td>";
+                      $alamat_apt = "<td class='hiderespons'>$data->alamat_apt</td>";
+                      printtable($i, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $data->kd_unit);
                       }
                     };
 
@@ -110,8 +136,8 @@
                     $show3 = $Proses->showUnit3($sekarang);
                     while($data = $show3->fetch(PDO::FETCH_OBJ)){
                       if ($data->kd_unit != 0){ 
-                        if($jam_now<$jam12){ $i=0;
-                          $status = "<td class='kotor' id='$data->kd_unit-kotorstat'>Kotor</td>";
+                        if($jam_now<strtotime('12:00')+$injury_bersih){ $i=0;
+                          $status = "<td class='kotor' id='$data->kd_unit-stat-bersih'>Kotor</td>";
                           $button = "<a class='btn btn-success popup' data-toggle='modal' id='$data->kd_unit"."-bersih' href='#popup-task' >Bersihkan</a>";
                           $tersedia = "<td>Check In</td>";
                         } else {
@@ -119,42 +145,23 @@
                           $button = "<a class='btn btn-basic popup' data-toggle='modal' id='$data->kd_unit"."-none' href='#popup-task' >Tidak Ada</a>";
                           $tersedia = "<td class='status' id='$data->kd_unit-muatstat'>Memuat...</td>";
                         }
-                        echo "
-                          <tr>
-                            <td class='hide'>$i</td>
-                            <td id='$data->kd_unit-nounit'>$data->no_unit</td>
-                            <td id='$data->kd_unit-nameapt'>$data->nama_apt</td>
-                            <td class='hiderespons'>$data->alamat_apt</td>
-                            $tersedia
-                            $status
-                            <td>
-                              <center>
-                                $button
-                              </center>
-                            </td>
-                          </tr>
-                        ";
+                      $no_unit = "<td id='$data->kd_unit-nounit'>$data->no_unit</td>";
+                      $nama_apt = "<td id='$data->kd_unit-nameapt'>$data->nama_apt</td>";
+                      $alamat_apt = "<td class='hiderespons'>$data->alamat_apt</td>";
+                      printtable($i, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $kd_unit);
                       }
                     };
                   $Proses = new Cleaner($db);
                   $show4 = $Proses->showUnit_normal($sekarang);
                   while($data = $show4->fetch(PDO::FETCH_OBJ)){
                     if ($data->kd_unit != 0){ 
-                      echo "
-                       <tr>
-                          <td id='$data->kd_unit-nourut' class='hide'>6</td>
-                          <td id='$data->kd_unit-nounit'>$data->no_unit</td>
-                          <td id='$data->kd_unit-nameapt'>$data->nama_apt</td>
-                          <td class='hiderespons'>$data->alamat_apt</td>
-                          <td class='status' id='$data->kd_unit-muatstat'>Memuat...</td>
-                          <td id='$data->kd_unit-stat-bersih'>Bersih</td>
-                          <td>
-                            <center>
-                              <a class='btn btn-Basic popup' data-toggle='modal' id='$data->kd_unit"."-none' href='#popup-task' >Tidak Ada</a>
-                            </center>
-                          </td>
-                        </tr>
-                      ";
+                      $no_unit = "<td id='$data->kd_unit-nounit'>$data->no_unit</td>";
+                      $nama_apt = "<td id='$data->kd_unit-nameapt'>$data->nama_apt</td>";
+                      $alamat_apt = "<td class='hiderespons'>$data->alamat_apt</td>";
+                      $tersedia = "<td class='status' id='$data->kd_unit-muatstat'>Memuat...</td>";
+                      $status = "<td id='$data->kd_unit-stat-bersih'>Bersih</td>";
+                      $button = "<a class='btn btn-Basic popup' data-toggle='modal' id='$data->kd_unit"."-none' href='#popup-task' >Tidak Ada</a>";
+                      printtable(6, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $data->kd_unit);
                     }
                     };
                 ?>

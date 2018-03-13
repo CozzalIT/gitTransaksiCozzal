@@ -2,14 +2,24 @@ $(document).ready(function(){
 
 var in_update = false;
 var idpopup = 'null';
+var jenisglob;
 var current_jml = 0;
 $('#note-anak').hide();
 $(".newnote").hide();
 
-function notecap(jumlah){
+function getButtonText(jenis){
+	if (jenis=='none') return 'Tidak Ada';
+	else if (jenis=='belum') return 'Belum Ada';
+	else if (jenis=='prepare') return 'Persiapkan';
+	else if (jenis=='bersih') return 'Bersihkan';
+	else if (jenis=='lihat') return 'Lihat Unit';
+	else if (jenis=='ubah') return 'Ubah Status';
+}
+
+function notecap(jumlah, jenis){
 	$("#note-cap").text('Catatan ('+jumlah+')');
 	if(jumlah==0) $("#"+idpopup+"-none").text('Tidak Ada');
-	else $("#"+idpopup+"-none").text('Tidak Ada ('+jumlah+')');
+	else $("#"+idpopup+"-"+jenis).text(getButtonText(jenis)+' ('+jumlah+')');
 }
 
 function updateelementtask(konten2, jumlah2, task){
@@ -23,34 +33,38 @@ function updateelementtask(konten2, jumlah2, task){
 		var a = id[0];
 	    $.post('../../../proses/option_unit.php', {status : a},
         function (data) {
-          response = JSON.parse(data);
-          //alert(data);
+          response = JSON.parse(data); jenis = 'none';
           ret = response.stat; $("#"+a+"-muatstat").text(ret);
-		  if (response.catatan!=0){
-		  	$("#"+a+"-none").text('Tidak Ada ('+response.catatan+')');
-		  } else if(ret=="Check In") {
+		  if(ret=="Check In") {
 		  	if(response.lihat=="Null"){
 		  		$("#"+a+"-none").attr("class", "btn btn-primary popup"); //set warna button biru
 		  		$("#"+a+"-none").text("Lihat Unit"); $("#"+a+"-none").attr("id", a+"-lihat"); //set button jadi lihat
-		  		$("#"+a+"-nourut").text("3");
+		  		$("#"+a+"-nourut").text("3"); jenis = 'lihat';
 		  	} else {
 		  		if(response.lihat == "N"){
 			  		$("#"+a+"-none").attr("class", "btn btn-danger popup"); $("#"+a).text('Belum Siap');
 			  		$("#"+a+"-none").text("Ubah Status"); $("#"+a+"-none").attr("id", a+"-ubah");	
-			  		$("#"+a+"-nourut").text("2");	  			
+			  		$("#"+a+"-nourut").text("2"); jenis = 'ubah';	  			
 		  		} else {$($("#"+a)).text('Siap Pakai');}
 		  	}
 		  }
+		  if (response.catatan!=0){
+		  	var buttontext = getButtonText(jenis);
+		  	$("#"+a+"-"+jenis).text(buttontext+' ('+response.catatan+')');	
+		  }	  
         });
 	});	
 
 	$(".kotor").click(function(){
 		var id = $(this).attr('id'); id = id.split("-");
-		var a = id[0];
+		var a = id[0]; var jenis = id[2];
 	    $.post('../../../proses/task.php', {updateTask_unit : a},
         function (data) {
           response = JSON.parse(data);
-          ret = response.done;
+		  if (response.catatan!=0){
+		  	var buttontext = getButtonText(jenis);
+		  	$("#"+a+"-"+jenis).text(buttontext+' ('+response.catatan+')');	
+		  }	 
         });		
 	});
 
@@ -75,6 +89,7 @@ function updateelementtask(konten2, jumlah2, task){
 		if(id!=idpopup){
 		  var jenis = data_id[1]; idpopup = id;
 		  var url_id = "../../../proses/task.php";
+		  jenisglob = jenis;
 		  if (jenis=='none' || jenis=='ubah' || jenis=='lihat') 
 		  	url_id = "../../../proses/catatan.php"; 
 		  if(jenis=='none'){ //kalo action = Tidak ada
@@ -111,7 +126,7 @@ function updateelementtask(konten2, jumlah2, task){
 		    function (data) {
 		      response = JSON.parse(data);
 				$("#note-anak-isi").html(response.konten); 
-				current_jml = response.jumlah;notecap(current_jml);
+				current_jml = response.jumlah;notecap(current_jml, jenisglob);
 				if(jenis!='lihat'){
 					updateelementtask(response.konten2, response.jumlah2, response.task);
 				}
@@ -141,7 +156,7 @@ $("#note-simpan").click(function(){
 	      	a_new = "'"+a+"'"; val = "'#del'"; but = "'#del-note'";
 	      	$("#temp").html('<a class="close" onclick="$('+val+').text('+a_new+'); $('+but+').click();">×</a>'+$("#note-baru").val());
 	      	$("#temp").attr('id',response.res);
-	      	current_jml++; notecap(current_jml);
+	      	current_jml++; notecap(current_jml, jenisglob);
 	      } else {alert('Gagal Menambahkan Note'); $("#temp").remove();}
 	      in_update = false;
 	    });
@@ -162,7 +177,7 @@ $("#del-note").click(function(){
 		if(willDelete){
 		    $.post("../../../proses/catatan.php", {hapus_catatan : a},
 		    function (data) {
-		      current_jml--; notecap(current_jml);
+		      current_jml--; notecap(current_jml, jenisglob);
 		      if(current_jml==0){
 		      	$("#note-anak-isi").html('<div class="note">Tidak adak catatan pada unit ini.</div>');	      	
 		      } else $("#"+a).remove(); 
@@ -204,6 +219,10 @@ $("#update-stat").click(function(){
 	var ready = 'Y';
 	if (document.getElementById('N-stat').checked) ready = 'N';
 	window.location = "../../../proses/task.php?set_ready="+ready+"&kd_unit="+idpopup;
+});
+
+$(".fg-button").click(function(){
+	$(".status").click();
 });
 
 }); //on document ready
