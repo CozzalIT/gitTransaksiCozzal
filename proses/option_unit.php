@@ -68,6 +68,8 @@ elseif(isset($_POST['status'])){
 	$kd_unit = $_POST['status'];
     date_default_timezone_set('Asia/Jakarta');
     $sekarang = date('Y-m-d'); 
+    require("../class/catatan.php");
+	$proses2 = new Catatan($db); 
     $jam12 = strtotime('12:00'); $jam_now = strtotime(date('H:i'));
 	$Proses = new Cleaner($db); $lihat = "Tidak Ada";
 	$status = "Kosong"; $catatan = 0;
@@ -90,15 +92,13 @@ elseif(isset($_POST['status'])){
 			$lihat = "N";
 		}
 	} else {
-		require("../class/catatan.php");
-		$proses2 = new Catatan($db); 
 		$migrate = $proses2->catatanToTask($kd_unit);
-		$delete = $Proses->deleteUnit_kotor($kd_unit, $sekarang);
-		$show = $proses2->showCatatanUnit($kd_unit);
-		while($data = $show->fetch(PDO::FETCH_OBJ)){
-			$catatan++; 
-		}			
+		$delete = $Proses->deleteUnit_kotor($kd_unit, $sekarang);		
 	}
+	$show = $proses2->showCatatanUnit($kd_unit);
+	while($data = $show->fetch(PDO::FETCH_OBJ)){
+		$catatan++; 
+	}	
 	$callback = array('stat'=>$status, 'catatan'=>$catatan, 'lihat'=>$lihat);
 	echo json_encode($callback);
 }

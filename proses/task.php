@@ -58,8 +58,11 @@ elseif(isset($_GET['delete_task'])){
 elseif(isset($_GET['kosongkan_unit'])){
   $kd_unit = $_GET['kosongkan_unit'];
   require("../class/cleaner.php");
+  $jam_sekarang = strtotime(date("H:i:s"));
+  $jam_sekarang -= 60;
+  $jam = date("H:i:s",$jam_sekarang);
   $proses = new Cleaner($db);
-  $proses->kosongkan_unit($kd_unit, $sekarang);
+  $proses->kosongkan_unit($kd_unit, $sekarang, $jam);
   header('Location:../view/'.$view.'/unit/status.php');
 }
 
@@ -78,7 +81,6 @@ elseif(isset($_POST['bersih_task'])){
   $proses = new Task($db);
   $task = explode('/', $task1);
   $hit = count($task); $hit_del = 1;
-  $hapuskah = false;
   for($i=1; $i<count($task); $i++){
     if(isset($_POST[$task[$i]."-ck"])){
         $del = $proses->deleteTask_unit($kd_unit,$task[$i]);
@@ -88,7 +90,8 @@ elseif(isset($_POST['bersih_task'])){
   if($hit==$hit_del){
     require("../class/cleaner.php");
     $Proses2 = new Cleaner($db);
-    $delete = $Proses2->deleteUnit_kotor($kd_unit, $sekarang);
+    $Proses2->updateLihat_ready($kd_unit, $sekarang);
+    $Proses2->deleteUnit_kotor($kd_unit, $sekarang);
   }
   header('Location:../view/'.$view.'/unit/status.php');
 }
@@ -111,15 +114,22 @@ elseif(isset($_POST['id'])){
 //update task unit pada status kotor saat memuat data
 elseif(isset($_POST['updateTask_unit'])){
   $kd_unit = $_POST['updateTask_unit'];
-  $Proses = new Task($db);
+  $Proses = new Task($db); $CO = "0000-00-00";
   $show = $Proses->getCOdate($kd_unit, $sekarang);
-  $data = $show->fetch(PDO::FETCH_OBJ);
-  $CO = $data->check_out;
+  while($data = $show->fetch(PDO::FETCH_OBJ)){
+    $CO = $data->check_out;
+  }
   $is_updated = $Proses->isTask_updated($kd_unit, $CO);
   if($is_updated==false){
     $update = $Proses->updateTask_Unit($kd_unit, $CO);
   }
-  $callback = array('done'=>$CO);
+  require("../class/catatan.php"); $i=0;
+  $Proses2 = new Catatan($db);
+  $show2 = $Proses2->showCatatanUnit($kd_unit);
+  while($data2 = $show2->fetch(PDO::FETCH_OBJ)){
+    $i++;
+  } 
+  $callback = array('done'=>$CO,'catatan'=>$i);
   echo json_encode($callback);  
 }
 

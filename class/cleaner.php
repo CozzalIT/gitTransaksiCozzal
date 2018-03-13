@@ -7,7 +7,8 @@ class Cleaner {
   }
 
   public function showUnit1($sekarang){
-    $sql = "SELECT * FROM tb_unit
+    $sql = "SELECT tb_unit.kd_unit, tb_unit.no_unit, tb_apt.nama_apt, tb_apt.alamat_apt,
+    tb_unit_kotor.check_out, tb_unit_kotor.jam_check_out FROM tb_unit
     INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt
     INNER JOIN tb_unit_kotor ON tb_unit_kotor.kd_unit = tb_unit.kd_unit
     WHERE tb_unit_kotor.check_out<='$sekarang' 
@@ -17,7 +18,8 @@ class Cleaner {
   }
 
   public function showUnit2($sekarang){
-    $sql = "SELECT * FROM tb_unit
+    $sql = "SELECT tb_unit.kd_unit, tb_unit.no_unit, tb_apt.nama_apt, tb_apt.alamat_apt,
+    tb_unit_kotor.jam_check_out FROM tb_unit
     INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt
     INNER JOIN tb_unit_kotor ON tb_unit_kotor.kd_unit = tb_unit.kd_unit
     WHERE tb_unit_kotor.check_out='$sekarang' and tb_unit_kotor.kd_unit
@@ -27,7 +29,8 @@ class Cleaner {
   }
 
   public function showUnit3($sekarang){
-    $sql = "SELECT * FROM tb_unit
+    $sql = "SELECT tb_unit.kd_unit, tb_unit.no_unit, tb_apt.nama_apt, tb_apt.alamat_apt,
+    tb_unit_kotor.jam_check_out FROM tb_unit
     INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt
     INNER JOIN tb_unit_kotor ON tb_unit_kotor.kd_unit = tb_unit.kd_unit
     WHERE tb_unit_kotor.check_in='$sekarang' 
@@ -37,8 +40,8 @@ class Cleaner {
   }
 
   public function showUnit_normal($sekarang){
-    $sql = "SELECT * FROM tb_unit
-    INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt
+    $sql = "SELECT tb_unit.kd_unit, tb_unit.no_unit, tb_apt.nama_apt, tb_apt.alamat_apt
+    FROM tb_unit INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt
     and tb_unit.kd_unit not in (SELECT kd_unit from tb_unit_kotor where check_out<='$sekarang')";
     $query = $this->db->query($sql);
     return $query;
@@ -68,6 +71,11 @@ class Cleaner {
     $query = $this->db->query($sql);
   }    
 
+  public function updateLihat_ready($kd_unit, $sekarang){
+    $sql = "UPDATE tb_unit SET ready='Y', tgl_lihat='$sekarang' WHERE kd_unit='$kd_unit'";
+    $query = $this->db->query($sql);    
+  }
+
   public function updateLihat($kd_unit, $sekarang){
     $sql = "UPDATE tb_unit SET tgl_lihat ='$sekarang', ready = null 
     WHERE kd_unit='$kd_unit' AND (tgl_lihat!='$sekarang' or tgl_lihat is null)";
@@ -82,8 +90,8 @@ class Cleaner {
     $query = $this->db->query($sql);
   } 
 
-  public function kosongkan_unit($kd_unit, $sekarang){
-    $sql = "UPDATE tb_unit_kotor SET check_out='0000-00-00' WHERE check_out='$sekarang'";
+  public function kosongkan_unit($kd_unit, $sekarang, $jam_sekarang){
+    $sql = "UPDATE tb_unit_kotor SET jam_check_out='$jam_sekarang' WHERE kd_unit='$kd_unit' AND check_out='$sekarang'";
     $query = $this->db->query($sql);
   }
 
