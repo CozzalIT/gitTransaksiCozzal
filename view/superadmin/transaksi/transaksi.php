@@ -317,7 +317,7 @@
   				  <label class="control-label">DP Via :</label>
   				  <div class="controls">
   				    <select id="kas" name="kas" class="span4" required>
-  					  <option value="">-- Bank --</option>
+  					    <option value="">-- Kas --</option>
     					  <?php
                   $Proses = new Kas($db);
         				  $show = $Proses->showKas();

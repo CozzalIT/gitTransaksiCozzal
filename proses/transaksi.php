@@ -168,19 +168,31 @@ elseif(isset($_POST['moveTransaksi'])){
 
 //Tambah Pembayaran
 elseif(isset($_POST['addPembayaran'])){
-	$Proses = new Transaksi($db);
-	$show	= $Proses->editTransaksi($_POST['kd_transaksi']);
+	$proses = new Transaksi($db);
+  $proses_kas = new Kas($db);
+
+	$show	= $proses->editTransaksi($_POST['kd_transaksi']);
 	$data = $show->fetch(PDO::FETCH_OBJ);
 
 	$kd_transaksi = $_POST['kd_transaksi'];
+  $kd_kas = $_POST['kas'];
 	$sisa_pelunasan_lama = $_POST['sisa_pelunasan'];
 	$pembayaran_lama = $data->pembayaran;
 	$pembayaran_masuk = $_POST['pembayaran'];
 	$pembayaran_baru = $pembayaran_lama + $pembayaran_masuk;
 	$sisa_pelunasan = $sisa_pelunasan_lama - $pembayaran_masuk;
+  $tanggal = date('Y-m-d H:i:s');
+  $keterangan = '7/'.$kd_transaksi;
 
-  $add = $Proses->addPembayaran($kd_transaksi, $pembayaran_baru, $sisa_pelunasan);
+  $add = $proses->addPembayaran($kd_transaksi, $pembayaran_baru, $sisa_pelunasan);
   if($add == "Success"){
+    $show_saldo = $proses_kas->editSaldo($kd_kas);
+    $edit_saldo = $show_saldo->fetch(PDO::FETCH_OBJ);
+    $saldo_baru = $edit_saldo->saldo + $pembayaran_masuk;
+
+    $update_kas = $proses_kas->updateKas($kd_kas, $saldo_baru, $tanggal);
+    $add_mutasi = $proses_kas->addMutasiKas($kd_kas, $pembayaran_masuk, 1, $tanggal, $keterangan);
+
     header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php?pembayaran='.$kd_transaksi);
   } else echo 'error';
 }
@@ -197,8 +209,8 @@ elseif(isset($_POST['addPenyewaTransaksi'])){
   $proses = new Penyewa($db);
   $add = $proses->addPenyewa($nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung);
 
-  $Proses = new Transaksi($db);
-  $show = $Proses->showPenyewaTransaksi();
+  $proses = new Transaksi($db);
+  $show = $proses->showPenyewaTransaksi();
   $data = $show->fetch(PDO::FETCH_OBJ);
 
   if($add == "Success"){
@@ -253,33 +265,47 @@ elseif(isset($_POST['updateTransaksi'])){
   $proses = new Transaksi($db);
   $proses_kas = new Kas($db);
 
-
   $show = $proses_kas->showKdKas($keterangan);
   $data_mutasi = $show->fetch(PDO::FETCH_OBJ);
   $kd_kas_lama = $data_mutasi->kd_kas;
   $mutasi_dana = $data_mutasi->mutasi_dana;
 
-  //Mengembalikan Saldo kas yang diganti
-  $show_saldo_lama = $proses_kas->editSaldo($kd_kas_lama);
-  $data_saldo_lama = $show_saldo_lama->fetch(PDO::FETCH_OBJ);
-  $saldo_kas_lama = $data_saldo_lama->saldo - $mutasi_dana;
+  if($kd_kas <> $kd_kas_lama){
+    //Mengembalikan Saldo kas yang diganti
+    $show_saldo_lama = $proses_kas->editSaldo($kd_kas_lama);
+    $data_saldo_lama = $show_saldo_lama->fetch(PDO::FETCH_OBJ);
+    $saldo_kas_lama = $data_saldo_lama->saldo - $mutasi_dana;
 
-  //Merubah Saldo kas pengganti
-  $show_saldo_baru = $proses_kas->editSaldo($kd_kas);
-  $data_saldo_baru = $show_saldo_baru->fetch(PDO::FETCH_OBJ);
-  $saldo_kas_baru = $data_saldo_baru->saldo + $dp;
+    //Merubah Saldo kas pengganti
+    $show_saldo_baru = $proses_kas->editSaldo($kd_kas);
+    $data_saldo_baru = $show_saldo_baru->fetch(PDO::FETCH_OBJ);
+    $saldo_kas_baru = $data_saldo_baru->saldo + $dp;
 
-  $update_kas_lama = $proses_kas->updateKas($kd_kas_lama, $saldo_kas_lama, $tanggal);
-  $update_kas_baru = $proses_kas->updateKas($kd_kas, $saldo_kas_baru, $tanggal);
+    $update_kas_lama = $proses_kas->updateKas($kd_kas_lama, $saldo_kas_lama, $tanggal);
+    $update_kas_baru = $proses_kas->updateKas($kd_kas, $saldo_kas_baru, $tanggal);
+    $delete_mutasi = $proses_kas->deleteMutasi($keterangan);
+    $add_mutasi = $proses_kas->addMutasiKas($kd_kas, $dp, 1, $tanggal, $keterangan);
+  }elseif($kd_kas == $kd_kas_lama){
+    $show_saldo = $proses_kas->editSaldo($kd_kas);
+    $show_mutasi_dana = $proses_kas->showMutasiKas($keterangan);
 
-  $delete_mutasi = $proses_kas->deleteMutasi($keterangan);
-  $add_mutasi = $proses_kas->addMutasiKas($kd_kas, $dp, 1, $tanggal, $keterangan);
+    $data_saldo = $show_saldo->fetch(PDO::FETCH_OBJ);
+    $data_mutasi_dana = $show_mutasi_dana->fetch(PDO::FETCH_OBJ);
+
+    $saldo_kas = ($data_saldo->saldo - $data_mutasi_dana->mutasi_dana) + $dp;
+    $update_kas = $proses_kas->updateKas($kd_kas, $saldo_kas, $tanggal);
+
+    $delete_mutasi = $proses_kas->deleteMutasi($keterangan);
+    $add_mutasi = $proses_kas->addMutasiKas($kd_kas, $dp, 1, $tanggal, $keterangan);
+  }
 
   $update = $proses->updateUnit_kotor($kd_transaksi ,$kd_unit, $check_in, $check_out);
   $add = $proses->updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $harga_sewa_we, $diskon, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total_tagihan, $sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday);
   if($add == "Success"){
     header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php');
-  } else echo 'error';
+  }else{
+    echo 'error';
+  };
 }
 
 //Delete Transaksi
@@ -289,21 +315,39 @@ elseif(isset($_GET['delete_transaksi']) && ($view=="superadmin" || $view=="manag
 
   $show = $proses->showTransaksi();
   $data = $show->fetch(PDO::FETCH_OBJ);
-  $keterangan = '6/'.$data->kd_transaksi;
-
-  $show_kas = $proses_kas->showKdKas($keterangan);
-  $data_kas = $show_kas->fetch(PDO::FETCH_OBJ);
-
-  $show_kas1 = $proses_kas->editSaldo($data_kas->kd_kas);
-  $data_kas1 = $show_kas1->fetch(PDO::FETCH_OBJ);
-  $saldo = $data_kas1->saldo - $data_kas->mutasi_dana;
-
+  $keterangan_transaksi = '6/'.$data->kd_transaksi;
+  $keterangan_pembayaran = '7/'.$data->kd_transaksi;
   $tanggal = date('Y-m-d H:i:s');
-  $update = $proses_kas->updateKas($data_kas->kd_kas, $saldo, $tanggal);
+
+  //Mengembalikan saldo kas hasil dp transaksi
+  $show_kas_t = $proses_kas->showKdKas($keterangan_transaksi);
+  $data_kas_t = $show_kas_t->fetch(PDO::FETCH_OBJ);
+
+  $show_kas = $proses_kas->editSaldo($data_kas_t->kd_kas);
+  $data_kas = $show_kas->fetch(PDO::FETCH_OBJ);
+  $saldo = $data_kas->saldo - $data_kas_t->mutasi_dana;
+  $update_kt = $proses_kas->updateKas($data_kas_t->kd_kas, $saldo, $tanggal);
+  //End
+
+  //Mengembalikan saldo kas hasil Pembayaran
+  $show_kas_p = $proses_kas->showKdKas($keterangan_pembayaran);
+  while($data_kas_p = $show_kas_p->fetch(PDO::FETCH_OBJ)){
+    $kd_kas = $data_kas_p->kd_kas;
+    $mutasi_dana = $data_kas_p->mutasi_dana;
+    $show_kas = $proses_kas->editSaldo($kd_kas);
+    $data_kas = $show_kas->fetch(PDO::FETCH_OBJ);
+    $saldo = $data_kas->saldo - $mutasi_dana;
+    $update_kt = $proses_kas->updateKas($kd_kas, $saldo, $tanggal);
+  }
+  //End
+
+  if($update_kt == 'Success'){
+    $delete_mutasi_transaksi = $proses_kas->deleteMutasi($keterangan_transaksi);
+  }
+  $delete_mutasi_pembayaran = $proses_kas->deleteMutasi($keterangan_pembayaran);
 
   $delete = $proses->deleteUnit_kotor($_GET['delete_transaksi']);
   $del = $proses->deleteTransaksi($_GET['delete_transaksi']);
-  $delete_mutasi = $proses_kas->deleteMutasi($keterangan);
   header("location:../view/".$view."/transaksi/laporan_transaksi.php");
 }
 
