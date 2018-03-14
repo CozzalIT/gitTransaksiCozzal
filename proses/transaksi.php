@@ -354,23 +354,31 @@ elseif (isset($_GET['addCancel']) && $view!="owner" && $view!="cleaner"){
 
 //Setlement Dp
 elseif (isset($_POST['setlementDp']) && $view!="owner" && $view!="cleaner"){
-  $setlement = $_POST['setlement'];
-  $kd_transaksi = $_SESSION['kd_transaksi'];
-  $kd_kas = $_POST['kas'];
-  $tanggal = date('Y-m-d H:i:s');
-  $keterangan = '8/'.$kd_transaksi;
-
   $proses = new Transaksi($db);
   $proses_k = new Kas($db);
-  $update = $proses->setlementDp($kd_transaksi, $setlement);
-  if($update == "Success"){
-    $show_k = $proses_k->editSaldo($kd_kas);
-    $data_s = $show_k->fetch(PDO::FETCH_OBJ);
+  $show_dp = $proses->showDpTransaksi($_SESSION['kd_transaksi']);
+  $kd_kas = $_POST['kas'];
+  $show_k = $proses_k->editSaldo($kd_kas);
+  $data_s = $show_k->fetch(PDO::FETCH_OBJ);
+
+  if($data_s->saldo < $_POST['setlement']){
+    header('Location:../view/'.$view.'/transaksi/cancel_transaksi.php?error=saldoKurang');
+  }elseif($_POST['setlement'] > $data->dp){
+    header('Location:../view/'.$view.'/transaksi/cancel_transaksi.php?error=dpKurang');
+  }elseif($data->dp >= $_POST['setlement']){
+    $setlement = $_POST['setlement'];
+    $kd_transaksi = $_SESSION['kd_transaksi'];
+    $tanggal = date('Y-m-d H:i:s');
+    $keterangan = '8/'.$kd_transaksi;
     $saldo = $data_s->saldo - $setlement;
 
-    $update_k = $proses_k->updateKas($kd_kas, $saldo, $tanggal);
-    $add_m = $proses_k->addMutasiKas($kd_kas, $setlement, 2, $tanggal, $keterangan);
-    header('Location:../view/'.$view.'/transaksi/cancel_transaksi.php');
+    $update = $proses->setlementDp($kd_transaksi, $setlement);
+    if($update == "Success"){
+
+      $update_k = $proses_k->updateKas($kd_kas, $saldo, $tanggal);
+      $add_m = $proses_k->addMutasiKas($kd_kas, $setlement, 2, $tanggal, $keterangan);
+      header('Location:../view/'.$view.'/transaksi/cancel_transaksi.php');
+    }
   }
 }
 

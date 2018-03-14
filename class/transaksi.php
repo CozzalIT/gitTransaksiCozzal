@@ -109,7 +109,7 @@ class Transaksi {
   }
 
   public function is_blocked($CI,$CO,$kd_unit,$jenis){
-   $result = $this->db->prepare("SELECT kd_mod_calendar from tb_mod_calendar
+    $result = $this->db->prepare("SELECT kd_mod_calendar from tb_mod_calendar
     where ((start_date<='$CI' and end_date>='$CO')
     or (start_date>='$CI' and start_date<'$CO')
     or (end_date>'$CI' and end_date<='$CO'))
@@ -128,11 +128,8 @@ class Transaksi {
     return $query;
   }
 
-  public function showCancelTransaksi(){
-    $sql = "SELECT * from tb_cancel_transaksi
-    INNER JOIN tb_penyewa ON tb_penyewa.kd_penyewa = tb_cancel_transaksi.kd_penyewa
-    INNER JOIN tb_apt ON tb_apt.kd_apt = tb_cancel_transaksi.kd_apt
-    INNER JOIN tb_unit ON tb_unit.kd_unit = tb_cancel_transaksi.kd_unit";
+  public function showDpTransaksi($kd_transaksi){
+    $sql = "SELECT dp from tb_transaksi WHERE kd_transaksi='$kd_transaksi'";
     $query = $this->db->query($sql);
     return $query;
   }

@@ -27,6 +27,23 @@
             <h5>Cancel Transaksi</h5>
           </div>
           <div class="widget-content nopadding">
+            <?php
+              if(isset($_GET['error'])){
+                if($_GET['error'] == 'dpKurang'){
+                  echo'
+                  <div class="alert alert-danger" role="alert">
+                    <strong>WARNING!!</strong> Setlement lebih besar dari DP.
+                  </div>
+                  ';
+                }elseif($_GET['error'] == 'saldoKurang'){
+                  echo'
+                  <div class="alert alert-danger" role="alert">
+                    <strong>WARNING!!</strong> Saldo pada kas tidak mencukupi, silahkan pilih kas lain.
+                  </div>
+                  ';
+                }
+              }
+            ?>
 			      <table class="table table-bordered data-table">
               <thead>
                 <tr>
