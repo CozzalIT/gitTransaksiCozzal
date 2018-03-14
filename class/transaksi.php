@@ -7,8 +7,10 @@ class Transaksi {
   }
 
   //Proses Add
-  public function addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $check_in, $check_out, $hari_weekend, $hari_weekday, $hari, $harga_sewa, $harga_sewa_weekend, $tgl_transaksi, $diskon, $ekstra_charge, $kd_kas, $tamu, $kd_booking, $dp, $total_tagihan, $sisa_pelunasan){
-    $sql = "INSERT INTO tb_transaksi (kd_penyewa, kd_apt, kd_unit, check_in, check_out, hari_weekend, hari_weekday, hari, harga_sewa, harga_sewa_weekend, tgl_transaksi, diskon, ekstra_charge, kd_kas, tamu, kd_booking, dp, total_tagihan, sisa_pelunasan) VALUES('$kd_penyewa', '$kd_apt', '$kd_unit', '$check_in', '$check_out', '$hari_weekend', '$hari_weekday', '$hari', '$harga_sewa', '$harga_sewa_weekend', '$tgl_transaksi', '$diskon', '$ekstra_charge', '$kd_kas', '$tamu', '$kd_booking', '$dp', '$total_tagihan', '$sisa_pelunasan')";
+  public function addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $check_in, $check_out, $hari_weekend, $hari_weekday, $hari, $harga_sewa, $harga_sewa_weekend, $tgl_transaksi, $diskon, $ekstra_charge, $kd_kas, $tamu, $kd_booking, $dp, $total_tagihan, $sisa_pelunasan, $status){
+    $sql = "INSERT INTO tb_transaksi (kd_penyewa, kd_apt, kd_unit, check_in, check_out, hari_weekend, hari_weekday, hari, harga_sewa, harga_sewa_weekend, tgl_transaksi, diskon, ekstra_charge, kd_kas, tamu, kd_booking, dp, total_tagihan, sisa_pelunasan, status)
+    VALUES ('$kd_penyewa', '$kd_apt', '$kd_unit', '$check_in', '$check_out',
+      '$hari_weekend', '$hari_weekday', '$hari', '$harga_sewa', '$harga_sewa_weekend', '$tgl_transaksi', '$diskon', '$ekstra_charge', '$kd_kas', '$tamu', '$kd_booking', '$dp', '$total_tagihan', '$sisa_pelunasan', '$status')";
     $query = $this->db->query($sql);
     if(!$query){
       return "Failed";
