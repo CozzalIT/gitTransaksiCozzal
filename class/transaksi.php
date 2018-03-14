@@ -38,13 +38,20 @@ class Transaksi {
   }
 
   public function addCancel($kd_transaksi){
-    $sql = "INSERT INTO tb_cancel_transaksi (kd_penyewa, kd_apt, kd_unit, tamu, check_in, check_out, harga_sewa, harga_sewa_weekend, ekstra_charge, kd_booking, kd_kas, dp, total_tagihan, sisa_pelunasan, hari, tgl_transaksi, diskon, hari_weekend, hari_weekday)
-    SELECT kd_penyewa, kd_apt, kd_unit, tamu, check_in, check_out, harga_sewa, harga_sewa_weekend, ekstra_charge, kd_booking, kd_kas, dp, total_tagihan, sisa_pelunasan, hari, tgl_transaksi, diskon, hari_weekend, hari_weekday
-    FROM tb_transaksi WHERE kd_transaksi='$kd_transaksi'";
-    $sql_delete = "DELETE FROM tb_transaksi WHERE kd_transaksi='$kd_transaksi'";
+    $sql = "UPDATE tb_transaksi SET status='2' WHERE kd_transaksi='$kd_transaksi'";
 
     $query = $this->db->query($sql);
-    $query1 = $this->db->query($sql_delete);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
+  }
+
+  public function setlementDp($kd_transaksi, $setlement){
+    $sql = "UPDATE tb_transaksi SET setlement_dp='$setlement' WHERE kd_transaksi='$kd_transaksi'";
+
+    $query = $this->db->query($sql);
     if(!$query){
       return "Failed";
     }else{
@@ -65,7 +72,7 @@ class Transaksi {
   //Proses Show
   public function showTransaksi(){
     $sql = "SELECT
-      tb_transaksi.kd_transaksi, tb_transaksi.kd_penyewa, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.tamu, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.harga_sewa, tb_transaksi.harga_sewa_weekend, tb_transaksi.ekstra_charge, tb_transaksi.kd_booking, tb_transaksi.kd_kas, tb_transaksi.dp, tb_transaksi.total_tagihan, tb_transaksi.sisa_pelunasan, tb_transaksi.hari, tb_transaksi.tgl_transaksi, tb_transaksi.diskon,
+      tb_transaksi.kd_transaksi, tb_transaksi.kd_penyewa, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.tamu, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.harga_sewa, tb_transaksi.harga_sewa_weekend, tb_transaksi.ekstra_charge, tb_transaksi.kd_booking, tb_transaksi.kd_kas, tb_transaksi.dp, tb_transaksi.total_tagihan, tb_transaksi.sisa_pelunasan, tb_transaksi.hari, tb_transaksi.tgl_transaksi, tb_transaksi.diskon, tb_transaksi.status, tb_transaksi.setlement_dp,
       tb_penyewa.kd_penyewa, tb_penyewa.nama,
       tb_apt.kd_apt, tb_apt.nama_apt,
       tb_kas.kd_kas, tb_kas.sumber_dana,

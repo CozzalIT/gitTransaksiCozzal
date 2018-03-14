@@ -311,42 +311,6 @@ elseif(isset($_POST['updateTransaksi'])){
 //Delete Transaksi
 elseif(isset($_GET['delete_transaksi']) && ($view=="superadmin" || $view=="manager")){
   $proses = new Transaksi($db);
-  $proses_kas = new Kas($db);
-
-  $show = $proses->showTransaksi();
-  $data = $show->fetch(PDO::FETCH_OBJ);
-  $keterangan_transaksi = '6/'.$data->kd_transaksi;
-  $keterangan_pembayaran = '7/'.$data->kd_transaksi;
-  $tanggal = date('Y-m-d H:i:s');
-
-  //Mengembalikan saldo kas hasil dp transaksi
-  $show_kas_t = $proses_kas->showKdKas($keterangan_transaksi);
-  $data_kas_t = $show_kas_t->fetch(PDO::FETCH_OBJ);
-
-  $show_kas = $proses_kas->editSaldo($data_kas_t->kd_kas);
-  $data_kas = $show_kas->fetch(PDO::FETCH_OBJ);
-  $saldo = $data_kas->saldo - $data_kas_t->mutasi_dana;
-  $update_kt = $proses_kas->updateKas($data_kas_t->kd_kas, $saldo, $tanggal);
-  //End
-
-  //Mengembalikan saldo kas hasil Pembayaran
-  $show_kas_p = $proses_kas->showKdKas($keterangan_pembayaran);
-  while($data_kas_p = $show_kas_p->fetch(PDO::FETCH_OBJ)){
-    $kd_kas = $data_kas_p->kd_kas;
-    $mutasi_dana = $data_kas_p->mutasi_dana;
-    $show_kas = $proses_kas->editSaldo($kd_kas);
-    $data_kas = $show_kas->fetch(PDO::FETCH_OBJ);
-    $saldo = $data_kas->saldo - $mutasi_dana;
-    $update_kt = $proses_kas->updateKas($kd_kas, $saldo, $tanggal);
-  }
-  //End
-
-  if($update_kt == 'Success'){
-    $delete_mutasi_transaksi = $proses_kas->deleteMutasi($keterangan_transaksi);
-  }
-  $delete_mutasi_pembayaran = $proses_kas->deleteMutasi($keterangan_pembayaran);
-
-  $delete = $proses->deleteUnit_kotor($_GET['delete_transaksi']);
   $del = $proses->deleteTransaksi($_GET['delete_transaksi']);
   header("location:../view/".$view."/transaksi/laporan_transaksi.php");
 }
@@ -355,7 +319,7 @@ elseif(isset($_GET['delete_transaksi']) && ($view=="superadmin" || $view=="manag
 elseif(isset($_GET['delete_confirm_transaksi']) && ($view=="superadmin" || $view=="manager")){
   $proses = new Transaksi($db);
   $del = $proses->deleteConfirmTransaksi($_GET['delete_confirm_transaksi']);
-  header("location:../view/superadmin/transaksi/confirm_transaksi.php");
+  header("location:../view/superadmin/transaksi/cancel_transaksi.php");
 }
 
 //Tambah Confirm Transaksi
@@ -368,6 +332,15 @@ elseif (isset($_GET['addConfirm']) && $view!="owner" && $view!="cleaner"){
   }
 }
 
+elseif (isset($_GET['backTransaksi']) && $view!="owner" && $view!="cleaner"){
+  $kd_transaksi = $_GET['backTransaksi'];
+  $proses = new Transaksi($db);
+  $add = $proses->backTransaksi($kd_confirm_transaksi);
+  if($add == "Success"){
+    header('Location:../view/'.$view.'/transaksi/confirm_transaksi.php');
+  }
+}
+
 //Tambah Cancel Transaksi
 elseif (isset($_GET['addCancel']) && $view!="owner" && $view!="cleaner"){
   $kd_transaksi = $_GET['addCancel'];
@@ -375,6 +348,28 @@ elseif (isset($_GET['addCancel']) && $view!="owner" && $view!="cleaner"){
   $add = $proses->addCancel($kd_transaksi);
   if($add == "Success"){
     $delete = $proses->deleteUnit_kotor($kd_transaksi);
+    header('Location:../view/'.$view.'/transaksi/cancel_transaksi.php');
+  }
+}
+
+//Setlement Dp
+elseif (isset($_POST['setlementDp']) && $view!="owner" && $view!="cleaner"){
+  $setlement = $_POST['setlement'];
+  $kd_transaksi = $_SESSION['kd_transaksi'];
+  $kd_kas = $_POST['kas'];
+  $tanggal = date('Y-m-d H:i:s');
+  $keterangan = '8/'.$kd_transaksi;
+
+  $proses = new Transaksi($db);
+  $proses_k = new Kas($db);
+  $update = $proses->setlementDp($kd_transaksi, $setlement);
+  if($update == "Success"){
+    $show_k = $proses_k->editSaldo($kd_kas);
+    $data_s = $show_k->fetch(PDO::FETCH_OBJ);
+    $saldo = $data_s->saldo - $setlement;
+
+    $update_k = $proses_k->updateKas($kd_kas, $saldo, $tanggal);
+    $add_m = $proses_k->addMutasiKas($kd_kas, $setlement, 2, $tanggal, $keterangan);
     header('Location:../view/'.$view.'/transaksi/cancel_transaksi.php');
   }
 }

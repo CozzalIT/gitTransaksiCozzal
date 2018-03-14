@@ -15,7 +15,7 @@
 ?>
 <div id="content">
   <div id="content-header">
-   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Cancel Transaksi</a></div>
+    <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Cancel Transaksi</a></div>
     <a href="transaksi.php" class="btn btn-success btn-add"><i class="icon-plus"></i> Transaksi Baru</a>
   </div>
   <div class="container-fluid">
@@ -42,26 +42,45 @@
               <tbody>
       			    <?php
         				  $Proses = new Transaksi($db);
-        				  $show = $Proses->showCancelTransaksi();
+        				  $show = $Proses->showTransaksi();
         				  $i = 1;
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-          					echo "
-          					  <tr class='gradeC'>
-          					    <td>$i</td>
-          					    <td>$data->nama</td>
-          					    <td>$data->nama_apt</td>
-                        <td>$data->check_in</td>
-            						<td>$data->no_unit</td>
-            						<td>$data->check_out</td>
-            						<td>
-                          <center>
-                            <a class='btn btn-success' href='#'>Setlement DP</a>
-              						  <a class='btn btn-primary' href='#'>Edit</a>
-                          </center>
-                        </td>
-          					  </tr>
-                    ";
-          				$i++;
+                    if($data->status == 2 && $data->setlement_dp == 0){
+            					echo "
+            					  <tr class='gradeC'>
+            					    <td>$i</td>
+            					    <td>$data->nama</td>
+            					    <td>$data->nama_apt</td>
+                          <td>$data->check_in</td>
+              						<td>$data->no_unit</td>
+              						<td>$data->check_out</td>
+              						<td>
+                            <center>
+                              <a class='btn btn-success' href='cancel_transaksi.php?setlement=$data->kd_transaksi'>Setlement DP</a>
+                            </center>
+                          </td>
+            					  </tr>
+                      ";
+                      $i++;
+                    }
+                    if($data->status == 2 && $data->setlement_dp > 0){
+            					echo "
+            					  <tr class='gradeC'>
+            					    <td>$i</td>
+            					    <td>$data->nama</td>
+            					    <td>$data->nama_apt</td>
+                          <td>$data->check_in</td>
+              						<td>$data->no_unit</td>
+              						<td>$data->check_out</td>
+              						<td>
+                            <center>
+                              <a class='btn btn-danger' href='../../../proses/transaksi.php?delete_transaksi=$data->kd_transaksi'>Hapus</a>
+                            </center>
+                          </td>
+            					  </tr>
+                      ";
+                    $i++;
+                    }
         				  };
       				  ?>
               </tbody>
@@ -72,6 +91,76 @@
     </div>
   </div>
 </div>
+
+<?php
+//Setlement DP
+  if(isset($_GET['setlement'])){
+    $show = $Proses->editTransaksi($_GET['setlement']);
+    $detail = $show->fetch(PDO::FETCH_OBJ);
+
+    echo '
+      <div id="popup-detail" class="modal">
+        <div class="modal-header">
+          <button id="close" data-dismiss="modal" class="close" type="button">×</button>
+          <script type="text/javascript">
+            $(document).ready(function(){
+            $("#close").click(function(){
+              $(".modal").addClass("hide");
+            });
+            });
+          </script>
+          <h3>Setlement DP</h3>
+        </div>
+        <div class="modal-body">
+          <div class="widget-content">
+            <div class="row-fluid">
+              <div class="span8">
+                <form action="../../../proses/transaksi.php" method="POST">
+                  <table class="">
+                    <tbody>
+                      <tr>
+                        <td colspan="3">
+                          <h4>Penyewa : '.$detail->nama.'</h4>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Jumlah</td>
+                        <td style="padding-left:25px;">
+                          <input type="number" name="setlement" required />
+
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Kas</td>
+                        <td style="padding-left:25px;">
+                          <select id="kas" name="kas" required>
+              					    <option value="">-- Kas --</option>
+                					  ';
+                              $_SESSION['kd_transaksi'] = $_GET['setlement'];
+                              $Proses = new Kas($db);
+                    				  $show = $Proses->showKas();
+                    				  while($data = $show->fetch(PDO::FETCH_OBJ)){
+                  						  echo "<option name='kd_kas' value='$data->kd_kas'>$data->sumber_dana</option>";
+                  						}
+                					  echo'
+              					  </select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td style="padding-left:25px;"><input type="submit" class="btn btn-success" value="Submit" name="setlementDp" /></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    ';
+  }
+?>
 
 <!--Footer-part-->
 <div class="row-fluid">
