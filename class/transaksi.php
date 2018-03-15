@@ -41,7 +41,6 @@ class Transaksi {
 
   public function addCancel($kd_transaksi){
     $sql = "UPDATE tb_transaksi SET status='2' WHERE kd_transaksi='$kd_transaksi'";
-
     $query = $this->db->query($sql);
     if(!$query){
       return "Failed";
@@ -50,9 +49,8 @@ class Transaksi {
     }
   }
 
-  public function setlementDp($kd_transaksi, $setlement){
-    $sql = "UPDATE tb_transaksi SET setlement_dp='$setlement' WHERE kd_transaksi='$kd_transaksi'";
-
+  public function setlementDp($kd_transaksi, $setlement, $status){
+    $sql = "UPDATE tb_transaksi SET setlement_dp='$setlement', status='$status' WHERE kd_transaksi='$kd_transaksi'";
     $query = $this->db->query($sql);
     if(!$query){
       return "Failed";

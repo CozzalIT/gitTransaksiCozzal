@@ -53,6 +53,8 @@
                   <th>Unit</th>
                   <th>Check In</th>
         				  <th>Check Out</th>
+                  <th>DP</th>
+                  <th>Setlement</th>
         				  <th>Action</th>
                 </tr>
               </thead>
@@ -62,7 +64,7 @@
         				  $show = $Proses->showTransaksi();
         				  $i = 1;
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-                    if($data->status == 2 && $data->setlement_dp == 0){
+                    if($data->status == 2){
             					echo "
             					  <tr class='gradeC'>
             					    <td>$i</td>
@@ -70,7 +72,9 @@
             					    <td>$data->nama_apt</td>
                           <td>$data->check_in</td>
               						<td>$data->no_unit</td>
-              						<td>$data->check_out</td>
+                          <td>$data->check_out</td>
+                          <td>".number_format($data->dp, 0, ".", ".")." IDR</td>
+              						<td>-</td>
               						<td>
                             <center>
                               <a class='btn btn-success' href='cancel_transaksi.php?setlement=$data->kd_transaksi'>Setlement DP</a>
@@ -80,7 +84,7 @@
                       ";
                       $i++;
                     }
-                    if($data->status == 2 && $data->setlement_dp > 0){
+                    if($data->status == 3){
             					echo "
             					  <tr class='gradeC'>
             					    <td>$i</td>
@@ -89,6 +93,8 @@
                           <td>$data->check_in</td>
               						<td>$data->no_unit</td>
               						<td>$data->check_out</td>
+                          <td>".number_format($data->dp, 0, ".", ".")." IDR</td>
+                          <td>".number_format($data->setlement_dp, 0, ".", ".")." IDR</td>
               						<td>
                             <center>
                               <a class='btn btn-danger' href='../../../proses/transaksi.php?delete_transaksi=$data->kd_transaksi'>Hapus</a>
