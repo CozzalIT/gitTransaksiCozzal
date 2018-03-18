@@ -148,6 +148,9 @@
                       case 7:
                         $keterangan = "Pembayaran : COZ-".strtoupper(dechex($arrayKeterangan[1]));
                         break;
+                      case 8:
+                        $keterangan = "Setlement DP : COZ-".strtoupper(dechex($arrayKeterangan[1]));
+                        break;
                     }
                     $dateTime = explode(" ",$data->tanggal);
                     echo "

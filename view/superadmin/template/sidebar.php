@@ -6,6 +6,7 @@
       <ul>
         <li <?php if($thisPage == "Transaksi") echo "class='active'"; ?>><a href="../transaksi/transaksi.php">Input Transaksi</a></li>
         <li <?php if($thisPage == "Laporan Transaksi") echo "class='active'"; ?>><a href="../transaksi/laporan_transaksi.php">Laporan Transaksi</a></li>
+        <li <?php if($thisPage == "Cancel Transaksi") echo "class='active'"; ?>><a href="../transaksi/cancel_transaksi.php">Cancel Transaksi</a></li>
         <li <?php if($thisPage == "Confirm Transaksi") echo "class='active'"; ?>><a href="../transaksi/confirm_transaksi.php">Confirm Transaksi</a></li>
       </ul>
     </li>
@@ -16,6 +17,7 @@
       </ul>
     </li>
     <li <?php if($thisPage == "Kas") echo "class='active'"; ?>><a href="../kas/kas.php"><i class="icon icon-credit-card"></i> <span>Kas Cozzal</span></a> </li>
+    <li <?php if($thisPage == "Owner Payment") echo "class='active'"; ?>><a href="../owner/owner_payment.php"><i class="icon icon-inbox"></i> <span>Owner Payment</span></a> </li>
     <li <?php if($thisPage == "Account Management") echo "class='active'"; ?>><a href="../account/account_management.php"><i class="icon icon-sitemap"></i> <span>Account Management</span></a> </li>
     <li <?php if($thisPage == "Booking Request") echo "class='active'"; ?>><a href="../booking/booking_request.php"><i class="icon icon-file"></i> <span>Booking Request</span></a> </li>
     <li <?php if($thisPage == "Listing Request") echo "class='active'"; ?>><a href="../unit/listing_request.php"><i class="icon icon-edit"></i> <span>Listing Request</span></a> </li>
