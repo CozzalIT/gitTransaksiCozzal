@@ -1,5 +1,4 @@
 <?php
-  session_start();
   require("../../../class/penyewa.php");
   require("../../../../config/database.php");
   require("../../../class/unit.php");

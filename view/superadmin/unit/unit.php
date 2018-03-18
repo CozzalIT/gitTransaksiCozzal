@@ -1,5 +1,4 @@
 <?php
-  session_start();
   require("../../../class/unit.php");
   require("../../../class/owner.php");
   require("../../../class/apartemen.php");
@@ -17,7 +16,7 @@
 <!--main-container-part-->
 <div id="content">
   <div id="content-header">
-   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Data Unit</a></div>
+    <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Data Unit</a></div>
     <a href="#popup-unit" data-toggle="modal" class="btn btn-info btn-add"><i class="icon-plus"></i> Tambah Data</a>
     <a id='hidenbtn' href='#' style='display:none'></a>
   </div>

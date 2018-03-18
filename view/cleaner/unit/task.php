@@ -1,5 +1,4 @@
 <?php
-  session_start();
   require("../../../class/unit.php");
   require("../../../class/task.php");
   require("../../../../config/database.php");

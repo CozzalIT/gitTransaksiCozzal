@@ -92,6 +92,9 @@ elseif(isset($_POST['status'])){
 			$lihat = "N";
 		}
 	} else {
+		if($status=="Check In" && $jam_now>=$jam12){
+			$lihat = "Ignore";
+		}
 		$migrate = $proses2->catatanToTask($kd_unit);
 		$delete = $Proses->deleteUnit_kotor($kd_unit, $sekarang);		
 	}

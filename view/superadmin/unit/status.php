@@ -1,5 +1,4 @@
 <?php
-  session_start();
   require("../../../class/cleaner.php");
   require("../../../class/apartemen.php");
   require("../../../../config/database.php");
@@ -17,6 +16,7 @@
 <div id="content">
   <div id="content-header">
    <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Data Unit</a></div>
+   <a href="timeline.php" class="btn btn-primary btn-add"><i class="icon-calendar"></i> Cek Timeline</a>
   </div>
   <div class="container-fluid">
     <hr>
@@ -202,7 +202,7 @@
           </div>
         </div>
         <div id="btn-bersihkan" class="controls">
-          <input type="submit" id="submit" name="bersih_task" class="btn btn-success" value="Bersihkan"/>
+          <input type="submit" id="submit" name="bersih_task" class="btn btn-success" value="Selesaikan"/>
         </div>        
       </div>
     </div>

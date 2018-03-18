@@ -1,5 +1,4 @@
 <?php
-  session_start();
   require("../../../class/transaksi.php");
   require("../../../class/kas.php");
   require("../../../class/unit.php");

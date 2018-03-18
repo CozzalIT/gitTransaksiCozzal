@@ -43,17 +43,19 @@ function updateelementtask(konten2, jumlah2, task){
           ret = response.stat; $("#"+a+"-muatstat").text(ret);
 		  if(ret=="Check In") {
 		  	if(response.lihat=="Null"){
-		  		if($(this).text()=="Memuat..."){
+//		  		if($(this).text()=="Memuat..."){
 			  		$("#"+a+"-none").attr("class", "btn btn-primary popup"); //set warna button biru
 			  		$("#"+a+"-none").text("Lihat Unit"); $("#"+a+"-none").attr("id", a+"-lihat"); //set button jadi lihat
 			  		$("#"+a+"-nourut").text("3"); jenis = 'lihat';
-		  		}
+//		  		}
 		  	} else {
 		  		if(response.lihat == "N"){
 			  		$("#"+a+"-none").attr("class", "btn btn-danger popup"); $("#"+a+"-muatstat").text('Belum Siap');
 			  		$("#"+a+"-none").text("Ubah Status"); $("#"+a+"-none").attr("id", a+"-ubah");	
 			  		$("#"+a+"-nourut").text("2"); jenis = 'ubah';  			
-		  		} else {$("#"+a+"-muatstat").text('Siap Pakai');}
+		  		} else if(response.lihat =="Y"){
+		  			$("#"+a+"-muatstat").text('Siap Pakai');
+		  		}
 		  	}
 		  }
 		  if (response.catatan!=0){

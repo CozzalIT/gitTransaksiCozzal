@@ -1,5 +1,12 @@
 <?php
- ob_start();
+//  function customError(){error:
+//  echo '<div class="hide">Error</div>'; 
+//  }
+  //set error handler
+//  set_error_handler("customError");
+//  session_save_path('../../../session');
+  session_start();
+  ob_start();
   if(!isset($_SESSION['username'])) {
     header('location:../../../index.php');
   }else {

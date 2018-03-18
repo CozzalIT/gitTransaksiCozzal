@@ -1,6 +1,4 @@
 <?php
-  session_start();
-
   $thisPage = "Unit";
 
   include "../template/head.php";

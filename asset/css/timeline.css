@@ -1,0 +1,79 @@
+#bingkai{
+	font-size: 11px;
+	margin-top: 20px;
+}
+#bingkai, #head-bingkai{
+	width: 100%;
+}
+#cap-timeline{
+	padding: 1px 34%;
+	font-size: 12px;
+    color: #333;
+    text-shadow: 0 1px 1px rgba(255,255,255,.75);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.2),0 1px 2px rgba(0,0,0,.05);
+}
+#selected-day{
+	width: 98%;
+	padding: 5px;
+	background-color: #E6E6E6;
+	margin-bottom: 5px;
+}
+.kotak{
+	float: left;
+	width: 14%;
+	height: 50%;
+	background-color: white;
+	cursor: pointer;
+}
+
+.today{
+	background-color: #F8D4D4;
+}
+.white{
+	min-height: 89px;
+}
+
+.selected{
+	background-color: #E6E6E6;
+}
+
+.statuses{
+	font-size: 9px;
+	color: white;	
+	margin: 2px 2px;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+}
+#selected-day, #cap-timeline, .hari{
+	background-color: #E6E6E6;
+	background-image: linear-gradient(to bottom,#fff,#e6e6e6);
+	background-repeat: repeat-x;	
+}
+
+.bulan{
+	background-color: #0e0d0d;
+	color: white;
+}
+.bulan{
+	margin-top: 4px;
+}
+
+.stat-co{
+	background-color: red;
+}
+.stat-ci{
+	background-color: green;
+}
+.stat-stay{
+	background-color: gray;
+}
+.stat-kosong{
+	background-color: white;
+	color: black;
+}
+#selected-day, #cap-timeline ,.kotak, .detail-timeline, .keterangan-timeline{
+	border: 1px solid;
+	border-color: rgba(0,0,0,.1) rgba(0,0,0,.1) rgba(0,0,0,.25);
+}

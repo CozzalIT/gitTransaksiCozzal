@@ -1,5 +1,4 @@
 <?php
-  session_start();
   require("../../../class/apartemen.php");
   require("../../../../config/database.php");
   
