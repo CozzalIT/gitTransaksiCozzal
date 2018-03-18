@@ -25,13 +25,10 @@ class Transaksi {
   }
 
   public function addConfirm($kd_transaksi){
-    $sql = "INSERT INTO tb_confirm_transaksi (kd_penyewa, kd_apt, kd_unit, tamu, check_in, check_out, harga_sewa, harga_sewa_weekend, ekstra_charge, kd_booking, kd_kas, dp, total_tagihan, sisa_pelunasan, hari, tgl_transaksi, diskon, hari_weekend, hari_weekday)
-    SELECT kd_penyewa, kd_apt, kd_unit, tamu, check_in, check_out, harga_sewa, harga_sewa_weekend, ekstra_charge, kd_booking, kd_kas, dp, total_tagihan, sisa_pelunasan, hari, tgl_transaksi, diskon, hari_weekend, hari_weekday
-    FROM tb_transaksi WHERE kd_transaksi='$kd_transaksi'";
-    $sql_delete = "DELETE FROM tb_transaksi WHERE kd_transaksi='$kd_transaksi'";
+    $sql = "UPDATE tb_transaksi SET status='42' WHERE kd_transaksi='$kd_transaksi'";
+    $query = $this->db->query($sql);
 
     $query = $this->db->query($sql);
-    $query1 = $this->db->query($sql_delete);
     if(!$query){
       return "Failed";
     }else{
@@ -82,6 +79,24 @@ class Transaksi {
         INNER JOIN tb_apt ON tb_apt.kd_apt = tb_transaksi.kd_apt
         INNER JOIN tb_kas ON tb_kas.kd_kas = tb_transaksi.kd_kas
         INNER JOIN tb_unit ON tb_unit.kd_unit = tb_transaksi.kd_unit ORDER BY tb_transaksi.kd_transaksi DESC";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
+  public function showTransaksiByUnit($kd_unit){
+    $sql = "SELECT
+      tb_transaksi.kd_transaksi, tb_transaksi.kd_penyewa, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.tamu, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.harga_sewa, tb_transaksi.harga_sewa_weekend, tb_transaksi.ekstra_charge, tb_transaksi.kd_booking, tb_transaksi.kd_kas, tb_transaksi.dp, tb_transaksi.total_tagihan, tb_transaksi.sisa_pelunasan, tb_transaksi.hari, tb_transaksi.tgl_transaksi, tb_transaksi.diskon, tb_transaksi.status, tb_transaksi.setlement_dp,
+      tb_transaksi.hari_weekend, tb_transaksi.hari_weekday,
+      tb_penyewa.kd_penyewa, tb_penyewa.nama,
+      tb_apt.kd_apt, tb_apt.nama_apt,
+      tb_kas.kd_kas, tb_kas.sumber_dana,
+      tb_unit.kd_unit, tb_unit.no_unit
+        from tb_transaksi
+        INNER JOIN tb_penyewa ON tb_penyewa.kd_penyewa = tb_transaksi.kd_penyewa
+        INNER JOIN tb_apt ON tb_apt.kd_apt = tb_transaksi.kd_apt
+        INNER JOIN tb_kas ON tb_kas.kd_kas = tb_transaksi.kd_kas
+        INNER JOIN tb_unit ON tb_unit.kd_unit = tb_transaksi.kd_unit
+        WHERE tb_transaksi.kd_unit = '$kd_unit'";
     $query = $this->db->query($sql);
     return $query;
   }
