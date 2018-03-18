@@ -134,28 +134,8 @@ class Transaksi {
     return $rows;
   }
 
-  public function showConfirmTransaksi(){
-    $sql = "SELECT * from tb_confirm_transaksi
-    INNER JOIN tb_penyewa ON tb_penyewa.kd_penyewa = tb_confirm_transaksi.kd_penyewa
-    INNER JOIN tb_apt ON tb_apt.kd_apt = tb_confirm_transaksi.kd_apt
-    INNER JOIN tb_unit ON tb_unit.kd_unit = tb_confirm_transaksi.kd_unit";
-    $query = $this->db->query($sql);
-    return $query;
-  }
-
   public function showDpTransaksi($kd_transaksi){
     $sql = "SELECT dp from tb_transaksi WHERE kd_transaksi='$kd_transaksi'";
-    $query = $this->db->query($sql);
-    return $query;
-  }
-
-  public function showConfirmById($kd_confirm_transaksi){
-    $sql = "SELECT * from tb_confirm_transaksi
-    INNER JOIN tb_penyewa ON tb_penyewa.kd_penyewa = tb_confirm_transaksi.kd_penyewa
-    INNER JOIN tb_apt ON tb_apt.kd_apt = tb_confirm_transaksi.kd_apt
-    INNER JOIN tb_unit ON tb_unit.kd_unit = tb_confirm_transaksi.kd_unit
-    INNER JOIN tb_kas ON tb_kas.kd_kas = tb_confirm_transaksi.kd_kas
-    WHERE kd_confirm_transaksi='$kd_confirm_transaksi'";
     $query = $this->db->query($sql);
     return $query;
   }
@@ -231,11 +211,6 @@ class Transaksi {
     $query = $this->db->query($sql);
   }
 
-  public function deleteConfirmTransaksi($kd_confirm_transaksi){
-    $sql = "DELETE FROM tb_confirm_transaksi WHERE kd_confirm_transaksi='$kd_confirm_transaksi'";
-    $query = $this->db->query($sql);
-  }
-
   //penyewa numpang lewat
  public function addPenyewa($nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung){
     $sql = "INSERT INTO tb_penyewa (nama, alamat, no_tlp, jenis_kelamin, email, tgl_gabung) VALUES('$nama', '$alamat', '$no_tlp', '$jenis_kelamin', '$email', '$tgl_gabung')";
@@ -259,40 +234,6 @@ class Transaksi {
     $sql = "DELETE FROM tb_reservasi where kd_reservasi='$kd_reservasi'";
     $query = $this->db->query($sql);
   }
-
-//Generate Part -------------------------------------------------
-public function showTransaksi_gen(){
-  $sql = "SELECT
-    tb_transaksi.kd_transaksi, tb_transaksi.check_in, tb_transaksi.harga_sewa,tb_transaksi.hari, tb_transaksi.harga_sewa_weekend, tb_transaksi.total_tagihan, tb_transaksi.diskon,
-    tb_unit.h_sewa_we, tb_unit.h_sewa_wd
-    FROM tb_transaksi INNER JOIN tb_unit ON tb_unit.kd_unit = tb_transaksi.kd_unit
-    WHERE tb_transaksi.harga_sewa_weekend is NULL OR tb_transaksi.harga_sewa_weekend=0";
-  $query = $this->db->query($sql);
-  return $query;
-}
-
-public function updateTransaksi_gen($kd_transaksi, $harga_sewa, $harga_sewa_weekend, $diskon, $jumlah_weekend, $jumlah_weekday){
-  $sql = "UPDATE tb_transaksi SET harga_sewa ='$harga_sewa', harga_sewa_weekend ='$harga_sewa_weekend', diskon ='$diskon' ,hari_weekend='$jumlah_weekend', hari_weekday='$jumlah_weekday'
-  WHERE kd_transaksi='$kd_transaksi'";
-  $query = $this->db->query($sql);
-}
-
-public function showConfrim_gen(){
-  $sql = "SELECT
-    tb_confirm_transaksi.kd_confirm_transaksi, tb_confirm_transaksi.check_in, tb_confirm_transaksi.harga_sewa,tb_confirm_transaksi.hari,
-    tb_confirm_transaksi.harga_sewa_weekend, tb_confirm_transaksi.total_tagihan, tb_confirm_transaksi.diskon,
-    tb_unit.h_sewa_we, tb_unit.h_sewa_wd
-    FROM tb_confirm_transaksi INNER JOIN tb_unit ON tb_unit.kd_unit = tb_confirm_transaksi.kd_unit
-    WHERE tb_confirm_transaksi.harga_sewa_weekend is NULL OR tb_confirm_transaksi.harga_sewa_weekend=0";
-  $query = $this->db->query($sql);
-  return $query;
-}
-
-public function updateConfrim_gen($kd_confirm_transaksi, $harga_sewa, $harga_sewa_weekend, $diskon, $jumlah_weekend, $jumlah_weekday){
-  $sql = "UPDATE tb_confirm_transaksi SET harga_sewa ='$harga_sewa', harga_sewa_weekend ='$harga_sewa_weekend', diskon ='$diskon' ,hari_weekend='$jumlah_weekend', hari_weekday='$jumlah_weekday'
-  WHERE kd_confirm_transaksi='$kd_confirm_transaksi'";
-  $query = $this->db->query($sql);
-}
 
 }
 ?>
