@@ -3,13 +3,11 @@ require("../../config/database.php");
 require("../class/cleaner.php");
 
 function getcount($tgl, $jenis, $Proses, $myfile){
-  $table = array('tb_transaksi','tb_confirm_transaksi');
-  $jumlah = 0; $i=2;
-  while($i--){ 	
+  $jumlah = 0; 
     if ($jenis!='stay'){
-      $show = $Proses->showUnit_cek($tgl, $jenis, $table[$i]);
+      $show = $Proses->showUnit_cek($tgl, $jenis);
     } else {
-      $show = $Proses->showUnit_stay($tgl, $table[$i]);
+      $show = $Proses->showUnit_stay($tgl);
     }
 	  while($data = $show->fetch(PDO::FETCH_OBJ)){
 	  	$jumlah++; 
@@ -22,7 +20,6 @@ function getcount($tgl, $jenis, $Proses, $myfile){
       }  
       fwrite($myfile, "$isi\n");
 	  }
-  }
   return $jumlah;
 }
 
