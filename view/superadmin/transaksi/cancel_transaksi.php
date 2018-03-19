@@ -1,5 +1,4 @@
 <?php
-  session_start();
   require("../../../class/transaksi.php");
   require("../../../class/kas.php");
   require("../../../../config/database.php");
@@ -97,7 +96,7 @@
                           <td>".number_format($data->setlement_dp, 0, ".", ".")." IDR</td>
               						<td>
                             <center>
-                              <a class='btn btn-danger' href='../../../proses/transaksi.php?delete_transaksi=$data->kd_transaksi'>Hapus</a>
+                              <a class='btn btn-danger hapus' href='../../../proses/transaksi.php?delete_transaksi=$data->kd_transaksi'>Hapus</a>
                             </center>
                           </td>
             					  </tr>
