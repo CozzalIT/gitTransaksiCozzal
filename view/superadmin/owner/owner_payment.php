@@ -59,7 +59,7 @@
                   <th>Invoice Id</th>
                   <th>Apartemen</th>
                   <th>Unit</th>
-                  <th>Tanggal Transaksi</th>
+                  <th>Check In/Out</th>
           				<th>Nominal</th>
                 </tr>
                 <tbody>
@@ -96,7 +96,7 @@
                       				  <td>$data_t->no_unit</td>
                       				  <td>
                                   <center>
-                                    $data_t->tgl_transaksi
+                                    $data_t->check_in / $data_t->check_out
                                   </center>
                                 </td>
                       					<td>".number_format($nominal, 0, ".", ".")." IDR</td>
