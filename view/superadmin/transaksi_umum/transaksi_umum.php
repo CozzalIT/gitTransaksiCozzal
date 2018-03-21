@@ -179,7 +179,7 @@
                   </div>
                   <div class="control-group">
                     <div class="controls">
-                      <button class="btn btn-success" name="addTransaksiUmum" type="submit">Submit</button>
+                      <button class="btn btn-success" name="addTransaksiUnit" type="submit">Submit</button>
                       <a href="transaksi_umum.php" class="btn btn-inverse">Kembali</a>
                     </div>
                   </div>

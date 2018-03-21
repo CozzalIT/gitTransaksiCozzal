@@ -126,6 +126,11 @@
                       $indikator = $data->keterangan;
                     }
 
+                    if($indikator == 10 or $indikator == 9){
+                      $show_unit = $proses->showNoUnit($arrayKeterangan[1]);
+                      $data_unit = $show_unit->fetch(PDO::FETCH_OBJ);
+                    }
+
                     switch($indikator){
                       case 1:
                         $keterangan = "Dari Kas";
@@ -151,7 +156,14 @@
                       case 8:
                         $keterangan = "Setlement DP : COZ-".strtoupper(dechex($arrayKeterangan[1]));
                         break;
+                      case 9:
+                        $keterangan = "Transaksi Unit : ".$data_unit->no_unit;
+                        break;
+                      case 10:
+                        $keterangan = "Transaksi Unit : ".$data_unit->no_unit;
+                        break;
                     }
+                    // 1:kas, 2:non-kas, 3:TU, 4:owner, 5:karyawan, 6:Transaksi, 7:Pembayaran, 8:Setlement, 9:tUnitL, 10:tUnitBL
                     $dateTime = explode(" ",$data->tanggal);
                     echo "
                     <tr class='gradeC'>
