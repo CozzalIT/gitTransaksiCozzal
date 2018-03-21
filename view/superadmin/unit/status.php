@@ -17,6 +17,7 @@
   <div id="content-header">
    <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Data Unit</a></div>
    <a href="timeline.php" class="btn btn-primary btn-add"><i class="icon-calendar"></i> Cek Timeline</a>
+   <a href="#popup-setting" data-toggle="modal" class="btn btn-ligth btn-add"><i class="icon-cogs"></i> Pengaturan Waktu</a>
   </div>
   <div class="container-fluid">
     <hr>
@@ -73,6 +74,16 @@
                   return "Undefined";
                 }  
 
+                function formated_injury_bersih($injury_bersih){
+                    $x = $injury_bersih/3600;
+                    $x_arr = explode(".", $x);
+                    $jam = $x_arr[0];
+                    $menit = ($injury_bersih-($jam*3600))/60;
+                    if(strlen($jam)==1) $jam = "0".$jam;
+                    if($menit<10) $menit = "0".$menit; 
+                    return $jam.":".$menit;
+                }
+
                 function jam_co($data_jam){
                   if($data_jam==""){
                     $data_jam = get_value_config("jam_check_out");
@@ -86,6 +97,9 @@
                   $sekarang = date('Y-m-d');
                   $jam_now = strtotime(date('H:i'));
                   $injury_bersih = get_value_config("extra_time_bersihkan");
+                  $COT = get_value_config("jam_check_out");
+                  $COTM = explode(":", $COT);
+                  $default_CO = $COTM[0].":".$COTM[1];
 
                   $Proses = new Cleaner($db);
                   $show1 = $Proses->showUnit1($sekarang);
@@ -175,7 +189,7 @@
 </div>
 <!--end-main-container-part-->
 
-<!--modal popup tambah unit-->
+<!--modal popup Action unit-->
 <div id="popup-task" class="modal hide">
   <div class="modal-header">
     <button data-dismiss="modal" class="close" type="button">×</button>
@@ -192,7 +206,7 @@
 
     <!--Task Part-->
     <div id="task-induk">
-      <div class="widget-title" id="task-bar" style="cursor:pointer;"> <span class="icon"><i class="icon-th"></i></span>
+      <div class="widget-title" id="task-bar" style="cursor:pointer;"> <span class="icon"><i class="icon-check"></i></span>
         <h5 id="task-cap">Task Tersisa</h5>
       </div>    
       <div id="task-anak">
@@ -209,7 +223,7 @@
 
     <!--Sttatus Part-->
     <div id="stat-induk">
-      <div class="widget-title" id="stat-bar" style="cursor:pointer;"> <span class="icon"><i class="icon-th"></i></span>
+      <div class="widget-title" id="stat-bar" style="cursor:pointer;"> <span class="icon"><i class="icon-leaf"></i></span>
         <h5>Status Unit</h5>
       </div>    
       <div id="stat-anak">
@@ -231,7 +245,7 @@
 
     <!--Note Part-->
     <div id="note-induk">
-      <div class="widget-title" id="note-bar" style="cursor:pointer;"> <span class="icon"><i class="icon-th"></i></span>
+      <div class="widget-title" id="note-bar" style="cursor:pointer;"> <span class="icon"><i class="icon-comment"></i></span>
         <h5 id="note-cap">Catatan</h5>
       </div>    
       <div id="note-anak">
@@ -254,11 +268,41 @@
 </div>
 <!-- //modal popup tambah unit-->
 
+<!--modal popup Action unit-->
+<div id="popup-setting" class="modal hide">
+  <div class="modal-header">
+    <button data-dismiss="modal" class="close" type="button">×</button>
+    <h3 id='head-cap'>Pengaturan waktu standar</h3>
+  </div>
+  <form action="../../../proses/cleaner.php" method="post" class="form-horizontal">
+    <div class="control-group">
+      <label class="control-label">Jam Check Out :</label>
+      <div class="controls">
+        <input name="jam_check_out" type="text" class="span2 houronly" value="<?php echo $default_CO; ?>" placeholder="hh:mm"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">Extra time bersihkan :</label>
+      <div class="controls">
+        <input name="injury_bersih" type="text" class="span2 houronly" value="<?php echo formated_injury_bersih($injury_bersih); ?>" placeholder="hh:mm"/>
+      </div>
+    </div>    
+    <div class="control-group">
+      <div class="controls">
+        <input type="submit" name="setTime" class="btn btn-success" value="Perbarui"/>
+        <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- //modal popup tambah unit-->
+
 <!--Footer-part-->
 <div class="row-fluid">
   <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
 </div>
 <!--End-Footer-part-->
+<script src="../../../asset/js/time.js"></script>
 <script src="../../../asset/js/sweetalert.min.js"></script>
 <script src="../../../asset/js/bootstrap.min.js"></script>
 <script src="../../../asset/js/cleaner.js"></script>
