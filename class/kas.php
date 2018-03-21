@@ -58,7 +58,13 @@ class Kas {
   }
 
   public function showMutasiDana($keterangan){
-    $sql = "SELECT mutasi_dana FROM tb_mutasi_kas WHERE kd_mutasi_kas='$kd_mutasi_kas'";
+    $sql = "SELECT mutasi_dana, kd_mutasi_kas FROM tb_mutasi_kas WHERE keterangan='$keterangan'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
+  public function showNoUnit($kd_unit){
+    $sql = "SELECT no_unit FROM tb_unit WHERE kd_unit='$kd_unit'";
     $query = $this->db->query($sql);
     return $query;
   }

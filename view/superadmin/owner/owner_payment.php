@@ -1,6 +1,7 @@
 <?php
   require("../../../class/transaksi.php");
   require("../../../class/owner.php");
+  require("../../../class/kas.php");
   require("../../../class/unit.php");
   require("../../../../config/database.php");
 
@@ -43,8 +44,8 @@
             <h5>Owner Payment</h5>
           </div>
           <script language="JavaScript">
-            function toggle(source) {
-              checkboxes = document.getElementsByName('kd_transaksi[]');
+            function checkAll(source) {
+              checkboxes = document.getElementsByName('ownerPayment[]');
               for(var i=0, n=checkboxes.length;i<n;i++) {
                 checkboxes[i].checked = source.checked;
               }
@@ -55,11 +56,11 @@
   			      <table class="table table-bordered data-table">
                 <tr>
                   <th class='hide'> No</th>
-                  <th><input type="checkbox" onClick="toggle(this)" /> All</th>
-                  <th>Invoice Id</th>
+                  <th><input type="checkbox" onClick="checkAll(this)" /> All</th>
+                  <th>Jenis</th>
                   <th>Apartemen</th>
                   <th>Unit</th>
-                  <th>Tanggal Transaksi</th>
+                  <th>Check In/Out</th>
           				<th>Nominal</th>
                 </tr>
                 <tbody>
@@ -67,6 +68,7 @@
                     if(isset($_POST['kd_owner'])){
             				  $proses_u = new Unit($db);
                       $proses_t = new Transaksi($db);
+                      $proses_k = new Kas($db);
             				  $show_u = $proses_u->showUnitbyOwner($_POST['kd_owner']);
                       while($data_u = $show_u->fetch(PDO::FETCH_OBJ)){
                         $owner_we = $data_u->h_owner_we;
@@ -88,15 +90,15 @@
                                 <td class='hide'>$i</td>
                     					  <td>
                                   <center>
-                                    <input type='checkbox' name='kd_transaksi[]' value='$data_t->kd_transaksi'>
+                                    <input type='checkbox' name='ownerPayment[]' value='t/$data_t->kd_transaksi'>
                                   </center>
                                 </td>
-                    					  <td>COZ-".strtoupper(dechex($data_t->kd_transaksi))."</td>
+                    					  <td>Transaksi : COZ-".strtoupper(dechex($data_t->kd_transaksi))."</td>
                     					  <td>$data_t->nama_apt</td>
                       				  <td>$data_t->no_unit</td>
                       				  <td>
                                   <center>
-                                    $data_t->tgl_transaksi
+                                    $data_t->check_in / $data_t->check_out
                                   </center>
                                 </td>
                       					<td>".number_format($nominal, 0, ".", ".")." IDR</td>
@@ -104,7 +106,26 @@
                             ";
                             $i++;
                           }
-                        };
+                        }
+                        $show_k = $proses_k->showMutasiDana('10/'.$data_u->kd_unit);
+                        while($data_k = $show_k->fetch(PDO::FETCH_OBJ)){
+                          echo "
+                            <tr class='gradeC'>
+                              <td class='hide'>$i</td>
+                              <td>
+                                <center>
+                                  <input type='checkbox' name='ownerPayment[]' value='mk/$data_k->kd_mutasi_kas'>
+                                </center>
+                              </td>
+                              <td>Pengeluaran Unit</td>
+                              <td>$data_u->nama_apt</td>
+                              <td>$data_u->no_unit</td>
+                              <td><center>-</center></td>
+                              <td>".number_format($data_k->mutasi_dana, 0, ".", ".")." IDR</td>
+                            </tr>
+                          ";
+                          $i++;
+                        }
                       }
                     }
                   ?>

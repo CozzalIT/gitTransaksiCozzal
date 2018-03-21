@@ -50,26 +50,30 @@
               events: [
                 <?php
                   if (isset($_GET['calendar_unit'])){
-            		    $show = $calendar->showCalendarBooked($_GET['calendar_unit']);
+            		    $show = $calendar->showCalendar($_GET['calendar_unit']);
             		    while($data = $show->fetch(PDO::FETCH_OBJ)){
-                      echo "
-                      {
-                        title: 'Booked',
-                        start: '$data->check_in',
-                        end: '$data->check_out',
-                      },
-                      ";
+                      if($data->status == '1'){
+                        echo "
+                        {
+                          title: 'Booked',
+                          start: '$data->check_in',
+                          end: '$data->check_out',
+                        },
+                        ";
+                      }
                     }
-            		    $show = $calendar->showCalendarConfirm($_GET['calendar_unit']);
+            		    $show = $calendar->showCalendar($_GET['calendar_unit']);
             		    while($data = $show->fetch(PDO::FETCH_OBJ)){
-                      echo "
-                      {
-                        title: 'Confirm',
-                        start: '$data->check_in',
-                        end: '$data->check_out',
-                        color: '#359b20'
-                      },
-                      ";
+                      if($data->status == '42' or $data->status == '41'){
+                        echo "
+                        {
+                          title: 'Confirm',
+                          start: '$data->check_in',
+                          end: '$data->check_out',
+                          color: '#359b20'
+                        },
+                        ";
+                      }
                     }
                     $show = $calendar->showModCalendar($_GET['calendar_unit']);
             		    while($data = $show->fetch(PDO::FETCH_OBJ)){
