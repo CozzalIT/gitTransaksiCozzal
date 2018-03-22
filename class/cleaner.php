@@ -39,9 +39,13 @@ class Cleaner {
     return $query;
   }
 
-  public function showUnit_cek($tgl, $jenis){
-    $sql = "SELECT tb_unit.kd_unit, tb_unit.no_unit, tb_apt.nama_apt, tb_apt.alamat_apt, tb_unit_kotor.jam_check_out, tb_penyewa.nama, tb_penyewa.no_tlp 
-    FROM tb_unit INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt
+  public function showUnit_cek($tgl, $jenis, $method){
+    if($method=="count"){
+      $sql = "SELECT COUNT(tb_unit.kd_unit) As jumlah ";
+    } else {
+      $sql = "SELECT tb_unit.kd_unit, tb_unit.no_unit, tb_apt.nama_apt, tb_apt.alamat_apt, tb_unit_kotor.jam_check_out, tb_penyewa.nama, tb_penyewa.no_tlp ";   
+    }
+    $sql .= "FROM tb_unit INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt
     INNER JOIN tb_unit_kotor ON tb_unit_kotor.kd_unit = tb_unit.kd_unit
     INNER JOIN tb_transaksi ON tb_transaksi.kd_unit = tb_unit.kd_unit AND tb_transaksi.".$jenis."='$tgl'"."
     INNER JOIN tb_penyewa ON tb_penyewa.kd_penyewa = tb_transaksi.kd_penyewa
@@ -50,18 +54,19 @@ class Cleaner {
     return $query;
   } 
 
-  public function showUnit_stay($tgl){
-    $sql = "SELECT tb_unit.kd_unit, tb_unit.no_unit, tb_apt.nama_apt, tb_apt.alamat_apt, tb_unit_kotor.jam_check_out, tb_penyewa.nama, tb_penyewa.no_tlp 
-    FROM tb_unit INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt
+  public function showUnit_stay($tgl, $method){
+    if($method=="count"){
+      $sql = "SELECT COUNT(tb_unit.kd_unit) As jumlah ";
+    } else {
+      $sql = "SELECT tb_unit.kd_unit, tb_unit.no_unit, tb_apt.nama_apt, tb_apt.alamat_apt, tb_unit_kotor.jam_check_out, tb_penyewa.nama, tb_penyewa.no_tlp ";   
+    }
+    $sql .= "FROM tb_unit INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt
     INNER JOIN tb_unit_kotor ON tb_unit_kotor.kd_unit = tb_unit.kd_unit
     INNER JOIN tb_transaksi ON tb_transaksi.kd_unit = tb_unit.kd_unit
     AND tb_transaksi.check_in <'$tgl'"." AND tb_transaksi.check_out>'$tgl'"." 
     INNER JOIN tb_penyewa ON tb_penyewa.kd_penyewa = tb_transaksi.kd_penyewa
     WHERE tb_unit_kotor.check_in <'$tgl' AND tb_unit_kotor.check_out>'$tgl'";
     $query = $this->db->query($sql);
-//    $myfile = fopen("stay.ini", "w") or die("Unable to open file!");
-//    fwrite($myfile, $sql);
-//    fclose($myfile);
     return $query;
   }   
 
@@ -117,7 +122,12 @@ class Cleaner {
   } 
 
   public function kosongkan_unit($kd_unit, $sekarang, $jam_sekarang){
-    $sql = "UPDATE tb_unit_kotor SET jam_check_out='$jam_sekarang' WHERE kd_unit='$kd_unit' AND check_out='$sekarang'";
+    if($jam_sekarang=="null"){
+      $jam = "null";
+    } else {
+      $jam = "'".$jam_sekarang."'";
+    }
+    $sql = "UPDATE tb_unit_kotor SET jam_check_out=$jam WHERE kd_unit='$kd_unit' AND check_out='$sekarang'";
     $query = $this->db->query($sql);
   }
 

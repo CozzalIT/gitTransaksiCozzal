@@ -60,7 +60,8 @@ elseif(isset($_GET['kosongkan_unit'])){
   require("../class/cleaner.php");
   $jam_sekarang = strtotime(date("H:i:s"));
   $jam_sekarang -= 60;
-  $jam = date("H:i:s",$jam_sekarang);
+  $jam = date("H:i",$jam_sekarang);
+  $jam .= ":00";
   $proses = new Cleaner($db);
   $proses->kosongkan_unit($kd_unit, $sekarang, $jam);
   header('Location:../view/'.$view.'/unit/status.php');

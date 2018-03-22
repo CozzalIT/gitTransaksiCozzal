@@ -1,6 +1,20 @@
 <?php
 require("../../config/database.php");
 
+function get_value_config($parameter){
+  $myfile = fopen("../config.ini", "r") or die("Unable to open file!");
+  while(!feof($myfile)){
+    $string = fgets($myfile);
+    $arr = explode("=", $string);
+    if($arr[0]==$parameter){
+      fclose($myfile);
+      return $arr[1];
+    }
+  }
+  fclose($myfile);
+  return "Undefined";
+}  
+
 if(isset($_POST['apartement'])){
 require("../class/unit.php");
 // Ambil data ID Provinsi yang dikirim via ajax post
@@ -70,7 +84,8 @@ elseif(isset($_POST['status'])){
     $sekarang = date('Y-m-d'); 
     require("../class/catatan.php");
 	$proses2 = new Catatan($db); 
-    $jam12 = strtotime('12:00'); $jam_now = strtotime(date('H:i'));
+    $jam12 = strtotime(get_value_config('jam_check_out')); 
+    $jam_now = strtotime(date('H:i'));
 	$Proses = new Cleaner($db); $lihat = "Tidak Ada";
 	$status = "Kosong"; $catatan = 0;
 	$show1 = $Proses->showStatus_check_in($kd_unit, $sekarang);
