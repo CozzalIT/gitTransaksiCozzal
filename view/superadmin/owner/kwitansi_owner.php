@@ -1,13 +1,15 @@
 <?php
   require("../../../../config/database.php");
   require("../../../class/transaksi.php");
+  require("../../../class/transaksi_umum.php");
+  require("../../../class/kas.php");
+  require("../../../class/unit.php");
+  require("../../../class/owner.php");
 
   $thisPage = "Transaksi";
 
   include "../template/head.php";
-?>
-<body>
-<?php
+  echo '<body>';
   include "../template/header.php";
   include "../template/sidebar.php";
 
@@ -15,16 +17,18 @@
     foreach($_POST['ownerPayment'] as $ownerPayment) {
       $cek = explode("/",$ownerPayment);
       if($cek[0] == 't'){
-        $kd_transaksi[] = $cek[1];
+        $transaksi[] = $cek[1];
       }elseif($cek[0] == 'mk'){
-        $kd_mutasi_kas[] = $cek[1];
+        $transaksi_umum[] = $cek[1];
       }
     }
+    $transaksi[999] = 'dummy';
+    $transaksi_umum[999] = 'dummy';
   }
 ?>
 <div id="content">
   <div id="content-header">
-    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Addons pages</a> <a href="#" class="current">kwitansi</a> </div>
+    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Owner Payment</a> </div>
     <a href="owner_payment.php" class="btn btn-primary btn-add"><i class="icon-arrow-left"></i> Kembali</a>
   </div>
   <div class="container-fluid"><hr>
@@ -32,51 +36,42 @@
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-briefcase"></i> </span>
-            <h5 >Kwitansi Pembayaran</h5>
+            <h5>Pengeluaran & Pendapatan</h5>
           </div>
           <div class="widget-content">
             <div class="row-fluid">
               <div class="span6">
-                <table class="">
-                  <tbody>
-                    <tr>
-                      <td><h4></h4></td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>Mobile Phone:</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                </table>
               </div>
               <div class="span6">
                 <table class="table table-bordered table-invoice">
                   <tbody>
+                    <?php
+                      if(isset($_SESSION['kd_owner'])){
+                        $proses_o = new Owner($db);
+                        $show_o = $proses_o->editOwner($_SESSION['kd_owner']);
+                        $data_o = $show_o->fetch(PDO::FETCH_OBJ);
+                      }
+                    ?>
                     <tr>
                       <tr>
-                        <td class="width30">Date</td>
+                        <td class="width30">Tanggal Pembayaran</td>
                         <td class="width70"><strong><?php echo date('Y-m-d'); ?></strong></td>
                       </tr>
                       <tr>
-                        <td class="width30">Check In</td>
-                        <td class="width70"><strong></strong></td>
+                        <td class="width30">Nama Owner</td>
+                        <td class="width70"><strong><?php echo $data_o->nama; ?></strong></td>
                       </tr>
                       <tr>
-                        <td class="width30">Check Out</td>
-                        <td class="width70"><strong></strong></td>
+                        <td class="width30">Alamat</td>
+                        <td class="width70"><strong><?php echo $data_o->alamat; ?></strong></td>
                       </tr>
                       <tr>
-                        <td class="width30">Apartemen</td>
-                        <td class="width70"><strong></strong></td>
+                        <td class="width30">Kontak</td>
+                        <td class="width70"><strong><?php echo $data_o->no_tlp; ?></strong></td>
                       </tr>
                       <tr>
-                        <td class="width30">No Unit</td>
-                        <td class="width70"><strong></strong></td>
+                        <td class="width30">Email</td>
+                        <td class="width70"><strong><?php echo $data_o->email; ?></strong></td>
                       </tr>
                     </tr>
                   </tbody>
@@ -86,34 +81,101 @@
             <div class="row-fluid">
               <div class="span12">
                 <table class="table table-bordered table-invoice-full">
+                  <thead>
+                    <tr>
+                      <th colspan="6">Pengeluaran Unit</th>
+                    </tr>
+                    <tr>
+                      <th>No</th>
+                      <th>Tanggal</th>
+                      <th>Keterangan</th>
+                      <th>Harga</th>
+                      <th>Jumlah</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
                   <tbody>
+                    <?php
+                      $proses_tu = new TransaksiUmum($db);
+                      $i=1;
+                      $total_out=0;
+                      foreach($transaksi_umum as $kd_transaksi_umum) {
+                        if($kd_transaksi_umum <> 'dummy'){
+                          $show_tu = $proses_tu->editTransaksiUmum($kd_transaksi_umum);
+                          $data_tu = $show_tu->fetch(PDO::FETCH_OBJ);
+                          $tanggal = explode(" ",$data_tu->tanggal);
+                          $subtotal = $data_tu->harga*$data_tu->jumlah;
+                          echo "
+                            <tr>
+                              <td>$i</td>
+                              <td>$tanggal[0]</td>
+                              <td>$data_tu->keterangan</td>
+                              <td>".number_format($data_tu->harga, 0, ".",".")." IDR</td>
+                              <td>$data_tu->jumlah</td>
+                              <td>".number_format($subtotal, 0, ".",".")." IDR</td>
+                            </tr>
+                          ";
+                          $i++;
+                          $total_out = $total_out+$subtotal;
+                        }
+                      }
+                    ?>
                     <tr>
-                      <td>Price Per Night</td>
-                      <td><strong> IDR</td>
+                      <td colspan="5"><strong>Total Pengeluaran</strong></td>
+                      <td><?php echo number_format($total_out, 0, ".","."); ?> IDR</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table class="table table-bordered table-invoice-full">
+                  <thead>
+                    <tr>
+                      <th colspan="7">Pendapatan Unit</th>
                     </tr>
                     <tr>
-                      <td>Discount</td>
-                      <td><strong> IDR</td>
+                      <th>No</th>
+                      <th>Tanggal</th>
+                      <th>Nama</th>
+                      <th>Jumlah</th>
+                      <th>Weekend</th>
+                      <th>Weekday</th>
+                      <th>Total</th>
                     </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                    $proses_t = new Transaksi($db);
+                    $proses_u = new Unit($db);
+                      $i=1;
+                      $total_in=0;
+                      foreach($transaksi as $kd_transaksi) {
+                        if($kd_transaksi <> 'dummy'){
+                          $show_t = $proses_t->editTransaksi($kd_transaksi);
+                          $data_t = $show_t->fetch(PDO::FETCH_OBJ);
+                          $show_u = $proses_u->showHargaOwner($data_t->no_unit);
+                          $data_u = $show_u->fetch(PDO::FETCH_OBJ);
+                          $weekend = $data_t->hari_weekend*$data_u->h_owner_we;
+                          $weekday = $data_t->hari_weekday*$data_u->h_owner_wd;
+                          $subtotal = $weekday+$weekend;
+                          echo "
+                            <tr>
+                              <td>$i</td>
+                              <td>$data_t->check_in / $data_t->check_out</td>
+                              <td>$data_t->nama</td>
+                              <td>$data_t->hari Hari</td>
+                              <td>".($weekend == 0 ? '-' : number_format($weekend, 0, ".",".").' IDR')."</td>
+                              <td>".($weekday == 0 ? '-' : number_format($weekday, 0, ".",".").' IDR')."</td>
+                              <td>".number_format($subtotal, 0, ".",".")." IDR</td>
+                            </tr>
+                          ";
+                          $i++;
+                        }
+                        $total_in = $total_in+$subtotal;
+                      }
+                      $earnings = $total_in-$total_out;
+                    ?>
                     <tr>
-                      <td>No Of Guest</td>
-                      <td><strong> Person</td>
-                    </tr>
-                    <tr>
-                      <td>Ekstra Charge</td>
-                      <td><strong> IDR</td>
-                    </tr>
-                    <tr>
-                      <td>Total No Of Days</td>
-                      <td><strong> Day</td>
-                    </tr>
-                    <tr>
-                      <td>Payment</td>
-                      <td><strong> IDR</td>
-                    </tr>
-                    <tr>
-                      <td>Outstanding Balance</td>
-                      <td><strong> IDR</td>
+                      <td colspan="6"><strong>Total Pengeluaran</strong></td>
+                      <td><?php echo number_format($total_in, 0, ".","."); ?> IDR</td>
                     </tr>
                   </tbody>
                 </table>
@@ -121,14 +183,23 @@
                   <tbody>
                     <tr>
                       <td class="msg-invoice" width="85%"><h4>Payment method: </h4>
-                        Via Bank
+                        <select id="kas" name="kas" class="span4" required>
+            					    <option value="">-- Kas --</option>
+              					  <?php
+                            $Proses = new Kas($db);
+                  				  $show = $Proses->showKas();
+                  				  while($data = $show->fetch(PDO::FETCH_OBJ)){
+                						  echo "<option name='kd_kas' value='$data->kd_kas'>$data->sumber_dana</option>";
+                						}
+              					  ?>
+            					  </select>
                     </tr>
                   </tbody>
                 </table>
                 <div class="pull-right">
-                  <h4><span>Total Amount:</span>  IDR</h4>
+                  <h4><span>EARNINGS: </span><?php echo number_format($earnings, 0, ".","."); ?> IDR</h4>
                   <br>
-                  <a class="btn btn-success btn-large pull-right" href="pdf.php?kwitansi=<?php echo $data->kd_confirm_transaksi; ?>">Download / Print</a> </div>
+                  <a class="btn btn-success btn-large pull-right" href="#">Bayar</a> </div>
               </div>
             </div>
           </div>
@@ -136,10 +207,6 @@
       </div>
     </div>
   </div>
-</div>
-<!--Footer-part-->
-<div class="row-fluid">
-  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
 <?php

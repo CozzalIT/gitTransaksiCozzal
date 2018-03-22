@@ -13,6 +13,18 @@ class TransaksiUmum {
     return $query;
   }
 
+  public function editTransaksiUmum($kd_transaksi_umum){
+    $sql = "SELECT * FROM tb_transaksi_umum WHERE kd_transaksi_umum='$kd_transaksi_umum'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
+  public function showTransaksiUmumByTanggal($tanggal){
+    $sql = "SELECT * FROM tb_transaksi_umum WHERE tanggal='$tanggal'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
   //Proses Add
   public function addTransaksiUmum($kd_kas, $kebutuhan, $harga, $jumlah, $keterangan, $tanggal){
     $sql = "INSERT INTO tb_transaksi_umum (kd_kas, kebutuhan, harga, jumlah, keterangan, tanggal) VALUES('$kd_kas', '$kebutuhan', '$harga', '$jumlah', '$keterangan', '$tanggal')";
@@ -22,6 +34,12 @@ class TransaksiUmum {
     }else{
       return "Success";
     }
+  }
+
+  public function showMaxTU(){
+    $sql = "SELECT kd_transaksi_umum FROM tb_transaksi_umum WHERE kd_transaksi_umum IN (SELECT MAX(kd_transaksi_umum) FROM tb_transaksi_umum)";
+    $query = $this->db->query($sql);
+    return $query;
   }
 
 }

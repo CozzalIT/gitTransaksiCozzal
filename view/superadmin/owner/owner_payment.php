@@ -1,4 +1,5 @@
 <?php
+  require("../../../class/transaksi_umum.php");
   require("../../../class/transaksi.php");
   require("../../../class/owner.php");
   require("../../../class/kas.php");
@@ -68,7 +69,9 @@
                     if(isset($_POST['kd_owner'])){
             				  $proses_u = new Unit($db);
                       $proses_t = new Transaksi($db);
+                      $proses_tu = new TransaksiUmum($db);
                       $proses_k = new Kas($db);
+                      $_SESSION['kd_owner'] = $_POST['kd_owner'];
             				  $show_u = $proses_u->showUnitbyOwner($_POST['kd_owner']);
                       while($data_u = $show_u->fetch(PDO::FETCH_OBJ)){
                         $owner_we = $data_u->h_owner_we;
@@ -109,19 +112,21 @@
                         }
                         $show_k = $proses_k->showMutasiDana('10/'.$data_u->kd_unit);
                         while($data_k = $show_k->fetch(PDO::FETCH_OBJ)){
+                          $show_tu = $proses_tu->showTransaksiUmumByTanggal($data_k->tanggal);
+                          $data_tu = $show_tu->fetch(PDO::FETCH_OBJ);
                           echo "
                             <tr class='gradeC'>
                               <td class='hide'>$i</td>
                               <td>
                                 <center>
-                                  <input type='checkbox' name='ownerPayment[]' value='mk/$data_k->kd_mutasi_kas'>
+                                  <input type='checkbox' name='ownerPayment[]' value='mk/$data_tu->kd_transaksi_umum'>
                                 </center>
                               </td>
-                              <td>Pengeluaran Unit</td>
+                              <td>T-Umum <strong>($data_tu->keterangan)</strong></td>
                               <td>$data_u->nama_apt</td>
                               <td>$data_u->no_unit</td>
                               <td><center>-</center></td>
-                              <td>".number_format($data_k->mutasi_dana, 0, ".", ".")." IDR</td>
+                              <td>".number_format($data_tu->harga*$data_tu->jumlah, 0, ".", ".")." IDR</td>
                             </tr>
                           ";
                           $i++;

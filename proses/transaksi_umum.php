@@ -83,8 +83,8 @@ elseif(isset($_POST['addTransaksiUnit'])){
   $harga = $_POST['harga'];
   $jumlah = $_POST['jumlah'];
   $keterangan = $_POST['keterangan'];
-  $keterangan_mutasi = '10/'.$kd_unit_real[0];
   $tanggal = date('Y-m-d H:i:s');
+	$keterangan_mutasi = '10/'.$kd_unit_real[0];
   $mutasi_dana = $harga*$jumlah;
   $jenis = 2;
 

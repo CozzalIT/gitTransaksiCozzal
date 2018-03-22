@@ -78,6 +78,12 @@ class Unit {
     return $query;
   }
 
+  public function showHargaOwner($no_unit){
+    $sql = "SELECT h_owner_wd, h_owner_we from tb_unit WHERE no_unit='$no_unit'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
   public function showRequestListing(){
     $sql = "SELECT * FROM tb_request_listing";
     $query = $this->db->query($sql);
