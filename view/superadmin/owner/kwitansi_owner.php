@@ -173,13 +173,13 @@
                               </tr>
                             ";
                             $i++;
+                            $total_in = $total_in+$subtotal_in;
                           }
-                          $total_in = $total_in+$subtotal_in;
                         }
                         $earnings = $total_in-$total_out;
                       ?>
                       <tr>
-                        <td colspan="6"><strong>Total Pengeluaran</strong></td>
+                        <td colspan="6"><strong>Total Pendapatan</strong></td>
                         <td><?php echo number_format($total_in, 0, ".","."); ?> IDR</td>
                       </tr>
                     </tbody>
