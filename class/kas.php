@@ -40,6 +40,12 @@ class Kas {
     return $query;
   }
 
+  public function showMutasiByTanggal($tanggal){
+    $sql = "SELECT * FROM tb_mutasi_kas WHERE tanggal='$tanggal'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
   public function showMutasiKas(){
     $sql = "SELECT
       tb_mutasi_kas.kd_mutasi_kas, tb_mutasi_kas.kd_kas, tb_mutasi_kas.mutasi_dana, tb_mutasi_kas.jenis, tb_mutasi_kas.tanggal, tb_mutasi_kas.keterangan,
@@ -84,6 +90,16 @@ class Kas {
   //Update
   public function updateKas($kd_kas, $saldo, $tanggal){
     $sql = "UPDATE tb_kas SET saldo='$saldo', tanggal='$tanggal' WHERE kd_kas='$kd_kas'";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
+  }
+
+  public function updateKeteranganMutasi($kd_mutasi_kas, $keterangan_baru){
+    $sql = "UPDATE tb_mutasi_kas SET keterangan='$keterangan_baru' WHERE kd_mutasi_kas='$kd_mutasi_kas'";
     $query = $this->db->query($sql);
     if(!$query){
       return "Failed";

@@ -111,21 +111,23 @@
                     $show1 = $proses->showBooking($kd_unit);
                     while($data1 = $show1->fetch(PDO::FETCH_OBJ)){
                       $pendapatan = ($data1->hari_weekend * $data1->h_owner_we) + ($data1->hari_weekday * $data1->h_owner_wd);
-                      echo "
-                        <tr class='gradeC'>
-                          <td>$i</td>
-                          <td>$data1->nama</td>
-                          <td>$data1->nama_apt</td>
-                          <td>$data1->no_unit</td>
-                          <td>$data1->check_in</td>
-                          <td>$data1->check_out</td>
-                          <td>".number_format($pendapatan, 0, ".",".")." IDR</td>
-                          <td>
-                            <a class='btn btn-success'>Detail</a>
-                          </td>
-                        </tr>
-                      ";
-                      $i++;
+                      if($data1->status == '1'){
+                        echo "
+                          <tr class='gradeC'>
+                            <td>$i</td>
+                            <td>$data1->nama</td>
+                            <td>$data1->nama_apt</td>
+                            <td>$data1->no_unit</td>
+                            <td>$data1->check_in</td>
+                            <td>$data1->check_out</td>
+                            <td>".number_format($pendapatan, 0, ".",".")." IDR</td>
+                            <td>
+                              <a class='btn btn-success'>Detail</a>
+                            </td>
+                          </tr>
+                        ";
+                        $i++;
+                      }
                     }
                   }
                 ?>

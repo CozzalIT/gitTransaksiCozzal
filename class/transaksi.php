@@ -189,6 +189,16 @@ class Transaksi {
     }
   }
 
+  public function updateStatusTransaksi($kd_transaksi, $status){
+    $sql = "UPDATE tb_transaksi SET status='$status' WHERE kd_transaksi='$kd_transaksi'";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
+  }
+
   public function updateUnit_kotor($kd_transaksi ,$kd_unit, $check_in, $check_out){
     $locsql = "SELECT check_in, check_out from tb_transaksi where kd_transaksi='$kd_transaksi' and kd_unit='$kd_unit'";
     $locq = $this->db->query($locsql);
