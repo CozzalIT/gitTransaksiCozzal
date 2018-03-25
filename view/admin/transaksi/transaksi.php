@@ -4,7 +4,7 @@
   require("../../../class/penyewa.php");
   require("../../../class/apartemen.php");
   require("../../../class/booking.php");
-  require("../../../class/dp_via.php");
+  require("../../../class/kas.php");
   require("../../../../config/database.php");
 
   $thisPage = "Transaksi";
@@ -193,13 +193,13 @@
     			    <div class="control-group">
       				  <label class="control-label">Check In :  <?$tgl=date('d-m-Y');echo $tgl;?></label>
       				  <div class="controls">
-      				    <input name="check_in" id="check_in" type="date" onchange="validasi(this.form)"/>
+      				    <input name="check_in" id="check_in" type="date" onchange="keepvalid(this.form)"/>
       				  </div>
     			    </div>
       				<div class="control-group">
       				  <label class="control-label">Check Out :</label>
       				  <div class="controls">
-      				    <input name="check_out" id="check_out" type="date" onchange="validasi2(this.form)"/>
+      				    <input name="check_out" id="check_out" type="date" onchange="keepvalid2(this.form)"/>
       				  </div>
       				</div>
       				<div class="control-group">
@@ -251,24 +251,24 @@
 				        </div>
 			        </div>
               <div class="control-group" id="harga_sewa-C">
-                <label class="control-label">Harga Sewa Weekday:</label>
-                <div class="controls">
-                  <input name="harga_sewa" min="0"  id="harga_sewa" type="number" onChange="hasil(this.form)" />
+      				  <label class="control-label">Harga Sewa Weekday:</label>
+      				  <div class="controls">
+      				    <input name="harga_sewa" min="0"  id="harga_sewa" type="number" onChange="hasil(this.form)" />
                 </div>
-              </div>
+      			  </div>
               <div class="control-group" id="harga_sewa_we-C">
                 <label class="control-label">Harga Sewa Weekend:</label>
                 <div class="controls">
                   <input name="harga_sewa_we" min="0"  id="harga_sewa_we" type="number" onChange="hasil(this.form)" />
                 </div>
               </div>
-              <div class="control-group">
-                <label class="control-label">Jumlah Tamu :</label>
-                <div class="controls">
-                  <input name="tamu" min="0" type="number" value="5" onChange="ECH(this.form)"/>
+      				<div class="control-group">
+      				  <label class="control-label">Jumlah Tamu :</label>
+      				  <div class="controls">
+      				    <input name="tamu" min="0" type="number" value="5" onChange="ECH(this.form)"/>
                   <input name="harga_sewa_asli" type="text" style="display:none;"/>
-                </div>
-              </div>
+      				  </div>
+      			  </div>
               <div class="control-group">
                 <label class="control-label">Ekstra Charge :</label>
                 <div class="controls">
@@ -315,13 +315,13 @@
 			    <div class="control-group">
   				  <label class="control-label">DP Via :</label>
   				  <div class="controls">
-  				    <select id="dp_via" name="dp_via" class="span4" required>
-  					  <option value="">-- Bank --</option>
+  				    <select id="kas" name="kas" class="span4" required>
+  					    <option value="">-- Kas --</option>
     					  <?php
-                  $Proses = new dpVia($db);
-        				  $show = $Proses->showDp_via();
+                  $Proses = new Kas($db);
+        				  $show = $Proses->showKas();
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-      						  echo "<option name='kd_bank' value='$data->kd_bank'>$data->nama_bank</option>";
+      						  echo "<option name='kd_kas' value='$data->kd_kas'>$data->sumber_dana</option>";
       						}
     					  ?>
   					  </select>
