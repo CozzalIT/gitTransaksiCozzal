@@ -62,7 +62,7 @@ if(isset($_POST['addTransaksi'])){
   $total  = $_POST['total'];
   $sisa_pelunasan = $total - $dp;
   $hari = $_POST['jumhari'];
-  $tgl_transaksi = date('y-m-d');
+  $tgl_transaksi = date('y-m-d H:i:s');
   $tanggal = date('y-m-d H:i:s');
   $week = date("w",strtotime($check_in))+1;
 

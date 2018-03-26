@@ -79,7 +79,7 @@ elseif(isset($_POST['ownerPayment'])){
 
 	if(!empty($_POST['transaksi'])){
 		foreach($_POST['transaksi'] as $kd_transaksi){
-			$update_t = $proses_t->updateStatusTransaksi($kd_transaksi, $status);
+			$update_t = $proses_t->updateStatusTransaksi($kd_transaksi, $status, $tanggal);
 		}
 	}
 	if(!empty($_POST['transaksiUmum'])){
@@ -90,7 +90,7 @@ elseif(isset($_POST['ownerPayment'])){
 			while($data_mk = $show_mk->fetch(PDO::FETCH_OBJ)){
 				$keterangan = explode('/',$data_mk->keterangan);
 				$keterangan_baru = '9/'.$keterangan[1];
-				$update_mk = $proses_k->updateKeteranganMutasi($data_mk->kd_mutasi_kas, $keterangan_baru);
+				$update_mk = $proses_k->updateMutasi($data_mk->kd_mutasi_kas, $keterangan_baru, $tanggal);
 			}
 		}
 	}

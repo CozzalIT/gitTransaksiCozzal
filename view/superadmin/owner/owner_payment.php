@@ -154,6 +154,7 @@
                   <th>Apartemen</th>
                   <th>Unit</th>
                   <th>Check In/Out</th>
+                  <th>Tanggal</th>
                   <th>Nominal</th>
                 </tr>
                 <tbody>
@@ -196,6 +197,7 @@
                                     $data_t->check_in / $data_t->check_out
                                   </center>
                                 </td>
+                                <td>$data_t->tgl_transaksi</td>
                                 <td>".number_format($nominal, 0, ".", ".")." IDR</td>
                               </tr>
                             ";

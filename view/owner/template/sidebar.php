@@ -5,7 +5,6 @@
     <li <?php if($thisPage == "Unit") echo "class='active'"; ?>><a href="../unit/unit.php"><i class="icon icon-edit"></i> <span>Listing Unit</span></a> </li>
     <li <?php if($thisPage == "Booking") echo "class='active'"; ?>><a href="../booking/laporan_booking.php"><i class="icon icon-th-large"></i> <span>Laporan Booking</span></a> </li>
     <li <?php if($thisPage == "Pendapatan") echo "class='active'"; ?>><a href="../booking/pendapatan.php"><i class="icon icon-money"></i> <span>Pendapatan</span></a> </li>
-	  <li <?php if($thisPage == "Request Unit") echo "class='active'"; ?>><a href="#" onclick="alert('Dalam tahap pengembangan')"><i class="icon icon-pencil"></i> <span>Request Unit</span></a> </li>
   </ul>
 </div>
 <!--sidebar-menu-->
