@@ -232,13 +232,14 @@ elseif(isset($_POST['updateTransaksi'])){
   $kd_kas = $_POST['kas'];
   $dp = $_POST['dp'];
   $total_tagihan = $_POST['total'];
-  $sisa_pelunasan = $total_tagihan - $dp;
+  $pembayaran = $_POST['pembayaran'];
+  $sisa_pelunasan = $total_tagihan - $dp - $pembayaran;
   $hari = $_POST['jumhari'];
   $week = date("w",strtotime($check_in))+1;
   $tanggal = date('Y-m-d H:i:s');
   $keterangan = '6/'.$kd_transaksi;
 
-  if($week>5){ //jika dimuai dari weekend
+  if($week>5){ //jika dimulai dari weekend
     $week_kind = explode("/",startinweekend($hari, $week, 0, 0));
     $jumlah_weekday = $week_kind[0]; $jumlah_weekend = $week_kind[1];
   }else{ //jika dimulai dri weekday
@@ -264,8 +265,14 @@ elseif(isset($_POST['updateTransaksi'])){
 
   $show = $proses_kas->showKdKas($keterangan);
   $data_mutasi = $show->fetch(PDO::FETCH_OBJ);
-  $kd_kas_lama = $data_mutasi->kd_kas;
-  $mutasi_dana = $data_mutasi->mutasi_dana;
+  //Mengecek ketersediaan mutasi kas
+  if(!empty($data_mutasi->kd_kas)){
+    $kd_kas_lama = $data_mutasi->kd_kas;
+    $mutasi_dana = $data_mutasi->mutasi_dana;
+  }else{
+    $kd_kas_lama = $kd_kas;
+    $mutasi_dana = 0;
+  }
 
   if($kd_kas <> $kd_kas_lama){
     //Mengembalikan Saldo kas yang diganti
@@ -280,6 +287,7 @@ elseif(isset($_POST['updateTransaksi'])){
 
     $update_kas_lama = $proses_kas->updateKas($kd_kas_lama, $saldo_kas_lama, $tanggal);
     $update_kas_baru = $proses_kas->updateKas($kd_kas, $saldo_kas_baru, $tanggal);
+
     $delete_mutasi = $proses_kas->deleteMutasi($keterangan);
     $add_mutasi = $proses_kas->addMutasiKas($kd_kas, $dp, 1, $tanggal, $keterangan);
   }elseif($kd_kas == $kd_kas_lama){
@@ -292,8 +300,10 @@ elseif(isset($_POST['updateTransaksi'])){
     $saldo_kas = ($data_saldo->saldo - $data_mutasi_dana->mutasi_dana) + $dp;
     $update_kas = $proses_kas->updateKas($kd_kas, $saldo_kas, $tanggal);
 
-    $delete_mutasi = $proses_kas->deleteMutasi($keterangan);
-    $add_mutasi = $proses_kas->addMutasiKas($kd_kas, $dp, 1, $tanggal, $keterangan);
+    if($mutasi_dana <> $dp){
+      $delete_mutasi = $proses_kas->deleteMutasi($keterangan);
+      $add_mutasi = $proses_kas->addMutasiKas($kd_kas, $dp, 1, $tanggal, $keterangan);
+    }
   }
 
   $update = $proses->updateUnit_kotor($kd_transaksi ,$kd_unit, $check_in, $check_out);

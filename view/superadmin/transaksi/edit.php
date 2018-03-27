@@ -42,6 +42,7 @@
               <div class="widget-content nopadding">
                 <form action="../../../proses/transaksi.php" method="post" class="form-horizontal">
                   <div class="control-group">
+                    <input name="pembayaran" class="hide" type="text" value="'.$edit->pembayaran.'"/>
                     <input name="kd_transaksi" class="hide" type="text" value="'.$edit->kd_transaksi.'"/>
                     <label class="control-label">Nama :</label>
                   <div class="controls">
