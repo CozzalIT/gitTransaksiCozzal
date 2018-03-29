@@ -63,10 +63,28 @@ elseif(isset($_POST['ownerPayment'])){
 	$status = '41';
 	$jenis = 2;
 	$keterangan = 4;
+	$kd_owner = $_SESSION['kd_owner'];
+
+	if(isset($_POST['transaksi'])){
+		$jumlah_t = count($_POST['transaksi']);
+	}else{
+		$jumlah_t = 0;
+	}
+	if(isset($_POST['transaksiUmum'])){
+		$jumlah_tu = count($_POST['transaksiUmum']);
+	}else{
+		$jumlah_tu = 0;
+	}
+	$jumlah_transaksi = $jumlah_t + $jumlah_tu;
 
 	$proses_k = new Kas($db);
 	$proses_t = new Transaksi($db);
 	$proses_tu = new TransaksiUmum($db);
+	$proses_o = new Owner($db);
+
+	$kd_op_t = implode("a",$_POST['transaksi']);
+	$kd_op_tu = implode("b",$_POST['transaksiUmum']);
+	$kd_owner_payment = $kd_op_t."x".$kd_op_tu;
 
 	$show_k = $proses_k->editSaldo($kd_kas);
 	$data_k = $show_k->fetch(PDO::FETCH_OBJ);
@@ -79,7 +97,7 @@ elseif(isset($_POST['ownerPayment'])){
 
 	if(!empty($_POST['transaksi'])){
 		foreach($_POST['transaksi'] as $kd_transaksi){
-			$update_t = $proses_t->updateStatusTransaksi($kd_transaksi, $status, $tanggal);
+			$update_t = $proses_t->updateStatusTransaksi($kd_transaksi, $status);
 		}
 	}
 	if(!empty($_POST['transaksiUmum'])){
@@ -90,11 +108,11 @@ elseif(isset($_POST['ownerPayment'])){
 			while($data_mk = $show_mk->fetch(PDO::FETCH_OBJ)){
 				$keterangan = explode('/',$data_mk->keterangan);
 				$keterangan_baru = '9/'.$keterangan[1];
-				$update_mk = $proses_k->updateMutasi($data_mk->kd_mutasi_kas, $keterangan_baru, $tanggal);
+				$update_mk = $proses_k->updateMutasi($data_mk->kd_mutasi_kas, $keterangan_baru);
 			}
 		}
 	}
-
+	$add_owner_payment = $proses_o->addOwnerPayment($kd_owner_payment, $kd_owner, $tanggal, $jumlah_transaksi, $earnings);
 	header("Location:../view/".$view."/owner/owner_payment.php");
 }
 

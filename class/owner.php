@@ -18,10 +18,27 @@ class Owner {
     }
   }
 
+  public function addOwnerPayment($kd_owner_payment, $kd_owner, $tgl_pembayaran, $jumlah_transaksi, $nominal){
+    $sql = "INSERT INTO tb_owner_payment (kd_owner_payment, kd_owner, tgl_pembayaran, jumlah_transaksi, nominal)
+    VALUES('$kd_owner_payment', '$kd_owner', '$tgl_pembayaran', '$jumlah_transaksi', '$nominal')";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
+  }
+
   //Proses Show
   public function showOwner(){
     $sql = "SELECT * from tb_owner
     INNER JOIN tb_bank ON tb_bank.kd_bank = tb_owner.kd_bank";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
+  public function showOwnerPayment($kd_owner){
+    $sql = "SELECT * from tb_owner_payment WHERE kd_owner='$kd_owner' ORDER BY tgl_pembayaran DESC";
     $query = $this->db->query($sql);
     return $query;
   }

@@ -193,8 +193,8 @@ class Transaksi {
     }
   }
 
-  public function updateStatusTransaksi($kd_transaksi, $status, $tanggal){
-    $sql = "UPDATE tb_transaksi SET status='$status', tgl_transaksi='$tanggal' WHERE kd_transaksi='$kd_transaksi'";
+  public function updateStatusTransaksi($kd_transaksi, $status){
+    $sql = "UPDATE tb_transaksi SET status='$status' WHERE kd_transaksi='$kd_transaksi'";
     $query = $this->db->query($sql);
     if(!$query){
       return "Failed";
