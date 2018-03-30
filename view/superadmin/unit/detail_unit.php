@@ -36,6 +36,20 @@
       }
       $show = $Proses->showUnitbyId($_GET['detail_unit']);
       while($data = $show->fetch(PDO::FETCH_OBJ)){
+        
+        if($data->url_bnb==""){
+          $url_bnb = 'Belum Ada'; 
+        } else {
+          $url_bnb = '<a style="color:blue;" target="_blank" href="'.$data->url_bnb.'">'.$data->url_bnb.'</a>';
+        }
+
+        if($data->url_cozzal==""){
+          $url_cozzal = "<a style='color:green;' href='../../../proses/unit.php?newics=".$data->kd_unit."'>Klik untuk membuat link</a>";
+        } else {
+          $url = str_replace('transaksi.cozzal.com/', '', $data->url_cozzal);
+          $url_cozzal = '<a style="color:orange;" target="_blank" href="../../../'.$url.'">'.$data->url_cozzal.'</a>';
+        }
+        
         echo '
             <!--main-container-part-->
             <div id="content">
@@ -275,6 +289,22 @@
                                         ';
                                       }
                                       echo'
+                                      <tr style="border-bottom-width: 2px;border-bottom-style: solid;">
+                                      <td><strong>Sync Cal</strong></td>
+                                      </tr>
+                                      <tr>
+                                      <td>URL Airbnb</td>
+                                      <td>: '.$url_bnb.'</td>
+                                      </tr>
+                                      <tr>
+                                      <td>URL Cozzal</td>
+                                      <td>: '.$url_cozzal.'</td>
+                                      </tr>
+                                      <tr>
+                                        <td>
+                                           <a class="btn btn-small" href="edit.php?edit_url='.$data->kd_unit.'" style="margin-bottom: 12px;" >Edit URL Airbnb</a>
+                                        </td>                                    
+                                      </tr>                                      
                                     </tbody>
                                   </table>
                                 </center>

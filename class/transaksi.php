@@ -200,12 +200,13 @@ class Transaksi {
   }
 
   public function updateUnit_kotor($kd_transaksi ,$kd_unit, $check_in, $check_out){
-    $locsql = "SELECT check_in, check_out from tb_transaksi where kd_transaksi='$kd_transaksi' and kd_unit='$kd_unit'";
+    $locsql = "SELECT kd_unit, check_in, check_out from tb_transaksi where kd_transaksi='$kd_transaksi'";
     $locq = $this->db->query($locsql);
     $trx = $locq->fetch();
-    $sql = "UPDATE tb_unit_kotor SET check_in='$check_in', check_out='$check_out'
-    WHERE kd_unit='$kd_unit' and check_in='".$trx["check_in"]."' and check_out='".$trx["check_out"]."'";
+    $sql = "UPDATE tb_unit_kotor SET kd_unit='$kd_unit', check_in='$check_in', check_out='$check_out'
+    WHERE kd_unit='".$trx["kd_unit"]."' and check_in='".$trx["check_in"]."' and check_out='".$trx["check_out"]."'";
     $query = $this->db->query($sql);
+    return $trx["kd_unit"];
   }
 
   //Proses Delete

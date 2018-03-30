@@ -242,5 +242,22 @@ elseif(isset($_POST['addMaintenance'])){
   }
 }
 
+elseif(isset($_GET['newics'])){
+  $kd_unit = $_GET['newics'];
+  include '../class/ics_unit.php';
+  $ics = new Ics_unit($db);
+  $ics->createIcs($kd_unit);
+  header('Location:../view/'.$view.'/unit/detail_unit.php?detail_unit='.$kd_unit);
+}
+
+elseif(isset($_POST['updateURL'])){
+  $kd_unit = $_POST['updateURL'];
+  $url = $_POST['url_bnb'];
+  include '../class/ics_unit.php';
+  $ics = new Ics_unit($db);
+  $ics->setURL($kd_unit, $url, 'url_bnb');
+  header('Location:../view/'.$view.'/unit/detail_unit.php?detail_unit='.$kd_unit);
+}
+
 else header('Location:../view/'.$view.'/home/home.php');
 ?>
