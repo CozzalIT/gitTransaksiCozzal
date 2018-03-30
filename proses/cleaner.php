@@ -6,19 +6,18 @@ $view = $_SESSION['hak_akses'];
 
 
 function set_value_config($parameter, $value){
-  $myfile = fopen("../config.ini", "r") or die("Unable to open file!");
-  $tmp = fopen("../tmp_cnf.ini", "w") or die("Unable to open file!");
-  while(!feof($myfile)){
+  $arr_val = array();
+  $isi = fread(fopen("../config.ini","r"),filesize("../config.ini"));
+  $myfile = fopen("../config.ini","r");
+  while (!feof($myfile)) {
     $string = fgets($myfile);
-    $arr = explode("=", $string);
-    if($arr[0]==$parameter){
-      fwrite($tmp, $arr[0]."=".$value."\n");
-    } else {
-      fwrite($tmp, $string."\n");
-    }
+    $arr = explode('=', $string); 
+    $arr_val[$arr[0]]=$arr[1];
   }
-  fclose($myfile); fclose($tmp);
-  unlink('../config.ini'); rename('../tmp_cnf.ini', '../config.ini');
+  $isi2 = str_replace($parameter."=".$arr_val[$parameter], $parameter."=".$value."\n", $isi);
+  $tmp = fopen("../config.ini", "w") or die("Unable to open file!");
+  fwrite($tmp,$isi2);
+  fclose($tmp);
 } 
 
 function formated_jam_co($jam){

@@ -107,6 +107,9 @@ if(isset($_POST['addTransaksi'])){
       $saldo = $dp + $data1->saldo;
       $update_kas = $proses2->updateKas($kd_kas, $saldo, $tanggal);
     }
+    require("../class/ics_unit.php");
+    $ics = new Ics_unit($db);
+    $ics->buildIcs($kd_unit);
     header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php');
   }else{
     echo 'Tambah Transaksi Gagal !';
@@ -306,9 +309,16 @@ elseif(isset($_POST['updateTransaksi'])){
     }
   }
 
-  $update = $proses->updateUnit_kotor($kd_transaksi ,$kd_unit, $check_in, $check_out);
+  $unit = $update = $proses->updateUnit_kotor($kd_transaksi ,$kd_unit, $check_in, $check_out);
   $add = $proses->updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $harga_sewa_we, $diskon, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total_tagihan, $sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday);
   if($add == "Success"){
+  require("../class/ics_unit.php");
+  $ics = new Ics_unit($db);
+  if($kd_unit!=$unit){
+    $ics->buildIcs($kd_unit.'/'.$unit);
+  } else {
+    $ics->buildIcs($kd_unit);
+  }
     header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php');
   }else{
     echo 'error';
@@ -351,10 +361,14 @@ elseif (isset($_GET['backTransaksi']) && $view!="owner" && $view!="cleaner"){
 //Tambah Cancel Transaksi
 elseif (isset($_GET['addCancel']) && $view!="owner" && $view!="cleaner"){
   $kd_transaksi = $_GET['addCancel'];
+  $kd_unit = $_GET['unitCancel'];
   $proses = new Transaksi($db);
   $add = $proses->addCancel($kd_transaksi);
   if($add == "Success"){
     $delete = $proses->deleteUnit_kotor($kd_transaksi);
+    require("../class/ics_unit.php");
+    $ics = new Ics_unit($db);
+    $ics->buildIcs($kd_unit);
     header('Location:../view/'.$view.'/transaksi/cancel_transaksi.php');
   }
 }
