@@ -64,9 +64,7 @@
                       			<td>$check_in</td>
                       			<td>$check_out</td>
                             <td>".number_format($pendapatan, 0, ".",".")." IDR</td>
-                            <td>
-                              <a class='btn btn-success'>Detail</a>
-                            </td>
+                            ".($data1->status == '41' ? '<td style="color:green;"><strong>Paid</strong></td>' : '<td style="color:red;"><strong>Unpaid</strong></td>')."
                     			</tr>
                         ";
                     		$i++;
@@ -97,7 +95,6 @@
                   <th>Check In</th>
                   <th>Check Out</th>
                   <th>Pendapatan</th>
-                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -121,9 +118,6 @@
                             <td>$data1->check_in</td>
                             <td>$data1->check_out</td>
                             <td>".number_format($pendapatan, 0, ".",".")." IDR</td>
-                            <td>
-                              <a class='btn btn-success'>Detail</a>
-                            </td>
                           </tr>
                         ";
                         $i++;

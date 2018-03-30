@@ -108,6 +108,16 @@ class Kas {
     }
   }
 
+  public function updateMutasi($kd_mutasi_kas, $keterangan_baru){
+    $sql = "UPDATE tb_mutasi_kas SET keterangan='$keterangan_baru' WHERE kd_mutasi_kas='$kd_mutasi_kas'";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
+  }
+
   //Proses Delete
   public function deleteMutasi($keterangan){
     $sql = "DELETE FROM tb_mutasi_kas WHERE keterangan='$keterangan'";

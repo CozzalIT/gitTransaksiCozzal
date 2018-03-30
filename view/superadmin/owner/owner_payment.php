@@ -43,8 +43,9 @@
         <div class="widget-box" style="overflow-x:auto;">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
             <ul class="nav nav-tabs">
-              <li class="active"><a data-toggle="tab" href="#tab1">Unpaid</a></li>
-              <li><a data-toggle="tab" href="#tab2">Paid</a></li>
+              <li class="active"><a data-toggle="tab" href="#unpaid">Unpaid</a></li>
+              <li><a data-toggle="tab" href="#paid">Paid</a></li>
+              <li><a data-toggle="tab" href="#history">Payment History</a></li>
             </ul>
           </div>
           <script language="JavaScript">
@@ -56,9 +57,9 @@
             }
           </script>
           <div class="widget-content tab-content nopadding">
-            <div id="tab1" class="tab-pane active">
+            <div id="unpaid" class="tab-pane active">
               <form action="kwitansi_owner.php" method="post">
-    			      <table class="table table-bordered data-table">
+    			      <table class="table table-bordered">
                   <tr>
                     <th class='hide'> No</th>
                     <th><input type="checkbox" onClick="checkAll(this)" /> All</th>
@@ -90,7 +91,7 @@
                               }elseif($data_t->hari_weekday == 0){
                                 $nominal = $data_t->hari_weekend*$owner_we;
                               }elseif($data_t->hari_weekday <> 0 && $data_t->hari_weekend <> 0){
-                                $nominal = ($data_t->hari_weekend*$owner_we)+($data_t->hari_weekend*$owner_we);
+                                $nominal = ($data_t->hari_weekend*$owner_we)+($data_t->hari_weekday*$owner_wd);
                               }
                       				echo "
                       					<tr class='gradeC'>
@@ -129,7 +130,7 @@
                                 <td>T-Umum <strong>($data_tu->keterangan)</strong></td>
                                 <td>$data_u->nama_apt</td>
                                 <td>$data_u->no_unit</td>
-                                <td><center>-</center></td>
+                                <td>-</td>
                                 <td>".number_format($data_tu->harga*$data_tu->jumlah, 0, ".", ".")." IDR</td>
                               </tr>
                             ";
@@ -145,17 +146,19 @@
                 </table>
               </form>
             </div>
-            <div id="tab2" class="tab-pane">
+            <div id="paid" class="tab-pane">
               <table class="table table-bordered data-table">
-                <tr>
-                  <th class='hide'> No</th>
-                  <th><input type="checkbox" onClick="checkAll(this)" /> All</th>
-                  <th>Jenis</th>
-                  <th>Apartemen</th>
-                  <th>Unit</th>
-                  <th>Check In/Out</th>
-                  <th>Nominal</th>
-                </tr>
+                <thead>
+                  <tr>
+                    <th class="hide"> No</th>
+                    <th>Jenis</th>
+                    <th>Apartemen</th>
+                    <th>Unit</th>
+                    <th>Check In/Out</th>
+                    <th>Tanggal</th>
+                    <th>Nominal</th>
+                  </tr>
+                </thead>
                 <tbody>
                   <?php
                     if(isset($_POST['kd_owner'])){
@@ -178,16 +181,12 @@
                             }elseif($data_t->hari_weekday == 0){
                               $nominal = $data_t->hari_weekend*$owner_we;
                             }elseif($data_t->hari_weekday <> 0 && $data_t->hari_weekend <> 0){
-                              $nominal = ($data_t->hari_weekend*$owner_we)+($data_t->hari_weekend*$owner_we);
+                              $nominal = ($data_t->hari_weekend*$owner_we)+($data_t->hari_weekday*$owner_wd);
                             }
+                            $dateTimeT = explode(" ",$data_t->tgl_transaksi);
                             echo "
                               <tr class='gradeC'>
                                 <td class='hide'>$i</td>
-                                <td>
-                                  <center>
-                                    <input type='checkbox' name='ownerPayment[]' value='t/$data_t->kd_transaksi'>
-                                  </center>
-                                </td>
                                 <td>Transaksi : COZ-".strtoupper(dechex($data_t->kd_transaksi))."</td>
                                 <td>$data_t->nama_apt</td>
                                 <td>$data_t->no_unit</td>
@@ -196,6 +195,7 @@
                                     $data_t->check_in / $data_t->check_out
                                   </center>
                                 </td>
+                                <td>$dateTimeT[0]</td>
                                 <td>".number_format($nominal, 0, ".", ".")." IDR</td>
                               </tr>
                             ";
@@ -206,18 +206,16 @@
                         while($data_k = $show_k->fetch(PDO::FETCH_OBJ)){
                           $show_tu = $proses_tu->showTransaksiUmumByTanggal($data_k->tanggal);
                           $data_tu = $show_tu->fetch(PDO::FETCH_OBJ);
+                          $dateTimeTu = explode(" ",$data_tu->tanggal);
                           echo "
                             <tr class='gradeC'>
                               <td class='hide'>$i</td>
-                              <td>
-                                <center>
-                                  <input type='checkbox' name='ownerPayment[]' value='mk/$data_tu->kd_transaksi_umum'>
-                                </center>
-                              </td>
+
                               <td>T-Umum <strong>($data_tu->keterangan)</strong></td>
                               <td>$data_u->nama_apt</td>
                               <td>$data_u->no_unit</td>
                               <td><center>-</center></td>
+                              <td>$dateTimeTu[0]</td>
                               <td>".number_format($data_tu->harga*$data_tu->jumlah, 0, ".", ".")." IDR</td>
                             </tr>
                           ";
@@ -226,9 +224,82 @@
                       }
                     }
                   ?>
+                </tbody>
+              </table>
+            </div>
+            <div id="history" class="tab-pane">
+              <table class="table table-bordered data-table">
+                <thead>
                   <tr>
-                    <td colspan="6"><button type="submit" class="btn btn-success">Bayar</button> Transaksi yang di pilih.</td>
+                    <th class="hide"> No</th>
+                    <th>Tanggal Pembayaran</th>
+                    <th>Jumlah Transaksi</th>
+                    <th>Nominal</th>
+                    <th>Action</th>
                   </tr>
+                </thead>
+                <tbody>
+                  <?php
+                    $i=1;
+                    $show_history = $Proses->showOwnerPayment($_POST['kd_owner']);
+                    while($data_history = $show_history->fetch(PDO::FETCH_OBJ)){
+                      $tanggal = explode(" ",$data_history->tgl_pembayaran);
+                      $formatTanggal = explode("-",$tanggal[0]);
+                      switch ($formatTanggal[1]) {
+                        case '01':
+                          $formatTanggal[1] = 'Januari';
+                          break;
+                        case '02':
+                          $formatTanggal[1] = 'Februari';
+                          break;
+                        case '03':
+                          $formatTanggal[1] = 'Maret';
+                          break;
+                        case '04':
+                          $formatTanggal[1] = 'April';
+                          break;
+                        case '05':
+                          $formatTanggal[1] = 'Mei';
+                          break;
+                        case '06':
+                          $formatTanggal[1] = 'Juni';
+                          break;
+                        case '07':
+                          $formatTanggal[1] = 'Juli';
+                          break;
+                        case '08':
+                          $formatTanggal[1] = 'Agustus';
+                          break;
+                        case '09':
+                          $formatTanggal[1] = 'September';
+                          break;
+                        case '10':
+                          $formatTanggal[1] = 'Oktober';
+                            break;
+                        case '11':
+                          $formatTanggal[1] = 'November';
+                          break;
+                        case '12':
+                          $formatTanggal[1] = 'Desember';
+                          break;
+                      }
+                      $tanggalIndo = $formatTanggal[2]." ".$formatTanggal[1]." ".$formatTanggal[0];
+                      echo "
+                        <tr class='gradeC'>
+                          <td class='hide'>$i</td>
+                          <td>$tanggalIndo</td>
+                          <td>$data_history->jumlah_transaksi Transaksi</td>
+                          <td>".number_format($data_history->nominal, 0, ".", ".")." IDR</td>
+                          <td>
+                            <center>
+                              <a class='btn btn-success' id='detail' name='detail' href='detail_payment.php?detail=$data_history->kd_owner_payment'>Detail</a>
+                            </center>
+                          </td>
+                        </tr>
+                      ";
+                      $i++;
+                    }
+                  ?>
                 </tbody>
               </table>
             </div>
@@ -249,12 +320,8 @@
 <script src="../../../asset/js/jquery.min.js"></script>
 <script src="../../../asset/js/jquery.ui.custom.js"></script>
 <script src="../../../asset/js/bootstrap.min.js"></script>
-<script src="../../../asset/js/jquery.uniform.js"></script>
 <script src="../../../asset/js/jquery.dataTables.min.js"></script>
 <script src="../../../asset/js/matrix.js"></script>
 <script src="../../../asset/js/matrix.tables.js"></script>
 </body>
-<?php
-  include '../template/modal.php';
-?>
 </html>
