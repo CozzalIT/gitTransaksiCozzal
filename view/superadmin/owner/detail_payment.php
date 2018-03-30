@@ -41,14 +41,25 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class='gradeC'>
-                  <td>-</td>
-                  <td>-</td>
-                  <td>-</td>
-                  <td>-</td>
-                  <td>-</td>
-                  <td>-</td>
-                </tr>
+                <?php
+                  if(isset($_GET['detail'])){
+                    $kode = explode("x",$_GET['detail']);
+                    $transaksi = explode("a",$kode[0]);
+                    $transaksi_umum = explode("b",$kode[1]);
+                  }
+                  foreach($transaksi as $kd_transaksi){
+                    echo "
+                      <tr class='gradeC'>
+                        <td>-</td>
+                        <td>$kd_transaksi</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                      </tr>
+                    ";
+                  }
+                ?>
               </tbody>
             </table>
           </div>

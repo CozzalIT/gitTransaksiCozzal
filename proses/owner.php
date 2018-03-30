@@ -94,7 +94,6 @@ elseif(isset($_POST['ownerPayment'])){
 	if($update_k == 'Success'){
 		$update_mk = $proses_k->addMutasiKas($kd_kas, $earnings, $jenis, $tanggal, $keterangan);
 	}
-
 	if(!empty($_POST['transaksi'])){
 		foreach($_POST['transaksi'] as $kd_transaksi){
 			$update_t = $proses_t->updateStatusTransaksi($kd_transaksi, $status);
