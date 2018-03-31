@@ -84,8 +84,11 @@ $pdf->Cell(189 ,10,'',0,1);
 //invoice contents
 $pdf->SetFont('Arial','',12);
 
-$pdf->Cell(90 ,5,'Price Per Night',1,0);
+$pdf->Cell(90 ,5,'Price Per Night for Weekday',1,0);
 $pdf->Cell(90 ,5,number_format($data->harga_sewa,0, ".", ".").' IDR',1,1);
+
+$pdf->Cell(90 ,5,'Price Per Night for Weekend',1,0);
+$pdf->Cell(90 ,5,number_format($data->harga_sewa_weekend,0, ".", ".").' IDR',1,1);
 
 $pdf->Cell(90 ,5,'No Of Guest',1,0);
 $pdf->Cell(90 ,5,$data->tamu.' Person',1,1);

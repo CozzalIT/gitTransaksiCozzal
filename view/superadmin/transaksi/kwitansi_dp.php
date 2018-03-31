@@ -1,9 +1,9 @@
 <?php
   require("../../../../config/database.php");
   require("../../../class/transaksi.php");
-
+  
   $thisPage = "Transaksi";
-
+ 
   include "../template/head.php";
 ?>
 <body>
@@ -87,8 +87,12 @@
                 <table class="table table-bordered table-invoice-full">
                   <tbody>
                     <tr>
-                      <td>Price Per Night</td>
+                      <td>Price Per Night for Weekday</td>
                       <td><strong><?php echo number_format($data->harga_sewa,0, ".", "."); ?> IDR</td>
+                    </tr>
+					<tr>
+                      <td>Price Per Night for Weekend</td>
+                      <td><strong><?php echo number_format($data->harga_sewa_weekend,0, ".", "."); ?> IDR</td>
                     </tr>
                     <tr>
                       <td>No Of Guest</td>
@@ -120,7 +124,7 @@
                   <tbody>
                     <tr>
                       <td class="msg-invoice" width="85%"><h4>Payment method: </h4>
-                        Via Bank <?php echo $data->nama_bank; ?>
+                        Via Bank <?php echo $data->sumber_dana; ?>
                     </tr>
                   </tbody>
                 </table>
