@@ -82,8 +82,12 @@ elseif(isset($_POST['ownerPayment'])){
 	$proses_tu = new TransaksiUmum($db);
 	$proses_o = new Owner($db);
 
-	$kd_op_t = implode("a",$_POST['transaksi']);
-	$kd_op_tu = implode("b",$_POST['transaksiUmum']);
+	if(isset($_POST['transaksi'])){
+		$kd_op_t = implode("a",$_POST['transaksi']);
+	}
+	if(isset($_POST['transaksiUmum'])){
+		$kd_op_tu = implode("b",$_POST['transaksiUmum']);
+	}
 	$kd_owner_payment = $kd_op_t."x".$kd_op_tu;
 
 	$show_k = $proses_k->editSaldo($kd_kas);
@@ -94,7 +98,6 @@ elseif(isset($_POST['ownerPayment'])){
 	if($update_k == 'Success'){
 		$update_mk = $proses_k->addMutasiKas($kd_kas, $earnings, $jenis, $tanggal, $keterangan);
 	}
-
 	if(!empty($_POST['transaksi'])){
 		foreach($_POST['transaksi'] as $kd_transaksi){
 			$update_t = $proses_t->updateStatusTransaksi($kd_transaksi, $status);
