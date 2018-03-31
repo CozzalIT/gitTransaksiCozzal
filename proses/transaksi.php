@@ -309,7 +309,7 @@ elseif(isset($_POST['updateTransaksi'])){
     }
   }
 
-  $unit = $update = $proses->updateUnit_kotor($kd_transaksi ,$kd_unit, $check_in, $check_out);
+  $unit = $proses->updateUnit_kotor($kd_transaksi ,$kd_unit, $check_in, $check_out);
   $add = $proses->updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $harga_sewa_we, $diskon, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total_tagihan, $sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday);
   if($add == "Success"){
   require("../class/ics_unit.php");

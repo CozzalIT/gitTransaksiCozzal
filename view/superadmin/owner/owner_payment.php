@@ -7,7 +7,6 @@
   require("../../../../config/database.php");
 
   $thisPage = "Owner Payment";
-
   include "../template/head.php";
 ?>
 <body>
@@ -41,7 +40,8 @@
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box" style="overflow-x:auto;">
-          <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+          <div class="widget-title">
+            <span class="icon"><i class="icon-th"></i></span>
             <ul class="nav nav-tabs">
               <li class="active"><a data-toggle="tab" href="#unpaid">Unpaid</a></li>
               <li><a data-toggle="tab" href="#paid">Paid</a></li>
@@ -85,7 +85,6 @@
                           $i = 1;
                 				  while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
                             if($data_t->status == 42){
-
                               if($data_t->hari_weekend == 0){
                                 $nominal = $data_t->hari_weekday*$owner_wd;
                               }elseif($data_t->hari_weekday == 0){
@@ -175,7 +174,6 @@
                         $i = 1;
                         while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
                           if($data_t->status == 41){
-
                             if($data_t->hari_weekend == 0){
                               $nominal = $data_t->hari_weekday*$owner_wd;
                             }elseif($data_t->hari_weekday == 0){
@@ -210,7 +208,6 @@
                           echo "
                             <tr class='gradeC'>
                               <td class='hide'>$i</td>
-
                               <td>T-Umum <strong>($data_tu->keterangan)</strong></td>
                               <td>$data_u->nama_apt</td>
                               <td>$data_u->no_unit</td>
