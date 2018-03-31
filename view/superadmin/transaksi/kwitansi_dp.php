@@ -104,7 +104,7 @@
                     </tr>
                     <tr>
                       <td>Total No of Stay</td>
-                      <td><strong><?php echo $data->hari; ?> Day</td>
+                      <td><strong><?php echo $data->hari; ?> Day (<?php echo $data->hari_weekend;?> Weekend, <?php echo $data->hari_weekday;?> Weekday)</td>
                     </tr>
                     <tr>
                       <td>Discount</td>

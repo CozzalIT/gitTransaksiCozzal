@@ -84,20 +84,23 @@ $pdf->Cell(189 ,10,'',0,1);
 //invoice contents
 $pdf->SetFont('Arial','',12);
 
+$pdf->Cell(90 ,5,'Price Per Night for Weekend',1,0);
+$pdf->Cell(90 ,5,number_format($data->harga_sewa_weekend,0, ".", ".").' IDR',1,1);
+
 $pdf->Cell(90 ,5,'Price Per Night for Weekday',1,0);
 $pdf->Cell(90 ,5,number_format($data->harga_sewa,0, ".", ".").' IDR',1,1);
 
-$pdf->Cell(90 ,5,'Price Per Night for Weekend',1,0);
-$pdf->Cell(90 ,5,number_format($data->harga_sewa_weekend,0, ".", ".").' IDR',1,1);
+$pdf->Cell(90 ,5,'Total No of Stay at Weekend',1,0);
+$pdf->Cell(90 ,5,$data->hari_weekend.' Nights',1,1);
+
+$pdf->Cell(90 ,5,'Total No of Stay at Weekday',1,0);
+$pdf->Cell(90 ,5,$data->hari_weekday.' Nights',1,1);
 
 $pdf->Cell(90 ,5,'No Of Guest',1,0);
 $pdf->Cell(90 ,5,$data->tamu.' Person',1,1);
 
 $pdf->Cell(90 ,5,'Ekstra Charge',1,0);
 $pdf->Cell(90 ,5,number_format($data->ekstra_charge,0, ".", ".").' IDR',1,1);
-
-$pdf->Cell(90 ,5,'Total No of Stay',1,0);
-$pdf->Cell(90 ,5,$data->hari.' Nights',1,1);
 
 $pdf->Cell(90 ,5,'Total Discount',1,0);
 $pdf->Cell(90 ,5,number_format($data->diskon,0, ".", ".").' IDR',1,1);
