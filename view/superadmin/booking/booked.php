@@ -54,8 +54,8 @@
           						  <td>$data->check_in</td>
                         <td>$data->check_out</td>
             						<td>
-            						  <a class='btn btn-success' href='transaksi.php?kd_reservasi=$data->kd_reservasi'>Transaksi</a>
-            						  <a class='btn btn-danger hapus' href='../../../proses/booking.php?delete_booking_rq=$data->kd_reservasi'>Hapus</a>
+            						  <a class='btn btn-success' href='#'>Transaksi</a>
+            						  <a class='btn btn-danger hapus' href='#'>Hapus</a>
             						</td>
           					  </tr>
                     ";

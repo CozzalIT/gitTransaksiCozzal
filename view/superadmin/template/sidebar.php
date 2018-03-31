@@ -19,7 +19,12 @@
     <li <?php if($thisPage == "Kas") echo "class='active'"; ?>><a href="../kas/kas.php"><i class="icon icon-credit-card"></i> <span>Kas Cozzal</span></a> </li>
     <li <?php if($thisPage == "Owner Payment") echo "class='active'"; ?>><a href="../owner/owner_payment.php"><i class="icon icon-inbox"></i> <span>Owner Payment</span></a> </li>
     <li <?php if($thisPage == "Account Management") echo "class='active'"; ?>><a href="../account/account_management.php"><i class="icon icon-sitemap"></i> <span>Account Management</span></a> </li>
-    <li <?php if($thisPage == "Booking Request") echo "class='active'"; ?>><a href="../booking/booking_request.php"><i class="icon icon-file"></i> <span>Booking Request</span></a> </li>
+    <li class="submenu <?php if($thisPage == "Booking Request") echo " active"; ?>"> <a href="#"><i class="icon icon-file"></i> <span>Booking List</span></a>
+      <ul>
+        <li><a href="../booking/booking_request.php">Booking Request</a></li>
+        <li><a href="../booking/booked.php">Booked</a></li>
+      </ul>
+    </li>
     <li <?php if($thisPage == "Listing Request") echo "class='active'"; ?>><a href="../unit/listing_request.php"><i class="icon icon-edit"></i> <span>Listing Request</span></a> </li>
     <li class="submenu <?php if($thisPage == "Unit") echo " active"; ?>"> <a href="#"><i class="icon icon-money"></i> <span>Data Unit</span></a>
       <ul>
