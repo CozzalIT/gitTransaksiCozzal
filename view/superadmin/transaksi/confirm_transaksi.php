@@ -30,8 +30,8 @@
               <thead>
                 <tr>
                   <th>No</th>
+                  <th>No Kwitansi</th>
                   <th>Penyewa</th>
-                  <th>Apartemen</th>
                   <th>Unit</th>
                   <th>Check In</th>
         				  <th>Check Out</th>
@@ -48,8 +48,8 @@
             					echo "
             					  <tr class='gradeC'>
             					    <td>$i</td>
+                          <td>COZ-".strtoupper(dechex($data->kd_transaksi))."</td>
             					    <td>$data->nama</td>
-            					    <td>$data->nama_apt</td>
               						<td>$data->no_unit</td>
               						<td>$data->check_in</td>
               						<td>$data->check_out</td>
