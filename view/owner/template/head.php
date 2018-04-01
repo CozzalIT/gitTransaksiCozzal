@@ -57,4 +57,5 @@
 <script src='../../../asset/fullcalendar/lib/jquery.min.js'></script>
 <script src='../../../asset/fullcalendar/fullcalendar.min.js'></script>
 <!-- //Full Calendar -->
+<link rel="shortcut icon" type="image/x-icon" href="http://transaksi.cozzal.com/asset/images/fav.png">
 </head>

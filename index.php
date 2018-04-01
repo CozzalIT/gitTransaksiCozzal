@@ -38,6 +38,7 @@
     <link rel="stylesheet" href="asset/css/matrix-login.css" />
     <link href="asset/font-awesome/css/font-awesome.css" rel="stylesheet" />
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+	<link rel="shortcut icon" type="image/x-icon" href="http://transaksi.cozzal.com/asset/images/fav.png">
   </head>
   <body>
     <div id="loginbox">
