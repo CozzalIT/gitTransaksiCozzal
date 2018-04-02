@@ -284,7 +284,7 @@
 			  <div class="control-group">
                 <label class="control-label">Total Harga Owner :</label>
                 <div class="controls">
-                  <input name="total_harga_owner" id="total" min="0"  type="number" />
+                  <input name="total_harga_owner" id="total_harga_owner" min="0"  type="number" />
                 </div>
               </div>
     			    <div class="control-group">
