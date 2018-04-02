@@ -48,7 +48,7 @@
                     $transaksi_umum = explode("b",$kode[1]);
                   }
 				  $proses_t = new Transaksi($db);
-                      $proses_u = new Unit($db);
+                  $proses_u = new Unit($db);
                         $i=1;
                         $total_in=0;
                         $subtotal_in=0;
@@ -126,7 +126,7 @@
 
 <!--Footer-part-->
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
+  <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
 </div>
 <!--end-Footer-part-->
 <script src="../../../asset/js/sweetalert.min.js"></script>
