@@ -1,6 +1,13 @@
 <?php
-  include "../template/head.php";
+  require("../../../class/transaksi.php");
+  require("../../../class/unit.php");
+  require("../../../class/owner.php");
+  require("../../../class/other.php");
+  require("../../../../config/database.php");
+
   $thisPage = "Dashboard";
+
+  include "../template/head.php";
 ?>
 <body>
 <?php
@@ -27,23 +34,92 @@
       </ul>
     </div>
 <!--End-Action boxes-->
-
-<!--Chart-box
     <div class="row-fluid">
+      <div class="span6">
       <div class="widget-box">
         <div class="widget-title bg_lg"><span class="icon"><i class="icon-signal"></i></span>
-          <h5>Site Analytics</h5>
+          <h5>Pendapatan dan Pengeluaran</h5>
         </div>
         <div class="widget-content" >
           <div class="row-fluid">
+            <!-- Chart -->
             <center>
-              <h1>Dashboard Under Constuction!</h1>
+              <div id="container" style="width: 100%; overflow-x: auto;">
+            		<canvas id="canvas"></canvas>
+            	</div>
+            	<script>
+            		var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            		var color = Chart.helpers.color;
+            		var barChartData = {
+            			labels: ['January', 'February', 'March', 'April'],
+                  datasets: [
+                    <?php
+                      $kd_owner = $_SESSION['pemilik'];
+                      $proses_u = new Unit($db);
+                      $other = new Other();
+                      $show_u = $proses_u->showUnitbyOwner($kd_owner);
+                      $bulan = date('m');
+                      
+                      $i = 1;
+                      while($data_u = $show_u->fetch(PDO::FETCH_OBJ)){
+                        $color = $other->selectColor($i);
+                        echo "
+                        {
+                            label: '$data_u->no_unit', //optional
+                            backgroundColor: color(window.chartColors.$color).alpha(0.5).rgbString(),
+                            borderColor: window.chartColors.$color,
+                            data: [6500, 5900, 8000, 8100] // y-axis
+                        },
+                        ";
+                        $i++;
+                      }
+                    ?>
+                ]
+            		};
+
+            		window.onload = function() {
+            			var ctx = document.getElementById('canvas').getContext('2d');
+            			window.myBar = new Chart(ctx, {
+            				type: 'bar',
+            				data: barChartData,
+            				options: {
+            					responsive: true,
+            					legend: {
+            						position: 'top',
+            					},
+            					title: {
+            						display: true,
+            						text: 'Nomor Unit'
+            					}
+            				}
+            			});
+            		};
+            	</script>
             </center>
+            <!-- //Chart -->
 		      </div>
         </div>
       </div>
     </div>
-End-Chart-box-->
+    <div class="span6">
+      <div class="widget-box">
+        <div class="widget-title bg_lg"><span class="icon"><i class="icon-signal"></i></span>
+          <h5>Data Booking</h5>
+        </div>
+        <div class="widget-content" >
+          <div class="row-fluid">
+            <!-- Chart -->
+            <center>
+              <div id="container" style="width: 100%; overflow-x: auto;">
+            		<canvas id="canvas"></canvas>
+            	</div>
+            </center>
+            <!-- //Chart -->
+		      </div>
+        </div>
+      </div>
+    </div>
+    </div>
     <hr/>
   </div>
 </div>
