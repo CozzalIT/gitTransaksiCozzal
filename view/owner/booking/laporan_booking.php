@@ -53,7 +53,11 @@
             				while($data1 = $show1->fetch(PDO::FETCH_OBJ)){
                       $check_in = $data1->check_in;
                       $check_out = $data1->check_out;
-                      $pendapatan = ($data1->hari_weekend * $data1->h_owner_we) + ($data1->hari_weekday * $data1->h_owner_wd);
+                      if($data1->total_harga_owner>0){
+						  $pendapatan = $data1->total_harga_owner;
+					  }else{
+						  $pendapatan = ($data1->hari_weekend * $data1->h_owner_we) + ($data1->hari_weekday * $data1->h_owner_wd);
+					  }
                       if($data1->status == '42' or $data1->status == '41'){
                         echo "
                     			<tr class='gradeC'>
@@ -105,9 +109,13 @@
                   while($data = $show->fetch(PDO::FETCH_OBJ)){
                     $kd_unit = $data->kd_unit;
                     $proses = new Owner($db);
-                    $show1 = $proses->showBooking($kd_unit);
+                    $showl = $proses->showBooking($kd_unit);
                     while($data1 = $show1->fetch(PDO::FETCH_OBJ)){
-                      $pendapatan = ($data1->hari_weekend * $data1->h_owner_we) + ($data1->hari_weekday * $data1->h_owner_wd);
+                      if($data1->total_harga_owner>0){
+						  $pendapatan = $data1->total_harga_owner;
+					  }else{
+						  $pendapatan = ($data1->hari_weekend * $data1->h_owner_we) + ($data1->hari_weekday * $data1->h_owner_wd);
+					  }
                       if($data1->status == '1'){
                         echo "
                           <tr class='gradeC'>

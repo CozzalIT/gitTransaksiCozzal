@@ -157,9 +157,18 @@
                             $data_t = $show_t->fetch(PDO::FETCH_OBJ);
                             $show_u = $proses_u->showHargaOwner($data_t->no_unit);
                             $data_u = $show_u->fetch(PDO::FETCH_OBJ);
-                            $weekend = $data_t->hari_weekend*$data_u->h_owner_we;
-                            $weekday = $data_t->hari_weekday*$data_u->h_owner_wd;
-                            $subtotal_in = $weekday+$weekend;
+							$subtest= $data_t ->total_harga_owner;
+							if($subtest>0){
+								
+								$subtotal_in = $data_t->total_harga_owner;
+								$weekend = 0;
+								$weekday = 0;
+							}else{
+
+								$weekend = $data_t->hari_weekend*$data_u->h_owner_we;
+								$weekday = $data_t->hari_weekday*$data_u->h_owner_wd;
+								$subtotal_in = $weekday+$weekend;
+							}
                             echo "
                               <tr>
                                 <td class='hide'><input type='text' name='transaksi[]' value='$kd_transaksi' /></td>
