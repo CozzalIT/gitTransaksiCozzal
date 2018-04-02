@@ -81,7 +81,7 @@
                               $data_t->check_in / $data_t->check_out
                             </center>
                           </td>
-                          <td>".number_format($data_t->$nominal, 0, ".", ".")." IDR</td>
+                          <td>".number_format($nominal, 0, ".", ".")." IDR</td>
                         </tr>
                       ";
                       $i++;
