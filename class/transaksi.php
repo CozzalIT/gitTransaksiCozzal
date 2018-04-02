@@ -7,10 +7,10 @@ class Transaksi {
   }
 
   //Proses Add
-  public function addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $check_in, $check_out, $hari_weekend, $hari_weekday, $hari, $harga_sewa, $harga_sewa_weekend, $tgl_transaksi, $diskon, $ekstra_charge, $kd_kas, $tamu, $kd_booking, $dp, $total_tagihan, $sisa_pelunasan, $status){
-    $sql = "INSERT INTO tb_transaksi (kd_penyewa, kd_apt, kd_unit, check_in, check_out, hari_weekend, hari_weekday, hari, harga_sewa, harga_sewa_weekend, tgl_transaksi, diskon, ekstra_charge, kd_kas, tamu, kd_booking, dp, total_tagihan, sisa_pelunasan, status)
+  public function addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $check_in, $check_out, $hari_weekend, $hari_weekday, $hari, $harga_sewa, $harga_sewa_weekend, $tgl_transaksi, $diskon, $ekstra_charge, $kd_kas, $tamu, $kd_booking, $dp, $total_tagihan, $total_harga_owner, $sisa_pelunasan, $status){
+    $sql = "INSERT INTO tb_transaksi (kd_penyewa, kd_apt, kd_unit, check_in, check_out, hari_weekend, hari_weekday, hari, harga_sewa, harga_sewa_weekend, tgl_transaksi, diskon, ekstra_charge, kd_kas, tamu, kd_booking, dp, total_tagihan, total_harga_owner, sisa_pelunasan, status)
     VALUES ('$kd_penyewa', '$kd_apt', '$kd_unit', '$check_in', '$check_out',
-      '$hari_weekend', '$hari_weekday', '$hari', '$harga_sewa', '$harga_sewa_weekend', '$tgl_transaksi', '$diskon', '$ekstra_charge', '$kd_kas', '$tamu', '$kd_booking', '$dp', '$total_tagihan', '$sisa_pelunasan', '$status')";
+      '$hari_weekend', '$hari_weekday', '$hari', '$harga_sewa', '$harga_sewa_weekend', '$tgl_transaksi', '$diskon', '$ekstra_charge', '$kd_kas', '$tamu', '$kd_booking', '$dp', '$total_tagihan', '$total_harga_owner, '$sisa_pelunasan', '$status')";
     $query = $this->db->query($sql);
     if(!$query){
       return "Failed";
@@ -69,7 +69,7 @@ class Transaksi {
   //Proses Show
   public function showTransaksi(){
     $sql = "SELECT
-      tb_transaksi.kd_transaksi, tb_transaksi.kd_penyewa, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.tamu, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.harga_sewa, tb_transaksi.harga_sewa_weekend, tb_transaksi.ekstra_charge, tb_transaksi.kd_booking, tb_transaksi.kd_kas, tb_transaksi.dp, tb_transaksi.total_tagihan, tb_transaksi.sisa_pelunasan, tb_transaksi.hari, tb_transaksi.tgl_transaksi, tb_transaksi.diskon, tb_transaksi.status, tb_transaksi.setlement_dp,
+      tb_transaksi.kd_transaksi, tb_transaksi.kd_penyewa, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.tamu, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.harga_sewa, tb_transaksi.harga_sewa_weekend, tb_transaksi.ekstra_charge, tb_transaksi.kd_booking, tb_transaksi.kd_kas, tb_transaksi.dp, tb_transaksi.total_tagihan, tb_transaksi.total_harga_owner, tb_transaksi.sisa_pelunasan, tb_transaksi.hari, tb_transaksi.tgl_transaksi, tb_transaksi.diskon, tb_transaksi.status, tb_transaksi.setlement_dp,
       tb_penyewa.kd_penyewa, tb_penyewa.nama,
       tb_apt.kd_apt, tb_apt.nama_apt,
       tb_kas.kd_kas, tb_kas.sumber_dana,
@@ -86,7 +86,7 @@ class Transaksi {
   public function showTransaksiByUnit($kd_unit){
     $sql = "SELECT
       tb_transaksi.kd_transaksi, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.harga_sewa, tb_transaksi.harga_sewa_weekend, tb_transaksi.tgl_transaksi, tb_transaksi.status,
-      tb_transaksi.hari_weekend, tb_transaksi.hari_weekday,
+      tb_transaksi.hari_weekend, tb_transaksi.hari_weekday, tb_transaksi.total_harga_owner,
       tb_apt.kd_apt, tb_apt.nama_apt,
       tb_unit.kd_unit, tb_unit.no_unit
         from tb_transaksi
@@ -153,7 +153,7 @@ class Transaksi {
 
   public function editTransaksi($kd_transaksi){
     $sql = "SELECT
-      tb_transaksi.kd_transaksi, tb_transaksi.kd_penyewa, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.tamu, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.harga_sewa, tb_transaksi.harga_sewa_weekend, tb_transaksi.ekstra_charge, tb_transaksi.kd_booking, tb_transaksi.kd_kas, tb_transaksi.dp, tb_transaksi.total_tagihan, tb_transaksi.sisa_pelunasan, tb_transaksi.pembayaran, tb_transaksi.tgl_transaksi, tb_transaksi.diskon,
+      tb_transaksi.kd_transaksi, tb_transaksi.kd_penyewa, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.tamu, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.harga_sewa, tb_transaksi.harga_sewa_weekend, tb_transaksi.ekstra_charge, tb_transaksi.kd_booking, tb_transaksi.kd_kas, tb_transaksi.dp, tb_transaksi.total_tagihan, tb_transaksi.total_harga_owner, tb_transaksi.sisa_pelunasan, tb_transaksi.pembayaran, tb_transaksi.tgl_transaksi, tb_transaksi.diskon,
       tb_transaksi.hari, tb_transaksi.hari_weekday, tb_transaksi.hari_weekend,
       tb_penyewa.kd_penyewa, tb_penyewa.nama, tb_penyewa.alamat, tb_penyewa.no_tlp, tb_penyewa.email, tb_penyewa.jenis_kelamin,
       tb_apt.kd_apt, tb_apt.nama_apt,
@@ -171,10 +171,10 @@ class Transaksi {
   }
 
   //Proses Update
-  public function updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $harga_sewa_we, $diskon, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total_tagihan, $sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday){
+  public function updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $harga_sewa_we, $diskon, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total_tagihan, $total_harga_owner, $sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday){
     $sql = "UPDATE tb_transaksi SET kd_apt ='$kd_apt', kd_unit='$kd_unit', tamu='$tamu', check_in='$check_in', check_out='$check_out',
     harga_sewa ='$harga_sewa', harga_sewa_weekend='$harga_sewa_we', diskon ='$diskon', ekstra_charge='$ekstra_charge', kd_booking='$kd_booking', kd_kas='$kd_kas', dp='$dp',
-    total_tagihan='$total_tagihan', sisa_pelunasan='$sisa_pelunasan', hari ='$hari', hari_weekend='$jumlah_weekend', hari_weekday='$jumlah_weekday' where kd_transaksi='$kd_transaksi'";
+    total_tagihan='$total_tagihan', total_harga_owner='$total_harga_owner', sisa_pelunasan='$sisa_pelunasan', hari ='$hari', hari_weekend='$jumlah_weekend', hari_weekday='$jumlah_weekday' where kd_transaksi='$kd_transaksi'";
     $query = $this->db->query($sql);
     if(!$query){
       return "Failed";
