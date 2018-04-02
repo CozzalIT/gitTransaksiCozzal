@@ -43,11 +43,8 @@
 <!-- //Slider Image -->
 
 <!-- Chart Js -->
-<script src='../../../asset/chart/dist/Chart.bundle.js'></script>
-<script src='../../../asset/chart/dist/Chart.bundle.min.js'></script>
-<script src='../../../asset/chart/dist/Chart.js'></script>
-<script src='../../../asset/chart/dist/Chart.min.js'></script>
-<script src='../../../asset/chart/utils.js'></script>
+<script src="../../../asset/chart/Chart.bundle.js"></script>
+<script src="../../../asset/chart/utils.js"></script>
 <!-- //Chart Js -->
 
 <!-- Full Calendar -->
@@ -58,4 +55,15 @@
 <script src='../../../asset/fullcalendar/fullcalendar.min.js'></script>
 <!-- //Full Calendar -->
 <link rel="shortcut icon" type="image/x-icon" href="http://transaksi.cozzal.com/asset/images/fav.png">
+
+<!-- Canvas Chart -->
+<style>
+  canvas {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
+</style>
+<!-- //Canvas Chart -->
+
 </head>
