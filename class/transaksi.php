@@ -83,6 +83,21 @@ class Transaksi {
     return $query;
   }
 
+ public function showTransaksiC(){
+    $sql = "SELECT
+      tb_transaksi.kd_transaksi, tb_transaksi.kd_penyewa, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.tamu, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.harga_sewa, tb_transaksi.harga_sewa_weekend, tb_transaksi.ekstra_charge, tb_transaksi.kd_booking, tb_transaksi.kd_kas, tb_transaksi.dp, tb_transaksi.total_tagihan, tb_transaksi.total_harga_owner, tb_transaksi.sisa_pelunasan, tb_transaksi.hari, tb_transaksi.tgl_transaksi, tb_transaksi.diskon, tb_transaksi.status, tb_transaksi.setlement_dp,
+      tb_penyewa.kd_penyewa, tb_penyewa.nama,
+      tb_apt.kd_apt, tb_apt.nama_apt,
+      tb_kas.kd_kas, tb_kas.sumber_dana,
+      tb_unit.kd_unit, tb_unit.no_unit
+        from tb_transaksi
+        INNER JOIN tb_penyewa ON tb_penyewa.kd_penyewa = tb_transaksi.kd_penyewa
+        INNER JOIN tb_apt ON tb_apt.kd_apt = tb_transaksi.kd_apt
+        INNER JOIN tb_kas ON tb_kas.kd_kas = tb_transaksi.kd_kas
+        INNER JOIN tb_unit ON tb_unit.kd_unit = tb_transaksi.kd_unit ORDER BY tb_transaksi.check_in DESC";
+    $query = $this->db->query($sql);
+    return $query;
+  } 
   public function showTransaksiByUnit($kd_unit){
     $sql = "SELECT
       tb_transaksi.kd_transaksi, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.harga_sewa, tb_transaksi.harga_sewa_weekend, tb_transaksi.tgl_transaksi, tb_transaksi.status,
