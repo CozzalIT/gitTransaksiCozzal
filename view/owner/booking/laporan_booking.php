@@ -35,7 +35,7 @@
                   <th>Apartemen</th>
                   <th>Unit</th>
                   <th>Check In</th>
-        				  <th>Check Out</th>
+        		  <th>Check Out</th>
                   <th>Pendapatan</th>
                   <th>Action</th>
                 </tr>
@@ -102,15 +102,18 @@
                 </tr>
               </thead>
               <tbody>
-                <?php
+                <<?php
                   $Proses = new Unit($db);
                   $show = $Proses->showUnitbyOwner($_SESSION['pemilik']);
                   $i = 1;
+                  $j = 0;
                   while($data = $show->fetch(PDO::FETCH_OBJ)){
-                    $kd_unit = $data->kd_unit;
+                    $kd_unit[$j] = $data->kd_unit;
                     $proses = new Owner($db);
-                    $showl = $proses->showBooking($kd_unit);
-                    while($data1 = $show1->fetch(PDO::FETCH_OBJ)){
+                    $show1 = $proses->showBooking($kd_unit[$j]);
+            				while($data1 = $show1->fetch(PDO::FETCH_OBJ)){
+                      $check_in = $data1->check_in;
+                      $check_out = $data1->check_out;
                       if($data1->total_harga_owner>0){
 						  $pendapatan = $data1->total_harga_owner;
 					  }else{
