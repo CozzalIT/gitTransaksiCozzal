@@ -281,17 +281,10 @@
                   <input name="total" id="total" min="0"  type="number" />
                 </div>
               </div>
-<<<<<<< HEAD
-			        <div class="control-group">
-                <label class="control-label">Total Harga Owner :</label>
-                <div class="controls">
-                  <input name="total_harga_owner" id="total_harga_owner" min="0"  type="number" />
-=======
-			  <div class="control-group" id="total_harga_owner-C">
+			        <div class="control-group" id="total_harga_owner-C">
                 <label class="control-label">Total Harga Owner :</label>
                 <div class="controls">
                   <input name="total_harga_owner" min="0" id="total_harga_owner"  type="number" />
->>>>>>> 0dde4b0cc403e478b2db07b2bfc4125e3fcb0f8b
                 </div>
               </div>
     			    <div class="control-group">
