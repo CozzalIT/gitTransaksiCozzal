@@ -8,7 +8,7 @@ class TransaksiUmum {
 
   public function showTransaksiUmum(){
     $sql = "SELECT * FROM tb_transaksi_umum
-    INNER JOIN tb_kas ON tb_kas.kd_kas = tb_transaksi_umum.kd_kas";
+    INNER JOIN tb_kas ON tb_kas.kd_kas = tb_transaksi_umum.kd_kas ORDER BY tb_transaksi_umum.kd_transaksi_umum DESC";
     $query = $this->db->query($sql);
     return $query;
   }

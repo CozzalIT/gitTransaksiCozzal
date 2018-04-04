@@ -47,12 +47,29 @@
                     $transaksi = explode("a",$kode[0]);
                     $transaksi_umum = explode("b",$kode[1]);
                   }
-                  $i = 1;
-                  if($transaksi[0] <> null){
-                    foreach($transaksi as $kd_transaksi){
-                      $proses_t = new Transaksi($db);
-                      $show_t = $proses_t->editTransaksi($kd_transaksi);
-                      $data_t = $show_t->fetch(PDO::FETCH_OBJ);
+				  $proses_t = new Transaksi($db);
+                  $proses_u = new Unit($db);
+                        $i=1;
+                        $total_in=0;
+                        $subtotal_in=0;
+                        foreach($transaksi as $kd_transaksi) {
+                          if($kd_transaksi <> 'dummy'){
+                            $show_t = $proses_t->editTransaksi($kd_transaksi);
+                            $data_t = $show_t->fetch(PDO::FETCH_OBJ);
+                            $show_u = $proses_u->showHargaOwner($data_t->no_unit);
+           
+							$subtest= $data_t ->total_harga_owner;
+							if($subtest>0){
+								
+								$nominal = $data_t->total_harga_owner;
+								$weekend = 0;
+								$weekday = 0;
+							}else{
+
+								$weekend = $data_t->hari_weekend*$data_u->h_owner_we;
+								$weekday = $data_t->hari_weekday*$data_u->h_owner_wd;
+								$nominal = $weekday+$weekend;
+							}
                       echo "
                         <tr class='gradeC'>
                           <td>$i</td>
@@ -64,7 +81,7 @@
                               $data_t->check_in / $data_t->check_out
                             </center>
                           </td>
-                          <td>".number_format($data_t->total_tagihan, 0, ".", ".")." IDR</td>
+                          <td>".number_format($nominal, 0, ".", ".")." IDR</td>
                         </tr>
                       ";
                       $i++;
@@ -97,6 +114,7 @@
                     }
                   }
                 ?>
+				
               </tbody>
             </table>
           </div>
@@ -108,7 +126,7 @@
 
 <!--Footer-part-->
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
+  <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
 </div>
 <!--end-Footer-part-->
 <script src="../../../asset/js/sweetalert.min.js"></script>
