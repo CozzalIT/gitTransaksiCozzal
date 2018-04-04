@@ -34,6 +34,7 @@
       </ul>
     </div>
 <!--End-Action boxes-->
+
     <div class="row-fluid">
       <div class="span6">
       <div class="widget-box">
@@ -59,7 +60,9 @@
                       $other = new Other();
                       $show_u = $proses_u->showUnitbyOwner($kd_owner);
                       $bulan = date('m');
-                      
+                      for($i=0;$i<=3;$i++) {
+                        //$listBulan
+                      }
                       $i = 1;
                       while($data_u = $show_u->fetch(PDO::FETCH_OBJ)){
                         $color = $other->selectColor($i);

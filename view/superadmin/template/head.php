@@ -37,10 +37,10 @@
 <script src="../../../asset/js/jquery.min.js" type="text/javascript"></script>
 <script src="../../../asset/js/config.js" type="text/javascript"></script>
 
-<!-- Slider Image -->
-<link href="../../../asset/js/js-image-slider.css" rel="stylesheet" type="text/css" />
-<script src="../../../asset/js/js-image-slider.js" type="text/javascript"></script>
-<!-- //Slider Image -->
+<!-- Chart Js -->
+<script src="../../../asset/chart/Chart.bundle.js"></script>
+<script src="../../../asset/chart/utils.js"></script>
+<!-- //Chart Js -->
 
 <!-- Chart Js -->
 <script src="../../../asset/js/Chart.bundle.js"></script>

@@ -117,6 +117,17 @@ class Transaksi {
     return $query;
   }
 
+  public function showSumMonth($noBulan, $tahun, $status){
+    if($status==41 OR $status==2){
+      $status2=$status+1;
+    }else{
+      $status2=$status;
+    }
+    $sql = "SELECT check_in, check_out, hari FROM tb_transaksi WHERE MONTH(check_in)='$noBulan' AND YEAR(check_in)='$tahun' AND (status='$status' OR status='$status2') ";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
   public function showTransaksi_cek($CI,$CO,$kd_unit){
    $result = $this->db->prepare("SELECT * from tb_unit_kotor where ((check_in<='$CI' and check_out>='$CO')
     or (check_in>='$CI' and check_in<'$CO')
