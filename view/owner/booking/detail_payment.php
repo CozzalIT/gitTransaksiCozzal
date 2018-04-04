@@ -18,7 +18,7 @@
 <div id="content">
   <div id="content-header">
    <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Laporan Transaksi</a></div>
-    <a href="owner_payment.php" class="btn btn-success btn-add"> Owner Payment</a>
+    <a href="pendapatan.php" class="btn btn-success btn-add"> List Pendapatan</a>
   </div>
   <div class="container-fluid">
     <hr>
