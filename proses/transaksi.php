@@ -3,6 +3,7 @@ require("../../config/database.php");
 require("../class/transaksi.php");
 require("../class/kas.php");
 require("../class/penyewa.php");
+require("../class/unit.php");
 
 date_default_timezone_set('Asia/Jakarta');
 session_start();
