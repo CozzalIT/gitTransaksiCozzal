@@ -3,6 +3,7 @@ require("../../config/database.php");
 require("../class/transaksi.php");
 require("../class/kas.php");
 require("../class/penyewa.php");
+require("../class/unit.php");
 
 date_default_timezone_set('Asia/Jakarta');
 session_start();
@@ -58,6 +59,7 @@ if(isset($_POST['addTransaksi']) || isset($_POST["Transaksi_booked"])){
 	$kd_kas = $_POST['kas'];
 	$dp = $_POST['dp'];
   $total  = $_POST['total'];
+  $total_harga_owner = $_POST['total_harga_owner'];
   $sisa_pelunasan = $total - $dp;
   $hari = $_POST['jumhari'];
   $tgl_transaksi = date('y-m-d H:i:s');
@@ -70,7 +72,7 @@ if(isset($_POST['addTransaksi']) || isset($_POST["Transaksi_booked"])){
     $kd_unit = $kode[0];
   }
 
-  if($week>5){ //jika dimuai dari weekend
+  if($week>5){ //jika dimulai dari weekend
     $week_kind = explode("/",startinweekend($hari, $week, 0, 0));
     $jumlah_weekday = $week_kind[0]; $jumlah_weekend = $week_kind[1];
   }else{ //jika dimulai dri weekday
@@ -101,7 +103,7 @@ if(isset($_POST['addTransaksi']) || isset($_POST["Transaksi_booked"])){
   } else {
     $proses->addUnit_kotor($kd_unit, $check_in, $check_out);
   }
-  
+
   if($add_transaksi == "Success"){
 
     $show = $proses->showMaxTransaksi();
@@ -158,13 +160,14 @@ elseif(isset($_POST['moveTransaksi'])){
   $kd_kas = $_POST['kas'];
   $dp = $_POST['dp'];
   $total = $_POST['total'];
+  $total_harga_owner =  $_POST['total_harga_owner'];
   $sisa_pelunasan = $total - $dp;
   $hari = $_POST['jumhari'];
   $tgl_transaksi = date('y-m-d');
   if($total<$harga_sewa_asli*$hari){
      $diskon = $harga_sewa_asli*$hari-$total;
   }
-  $add = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total, $sisa_pelunasan, $hari, $tgl_transaksi, $diskon);
+  $add = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total,$total_harga_owner, $sisa_pelunasan, $hari, $tgl_transaksi, $diskon);
   if($add == "Success"){
     $delete = $proses->deleteReservasi($kd_reservasi);
     $add2 = $proses->addUnit_kotor($kd_unit, $check_in, $check_out);
@@ -243,6 +246,7 @@ elseif(isset($_POST['updateTransaksi'])){
   $kd_kas = $_POST['kas'];
   $dp = $_POST['dp'];
   $total_tagihan = $_POST['total'];
+  $total_harga_owner = $_POST['total_harga_owner'];
   $pembayaran = $_POST['pembayaran'];
   $sisa_pelunasan = $total_tagihan - $dp - $pembayaran;
   $hari = $_POST['jumhari'];
@@ -318,7 +322,7 @@ elseif(isset($_POST['updateTransaksi'])){
   }
 
   $unit = $proses->updateUnit_kotor($kd_transaksi ,$kd_unit, $check_in, $check_out);
-  $add = $proses->updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $harga_sewa_we, $diskon, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total_tagihan, $sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday);
+  $add = $proses->updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $harga_sewa_we, $diskon, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total_tagihan, $total_harga_owner,$sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday);
   if($add == "Success"){
   require("../class/ics_unit.php");
   $ics = new Ics_unit($db);

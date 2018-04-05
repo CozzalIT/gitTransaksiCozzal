@@ -26,6 +26,7 @@ function updateselisih(form)
 
 }
 
+
 function nilaitanggal(t, b)
 {
 	t.setDate(t.getDate()+b);
@@ -61,6 +62,8 @@ function biaya(form)
 {
 	var week = new Date(form.check_in.value).getDay(); 
 	var we =0; var hari= Number(form.jumhari.value);
+	if(hari>5) {$("#total_harga_owner").val("0");$("#total_harga_owner-C").show();} 
+	else {$("#total_harga_owner").val("0");$("#total_harga_owner-C").hide();};
 	var a= form.unit.value; var wd; week++;
 	if(week>5){ //jika dimuai dari weekend
 		startinweekend(hari, week, 0, 0);
@@ -85,6 +88,9 @@ function keepvalid(form){
 	var a = form.check_in.value;
 	var b = new Date(a);
 	form.check_out.value = nilaitanggal(b,1);
+	var hari= Number(form.jumhari.value);
+	if(hari>5) {$("#total_harga_owner").val("0");$("#total_harga_owner-C").show();} 
+	else {$("#total_harga_owner").val("0");$("#total_harga_owner-C").hide();};
 	updateselisih(form);
 	ECH(form); biaya(form); 
 }
@@ -92,6 +98,9 @@ function keepvalid(form){
 function keepvalid2(form){
 	if (form.check_in.value!="")
 	{
+		var hari= Number(form.jumhari.value);
+		if(hari>5) {$("#total_harga_owner").val("0");$("#total_harga_owner-C").show();} 
+		else {$("#total_harga_owner").val("0");$("#total_harga_owner-C").hide();};
 		updateselisih(form); biaya(form);
 	}
 	else
@@ -143,6 +152,9 @@ function tambah(form)
 {
 	var d = new Date(form.check_in.value);
 	var h = nilaitanggal(d,Number(form.jumhari.value));
+	var hari= Number(form.jumhari.value);
+	if(hari>5) {$("#total_harga_owner").val("0");$("#total_harga_owner-C").show();} 
+	else {$("#total_harga_owner").val("0");$("#total_harga_owner-C").hide();};
     form.check_out.value=h; biaya(form); hasil(form);
 }
 

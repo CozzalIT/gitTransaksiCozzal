@@ -16,7 +16,7 @@
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Laporan Booking</a></div>
-    <a class="btn btn-success btn-add"><i class="icon-check"></i> Total Pendapatan</a>
+    <a href="pendapatan.php" class="btn btn-success btn-add"><i class="icon-check"></i> Total Pendapatan</a>
   </div>
   <div class="container-fluid">
     <hr>
@@ -35,7 +35,7 @@
                   <th>Apartemen</th>
                   <th>Unit</th>
                   <th>Check In</th>
-        				  <th>Check Out</th>
+        		  <th>Check Out</th>
                   <th>Pendapatan</th>
                   <th>Action</th>
                 </tr>
@@ -53,7 +53,11 @@
             				while($data1 = $show1->fetch(PDO::FETCH_OBJ)){
                       $check_in = $data1->check_in;
                       $check_out = $data1->check_out;
-                      $pendapatan = ($data1->hari_weekend * $data1->h_owner_we) + ($data1->hari_weekday * $data1->h_owner_wd);
+                      if($data1->total_harga_owner>0){
+          						  $pendapatan = $data1->total_harga_owner;
+          					  }else{
+          						  $pendapatan = ($data1->hari_weekend * $data1->h_owner_we) + ($data1->hari_weekday * $data1->h_owner_wd);
+          					  }
                       if($data1->status == '42' or $data1->status == '41'){
                         echo "
                     			<tr class='gradeC'>
@@ -98,16 +102,23 @@
                 </tr>
               </thead>
               <tbody>
-                <?php
+                <<?php
                   $Proses = new Unit($db);
                   $show = $Proses->showUnitbyOwner($_SESSION['pemilik']);
                   $i = 1;
+                  $j = 0;
                   while($data = $show->fetch(PDO::FETCH_OBJ)){
-                    $kd_unit = $data->kd_unit;
+                    $kd_unit[$j] = $data->kd_unit;
                     $proses = new Owner($db);
-                    $show1 = $proses->showBooking($kd_unit);
-                    while($data1 = $show1->fetch(PDO::FETCH_OBJ)){
-                      $pendapatan = ($data1->hari_weekend * $data1->h_owner_we) + ($data1->hari_weekday * $data1->h_owner_wd);
+                    $show1 = $proses->showBooking($kd_unit[$j]);
+            				while($data1 = $show1->fetch(PDO::FETCH_OBJ)){
+                      $check_in = $data1->check_in;
+                      $check_out = $data1->check_out;
+                      if($data1->total_harga_owner>0){
+						  $pendapatan = $data1->total_harga_owner;
+					  }else{
+						  $pendapatan = ($data1->hari_weekend * $data1->h_owner_we) + ($data1->hari_weekday * $data1->h_owner_wd);
+					  }
                       if($data1->status == '1'){
                         echo "
                           <tr class='gradeC'>

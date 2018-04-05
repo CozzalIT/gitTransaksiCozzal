@@ -20,7 +20,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<title>Matrix Admin</title>
+<title>Cozzal Admin</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="../../../asset/css/bootstrap.min.css" />
@@ -44,4 +44,5 @@
 <script src='../../../asset/fullcalendar/lib/jquery.min.js'></script>
 <script src='../../../asset/fullcalendar/fullcalendar.min.js'></script>
 <!-- //Full Calendar -->
+<link rel="shortcut icon" type="image/x-icon" href="http://transaksi.cozzal.com/asset/images/fav.png">
 </head>

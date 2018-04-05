@@ -42,7 +42,7 @@ class Booking {
   }
 
   public function showRequestBook_byId($kd_reservasi){
-    $sql = "SELECT * from tb_reservasi WHERE kd_reservasi='$kd_reservasi'";
+    $sql = "SELECT * from tb_reservasi WHERE kd_reservasi='$kd_reservasi' order by '$check_in' desc";
     $query = $this->db->query($sql);
     return $query;
   }

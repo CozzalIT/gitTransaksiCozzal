@@ -191,7 +191,7 @@
             </div>
             <div class="collapse accordion-body" id="collapseGFour">
     			    <div class="control-group">
-      				  <label class="control-label">Check In :  <?$tgl=date('d-m-Y');echo $tgl;?></label>
+      				  <label class="control-label">Check In : </label>
       				  <div class="controls">
       				    <input name="check_in" id="check_in" type="date" onchange="keepvalid(this.form)"/>
       				  </div>
@@ -279,6 +279,12 @@
                 <label class="control-label">Total Biaya :</label>
                 <div class="controls">
                   <input name="total" id="total" min="0"  type="number" />
+                </div>
+              </div>
+			        <div class="control-group" id="total_harga_owner-C">
+                <label class="control-label">Total Harga Owner :</label>
+                <div class="controls">
+                  <input name="total_harga_owner" min="0" id="total_harga_owner"  type="number" />
                 </div>
               </div>
     			    <div class="control-group">
@@ -404,7 +410,7 @@
 
 <!--Footer-part-->
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
+  <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
 </div>
 <!--end-Footer-part-->
 <script src="../../../asset/js/jquery.min.js"></script>

@@ -66,7 +66,7 @@
                             <center>
                               <a class='btn btn-success' id='pembayaran' name='pembayaran' href='laporan_transaksi.php?pembayaran=$data->kd_transaksi'>Bayar</a>
                 						  <a class='btn btn-primary' href='edit.php?edit_transaksi=$data->kd_transaksi'>Edit</a>
-                						  <a class='btn btn-warning' href='../../../proses/transaksi.php?addCancel=$data->kd_transaksi&unitCancel=$data->kd_unit' style='color:black;'>Cancel</a>
+                						  <a class='btn btn-warning cancel' href='../../../proses/transaksi.php?addCancel=$data->kd_transaksi&unitCancel=$data->kd_unit' style='color:black;'>Cancel</a>
                             </center>
                           </td>
             					  </tr>
@@ -311,7 +311,7 @@ if(isset($_GET['pembayaran'])){
 
 <!--Footer-part-->
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
+  <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
 </div>
 <!--end-Footer-part-->
 <script src="../../../asset/js/sweetalert.min.js"></script>

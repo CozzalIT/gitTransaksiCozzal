@@ -1,6 +1,6 @@
 <?php
 //  function customError(){error:
-//  echo '<div class="hide">Error</div>'; 
+//  echo '<div class="hide">Error</div>';
 //  }
   //set error handler
 //  set_error_handler("customError");
@@ -14,7 +14,7 @@
   		$username = $_SESSION['username'];
   	}else{
   		header('location:../../'.$_SESSION['hak_akses'].'/home/home.php');
-  	}  
+  	}
   }
 ?>
 <!DOCTYPE html>
@@ -42,6 +42,11 @@
 <script src="../../../asset/js/js-image-slider.js" type="text/javascript"></script>
 <!-- //Slider Image -->
 
+<!-- Chart Js -->
+<script src="../../../asset/chart/Chart.bundle.js"></script>
+<script src="../../../asset/chart/utils.js"></script>
+<!-- //Chart Js -->
+
 <!-- Full Calendar -->
 <link href='../../../asset/fullcalendar/fullcalendar.min.css' rel='stylesheet' />
 <link href='../../../asset/fullcalendar/fullcalendar.print.min.css' rel='stylesheet' media='print' />
@@ -49,4 +54,16 @@
 <script src='../../../asset/fullcalendar/lib/jquery.min.js'></script>
 <script src='../../../asset/fullcalendar/fullcalendar.min.js'></script>
 <!-- //Full Calendar -->
+<link rel="shortcut icon" type="image/x-icon" href="http://transaksi.cozzal.com/asset/images/fav.png">
+
+<!-- Canvas Chart -->
+<style>
+  canvas {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
+</style>
+<!-- //Canvas Chart -->
+
 </head>
