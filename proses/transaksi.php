@@ -44,11 +44,9 @@ function startinweekend($hari, $week, $jumlah_weekday, $jumlah_weekend){
 }
 
 //Tambah Transaksi
-if(isset($_POST['addTransaksi'])){
+if(isset($_POST['addTransaksi']) || isset($_POST["Transaksi_booked"])){
 	$kd_penyewa = $_POST['kd_penyewa'];
 	$kd_apt = $_POST['apartemen'];
-	$kode = explode("+",$_POST['unit']);
-	$kd_unit = $kode[0];
 	$tamu = $_POST['tamu'];
 	$check_in = $_POST['check_in'];
 	$check_out = $_POST['check_out'];
@@ -65,6 +63,12 @@ if(isset($_POST['addTransaksi'])){
   $tgl_transaksi = date('y-m-d H:i:s');
   $tanggal = date('y-m-d H:i:s');
   $week = date("w",strtotime($check_in))+1;
+  if(isset($_POST["Transaksi_booked"])){
+    $kd_unit = $_POST['unit'];
+  } else {
+    $kode = explode("+",$_POST['unit']);
+    $kd_unit = $kode[0];
+  }
 
   if($week>5){ //jika dimuai dari weekend
     $week_kind = explode("/",startinweekend($hari, $week, 0, 0));
@@ -91,10 +95,14 @@ if(isset($_POST['addTransaksi'])){
   $proses2 = new Kas($db);
 
   $add_transaksi = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $check_in, $check_out, $jumlah_weekend, $jumlah_weekday, $hari, $harga_sewa, $harga_sewa_we, $tgl_transaksi, $diskon, $ekstra_charge, $kd_kas, $tamu, $kd_booking, $dp, $total, $sisa_pelunasan, 1);
+  
+  if(isset($_POST["Transaksi_booked"])){
+    $proses->deleteBooked_list($_POST["kd_booked"], $check_in, $kd_unit);
+  } else {
+    $proses->addUnit_kotor($kd_unit, $check_in, $check_out);
+  }
+  
   if($add_transaksi == "Success"){
-//    if(isNew($check_in)){
-      $add2 = $proses->addUnit_kotor($kd_unit, $check_in, $check_out);
-//    }
 
     $show = $proses->showMaxTransaksi();
     $data = $show->fetch(PDO::FETCH_OBJ);

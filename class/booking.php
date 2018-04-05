@@ -26,7 +26,7 @@ class Booking {
 
   public function showBooked_airbnb(){
     $sql = "SELECT tb_booked.kd_booked, tb_booked.penyewa, tb_booked.check_in, tb_booked.no_tlp,
-    tb_booked.check_out, tb_unit.no_unit, tb_apt.nama_apt FROM tb_booked
+    tb_booked.check_out, tb_booked.status, tb_unit.no_unit, tb_unit.kd_unit, tb_apt.nama_apt FROM tb_booked
     INNER JOIN tb_apt ON tb_apt.kd_apt = tb_booked.kd_apt
     INNER JOIN tb_unit ON tb_unit.kd_unit = tb_booked.kd_unit";
     $query = $this->db->query($sql);

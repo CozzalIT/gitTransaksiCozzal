@@ -7,7 +7,7 @@ function startinweekend(hari, week, jumlah_weekday, jumlah_weekend){
     we = 8-week; hari = wd-5; 
     if(hari==1) we=1; wd=hari-we; 
     jumlah_weekend = jumlah_weekend+we; 
-    if(wd>5) jumlah_weekday = jumlah_weekday+55; else jumlah_weekday = jumlah_weekday+wd;     
+    if(wd>5) jumlah_weekday = jumlah_weekday+5; else jumlah_weekday = jumlah_weekday+wd;     
   }
   we_G = jumlah_weekend; wd_G = jumlah_weekday;
 }
