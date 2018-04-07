@@ -150,7 +150,7 @@ class Transaksi {
   }
 
   public function showSumSewa($noBulan, $tahun){
-    $sql = "SELECT  FROM"
+    //$sql = "SELECT  FROM"
   }
 
   public function showTransaksi_cek($CI,$CO,$kd_unit){
