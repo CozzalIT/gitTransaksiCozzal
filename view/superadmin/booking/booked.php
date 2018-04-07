@@ -44,7 +44,12 @@
         				  $show = $Proses->showBooked_airbnb();
                   $i = 1;
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-          					echo "
+          					$button = ""; 
+                    if($data->status!='0'){
+                      $button .= "<a class='btn btn-success' href='booked_penyewa.php?kd_booked=$data->kd_booked'>Transaksi</a>";
+                    }
+                    $button .= "<a class='btn btn-danger hapus' href='../../../proses/booked.php?hapus=$data->kd_booked&unit=$data->kd_unit&ci=$data->check_in'>Hapus</a>";
+                    echo "
           					  <tr class=gradeC'>
           					    <td>$i</td>
           					    <td>$data->penyewa</td>
@@ -53,10 +58,7 @@
                         <td>$data->no_unit</td>
           						  <td>$data->check_in</td>
                         <td>$data->check_out</td>
-            						<td>
-            						  <a class='btn btn-success' href='#'>Transaksi</a>
-            						  <a class='btn btn-danger hapus' href='#'>Hapus</a>
-            						</td>
+            						<td>$button</td>
           					  </tr>
                     ";
                     $i++;

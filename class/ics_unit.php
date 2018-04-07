@@ -6,12 +6,23 @@ class Ics_unit {
     $this->db = $database;
   }
 
+  public function cancelBooked($kd_unit, $check_in){
+    $sql = "UPDATE tb_booked SET status='0' WHERE kd_unit='$kd_unit' AND check_in='$check_in'";
+    $query = $this->db->query($sql);    
+    $sql = "DELETE FROM tb_mod_calendar WHERE kd_unit='$kd_unit' AND start_date='$check_in'";
+    $query = $this->db->query($sql);
+    $sql = "DELETE FROM tb_unit_kotor WHERE kd_unit='$kd_unit' AND check_in='$check_in'";
+    $query = $this->db->query($sql);    
+  }
+
   public function createBooked($kd_unit, $kd_apt, $penyewa, $no_tlp, $check_in, $check_out){
     $sql = "INSERT into tb_booked VALUES (null, '$kd_unit', '$kd_apt', '$penyewa', '$no_tlp', 
-    '$check_in','$check_out')";
-    $sql2 = "INSERT INTO tb_mod_calendar VALUES(null, '$kd_unit', '$check_in', '$check_out', 'Booked by Airbnb', '3')";
-    $query = $this->db->query($sql);
-    $query = $this->db->query($sql2);
+    '$check_in','$check_out', '1')";
+    $this->db->query($sql);
+    $sql = "INSERT INTO tb_mod_calendar VALUES(null, '$kd_unit', '$check_in', '$check_out', 'Booked by Airbnb', '3')";
+    $this->db->query($sql);
+    $sql = "INSERT INTO tb_unit_kotor VALUES('$kd_unit', '$check_in', '$check_out', null)";
+    $this->db->query($sql);
   }
 
   public function showRecent_trx($kd_unit, $sekarang){
@@ -23,7 +34,7 @@ class Ics_unit {
 
   public function showRecent_booked($kd_unit, $sekarang){
     $sql = "SELECT check_in FROM tb_booked WHERE kd_unit='$kd_unit' 
-    AND (check_in>='$sekarang' OR check_out>='$sekarang')";
+    AND (check_in>='$sekarang' OR check_out>='$sekarang') AND status!='0'";
     $query = $this->db->query($sql);
     return $query;
   }
