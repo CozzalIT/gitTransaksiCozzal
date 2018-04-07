@@ -50,6 +50,8 @@ function tampilkanharga(kd_unit, check_in, check_out){
 		var hari = selisih_hari(check_in, check_out);
 		var wd,we =0; week++;
 		$("#jumhari").val(hari);
+		if(hari>5) {$("#total_harga_owner").val("0");$("#total_harga_owner-C").show();} 
+		else {$("#total_harga_owner").val("0");$("#total_harga_owner-C").hide();};
 		if(week>5){ //jika dimuai dari weekend
 			startinweekend(hari, week, 0, 0);
 		}
