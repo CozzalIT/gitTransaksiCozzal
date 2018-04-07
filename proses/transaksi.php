@@ -1,9 +1,10 @@
 <?php
 require("../../config/database.php");
 require("../class/transaksi.php");
+require("../class/unit.php");
 require("../class/kas.php");
 require("../class/penyewa.php");
-require("../class/unit.php");
+
 
 date_default_timezone_set('Asia/Jakarta');
 session_start();
@@ -72,6 +73,12 @@ if(isset($_POST['addTransaksi']) || isset($_POST["Transaksi_booked"])){
     $kd_unit = $kode[0];
   }
 
+  $proses_u = new Unit($db);
+  $show_u = $proses_u->editUnit($kd_unit);
+  $data_u = $show_u->fetch(PDO::FETCH_OBJ);
+  $h_owner_wd = $data_u->h_owner_wd;
+  $h_owner_we = $data_u->h_owner_we;
+
   if($week>5){ //jika dimulai dari weekend
     $week_kind = explode("/",startinweekend($hari, $week, 0, 0));
     $jumlah_weekday = $week_kind[0]; $jumlah_weekend = $week_kind[1];
@@ -96,13 +103,15 @@ if(isset($_POST['addTransaksi']) || isset($_POST["Transaksi_booked"])){
   $proses = new Transaksi($db);
   $proses2 = new Kas($db);
 
-  $add_transaksi = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $check_in, $check_out, $jumlah_weekend, $jumlah_weekday, $hari, $harga_sewa, $harga_sewa_we, $tgl_transaksi, $diskon, $ekstra_charge, $kd_kas, $tamu, $kd_booking, $dp, $total, $sisa_pelunasan, 1);
-  
+
+  $add_transaksi = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $check_in, $check_out, $jumlah_weekend, $jumlah_weekday, $hari, $harga_sewa, $harga_sewa_we, $tgl_transaksi, $diskon, $ekstra_charge, $kd_kas, $tamu, $kd_booking, $dp, $total, $total_harga_owner,$sisa_pelunasan, 1, $h_owner_wd, $h_owner_we);
+
   if(isset($_POST["Transaksi_booked"])){
     $proses->deleteBooked_list($_POST["kd_booked"], $check_in, $kd_unit);
   } else {
     $proses->addUnit_kotor($kd_unit, $check_in, $check_out);
   }
+
 
   if($add_transaksi == "Success"){
 
@@ -254,6 +263,12 @@ elseif(isset($_POST['updateTransaksi'])){
   $tanggal = date('Y-m-d H:i:s');
   $keterangan = '6/'.$kd_transaksi;
 
+  $proses_u = new Unit($db);
+  $show_u = $proses_u->editUnit($kd_unit);
+  $data_u = $show_u->fetch(PDO::FETCH_OBJ);
+  $h_owner_wd = $data_u->h_owner_wd;
+  $h_owner_we = $data_u->h_owner_we;
+
   if($week>5){ //jika dimulai dari weekend
     $week_kind = explode("/",startinweekend($hari, $week, 0, 0));
     $jumlah_weekday = $week_kind[0]; $jumlah_weekend = $week_kind[1];
@@ -322,7 +337,7 @@ elseif(isset($_POST['updateTransaksi'])){
   }
 
   $unit = $proses->updateUnit_kotor($kd_transaksi ,$kd_unit, $check_in, $check_out);
-  $add = $proses->updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $harga_sewa_we, $diskon, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total_tagihan, $total_harga_owner,$sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday);
+  $add = $proses->updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $harga_sewa_we, $diskon, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total_tagihan, $total_harga_owner,$sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday, $h_owner_wd, $h_owner_we);
   if($add == "Success"){
   require("../class/ics_unit.php");
   $ics = new Ics_unit($db);
