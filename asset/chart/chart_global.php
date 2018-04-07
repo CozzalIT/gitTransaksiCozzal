@@ -198,10 +198,11 @@
           <?php
             $proses_t = new Transaksi($db);
             for($i=1;$i<=12;$i++){
-              $show_t = $proses_t->showSumPendapatan($i, 2018);
-              $jumlahPendapatan=0;
+              $show_t = $proses_t->showSumSewa($i, 2018);
+              $keuntunganKotor=0;
               while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
-                $jumlahPendapatan = $jumlahPendapatan + $data_t->total_tagihan;
+                //$totalOwner = ($data_t->harga_owner*$data->hari_weekday)+($data_t->harga_owner_weekend*$data->hari_weekend);
+                $keuntunganKotor = $data_t->total_tagihan;
               }
               echo $jumlahPendapatan.',';
             }
