@@ -43,270 +43,56 @@
       <div class="">
         <div class="widget-box">
           <div class="widget-title bg_lg"><span class="icon"><i class="icon-signal"></i></span>
-            <h5>Data Transaksi Tahun 2018</h5>
+            <h5>Statistik Cozzal</h5>
+
           </div>
-          <div class="widget-content" >
+          <div class="widget-content nopadding" >
             <div class="row-fluid">
             <!-- Chart -->
-              <center>
-                <div id="container" style="width: 100%;">
-              		<canvas id="canvas"></canvas>
-              	</div>
-            	  <script>
-                  var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-                  var config = {
-                    type: 'line',
-                    data: {
-                      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                      datasets: [{
-                        label: 'Confirm',
-                        backgroundColor: window.chartColors.purple,
-                        borderColor: window.chartColors.purple,
-                        data: [
-                          <?php
-                            $proses_t = new Transaksi($db);
-                            for($i=1;$i<=12;$i++){
-                          		$show_t = $proses_t->showSumMonth($i, 2018, 41);
-                          		$jumlahHari=0;
-                          		while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
-                          			$jumlahHari = $jumlahHari + $data_t->hari;
-                          		}
-                              echo $jumlahHari.',';
-                        	  }
-                          ?>
-                        ],
-                        fill: false,
-                      }, {
-                        label: 'Booked',
-                        backgroundColor: window.chartColors.blue,
-                        borderColor: window.chartColors.blue,
-                        data: [
-                          <?php
-                            for($i=1;$i<=12;$i++){
-                          		$show_t = $proses_t->showSumMonth($i, 2018, 1);
-                          		$jumlahHari=0;
-                          		while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
-                          			$jumlahHari = $jumlahHari + $data_t->hari;
-                          		}
-                              echo $jumlahHari.',';
-                        	  }
-                          ?>
-                        ],
-                        fill: false,
-                      }, {
-                        label: 'Cancel',
-                        backgroundColor: window.chartColors.yellow,
-                        borderColor: window.chartColors.yellow,
-                        data: [
-                          <?php
-                            for($i=1;$i<=12;$i++){
-                          		$show_t = $proses_t->showSumMonth($i, 2018, 2);
-                          		$jumlahHari=0;
-                          		while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
-                          			$jumlahHari = $jumlahHari + $data_t->hari;
-                          		}
-                              echo $jumlahHari.',';
-                        	  }
-                          ?>
-                        ],
-                        fill: false,
-                      }]
-                    },
-                    options: {
-                      responsive: true,
-                      elements: {
-                				line: {
-                					tension: 0.000001
-                				}
-                			},
-                      title: {
-                        display: true,
-                        text: 'Status Transaksi'
-                      },
-                      tooltips: {
-                        mode: 'index',
-                        intersect: false,
-                      },
-                      hover: {
-                        mode: 'nearest',
-                        intersect: true
-                      },
-                      scales: {
-                        xAxes: [{
-                          display: true,
-                          scaleLabel: {
-                            display: true,
-                            labelString: 'Bulan'
-                          }
-                        }],
-                        yAxes: [{
-                          display: true,
-                          scaleLabel: {
-                            display: true,
-                            labelString: 'Hari'
-                          }
-                        }]
-                      }
-                    }
-                  };
-
-                  window.onload = function() {
-                    var ctx = document.getElementById('canvas').getContext('2d');
-                    window.myLine = new Chart(ctx, config);
-                  };
-              	</script>
-              </center>
+              <div class="span9">
+                <center>
+                  <div id="ctr_transaksi" style="width: 100%;">
+                    <canvas id="cv_transaksi"></canvas>
+                	</div>
+                  <div id="ctr_pendapatan" style="width: 100%;" class="hide">
+                    <canvas id="cv_pendapatan"></canvas>
+                	</div>
+                  <div id="ctr_keuntungan_kotor" style="width: 100%;" class="hide">
+                		<canvas id="cv_keuntungan_kotor"></canvas>
+                	</div>
+                </center>
+              </div>
+              <div class="span3">
+                <center>
+                  <button class="btn btn-success chart-button" type="button" onclick="viewTransaksi()">Transaksi</button>
+                  <br>
+                  <button class="btn btn-success chart-button" type="button" onclick="viewPendapatan()">Pendapatan</button>
+                  <br>
+                  <button class="btn btn-success chart-button" type="button" onclick="viewKeuntunganKotor()">Keuntungan Kotor</button>
+                </center>
+                <ul class="site-stats" style="padding-top: 10px;padding-bottom: 10px;">
+                  <li class="bg_lh"><i class="icon-user"></i> <strong>2540</strong> <small>Dummy</small></li>
+                  <li class="bg_lh"><i class="icon-plus"></i> <strong>120</strong> <small>Dummy</small></li>
+                  <li class="bg_lh"><i class="icon-shopping-cart"></i> <strong>656</strong> <small>Dummy</small></li>
+                  <li class="bg_lh"><i class="icon-tag"></i> <strong>9540</strong> <small>Dummy</small></li>
+                  <li class="bg_lh"><i class="icon-repeat"></i> <strong>10</strong> <small>Dummy</small></li>
+                  <li class="bg_lh"><i class="icon-globe"></i> <strong>8540</strong> <small>Dummy</small></li>
+                </ul>
+              </div>
             <!-- //Chart -->
 		        </div>
           </div>
         </div>
-      </div>
-      <div>
-      <div class="span6">
-        <div class="widget-box">
-          <div class="widget-title bg_lg"><span class="icon"><i class="icon-signal"></i></span>
-            <h5>Keuntungan Kotor</h5>
-          </div>
-          <div class="widget-content" >
-            <div class="row-fluid">
-              <!-- Chart -->
-              <center>
-                <div id="container" style="width: 100%; overflow-x: auto;">
-              		<canvas id="canvas"></canvas>
-              	</div>
-                <script>
-                  var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-                  var config = {
-                    type: 'line',
-                    data: {
-                      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                      datasets: [{
-                        label: 'Confirm',
-                        backgroundColor: window.chartColors.purple,
-                        borderColor: window.chartColors.purple,
-                        data: [
-                          <?php
-                            $proses_t = new Transaksi($db);
-                            for($i=1;$i<=12;$i++){
-                          		$show_t = $proses_t->showSumMonth($i, 2018, 41);
-                          		$jumlahHari=0;
-                          		while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
-                          			$jumlahHari = $jumlahHari + $data_t->hari;
-                          		}
-                              echo $jumlahHari.',';
-                        	  }
-                          ?>
-                        ],
-                        fill: false,
-                      }, {
-                        label: 'Booked',
-                        backgroundColor: window.chartColors.blue,
-                        borderColor: window.chartColors.blue,
-                        data: [
-                          <?php
-                            for($i=1;$i<=12;$i++){
-                          		$show_t = $proses_t->showSumMonth($i, 2018, 1);
-                          		$jumlahHari=0;
-                          		while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
-                          			$jumlahHari = $jumlahHari + $data_t->hari;
-                          		}
-                              echo $jumlahHari.',';
-                        	  }
-                          ?>
-                        ],
-                        fill: false,
-                      }, {
-                        label: 'Cancel',
-                        backgroundColor: window.chartColors.yellow,
-                        borderColor: window.chartColors.yellow,
-                        data: [
-                          <?php
-                            for($i=1;$i<=12;$i++){
-                          		$show_t = $proses_t->showSumMonth($i, 2018, 2);
-                          		$jumlahHari=0;
-                          		while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
-                          			$jumlahHari = $jumlahHari + $data_t->hari;
-                          		}
-                              echo $jumlahHari.',';
-                        	  }
-                          ?>
-                        ],
-                        fill: false,
-                      }]
-                    },
-                    options: {
-                      responsive: true,
-                      elements: {
-                				line: {
-                					tension: 0.000001
-                				}
-                			},
-                      title: {
-                        display: true,
-                        text: 'Status Transaksi'
-                      },
-                      tooltips: {
-                        mode: 'index',
-                        intersect: false,
-                      },
-                      hover: {
-                        mode: 'nearest',
-                        intersect: true
-                      },
-                      scales: {
-                        xAxes: [{
-                          display: true,
-                          scaleLabel: {
-                            display: true,
-                            labelString: 'Bulan'
-                          }
-                        }],
-                        yAxes: [{
-                          display: true,
-                          scaleLabel: {
-                            display: true,
-                            labelString: 'Hari'
-                          }
-                        }]
-                      }
-                    }
-                  };
-
-                  window.onload = function() {
-                    var ctx = document.getElementById('canvas').getContext('2d');
-                    window.myLine = new Chart(ctx, config);
-                  };
-              	</script>
-              </center>
-              <!-- //Chart -->
-  		      </div>
-          </div>
-        </div>
-      </div>
-      <div class="span6">
-        <div class="widget-box">
-          <div class="widget-title bg_lg"><span class="icon"><i class="icon-signal"></i></span>
-            <h5>Pendapatan</h5>
-          </div>
-          <div class="widget-content" >
-            <div class="row-fluid">
-              <!-- Chart -->
-              <center>
-                <div id="container" style="width: 100%; overflow-x: auto;">
-              		<canvas id="canvas"></canvas>
-              	</div>
-              </center>
-              <!-- //Chart -->
-  		      </div>
-          </div>
-        </div>
-      </div>
       </div>
     </div>
     <hr/>
   </div>
 </div>
 <!--end-main-container-part-->
+
+<?php
+include "../../../asset/chart/chart_global.php"
+?>
 
 <!--Footer-part-->
 <div class="row-fluid">
@@ -321,30 +107,5 @@
 <script src="../../../asset/js/jquery.dataTables.min.js"></script>
 <script src="../../../asset/js/matrix.js"></script>
 <script src="../../../asset/js/matrix.tables.js"></script>
-
-<script type="text/javascript">
-  // This function is called from the pop-up menus to transfer to
-  // a different page. Ignore if the value returned is a null string:
-  function goPage (newURL) {
-
-      // if url is empty, skip the menu dividers and reset the menu selection to default
-      if (newURL != "") {
-
-          // if url is "-", it is this page -- reset the menu:
-          if (newURL == "-" ) {
-              resetMenu();
-          }
-          // else, send page to designated URL
-          else {
-            document.location.href = newURL;
-          }
-      }
-  }
-
-// resets the menu selection upon entry to this page:
-function resetMenu() {
-   document.gomenu.selector.selectedIndex = 2;
-}
-</script>
 </body>
 </html>
