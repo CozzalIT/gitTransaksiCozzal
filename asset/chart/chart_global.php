@@ -195,7 +195,17 @@
         backgroundColor: window.chartColors.green,
         borderColor: window.chartColors.green,
         data: [
-          25, 30, 55, 11, 0, 89, 0, 0, 0, 0, 0, 0
+          <?php
+            $proses_t = new Transaksi($db);
+            for($i=1;$i<=12;$i++){
+              $show_t = $proses_t->showSumPendapatan($i, 2018);
+              $jumlahPendapatan=0;
+              while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
+                $jumlahPendapatan = $jumlahPendapatan + $data_t->total_tagihan;
+              }
+              echo $jumlahPendapatan.',';
+            }
+          ?>
         ],
         fill: false,
       }]
@@ -268,7 +278,7 @@
     pendapatan.classList.remove("hide");
     keuntungan_kotor.classList.add("hide");
   }
-  
+
   function viewKeuntunganKotor() {
     var transaksi = document.getElementById('ctr_transaksi');
     var pendapatan = document.getElementById('ctr_pendapatan');

@@ -149,6 +149,10 @@ class Transaksi {
     return $query;
   }
 
+  public function showSumSewa($noBulan, $tahun){
+    $sql = "SELECT  FROM"
+  }
+
   public function showTransaksi_cek($CI,$CO,$kd_unit){
    $result = $this->db->prepare("SELECT * from tb_unit_kotor where ((check_in<='$CI' and check_out>='$CO')
     or (check_in>='$CI' and check_in<'$CO')
