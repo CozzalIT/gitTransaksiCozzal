@@ -150,13 +150,11 @@ class Transaksi {
   }
 
   public function showSumSewa($noBulan, $tahun){
-<<<<<<< HEAD
+
     $sql = "SELECT hari_weekday, hari_weekend, harga_sewa, harga_sewa_weekend, harga_owner, harga_owner_weekend, total_tagihan FROM tb_transaksi WHERE MONTH(tgl_transaksi)='$noBulan' AND YEAR(tgl_transaksi)='$tahun'";
     $query = $this->db->query($sql);
     return $query;
-=======
-    //$sql = "SELECT  FROM"
->>>>>>> 78f773937bc91f586b727089485c3a756ae336f5
+
   }
 
   public function showTransaksi_cek($CI,$CO,$kd_unit){
