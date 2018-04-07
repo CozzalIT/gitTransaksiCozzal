@@ -82,7 +82,6 @@
                         borderColor: window.chartColors.blue,
                         data: [
                           <?php
-                            $proses_t = new Transaksi($db);
                             for($i=1;$i<=12;$i++){
                           		$show_t = $proses_t->showSumMonth($i, 2018, 1);
                           		$jumlahHari=0;
@@ -100,7 +99,6 @@
                         borderColor: window.chartColors.yellow,
                         data: [
                           <?php
-                            $proses_t = new Transaksi($db);
                             for($i=1;$i<=12;$i++){
                           		$show_t = $proses_t->showSumMonth($i, 2018, 2);
                           		$jumlahHari=0;
@@ -176,6 +174,109 @@
                 <div id="container" style="width: 100%; overflow-x: auto;">
               		<canvas id="canvas"></canvas>
               	</div>
+                <script>
+                  var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                  var config = {
+                    type: 'line',
+                    data: {
+                      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                      datasets: [{
+                        label: 'Confirm',
+                        backgroundColor: window.chartColors.purple,
+                        borderColor: window.chartColors.purple,
+                        data: [
+                          <?php
+                            $proses_t = new Transaksi($db);
+                            for($i=1;$i<=12;$i++){
+                          		$show_t = $proses_t->showSumMonth($i, 2018, 41);
+                          		$jumlahHari=0;
+                          		while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
+                          			$jumlahHari = $jumlahHari + $data_t->hari;
+                          		}
+                              echo $jumlahHari.',';
+                        	  }
+                          ?>
+                        ],
+                        fill: false,
+                      }, {
+                        label: 'Booked',
+                        backgroundColor: window.chartColors.blue,
+                        borderColor: window.chartColors.blue,
+                        data: [
+                          <?php
+                            for($i=1;$i<=12;$i++){
+                          		$show_t = $proses_t->showSumMonth($i, 2018, 1);
+                          		$jumlahHari=0;
+                          		while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
+                          			$jumlahHari = $jumlahHari + $data_t->hari;
+                          		}
+                              echo $jumlahHari.',';
+                        	  }
+                          ?>
+                        ],
+                        fill: false,
+                      }, {
+                        label: 'Cancel',
+                        backgroundColor: window.chartColors.yellow,
+                        borderColor: window.chartColors.yellow,
+                        data: [
+                          <?php
+                            for($i=1;$i<=12;$i++){
+                          		$show_t = $proses_t->showSumMonth($i, 2018, 2);
+                          		$jumlahHari=0;
+                          		while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
+                          			$jumlahHari = $jumlahHari + $data_t->hari;
+                          		}
+                              echo $jumlahHari.',';
+                        	  }
+                          ?>
+                        ],
+                        fill: false,
+                      }]
+                    },
+                    options: {
+                      responsive: true,
+                      elements: {
+                				line: {
+                					tension: 0.000001
+                				}
+                			},
+                      title: {
+                        display: true,
+                        text: 'Status Transaksi'
+                      },
+                      tooltips: {
+                        mode: 'index',
+                        intersect: false,
+                      },
+                      hover: {
+                        mode: 'nearest',
+                        intersect: true
+                      },
+                      scales: {
+                        xAxes: [{
+                          display: true,
+                          scaleLabel: {
+                            display: true,
+                            labelString: 'Bulan'
+                          }
+                        }],
+                        yAxes: [{
+                          display: true,
+                          scaleLabel: {
+                            display: true,
+                            labelString: 'Hari'
+                          }
+                        }]
+                      }
+                    }
+                  };
+
+                  window.onload = function() {
+                    var ctx = document.getElementById('canvas').getContext('2d');
+                    window.myLine = new Chart(ctx, config);
+                  };
+              	</script>
               </center>
               <!-- //Chart -->
   		      </div>
