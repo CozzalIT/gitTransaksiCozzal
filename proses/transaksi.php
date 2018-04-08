@@ -103,7 +103,7 @@ if(isset($_POST['addTransaksi']) || isset($_POST["Transaksi_booked"])){
   $proses = new Transaksi($db);
   $proses2 = new Kas($db);
 
-  $add_transaksi = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $check_in, $check_out, $jumlah_weekend, $jumlah_weekday, $hari, $harga_sewa, $harga_sewa_we, $tgl_transaksi, $diskon, $ekstra_charge, $kd_kas, $tamu, $kd_booking, $dp, $total, $total_harga_owner,$sisa_pelunasan, 1, $h_owner_wd, $h_owner_we);
+  $add_transaksi = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $check_in, $check_out, $jumlah_weekend, $jumlah_weekday, $hari, $harga_sewa, $harga_sewa_we, $tgl_transaksi, $diskon, $ekstra_charge, $kd_kas, $tamu, $kd_booking, $dp, $total, $total_harga_owner, $sisa_pelunasan, 1, $h_owner_wd, $h_owner_we);
 
   if(isset($_POST["Transaksi_booked"])){
     $proses->deleteBooked_list($_POST["kd_booked"], $check_in, $kd_unit);

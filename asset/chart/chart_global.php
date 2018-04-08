@@ -201,10 +201,10 @@
               $show_t = $proses_t->showSumSewa($i, 2018);
               $keuntunganKotor=0;
               while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
-                //$totalOwner = ($data_t->harga_owner*$data->hari_weekday)+($data_t->harga_owner_weekend*$data->hari_weekend);
-                $keuntunganKotor = $data_t->total_tagihan;
+                $totalOwner = ($data_t->harga_owner*$data_t->hari_weekday)+($data_t->harga_owner_weekend*$data_t->hari_weekend);
+                $keuntunganKotor = $data_t->total_tagihan-$totalOwner;
               }
-              echo $jumlahPendapatan.',';
+              echo $keuntunganKotor.',';
             }
           ?>
         ],
@@ -225,6 +225,27 @@
       tooltips: {
         mode: 'index',
         intersect: false,
+        callbacks: {
+          label: function(tooltipItem, data) {
+            var label = data.datasets[tooltipItem.datasetIndex].label || '';
+            if (label) {
+              label += ' : ';
+            }
+            function formatRupiah(nominal){
+            	nominal += '';
+            	x = nominal.split('.');
+            	x1 = x[0];
+            	x2 = x.length > 1 ? '.' + x[1] : '';
+            	var rgx = /(\d+)(\d{3})/;
+            	while (rgx.test(x1)) {
+            		x1 = x1.replace(rgx, '$1' + '.' + '$2');
+            	}
+            	return x1 + x2;
+            }
+            label += formatRupiah(Math.round(tooltipItem.yLabel * 100) / 100) + ' IDR';
+            return label;
+          }
+        }
       },
       hover: {
         mode: 'nearest',
@@ -242,7 +263,7 @@
           display: true,
           scaleLabel: {
             display: true,
-            labelString: 'Hari'
+            labelString: 'Nominal *IDR'
           }
         }]
       }

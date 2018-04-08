@@ -38,7 +38,7 @@
           <div class="widget-title"> <span class="icon"> <i class="icon-briefcase"></i> </span>
             <h5>Pengeluaran & Pendapatan</h5>
           </div>
-          <form method="post" action="../../../proses/owner.php">
+          <form method="post" id="formOwnerPayment">
             <div class="widget-content">
               <div class="row-fluid">
                 <div class="span6">
@@ -87,6 +87,7 @@
                         <th colspan="6">Pengeluaran Unit</th>
                       </tr>
                       <tr>
+                        <th class='hide'><input type='text' name='kd_owner' value='<?php echo $data_o->kd_owner; ?>' /></th>
                         <th>No</th>
                         <th>Tanggal</th>
                         <th>Keterangan</th>
@@ -157,18 +158,16 @@
                             $data_t = $show_t->fetch(PDO::FETCH_OBJ);
                             $show_u = $proses_u->showHargaOwner($data_t->no_unit);
                             $data_u = $show_u->fetch(PDO::FETCH_OBJ);
-							$subtest= $data_t ->total_harga_owner;
-							if($subtest>0){
-								
-								$subtotal_in = $data_t->total_harga_owner;
-								$weekend = 0;
-								$weekday = 0;
-							}else{
-
-								$weekend = $data_t->hari_weekend*$data_u->h_owner_we;
-								$weekday = $data_t->hari_weekday*$data_u->h_owner_wd;
-								$subtotal_in = $weekday+$weekend;
-							}
+              							$subtest= $data_t ->total_harga_owner;
+              							if($subtest>0){
+              								$subtotal_in = $data_t->total_harga_owner;
+              								$weekend = 0;
+              								$weekday = 0;
+              							}else{
+              								$weekend = $data_t->hari_weekend*$data_u->h_owner_we;
+              								$weekday = $data_t->hari_weekday*$data_u->h_owner_wd;
+              								$subtotal_in = $weekday+$weekend;
+              							}
                             echo "
                               <tr>
                                 <td class='hide'><input type='text' name='transaksi[]' value='$kd_transaksi' /></td>
@@ -214,7 +213,8 @@
                     <h4><span>EARNINGS: </span><?php echo number_format($earnings, 0, ".","."); ?> IDR</h4>
                     <br>
                     <div class='hide'><input type='text' name='earnings' value='<?php echo $earnings;?>' /></div>
-                    <button class="btn btn-success btn-large pull-right" type="submit" name="ownerPayment">Bayar</button>
+                    <button class="btn btn-success btn-large pull-right" type="submit" name="ownerPayment" style="margin-left:10px;" onclick="submitForm('../../../proses/owner.php')">Bayar</button>
+                    <button class="btn btn-primary btn-large pull-right" type="submit" style="margin-left:10px;" onclick="submitForm('pdf.php')">Download/Print</button>
                   </div>
                 </div>
               </div>
@@ -225,6 +225,14 @@
     </div>
   </div>
 </div>
+
+<script>
+  function submitForm(action){
+    document.getElementById('formOwnerPayment').action = action;
+    document.getElementById('formOwnerPayment').submit();
+  }
+</script>
+
 <!--end-Footer-part-->
 <?php
   include("../template/footer.php");
