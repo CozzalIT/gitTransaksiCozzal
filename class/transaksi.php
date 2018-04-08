@@ -198,7 +198,7 @@ class Transaksi {
       tb_penyewa.kd_penyewa, tb_penyewa.nama, tb_penyewa.alamat, tb_penyewa.no_tlp, tb_penyewa.email, tb_penyewa.jenis_kelamin,
       tb_apt.kd_apt, tb_apt.nama_apt,
       tb_kas.kd_kas, tb_kas.sumber_dana,
-      tb_unit.kd_unit, tb_unit.no_unit,
+      tb_unit.kd_unit, tb_unit.no_unit,tb_unit.lantai,
       tb_booking_via.kd_booking, tb_booking_via.booking_via
         from tb_transaksi
         INNER JOIN tb_penyewa ON tb_penyewa.kd_penyewa = tb_transaksi.kd_penyewa
