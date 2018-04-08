@@ -15,7 +15,7 @@
   </div>
   <div class="container-fluid">
     <div class="row-fluid">
-	  <?php
+    <?php
 // Audit transaksi
       if (isset($_POST['next-booked']))
       {
@@ -118,7 +118,7 @@
                   <div class="control-group">
                     <label class="control-label">Total Biaya :</label>
                     <div class="controls">
-                      <input name="total" min="0" id="total" step="1000" class="span11" type="number" required/>
+                      <input name="total" min="0" id="total" class="span11" type="number" required/>
                       <div class="loading">
                         <img src="../../../asset/images/loading.gif" width="18"> <small>Loading...</small>
                       </div>                        

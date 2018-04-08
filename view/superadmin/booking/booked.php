@@ -44,24 +44,24 @@
         				  $show = $Proses->showBooked_airbnb();
                   $i = 1;
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-          					$button = ""; 
                     if($data->status!='0'){
-                      $button .= "<a class='btn btn-success' href='booked_penyewa.php?kd_booked=$data->kd_booked'>Transaksi</a>";
+                      echo "
+                        <tr class=gradeC'>
+                          <td>$i</td>
+                          <td>$data->penyewa</td>
+                          <td>$data->no_tlp</td>
+                          <td>$data->nama_apt</td>
+                          <td>$data->no_unit</td>
+                          <td>$data->check_in</td>
+                          <td>$data->check_out</td>
+                          <td>
+                            <a class='btn btn-success' href='booked_penyewa.php?kd_booked=$data->kd_booked'>Transaksi</a> 
+                            <a class='btn btn-danger hapus' href='../../../proses/booked.php?hapus=$data->kd_booked&unit=$data->kd_unit&ci=$data->check_in'>Hapus</a>                       
+                          </td>
+                        </tr>
+                      ";
+                      $i++;
                     }
-                    $button .= "<a class='btn btn-danger hapus' href='../../../proses/booked.php?hapus=$data->kd_booked&unit=$data->kd_unit&ci=$data->check_in'>Hapus</a>";
-                    echo "
-          					  <tr class=gradeC'>
-          					    <td>$i</td>
-          					    <td>$data->penyewa</td>
-          						  <td>$data->no_tlp</td>
-          						  <td>$data->nama_apt</td>
-                        <td>$data->no_unit</td>
-          						  <td>$data->check_in</td>
-                        <td>$data->check_out</td>
-            						<td>$button</td>
-          					  </tr>
-                    ";
-                    $i++;
         				  }
         				?>
               </tbody>

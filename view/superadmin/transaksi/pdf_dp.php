@@ -76,8 +76,8 @@ $pdf->Cell(25 ,5,'Apartemen',0,0);
 $pdf->Cell(34 ,5,': '.$data->nama_apt,0,1);//end of line
 
 $pdf->Cell(120 ,5,'',0,0);
-$pdf->Cell(25 ,5,'No Unit',0,0);
-$pdf->Cell(34 ,5,': '.$data->no_unit,0,1);//end of line
+$pdf->Cell(25 ,5,'Lantai',0,0);
+$pdf->Cell(34 ,5,': '.$data->lantai,0,1);//end of line
 
 $pdf->Cell(189 ,10,'',0,1);
 
