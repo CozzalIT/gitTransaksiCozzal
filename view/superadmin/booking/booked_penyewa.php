@@ -39,7 +39,7 @@
                   <div class="control-group">
                     <label class="control-label">Nama Lengkap:</label>
                     <div class="controls">
-                    <input id="nama" type="text" class="span11" value="<?php echo $edit->penyewa; ?>"/>
+                    <input id="nama" type="text" class="span11" value="<?php echo $edit->penyewa; ?>"disabled/>
                     </div>
                   </div>
                   <div class="control-group">
@@ -55,19 +55,19 @@
                   <div class="control-group">
                     <label class="control-label">Alamat :</label>
                     <div class="controls">
-                    <input id="alamat" type="text" class="span11" placeholder="Alamat"/>
+                    <input id="alamat" type="text" class="span11" placeholder="Alamat" value="Jakarta"/>
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label">No Telepon / HP</label>
                     <div class="controls">
-                    <input id="no_tlp" type="text" class="span11" value="<?php echo $edit->no_tlp; ?>"/>
+                    <input id="no_tlp" type="text" class="span11" value="<?php echo $edit->no_tlp; ?>"disabled/>
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label">E-Mail</label>
                     <div class="controls">
-                    <input id="email" type="text" class="span11" placeholder="Email"/>
+                    <input id="email" type="text" class="span11" placeholder="Email" value="guest@airbnb.com" disabled/>
                     </div>
                   </div>  
                   <div class="controls" style="padding: 10px; text-align:right;">
@@ -102,7 +102,7 @@
             </div>           
 <!--Footer-part-->
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
+  <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
 </div>
 <!--end-Footer-part-->
 
