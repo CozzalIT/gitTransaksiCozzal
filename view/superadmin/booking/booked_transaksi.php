@@ -76,7 +76,7 @@
                     </div>
                   </div>
 
-                 <div class="control-group" id="harga_sewa-C">
+                 <div hidden class="control-group" id="harga_sewa-C">
                     <label class="control-label">Harga Sewa Weekday:</label>
                     <div class="controls">
                       <input name="harga_sewa" id='harga_sewa' min="0" required class="span11" id="harga_sewa" type="number" onChange="hasil();" value="0" />
@@ -93,7 +93,7 @@
                     </div>
                   </div>
 
-                  <div class="control-group" id="harga_sewa_we-C">
+                  <div hidden class="control-group"  id="harga_sewa_we-C">
                     <label class="control-label">Harga Sewa Weekend:</label>
                     <div class="controls">
                       <input name="harga_sewa_we" id='harga_sewa_we' min="0" required class="span11" id="harga_sewa_we" type="number" onChange="hasil();" value="0" />
@@ -103,13 +103,13 @@
                     </div>                  
                   </div>
 
-                  <div class="control-group">
+                  <div hidden class="control-group">
                     <label class="control-label">Tamu :</label>
                     <div class="controls">
                     <input name="tamu" id="tamu" type="number" onChange="ech();" placeholder="Jumlah Tamu" required min="0" class="span11" value="5"/>
                     </div>
                   </div>
-                  <div class="control-group">
+                  <div hidden class="control-group">
                     <label class="control-label">Ekstra Charge :</label>
                     <div class="controls">
                     <input name="ekstra_charge" min="0" value="0" placeholder="Ekstra Charge" type="number" id="ekstra_charge" onChange="hasil();" class="span11"/>
@@ -134,7 +134,7 @@
                     <label class="control-label">DP Via :</label>
                     <div class="controls">
                     <select name="kas" required>
-                      <option value="">-- Pilih DP Via --</option>
+                      <!-- <option value="">-- Pilih DP Via --</option> -->
                     <?php
                         $Proses = new dpVia($db);
                         $show = $Proses->showDp_via();
@@ -148,7 +148,7 @@
                   <div class="control-group">
                     <label class="control-label">DP :</label>
                     <div class="controls">
-                    <input name="dp" type="number" class="span11" placeholder="Nominal DP" value="'.$edit->dp.'" required/>
+                    <input name="dp" type="number" class="span11" placeholder="Nominal DP" id="dp" value="0" disabled/>
                     </div>
                   </div>
                   <div class="control-group">
