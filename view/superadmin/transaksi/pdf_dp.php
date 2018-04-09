@@ -72,11 +72,11 @@ $pdf->Cell(25 ,5,'Check Out',0,0);
 $pdf->Cell(34 ,5,': '.$data->check_out,0,1);//end of line
 
 $pdf->Cell(120 ,5,'',0,0);
-$pdf->Cell(25 ,5,'Apartemen',0,0);
+$pdf->Cell(25 ,5,'Apartment',0,0);
 $pdf->Cell(34 ,5,': '.$data->nama_apt,0,1);//end of line
 
 $pdf->Cell(120 ,5,'',0,0);
-$pdf->Cell(25 ,5,'Lantai',0,0);
+$pdf->Cell(25 ,5,'Level / Floor',0,0);
 $pdf->Cell(34 ,5,': '.$data->lantai,0,1);//end of line
 
 $pdf->Cell(189 ,10,'',0,1);
@@ -99,7 +99,7 @@ $pdf->Cell(90 ,5,$data->hari_weekday.' Nights',1,1);
 $pdf->Cell(90 ,5,'No Of Guest',1,0);
 $pdf->Cell(90 ,5,$data->tamu.' Person',1,1);
 
-$pdf->Cell(90 ,5,'Ekstra Charge',1,0);
+$pdf->Cell(90 ,5,'Extra Charge',1,0);
 $pdf->Cell(90 ,5,number_format($data->ekstra_charge,0, ".", ".").' IDR',1,1);
 
 $pdf->Cell(90 ,5,'Total Discount',1,0);

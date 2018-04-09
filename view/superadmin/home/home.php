@@ -47,7 +47,7 @@
 
           </div>
           <div class="widget-content nopadding" >
-            <div class="row-fluid">
+            <div class="row-fluid"  style="overflow-x:auto;">
             <!-- Chart -->
               <div class="span9">
                 <center>
