@@ -44,7 +44,7 @@
         				  $show = $Proses->showBooked_airbnb();
                   $i = 1;
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-                    if($data->status!='0'){
+                    if($data->status=='1'){
                       echo "
                         <tr class=gradeC'>
                           <td>$i</td>
