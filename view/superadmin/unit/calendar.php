@@ -12,19 +12,37 @@
   include "../template/sidebar.php";
 
   if (isset($_GET['calendar_unit'])){
+    $arrayunit = array();
     $calendar = new Calendar($db);
-    $show = $calendar->showNoUnit($_GET['calendar_unit']);
-    $data = $show->fetch(PDO::FETCH_OBJ);
     $kd_unit = $_GET['calendar_unit'];
-    $no_unit = $data->no_unit;
-    $nama_apt = $data->nama_apt;
+    $show = $calendar->showNoUnit();
+    while($data = $show->fetch(PDO::FETCH_OBJ)){
+      if($data->kd_unit==$kd_unit){
+        $no_unit = $data->no_unit;
+        $nama_apt = $data->nama_apt;
+      } else {
+        $arrayunit[] = $data->kd_unit;
+        $arrayunit[] = $data->no_unit." - ".$data->nama_apt;
+      }
+    }
   }
 ?>
+
 <div id="content">
   <div id="content-header">
   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="unit.php" title="Go to Data Unit" class="tip-bottom">Data Unit</a> <a href="#" class="current">Kalender Unit <?php echo $no_unit; ?></a> </div>
-
-    <h1>Calendar Unit <?php echo $no_unit.' ('.$nama_apt.')'; ?></h1>
+    <h1 onclick="triger()"><?php echo "<div id='nganu'>".$no_unit.' '.$nama_apt."</div>"; ?></h1>
+    <div id="apartement-dropdown" class="hide-dropdown">
+      <input type="text" placeholder="Search.." id="keyword" onkeyup="filter()"/> <br>
+      <?php
+        if(count($arrayunit)>0){
+          for($i=0;$i<count($arrayunit);$i+=2){
+            echo '<a class="content-dropdown" href="calendar.php?calendar_unit='.$arrayunit[$i].'">';
+            echo $arrayunit[$i+1]."</a>";
+          }
+        }
+      ?>
+    </div>
     <?php
       if((isset($_POST['editCalendar']) && !isset($_POST['batal'])) || isset($_POST['editBlok']) || isset($_POST['close'])){
         echo '
@@ -186,6 +204,7 @@
       </div>
     </div>
   </div>
+  <?php include 'calendar_option.php'; ?>
 </div>
 
 <div id="popup-blok" class="modal hide">
