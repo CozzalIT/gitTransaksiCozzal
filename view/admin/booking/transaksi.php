@@ -24,7 +24,7 @@
         require("../../../class/unit.php");
         require("../../../class/apartemen.php");
         require("../../../class/booking.php");
-        require("../../../class/dp_via.php");        
+        require("../../../class/dp_via.php");
         $Proses = new Booking($db);
         $show = $Proses->showRequestBook_byId($_GET['kd_reservasi']);
         $edit = $show->fetch(PDO::FETCH_OBJ);
@@ -82,17 +82,17 @@
                   <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
                     <h5>Data Transaksi</h5>
                   </div>
- 
+
                   <div class="control-group">
                     <label class="control-label">Check In :</label>
                     <div class="controls">
-                    <input name="check_in" id="check_in" type="date" class="span11" required placeholder="" value="<?php echo $edit->check_in; ?>" onchange="validasi(this.form)"/>
+                    <input name="check_in" id="check_in" type="date" class="span11" required placeholder="" value="<?php echo $edit->check_in; ?>" onchange="keepvalid(this.form)"/>
                     </div>
                   </div>
                   <div class="control-group">
                     <label class="control-label">Check Out :</label>
                     <div class="controls">
-                    <input name="check_out" id="check_out" type="date" class="span11" required placeholder="" value="<?php echo $edit->check_out; ?>" onchange="validasi2(this.form)"/>
+                    <input name="check_out" id="check_out" type="date" class="span11" required placeholder="" value="<?php echo $edit->check_out; ?>" onchange="keepvalid2(this.form)"/>
                     </div>
                   </div>
                   <div class="control-group">
@@ -167,7 +167,7 @@
                   </div>
                   <div class="control-group">
                     <label class="control-label">Ekstra Charge :</label>
-                    <div class="controls"> 
+                    <div class="controls">
                     <input name="ekstra_charge" min="0" step="1000" placeholder="Ekstra Charge" type="number" onChange="hasil(this.form)" required class="span11"/>
                     </div>
                   </div>
@@ -229,7 +229,7 @@
 </div>
 <!--Footer-part-->
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
+  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
 <script src="../../../asset/js/jquery.min.js"></script>

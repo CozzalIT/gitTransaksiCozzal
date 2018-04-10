@@ -61,6 +61,7 @@
                         <td>$data->status</td>
             						<td>
             						  <a class='btn btn-primary' href=''>Edit</a>
+            						  <a class='btn btn-danger hapus' href=''>Hapus</a>
             						</td>
           					  </tr>
                     ";
@@ -81,6 +82,8 @@
   <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
 </div>
 <!--end-Footer-part-->
+<script src="../../../asset/js/sweetalert.min.js"></script>
+<script src="../../../asset/js/hapus.js"></script>
 <script src="../../../asset/js/jquery.min.js"></script>
 <script src="../../../asset/js/jquery.ui.custom.js"></script>
 <script src="../../../asset/js/bootstrap.min.js"></script>

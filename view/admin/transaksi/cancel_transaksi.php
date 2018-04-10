@@ -96,7 +96,7 @@
                           <td>".number_format($data->setlement_dp, 0, ".", ".")." IDR</td>
               						<td>
                             <center>
-                              <a class='btn btn-danger hapus' href='../../../proses/transaksi.php?delete_transaksi=$data->kd_transaksi'>Hapus</a>
+                              <a class='btn btn-info' href='../home/home.php'>Tidak Ada</a>
                             </center>
                           </td>
             					  </tr>
