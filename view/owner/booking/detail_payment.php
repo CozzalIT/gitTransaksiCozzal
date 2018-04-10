@@ -53,15 +53,15 @@
                         $total_in=0;
                         $subtotal_in=0;
                         foreach($transaksi as $kd_transaksi) {
-                          if($kd_transaksi <> 'dummy'){
+                          if($kd_transaksi <> null){
                             $show_t = $proses_t->editTransaksi($kd_transaksi);
                             $data_t = $show_t->fetch(PDO::FETCH_OBJ);
                             $show_u = $proses_u->showHargaOwner($data_t->no_unit);
-           
+							$data_u = $show_u->fetch(PDO::FETCH_OBJ);
 							$subtest= $data_t ->total_harga_owner;
 							if($subtest>0){
 								
-								$nominal = $data_t->total_harga_owner;
+								$nominal = $subtest;
 								$weekend = 0;
 								$weekday = 0;
 							}else{
