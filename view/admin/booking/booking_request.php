@@ -55,9 +55,10 @@
           						  <td>$data->check_in</td>
                         <td>$data->check_out</td>
                         <td>$data->tgl_reservasi</td>
-                        <td>
-                          <a class='btn btn-success' href='transaksi.php?kd_reservasi=$data->kd_reservasi'>Transaksi</a>
-                        </td>
+            						<td>
+            						  <a class='btn btn-success' href='transaksi.php?kd_reservasi=$data->kd_reservasi'>Transaksi</a>
+            						  <a class='btn btn-danger hapus' href='../../../proses/booking.php?delete_booking_rq=$data->kd_reservasi'>Hapus</a>
+            						</td>
           					  </tr>
                     ";
                     $i++;
@@ -74,9 +75,11 @@
 
 <!--Footer-part-->
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
+  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
+<script src="../../../asset/js/sweetalert.min.js"></script>
+<script src="../../../asset/js/hapus.js"></script>
 <script src="../../../asset/js/jquery.min.js"></script>
 <script src="../../../asset/js/jquery.ui.custom.js"></script>
 <script src="../../../asset/js/bootstrap.min.js"></script>

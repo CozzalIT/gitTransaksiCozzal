@@ -25,16 +25,16 @@
   <div class="container-fluid">
     <div class="quick-actions_homepage">
       <ul class="quick-actions">
-        <li class="bg_ls"> <a href="home.php"> <i class="icon-home"></i> Dashboard</a> </li>
-        <li class="bg_lg span3"> <a href="../owner/owner_payment.php"> <i class="icon-inbox"></i> Owner Payment</a> </li>
-        <li class="bg_lb"> <a href="../transaksi/transaksi.php"> <i class="icon-money"></i> <span class="label label-important"></span> Transaksi </a> </li>
-        <li class="bg_ly"> <a href="../unit/task.php"> <i class="icon-user-md"></i><span class="label label-success"></span> Task Cleaner </a> </li>
-        <li class="bg_lo"> <a href="../kas/kas.php"> <i class="icon-credit-card"></i> Kas</a> </li>
-        <li class="bg_lo span3"> <a href="../account/account_management.php"> <i class="icon-sitemap"></i> Account Management</a> </li>
-        <li class="bg_ls"> <a href="../apartemen/apartemen.php"> <i class="icon-columns"></i> Apartemen</a> </li>
-        <li class="bg_lr"> <a href="../transaksi_umum/transaksi_umum.php"> <i class="icon-money"></i> T. Umum</a> </li>
-        <li class="bg_lg"> <a href="../unit/status.php"> <i class="icon-tasks"></i> Status Unit</a> </li>
-        <li class="bg_lb"> <a href="../unit/unit.php"> <i class="icon-list"></i> List Unit</a> </li>
+        <li class="bg_ls"> <a href="../booking/booked.php"> <i class="icon-home"></i> Booked bnb</a> </li>
+        <li class="bg_lb"> <a href="../transaksi/transaksi.php"> <i class="icon-credit-card"></i> <span class="label label-important"></span> Transaksi</a> </li>
+		<li class="bg_lg span3"> <a href="../transaksi/laporan_transaksi.php"> <i class="icon-inbox"></i> Laporan Transaksi</a> </li>
+        <li class="bg_ly"> <a href="../unit/status.php"> <i class="icon-user-md"></i><span class="label label-success"></span> Status Unit</a> </li>
+        <li class="bg_lo"> <a href="../unit/timeline.php"> <i class="icon-columns"></i> Timeline</a> </li>
+        <li class="bg_ly"> <a href="../transaksi/confirm_transaksi.php"> <i class="icon-columns"></i> Confirm</a> </li>
+		<li class="bg_ls"> <a href="../transaksi/cancel_transaksi.php"> <i class="icon-sitemap"></i> Cancel</a> </li>
+		<li class="bg_lr span3"> <a href="../transaksi_umum/transaksi_umum.php"> <i class="icon-money"></i> Transaksi Umum</a> </li>
+        <li class="bg_lb"> <a href="../unit/task.php"> <i class="icon-tasks"></i> Task Cleaner</a> </li>
+        <li class="bg_lg"> <a href="../unit/unit.php"> <i class="icon-list"></i> List Unit</a> </li>
       </ul>
     </div>
 <!--End-Action boxes-->
@@ -64,11 +64,11 @@
               </div>
               <div class="span3">
                 <center>
-                  <button class="btn btn-success chart-button" type="button" onclick="viewTransaksi()">Transaksi</button>
+                  <button class="bg_ls btn btn-success chart-button" type="button" onclick="viewTransaksi()">Transaksi</button>
                   <br>
-                  <button class="btn btn-success chart-button" type="button" onclick="viewPendapatan()">Pendapatan</button>
+                  <button class="bg_lb btn btn-success chart-button" type="button" onclick="viewPendapatan()">Pendapatan</button>
                   <br>
-                  <button class="btn btn-success chart-button" type="button" onclick="viewKeuntunganKotor()">Keuntungan Kotor</button>
+                  <button class="bg_lg btn btn-success chart-button" type="button" onclick="viewKeuntunganKotor()">Keuntungan Kotor</button>
                 </center>
                 <ul class="site-stats" style="padding-top: 10px;padding-bottom: 10px;">
                   <li class="bg_lh"><i class="icon-user"></i> <strong>2540</strong> <small>Dummy</small></li>
