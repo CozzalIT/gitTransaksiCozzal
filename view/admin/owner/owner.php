@@ -54,7 +54,6 @@
               						<td>
               						  <a class='btn btn-success' href='owner.php?detail_owner=$data->kd_owner'>Detail</a>
               						  <a class='btn btn-primary' href='edit.php?edit_owner=$data->kd_owner'>Edit</a>
-              						  <a class='btn btn-danger hapus' href='../../../proses/owner.php?delete_owner=$data->kd_owner'>Hapus</a>
               						</td>
             					  </tr>";
                       $i++;
