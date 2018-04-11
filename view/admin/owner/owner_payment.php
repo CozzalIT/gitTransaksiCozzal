@@ -135,7 +135,7 @@
                                 <td>$data_u->nama_apt</td>
                                 <td>$data_u->no_unit</td>
                                 <td>-</td>
-                                <td>".number_format($data_tu->harga*$data_tu->jumlah, 0, ".", ".")." IDR</td>
+                                <td>".number_format($data_tu->harga*$data_tu->jumlah*(-1), 0, ".", ".")." IDR</td>
                               </tr>
                             ";
                             $i++;
@@ -222,7 +222,7 @@
                               <td>$data_u->no_unit</td>
                               <td><center>-</center></td>
                               <td>$dateTimeTu[0]</td>
-                              <td>".number_format($data_tu->harga*$data_tu->jumlah, 0, ".", ".")." IDR</td>
+                              <td>".number_format($data_tu->harga*$data_tu->jumlah*(-1), 0, ".", ".")." IDR</td>
                             </tr>
                           ";
                           $i++;
