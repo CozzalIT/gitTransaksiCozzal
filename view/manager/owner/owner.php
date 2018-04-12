@@ -54,7 +54,6 @@
               						<td>
               						  <a class='btn btn-success' href='owner.php?detail_owner=$data->kd_owner'>Detail</a>
               						  <a class='btn btn-primary' href='edit.php?edit_owner=$data->kd_owner'>Edit</a>
-              						  <a class='btn btn-danger hapus' href='../../../proses/owner.php?delete_owner=$data->kd_owner'>Hapus</a>
               						</td>
             					  </tr>";
                       $i++;
@@ -226,7 +225,7 @@ echo '
 
 <!--Footer-part-->
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
+  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
 <script src="../../../asset/js/sweetalert.min.js"></script>

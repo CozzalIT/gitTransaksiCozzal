@@ -98,8 +98,42 @@
       </div>';
       }
 
+//Edit url airbnb
+    elseif (isset($_GET['edit_url']))
+    {
+      $Proses = new Unit($db);
+      $show = $Proses->getURL($_GET['edit_url']);
+      $edit = $show->fetch(PDO::FETCH_OBJ);
+      echo '
+      <div class="span3">
+      </div>
+      <div class="span6">
+        <div class="widget-box">
+        <div class="widget-title"> <span class="icon"> <i class="icon-refresh"></i> </span>
+          <h5>Sinkronisasi URL</h5>
+        </div>
+        <div class="widget-content nopadding">
+          <form action="../../../proses/unit.php" method="post" class="form-horizontal">
+            <div class="control-group">
+            <label class="control-label">URL Airbnb :</label>
+            <div class="controls">
+              <input name="url_bnb" type="text" value="'.$edit->url_bnb.'" />
+            </div>
+            </div> 
+            <div class="form-actions" style="text-align:right">
+            <button name="updateURL" value="'.$edit->kd_unit.'" type="submit" class="btn btn-success">Update</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      </div>
+      <div class="span3">
+      </div>
+          ';
+      }
+
 //Edit harga Unit by owner
-    if (isset($_GET['edit_harga_owner']))
+    elseif (isset($_GET['edit_harga_owner']))
     {
       $Proses = new Unit($db);
       $show = $Proses->editUnit($_GET['edit_harga_owner']);
@@ -164,7 +198,7 @@
       }
 
       //Edit data detail unit
-      		if (isset($_GET['edit_detail_unit']) || isset($_GET['tambah_detail_unit']))
+        elseif (isset($_GET['edit_detail_unit']) || isset($_GET['tambah_detail_unit']))
       		{
       		  $lantai = 0; $jml_kmr = 0; $jml_bed = 0; $jml_ac = 0; $water_heater='Tidak Tersedia';
       		  $dapur='Tidak Tersedia'; $wifi='Tidak Tersedia'; $tv='Tidak Tersedia'; $kd_unit=0; $act='';
@@ -358,7 +392,7 @@
       ?>
 <!--Footer-part-->
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
+<div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
 </div>
 <!--end-Footer-part-->
 <script src="../../../js/jquery.min.js"></script>

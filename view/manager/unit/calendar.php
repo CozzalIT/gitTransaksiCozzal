@@ -12,38 +12,59 @@
   include "../template/sidebar.php";
 
   if (isset($_GET['calendar_unit'])){
+    $arrayunit = array();
     $calendar = new Calendar($db);
-    $show = $calendar->showNoUnit($_GET['calendar_unit']);
-    $data = $show->fetch(PDO::FETCH_OBJ);
     $kd_unit = $_GET['calendar_unit'];
-    $no_unit = $data->no_unit;
-    $nama_apt = $data->nama_apt;
+    $show = $calendar->showNoUnit();
+    while($data = $show->fetch(PDO::FETCH_OBJ)){
+      if($data->kd_unit==$kd_unit){
+        $no_unit = $data->no_unit;
+        $nama_apt = $data->nama_apt;
+      } else {
+        $arrayunit[] = $data->kd_unit;
+        $arrayunit[] = $data->no_unit." - ".$data->nama_apt;
+      }
+    }
   }
 ?>
+
 <div id="content">
   <div id="content-header">
   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="unit.php" title="Go to Data Unit" class="tip-bottom">Data Unit</a> <a href="#" class="current">Kalender Unit <?php echo $no_unit; ?></a> </div>
-    <h1>Calendar Unit
+    <h1 onclick="triger()"><?php echo "<div id='nganu'>".$no_unit.' '.$nama_apt."</div>"; ?></h1>
+    <div id="apartement-dropdown" class="hide-dropdown">
+      <input type="text" placeholder="Search.." id="keyword" onkeyup="filter()"/> <br>
+      <?php
+        if(count($arrayunit)>0){
+          for($i=0;$i<count($arrayunit);$i+=2){
+            echo '<a class="content-dropdown" href="calendar.php?calendar_unit='.$arrayunit[$i].'">';
+            echo $arrayunit[$i+1]."</a>";
+          }
+        }
+      ?>
+    </div>
     <?php
-      echo $no_unit;
-      if(!isset($_POST['editCalendar']) && !isset($_POST['editBlok'])){
-        echo ' ('.$nama_apt.')</h1>';
-      }elseif((isset($_POST['editCalendar']) && !isset($_POST['batal'])) || isset($_POST['editBlok']) || isset($_POST['close'])){
-        echo ' </h1><p class="btn-add" style="color:red;">(Mode: EDIT EVENT) *klik event untuk mengedit</p>';
+      if((isset($_POST['editCalendar']) && !isset($_POST['batal'])) || isset($_POST['editBlok']) || isset($_POST['close'])){
+        echo '
+          <div class="alert alert-info" role="alert">
+            <strong>Mode edit event. </strong>Klik event untuk mengedit
+          </div>
+        ';
       }
     ?>
     <form action="" method="POST">
-      <a href="unit.php" class="btn btn-light btn-add"><i class="icon-chevron-left"></i> Kembali</a>
-      <a href="#popup-blok" data-toggle="modal" class="btn btn-danger btn-add"><i class="icon-minus-sign"></i> Blok Tanggal</a>
-      <a href="#popup-maintenance" data-toggle="modal" class="btn btn-warning btn-add" style="color:black;"><i class="icon-cogs"></i> Maintenance</a>
       <?php
         if((isset($_POST['editCalendar']) && !isset($_POST['batal'])) || isset($_POST['editBlok']) || isset($_POST['close'])){
           echo '
-            <button type="submit" name="batal" class="btn btn-inverse btn-add"><i class="icon-minus-sign"></i> Batal</button>
+            <button type="submit" name="batal" class="btn btn-inverse btn-add" style="margin-top: 0px;"><i class="icon-minus-sign"></i> Batal</button>
           ';
         }elseif(!isset($_POST['editCalendar']) && !isset($_POST['editBlok'])){
           echo '
-            <button type="submit" name="editCalendar" class="btn btn-primary btn-add"><i class="icon-pencil"></i> Edit Event</button>
+            <a href="unit.php" class="btn btn-light btn-add"><i class="icon-chevron-left"></i> <strong>Kembali</strong></a>
+            <a href="#popup-blok" data-toggle="modal" class="btn btn-danger btn-add"><i class="icon-minus-sign"></i> <strong>Blok Tanggal</strong></a>
+            <a href="#popup-maintenance" data-toggle="modal" class="btn btn-warning btn-add"><i class="icon-cogs"></i> <strong>Maintenance</strong></a>
+            <a href="#popup-mod-harga" data-toggle="modal" class="btn btn-info btn-add"><i class="icon-money"></i> <strong>Edit Harga</strong></a>
+            <button type="submit" name="editCalendar" class="btn btn-primary btn-add"><i class="icon-pencil"></i> <strong>Edit Event</strong></button>
           ';
         }
       ?>
@@ -59,7 +80,7 @@
         <script>
           function popupEdit(id, title, awal, akhir){
             $('#popup-editEvent').modal('show');
-            arrayNote = id.split("+")
+            arrayNote = id.split("+");
             document.editEvent.id.value = arrayNote[0];
             document.editEvent.jenis.value = title;
             document.editEvent.awal.value = awal;
@@ -98,26 +119,30 @@
               events: [
                 <?php
                   if (isset($_GET['calendar_unit'])){
-            		    $show = $calendar->showCalendarBooked($_GET['calendar_unit']);
+            		    $show = $calendar->showCalendar($_GET['calendar_unit']);
             		    while($data = $show->fetch(PDO::FETCH_OBJ)){
-                      echo "
-                      {
-                        title: 'Booked',
-                        start: '$data->check_in',
-                        end: '$data->check_out',
-                      },
-                      ";
+                      if($data->status == '1'){
+                        echo "
+                        {
+                          title: 'Booked',
+                          start: '$data->check_in',
+                          end: '$data->check_out',
+                        },
+                        ";
+                      }
                     }
-            		    $show = $calendar->showCalendarConfirm($_GET['calendar_unit']);
+            		    $show = $calendar->showCalendar($_GET['calendar_unit']);
             		    while($data = $show->fetch(PDO::FETCH_OBJ)){
-                      echo "
-                      {
-                        title: 'Confirm',
-                        start: '$data->check_in',
-                        end: '$data->check_out',
-                        color: '#359b20'
-                      },
-                      ";
+                      if($data->status == '42' or $data->status == '41'){
+                        echo "
+                        {
+                          title: 'Confirm',
+                          start: '$data->check_in',
+                          end: '$data->check_out',
+                          color: '#359b20'
+                        },
+                        ";
+                      }
                     }
                     $show = $calendar->showModCalendar($_GET['calendar_unit']);
             		    while($data = $show->fetch(PDO::FETCH_OBJ)){
@@ -126,8 +151,8 @@
                         {
                           id: '$data->kd_mod_calendar+$data->note',
                           title: 'Maintenance',
-                          start: '$data->start_date',
-                          end: '$data->end_date',
+                          start: '".$data->start_date."T12:00:00',
+                          end: '".$data->end_date."T13:00:00',
                           color: '#faa732',
                           textColor: '#000000'
                         },
@@ -137,8 +162,8 @@
                         {
                           id: '$data->kd_mod_calendar+$data->note',
                           title: 'Block by Owner',
-                          start: '$data->start_date',
-                          end: '$data->end_date',
+                          start: '".$data->start_date."T12:00:00',
+                          end: '".$data->end_date."T13:00:00',
                           color: '#da4f49',
                         },
                         ";
@@ -147,8 +172,8 @@
                         {
                           id: '$data->kd_mod_calendar+$data->note',
                           title: 'Block by Admin',
-                          start: '$data->start_date',
-                          end: '$data->end_date',
+                          start: '".$data->start_date."T12:00:00',
+                          end: '".$data->end_date."T13:00:00',
                           color: '#da4f49',
                         },
                         ";
@@ -179,11 +204,12 @@
       </div>
     </div>
   </div>
+  <?php include 'calendar_option.php'; ?>
 </div>
 
 <div id="popup-blok" class="modal hide">
   <div class="modal-header">
-    <button data-dismiss="modal" class="close" type="button">×</button>
+    <button data-dismiss="modal" class="close" type="button">Ã—</button>
     <h3>Blok Tanggal</h3>
   </div>
   <form action="../../../proses/calendar.php" method="post" class="form-horizontal">
@@ -213,7 +239,7 @@
 
 <div id="popup-maintenance" class="modal hide">
   <div class="modal-header">
-    <button data-dismiss="modal" class="close" type="button">×</button>
+    <button data-dismiss="modal" class="close" type="button">Ã—</button>
     <h3>Maintenance</h3>
   </div>
   <div class="modal-body">
@@ -243,10 +269,42 @@
   </div>
 </div>
 
+<div id="popup-mod-harga" class="modal hide">
+  <div class="modal-header">
+    <button data-dismiss="modal" class="close" type="button">Ã—</button>
+    <h3>Edit Harga</h3>
+  </div>
+  <div class="modal-body">
+  	<form action="../../../proses/calendar.php" method="post" class="form-horizontal">
+  	  <div class="control-group">
+  		  <label class="control-label">Unit : </label>
+    		<div class="controls">
+    		  <input name="unit" type="text" class="span2" value="<?php echo $no_unit.' ('.$nama_apt.')'; ?>" disabled/>
+    		</div>
+        <label class="control-label">Tanggal :</label>
+        <div class="controls">
+          <input name="tanggal" type="date" class="span2" required/>
+        </div>
+        <label class="control-label">Perubahan Harga :</label>
+        <div class="controls">
+          <input name="mod_harga" type="number" class="span2" required/>
+          <input name="kd_unit" type="text" class="span2 hide" value="<?php echo $kd_unit; ?>" required/>
+        </div>
+  	  </div>
+  	  <div class="control-group">
+    		<div class="controls">
+    		  <input type="submit" name="addMaintenance" value="submit" class="btn btn-success">
+    		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+    		</div>
+  	  </div>
+  	</form>
+  </div>
+</div>
+
 <div id="popup-editEvent" class="hapus modal hide <?php if(isset($_POST['editBlok'])){ echo 'show'; }?>">
   <div class="modal-header">
     <form action="" method="post">
-      <button id="close" name="close" data-dismiss="modal" class="close" type="submit">×</button>
+      <button id="close" name="close" data-dismiss="modal" class="close" type="submit">Ã—</button>
     </form>
     <?php
       if(isset($_POST['close'])){

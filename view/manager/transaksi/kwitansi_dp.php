@@ -1,9 +1,9 @@
 <?php
   require("../../../../config/database.php");
   require("../../../class/transaksi.php");
-
+  
   $thisPage = "Transaksi";
-
+ 
   include "../template/head.php";
 ?>
 <body>
@@ -54,7 +54,7 @@
                     <tr>
                     <tr>
                       <td class="width30">Invoice ID</td>
-                      <td class="width70"><strong>COZ-<?php echo $data->kd_transaksi; ?></strong></td>
+                      <td class="width70"><strong>COZ-<?php echo strtoupper(dechex($data->kd_transaksi)); ?></strong></td>
                     </tr>
                     <tr>
                       <td class="width30">Invoice Date</td>
@@ -87,8 +87,12 @@
                 <table class="table table-bordered table-invoice-full">
                   <tbody>
                     <tr>
-                      <td>Price Per Night</td>
+                      <td>Price Per Night for Weekday</td>
                       <td><strong><?php echo number_format($data->harga_sewa,0, ".", "."); ?> IDR</td>
+                    </tr>
+					<tr>
+                      <td>Price Per Night for Weekend</td>
+                      <td><strong><?php echo number_format($data->harga_sewa_weekend,0, ".", "."); ?> IDR</td>
                     </tr>
                     <tr>
                       <td>No Of Guest</td>
@@ -100,7 +104,7 @@
                     </tr>
                     <tr>
                       <td>Total No of Stay</td>
-                      <td><strong><?php echo $data->hari; ?> Day</td>
+                      <td><strong><?php echo $data->hari; ?> Day (<?php echo $data->hari_weekend;?> Weekend, <?php echo $data->hari_weekday;?> Weekday)</td>
                     </tr>
                     <tr>
                       <td>Discount</td>
@@ -120,7 +124,7 @@
                   <tbody>
                     <tr>
                       <td class="msg-invoice" width="85%"><h4>Payment method: </h4>
-                        Via Bank <?php echo $data->nama_bank; ?>
+                        Via Bank <?php echo $data->sumber_dana; ?>
                     </tr>
                   </tbody>
                 </table>

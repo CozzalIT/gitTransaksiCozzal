@@ -1,8 +1,9 @@
 <?php
-  require("../../../class/transaksi.php");
+  require("../../../class/transaksi_umum.php");
+  require("../../../class/unit.php");
   require("../../../../config/database.php");
 
-  $thisPage = "Confirm Transaksi";
+  $thisPage = "Laporan Transaksi";
 
   include "../template/head.php";
 ?>
@@ -13,9 +14,8 @@
 ?>
 <div id="content">
   <div id="content-header">
-   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Konfirmasi Transaksi</a></div>
-    <a href="transaksi.php" class="btn btn-success btn-add"><i class="icon-plus"></i> Transaksi Baru</a>
-    <a href="laporan_transaksi.php" class="btn btn-primary btn-add"><i class="icon-edit"></i> Laporan Transaksi</a>
+   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Laporan Transaksi</a></div>
+    <a href="transaksi_umum.php" class="btn btn-success btn-add"><i class="icon-plus"></i> Transaksi Umum Baru</a>
   </div>
   <div class="container-fluid">
     <hr>
@@ -23,48 +23,57 @@
       <div class="span12">
         <div class="widget-box" style="overflow-x:auto;">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5>Confirm Transaksi</h5>
+            <h5>Laporan Transaksi</h5>
           </div>
           <div class="widget-content nopadding">
 			      <table class="table table-bordered data-table">
               <thead>
                 <tr>
                   <th>No</th>
-                  <th>Penyewa</th>
-                  <th>Apartemen</th>
-                  <th>Unit</th>
-                  <th>Check In</th>
-        				  <th>Check Out</th>
+                  <th>Sumber Dana</th>
+                  <th>Kebutuhan</th>
+                  <th>Harga</th>
+                  <th>Jumlah</th>
+        				  <th>Total</th>
+                  <th>Keterangan</th>
         				  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                <?php
-        				  $Proses = new Transaksi($db);
-        				  $show = $Proses->showTransaksi();
+      			    <?php
+        				  $Proses = new TransaksiUmum($db);
+        				  $show = $Proses->showTransaksiUmum();
         				  $i = 1;
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-                    if($data->status == 42){
-            					echo "
-            					  <tr class='gradeC'>
-            					    <td>$i</td>
-            					    <td>$data->nama</td>
-            					    <td>$data->nama_apt</td>
-              						<td>$data->no_unit</td>
-              						<td>$data->check_in</td>
-              						<td>$data->check_out</td>
+                    if($data->kebutuhan == "umum"){
+                      $kebutuhan = $data->kebutuhan;
+                    }else{
+                      $arrayKebutuhan = explode("/",$data->kebutuhan);
+                      $kebutuhan = $arrayKebutuhan[0];
+
+                      $proses_unit = new Unit($db);
+                      $show_unit = $proses_unit->editUnit($arrayKebutuhan[1]);
+                      $data_unit = $show_unit->fetch(PDO::FETCH_OBJ);
+                    }
+          					echo "
+          					  <tr class='gradeC'>
+          					    <td>$i</td>
+          					    <td>$data->sumber_dana</td>
+          					    <td>".($kebutuhan == 'umum' ? 'Umum' : 'Unit '.$data_unit->no_unit)."</td>
+            						<td>".number_format($data->harga, 0, ".", ".")." IDR</td>
+            						<td>$data->jumlah</td>
+            						<td>".number_format($data->harga*$data->jumlah, 0, ".", ".")." IDR</td>
+                        <td>$data->keterangan</td>
             						<td>
                           <center>
-                            <a class='btn btn-primary' href='kwitansi.php?kwitansi=$data->kd_transaksi'>Kwitansi</a>
-              						 
+              						  <a class='btn btn-primary' href='#'>Edit</a>
                           </center>
                         </td>
           					  </tr>
                     ";
-                    $i++;
-                    }
-                  };
-                ?>
+          				$i++;
+        				  };
+      				  ?>
               </tbody>
             </table>
           </div>
@@ -90,7 +99,4 @@
 <script src="../../../asset/js/matrix.js"></script>
 <script src="../../../asset/js/matrix.tables.js"></script>
 </body>
-<?php
-  include '../template/modal.php';
-?>
 </html>
