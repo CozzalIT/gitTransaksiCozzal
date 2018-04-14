@@ -20,6 +20,15 @@
       if($data->kd_unit==$kd_unit){
         $no_unit = $data->no_unit;
         $nama_apt = $data->nama_apt;
+        $cal_bnb = $data->url_bnb;
+        $cal_cozzal = $data->url_cozzal;
+        $kd_apt = $data->kd_apt;
+        if($cal_cozzal==""){
+          $cal_cozzal = "<a href='../../../proses/unit.php?newics=$kd_unit' class='btn btn-small'>Buat Link</a>";
+        }
+        if($cal_bnb==""){
+          $cal_bnb = "Belum Tersedia";
+        }
       } else {
         $arrayunit[] = $data->kd_unit;
         $arrayunit[] = $data->no_unit." - ".$data->nama_apt;
@@ -90,7 +99,6 @@
           }
           $(document).ready(function() {
             $('#calendar').fullCalendar({
-
                 <?php
                   if(isset($_POST['editCalendar']) || isset($_POST['editBlok']) || isset($_POST['close'])){
                     echo "

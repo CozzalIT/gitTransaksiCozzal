@@ -8,7 +8,8 @@
 
     //Show
     public function showNoUnit(){
-      $sql = "SELECT tb_unit.kd_unit, tb_unit.no_unit, tb_unit.kd_apt, tb_apt.kd_apt, tb_apt.nama_apt FROM tb_unit
+      $sql = "SELECT tb_unit.kd_unit, tb_unit.no_unit, tb_unit.kd_apt, tb_unit.url_bnb, 
+      tb_unit.url_cozzal, tb_apt.kd_apt, tb_apt.nama_apt FROM tb_unit
       INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt ORDER BY tb_apt.nama_apt ASC";
       $query = $this->db->query($sql);
       return $query;
