@@ -1,4 +1,45 @@
+	<div class="widget-box" style="margin: 16px;">
+     <div class="widget-title"> <span class="icon"> <i class="icon-calendar"></i> </span>
+       <h5>Sinkronisasi Kalender</h5>
+     </div>
+     <div class="widget-content nopadding">
+       <div class="content-calendar notlast" style="border-bottom: 1px solid #C9C9C9;">
+       	<label class="control-label">URL Cozzal :</label>
+       	<div class="url-link"><?php echo $cal_cozzal; ?></div>
+       </div>
+       <div class="content-calendar">
+       	<label class="control-label">URL Airbnb :</label>
+       	<div class="url-link" id="url-bnb"><?php echo $cal_bnb; ?></div> 
+       <?php
+       echo '
+		 <a class="btn btn-small" href="edit.php?edit_url='.$kd_unit.'" style="margin: 5px;" ><i class="iconM icon-edit"></i>Edit URL Airbnb</a>  
+       ';
+       if($cal_bnb!="Belum Tersedia"){
+	        echo '
+		 <a onclick="refresh()" class="btn btn-small"><i class="iconM icon-repeat"></i>Refresh</a>
+	       ';      	
+       }
+       ?>       	    	
+       </div>       
+     </div>
+    </div>
+
 	<style type="text/css">
+		.content-calendar{
+			padding: 10px;
+		}
+		.url-link{
+			padding: 5px; 
+			background-color: #EFEFEF;
+			color: black;
+			overflow-x: auto;
+			max-width: 100%;
+			border: 1px solid grey;
+			border-radius: 4px;
+		}
+		.iconM{
+			margin-right: 5px;
+		}
 		#nganu,#apartement-dropdown{
 			width: 80%;
 			border: 1px solid #D5D1D1;
@@ -43,9 +84,15 @@
 		}
 	</style>
 	<script type="text/javascript">
+		
+		var kd_unit = <?php echo $kd_unit.";"; ?>
+		var kd_apt = <?php echo $kd_apt.";"; ?>
+		var url_bnb = $("#url-bnb").text();
+
 		function triger(){
 			document.getElementById("apartement-dropdown").classList.toggle("show-dropdown");	
 		}
+
 		function filter() {
 	  		var input, filter, ul, li, a, i;
 	  		input = document.getElementById("keyword");
@@ -58,5 +105,19 @@
 			       a[i].style.display = "none";
 			    }
 		    }
-		} 		
+		}
+
+		function refresh(){
+			$(".icon-repeat").attr("class","iconM icon-refresh");
+			$.post("../../../ics/generate2.php", {
+				cek_by_id : kd_unit, 
+				kd_apt : kd_apt, 
+				url_bnb : url_bnb
+			},
+			function (data) {
+				$(".icon-refresh").attr("class","iconM icon-ok");				
+				window.location = "calendar.php?calendar_unit="+kd_unit;
+			});				
+		} 
+
 	</script>

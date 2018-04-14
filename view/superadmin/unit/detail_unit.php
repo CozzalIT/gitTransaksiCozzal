@@ -288,23 +288,7 @@
                                           </tr>
                                         ';
                                       }
-                                      echo'
-                                      <tr style="border-bottom-width: 2px;border-bottom-style: solid;">
-                                      <td><strong>Sync Cal</strong></td>
-                                      </tr>
-                                      <tr>
-                                      <td>URL Airbnb</td>
-                                      <td>: '.$url_bnb.'</td>
-                                      </tr>
-                                      <tr>
-                                      <td>URL Cozzal</td>
-                                      <td>: '.$url_cozzal.'</td>
-                                      </tr>
-                                      <tr>
-                                        <td>
-                                           <a class="btn btn-small" href="edit.php?edit_url='.$data->kd_unit.'" style="margin-bottom: 12px;" >Edit URL Airbnb</a>
-                                        </td>                                    
-                                      </tr>                                      
+                                      echo'                                    
                                     </tbody>
                                   </table>
                                 </center>
