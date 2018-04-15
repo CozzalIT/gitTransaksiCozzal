@@ -46,6 +46,15 @@ class Ics_unit {
     return $query;    
   }  
 
+  public function showUnit2(){
+    $sql = "SELECT tb_unit.kd_unit, tb_unit.url_bnb, tb_unit.kd_apt, 
+    tb_unit.no_unit, tb_apt.nama_apt FROM tb_unit
+    INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt 
+    WHERE tb_unit.url_bnb is not null OR tb_unit.url_bnb!=''";
+    $query = $this->db->query($sql);
+    return $query;    
+  } 
+
   public function setURL($kd_unit, $url, $type){ //there are 2 type, url_bnb and url_cozzal
     $sql = "UPDATE tb_unit SET $type = '$url' WHERE kd_unit = '$kd_unit'";
     $query = $this->db->query($sql);

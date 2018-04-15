@@ -156,10 +156,10 @@ class Transaksi {
   }
 
   public function showTransaksi_cek($CI,$CO,$kd_unit){
-   $result = $this->db->prepare("SELECT * from tb_unit_kotor where ((check_in<='$CI' and check_out>='$CO')
+   $result = $this->db->prepare("SELECT * from tb_transaksi where ((check_in<='$CI' and check_out>='$CO')
     or (check_in>='$CI' and check_in<'$CO')
     or (check_out>'$CI' and check_out<='$CO'))
-    and (kd_unit ='$kd_unit')");
+    and (kd_unit ='$kd_unit') and (status!='2' OR status!='3')");
     $result->execute();
     $rows = $result->fetch();
     return $rows;
