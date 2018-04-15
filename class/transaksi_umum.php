@@ -53,5 +53,11 @@ class TransaksiUmum {
     }
   }
 
+  //Proses Delete
+  public function deleteTransaksiUmum($kd_transaksi_umum){
+    $sql = "DELETE FROM tb_transaksi_umum WHERE kd_transaksi_umum='$kd_transaksi_umum'";
+    $query = $this->db->query($sql);
+  }
+
 }
 ?>
