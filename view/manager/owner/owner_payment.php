@@ -32,7 +32,7 @@
           ?>
         </select>
       </div>
-      <button type="submit" href="laporan_transaksi.php" class="btn btn-primary" style="margin-left:20px;">Tampilkan</button>
+      <button type="submit" class="btn btn-primary" style="margin-left:20px;">Tampilkan</button>
     </form>
   </div>
   <div class="container-fluid">
@@ -96,7 +96,7 @@
 									}elseif($data_t->hari_weekday <> 0 && $data_t->hari_weekend <> 0){
 										$nominal = ($data_t->hari_weekend*$owner_we)+($data_t->hari_weekday*$owner_wd);
 									}
-								}									
+								}
                       				echo "
                       					<tr class='gradeC'>
                                   <td class='hide'>$i</td>
