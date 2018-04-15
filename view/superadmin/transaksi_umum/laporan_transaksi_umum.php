@@ -66,7 +66,7 @@
                         <td>$data->keterangan</td>
             						<td>
                           <center>
-              						  <a class='btn btn-primary' href='#'>Edit</a>
+              						  <a class='btn btn-primary' href=edit_umum.php?edit_transaksi_umum=$data->kd_transaksi_umum>Edit</a>
                           </center>
                         </td>
           					  </tr>

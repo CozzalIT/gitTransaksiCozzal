@@ -12,13 +12,31 @@
         data: [
           <?php
             $proses_t = new Transaksi($db);
+            $other = new Other();
+            $jumlahHari2 = 0;
             for($i=1;$i<=12;$i++){
               $show_t = $proses_t->showSumMonth($i, 2018, 41);
               $jumlahHari=0;
               while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
-                $jumlahHari = $jumlahHari + $data_t->hari;
+                $bulanCI = explode("-",$data_t->check_in);
+                $bulanCO = explode("-",$data_t->check_out);
+                if($bulanCI[1] != $bulanCO[1]){
+                  $kabisat = $other->cekKabisat(2018);
+                  $hari1 = $other->cekJumHari($kabisat, $bulanCI[1]);
+                  $jumlahHari = $jumlahHari + $hari1 - $bulanCI[2];
+                  $jumlahHari2 += $bulanCO[2];
+                }else{
+                  $jumlahHari = $jumlahHari + $data_t->hari;
+                  $jumlahHari2 += 0;
+                }
               }
-              echo $jumlahHari.',';
+              $hariLebih[$i+1] = $jumlahHari2;
+              if(empty($hariLebih[$i])){
+                $hariLebih[$i] = 0;
+              }
+              $jumlahHari2=0;
+              $subJumlahHari[$i] = $jumlahHari + $hariLebih[$i];
+              echo $subJumlahHari[$i].',';
             }
           ?>
         ],
@@ -29,7 +47,6 @@
         borderColor: window.chartColors.blue,
         data: [
           <?php
-            $other = new Other();
             $jumlahHari2 = 0;
             for($i=1;$i<=12;$i++){
               $show_t = $proses_t->showSumMonth($i, 2018, 1);
@@ -40,16 +57,20 @@
                 if($bulanCI[1] != $bulanCO[1]){
                   $kabisat = $other->cekKabisat(2018);
                   $hari1 = $other->cekJumHari($kabisat, $bulanCI[1]);
-                  $jumlahHari = $hari1 - $bulanCI[2];
-                  $jumlahHari2 = $bulanCO[2];
+                  $jumlahHari = $jumlahHari + $hari1 - $bulanCI[2];
+                  $jumlahHari2 += $bulanCO[2];
                 }else{
                   $jumlahHari = $jumlahHari + $data_t->hari;
-                  $jumlahHari2 = 0;
+                  $jumlahHari2 += 0;
                 }
               }
-              $jumlahHari = $jumlahHari + $jumlahHari2;
-              $jumlahHari2 = 0;
-              echo $jumlahHari.',';
+              $hariLebih[$i+1] = $jumlahHari2;
+              if(empty($hariLebih[$i])){
+                $hariLebih[$i] = 0;
+              }
+              $jumlahHari2=0;
+              $subJumlahHari[$i] = $jumlahHari + $hariLebih[$i];
+              echo $subJumlahHari[$i].',';
             }
           ?>
         ],
@@ -64,9 +85,25 @@
               $show_t = $proses_t->showSumMonth($i, 2018, 2);
               $jumlahHari=0;
               while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
-                $jumlahHari = $jumlahHari + $data_t->hari;
+                $bulanCI = explode("-",$data_t->check_in);
+                $bulanCO = explode("-",$data_t->check_out);
+                if($bulanCI[1] != $bulanCO[1]){
+                  $kabisat = $other->cekKabisat(2018);
+                  $hari1 = $other->cekJumHari($kabisat, $bulanCI[1]);
+                  $jumlahHari = $jumlahHari + $hari1 - $bulanCI[2];
+                  $jumlahHari2 += $bulanCO[2];
+                }else{
+                  $jumlahHari = $jumlahHari + $data_t->hari;
+                  $jumlahHari2 += 0;
+                }
               }
-              echo $jumlahHari.',';
+              $hariLebih[$i+1] = $jumlahHari2;
+              if(empty($hariLebih[$i])){
+                $hariLebih[$i] = 0;
+              }
+              $jumlahHari2=0;
+              $subJumlahHari[$i] = $jumlahHari + $hariLebih[$i];
+              echo $subJumlahHari[$i].',';
             }
           ?>
         ],

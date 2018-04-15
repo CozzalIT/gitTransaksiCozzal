@@ -110,6 +110,7 @@ elseif(isset($_POST['addTransaksiUnit'])){
 	  }elseif($add == "Failed"){
 	    echo 'Proses Gagal!!';
 		}
+
 	}elseif($mutasi_dana > $data->saldo){
 		if($kebutuhan == 'umum'){
 			header('Location:../view/'.$view.'/transaksi_umum/transaksi_umum.php?umum');
@@ -117,6 +118,53 @@ elseif(isset($_POST['addTransaksiUnit'])){
 			header('Location:../view/'.$view.'/transaksi_umum/transaksi_umum.php?unit');
 		}
 	}
+}
+
+//update transaksi umum
+elseif(isset($_POST['updateTransaksiUmum'])){
+	$kd_transaksi_umum = $_POST['kd_transaksi_umum'];
+	$kd_kas_lama = $_POST['kd_kas'];
+	$kas_selected = $_POST['kas'];
+	if($_POST['kebutuhan'] == "0"){
+		$kebutuhan = "umum";
+	} else {
+		$kd_unit = $_POST['unit'];
+		$kebutuhan = "unit/$kd_unit";
+	}
+	$harga_umum = $_POST['harga'];
+	$jumlah_umum = $_POST['jumlah'];
+	$total_umum_lama = $_POST['total_umum_lama'];
+	$total_umum_baru = $_POST['total_umum_baru'];
+	$keterangan = $_POST['keterangan'];
+	$tanggal = date("Y-m-d H:i:s");
+
+	$Proses = new TransaksiUmum($db);
+	$Proses_k = new Kas($db);
+
+	$show = $Proses_k->showKas();
+	$data_kas = $show->fetch(PDO::FETCH_OBJ);
+	if($kd_kas_lama <> $kas_selected){
+		$show_saldo_lama = $Proses_k->editSaldo($kd_kas_lama);
+		$data_saldo_lama = $show_saldo_lama->fetch(PDO::FETCH_OBJ);
+		$saldo_kas_lama = $data_saldo_lama->saldo + $total_umum_baru;
+
+		$show_saldo_baru = $Proses_k->editSaldo($kas_selected);
+		$data_saldo_baru = $show_saldo_baru->fetch(PDO::FETCH_OBJ);
+		$saldo_kas_baru = $data_saldo_baru->saldo - $total_umum_baru;
+
+		$update_kas_lama = $Proses_k->updateKas($kd_kas_lama, $saldo_kas_lama, $tanggal);
+		$update_kas_baru = $Proses_k->updateKas($kas_selected, $saldo_kas_baru, $tanggal);
+
+	}elseif ($kd_kas_lama == $kas_selected) {
+		$show_saldo_lama = $Proses_k->editSaldo($kd_kas_lama);
+		$data_saldo_lama = $show_saldo_lama->fetch(PDO::FETCH_OBJ);
+		$saldo_kas_lama = $data_saldo_lama->saldo + $total_umum_lama - $total_umum_baru;
+
+		$update_kas_lama = $Proses_k->updateKas($kd_kas_lama, $saldo_kas_lama, $tanggal);
+	}
+
+	$add = $Proses->updateTransaksiUmum($kd_transaksi_umum, $kas_selected, $kebutuhan, $harga_umum, $jumlah_umum, $keterangan, $tanggal);
+	header('Location:../view/'.$view.'/transaksi_umum/laporan_transaksi_umum.php');
 }
 
 else header('Location:../view/'.$view.'/home/home.php');
