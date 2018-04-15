@@ -5,7 +5,6 @@ require("../class/unit.php");
 require("../class/kas.php");
 require("../class/penyewa.php");
 
-
 date_default_timezone_set('Asia/Jakarta');
 session_start();
 $view = $_SESSION['hak_akses'];
@@ -368,9 +367,16 @@ elseif(isset($_GET['delete_confirm_transaksi']) && ($view=="superadmin" || $view
 elseif (isset($_GET['addConfirm']) && $view!="owner" && $view!="cleaner"){
   $kd_transaksi = $_GET['addConfirm'];
   $proses = new Transaksi($db);
-  $add = $proses->addConfirm($kd_transaksi);
-  if($add == "Success"){
-    header('Location:../view/'.$view.'/transaksi/confirm_transaksi.php');
+  $show = $proses->cekPelunasan($kd_transaksi);
+  $data = $show->fetch(PDO::FETCH_OBJ);
+
+  if($data->sisa_pelunasan > 0){
+    header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php?belum_lunas');
+  }else{
+    $add = $proses->addConfirm($kd_transaksi);
+    if($add == "Success"){
+      header('Location:../view/'.$view.'/transaksi/confirm_transaksi.php');
+    }
   }
 }
 
