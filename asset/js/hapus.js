@@ -25,8 +25,8 @@ $('.cancel').click(function(){
 		buttons: true,
 		dangerMode: true,
 	})
-	.then((willDelete) => {
-		if(willDelete){
+	.then((willCancle) => {
+		if(willCancle){
 			window.location = this.href;
 		}
 	});

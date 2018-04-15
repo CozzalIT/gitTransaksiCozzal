@@ -167,5 +167,12 @@ elseif(isset($_POST['updateTransaksiUmum'])){
 	header('Location:../view/'.$view.'/transaksi_umum/laporan_transaksi_umum.php');
 }
 
+//Delete Transaksi
+elseif(isset($_GET['delete_transaksi_umum']) && ($view=="superadmin" || $view=="manager")){
+  $proses = new TransaksiUmum($db);
+  $del = $proses->deleteTransaksiUmum($_GET['delete_transaksi_umum']);
+  header("location:../view/".$view."/transaksi_umum/laporan_transaksi_umum.php");
+}
+
 else header('Location:../view/'.$view.'/home/home.php');
 ?>

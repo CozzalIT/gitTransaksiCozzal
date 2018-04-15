@@ -67,6 +67,7 @@
             						<td>
                           <center>
               						  <a class='btn btn-primary' href=edit_umum.php?edit_transaksi_umum=$data->kd_transaksi_umum>Edit</a>
+                            <a class='btn btn-danger hapus' href='../../../proses/transaksi_umum.php?delete_transaksi_umum=$data->kd_transaksi_umum'>Hapus</a>
                           </center>
                         </td>
           					  </tr>
