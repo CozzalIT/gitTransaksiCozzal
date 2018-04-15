@@ -2,7 +2,7 @@
   require("../../../class/transaksi.php");
   require("../../../../config/database.php");
 
-  $thisPage = "Transaksi";
+  $thisPage = "Confirm Transaksi";
 
   include "../template/head.php";
 ?>
@@ -15,6 +15,7 @@
   <div id="content-header">
    <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Konfirmasi Transaksi</a></div>
     <a href="transaksi.php" class="btn btn-success btn-add"><i class="icon-plus"></i> Transaksi Baru</a>
+    <a href="laporan_transaksi.php" class="btn btn-primary btn-add"><i class="icon-edit"></i> Laporan Transaksi</a>
   </div>
   <div class="container-fluid">
     <hr>
@@ -38,30 +39,32 @@
                 </tr>
               </thead>
               <tbody>
-      			    <?php
+                <?php
         				  $Proses = new Transaksi($db);
-        				  $show = $Proses->showConfirmTransaksi();
+        				  $show = $Proses->showTransaksi();
         				  $i = 1;
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-          					echo "
-          					  <tr class='gradeC'>
-          					    <td>$i</td>
-          					    <td>$data->nama</td>
-          					    <td>$data->nama_apt</td>
-            						<td>$data->no_unit</td>
-            						<td>$data->check_in</td>
-            						<td>$data->check_out</td>
+                    if($data->status == 42){
+            					echo "
+            					  <tr class='gradeC'>
+            					    <td>$i</td>
+            					    <td>$data->nama</td>
+            					    <td>$data->nama_apt</td>
+              						<td>$data->no_unit</td>
+              						<td>$data->check_in</td>
+              						<td>$data->check_out</td>
             						<td>
                           <center>
-                            <a class='btn btn-primary' href='kwitansi.php?kwitansi=$data->kd_confirm_transaksi'>Kwitansi</a>
-              						  <a class='btn btn-danger hapus' href='../../../proses/transaksi.php?delete_confirm_transaksi=$data->kd_confirm_transaksi'>Hapus</a>
+                            <a class='btn btn-primary' href='kwitansi.php?kwitansi=$data->kd_transaksi'>Kwitansi</a>
+              						 
                           </center>
                         </td>
           					  </tr>
                     ";
-          				$i++;
-        				  };
-      				  ?>
+                    $i++;
+                    }
+                  };
+                ?>
               </tbody>
             </table>
           </div>

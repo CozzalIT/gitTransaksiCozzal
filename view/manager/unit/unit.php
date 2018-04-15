@@ -16,7 +16,7 @@
 <!--main-container-part-->
 <div id="content">
   <div id="content-header">
-   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Data Unit</a></div>
+    <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Data Unit</a></div>
     <a href="#popup-unit" data-toggle="modal" class="btn btn-info btn-add"><i class="icon-plus"></i> Tambah Data</a>
     <a id='hidenbtn' href='#' style='display:none'></a>
   </div>
@@ -26,7 +26,7 @@
       <div class="span12">
         <div class="widget-box" style="overflow-x:auto;">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5>Data Penyewa</h5>
+            <h5>Data Unit</h5>
           </div>
           <div class="widget-content nopadding">
             <table class="table table-bordered data-table">
@@ -69,8 +69,7 @@
                             <center>
                               <a class='btn btn-info' href='calendar.php?calendar_unit=$data->kd_unit'>Calendar</a>
                               <a class='btn btn-success' href='detail_unit.php?detail_unit=".$data->kd_unit."' >Kelola</a>
-                              <a class='btn btn-danger hapus' href='../../../proses/unit.php?delete_unit=$data->kd_unit&kurangi_ju=$data->kd_owner'>Hapus</a>
-                            </center>
+                              </center>
                           </td>
             					  </tr>
                       ";
@@ -177,7 +176,7 @@
 
 <!--Footer-part-->
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
+  <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://booking.cozzal.com">Cozzal IT</a> </div>
 </div>
 <!--End-Footer-part-->
 <script src="../../../asset/js/sweetalert.min.js"></script>

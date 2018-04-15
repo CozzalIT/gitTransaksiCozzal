@@ -1,6 +1,6 @@
 <?php
 //  function customError(){error:
-//  echo '<div class="hide">Error</div>'; 
+//	echo '<div class="hide">Error</div>';
 //  }
   //set error handler
 //  set_error_handler("customError");
@@ -14,7 +14,7 @@
   		$username = $_SESSION['username'];
   	}else{
   		header('location:../../'.$_SESSION['hak_akses'].'/home/home.php');
-  	}  
+  	}
   }
 ?>
 <!DOCTYPE html>
@@ -26,7 +26,6 @@
 <link rel="stylesheet" href="../../../asset/css/bootstrap.min.css" />
 <link rel="stylesheet" href="../../../asset/css/bootstrap-responsive.min.css" />
 <link rel="stylesheet" href="../../../asset/css/uniform.css" />
-<link rel="stylesheet" href="../../../asset/css/theme.css" />
 <link rel="stylesheet" href="../../../asset/css/select2.css" />
 <link rel="stylesheet" href="../../../asset/css/new.css" />
 <link rel="stylesheet" href="../../../asset/css/matrix-style.css" />
@@ -34,8 +33,19 @@
 <link href="../../../asset/font-awesome/css/font-awesome.css" rel="stylesheet" />
 <link rel="stylesheet" href="../../../asset/css/jquery.gritter.css" />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="../../../asset/css/theme.css" />
 <script src="../../../asset/js/jquery.min.js" type="text/javascript"></script>
 <script src="../../../asset/js/config.js" type="text/javascript"></script>
+
+<!-- Chart Js -->
+<script src="../../../asset/chart/Chart.bundle.js"></script>
+<script src="../../../asset/chart/utils.js"></script>
+<!-- //Chart Js -->
+
+<!-- Chart Js -->
+<script src="../../../asset/js/Chart.bundle.js"></script>
+<script src="../../../asset/js/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+<!-- //Chart Js -->
 
 <!-- Full Calendar -->
 <link href='../../../asset/fullcalendar/fullcalendar.min.css' rel='stylesheet' />
@@ -44,5 +54,7 @@
 <script src='../../../asset/fullcalendar/lib/jquery.min.js'></script>
 <script src='../../../asset/fullcalendar/fullcalendar.min.js'></script>
 <!-- //Full Calendar -->
+
+<script src="../../../asset/js/numeral.min.js"></script>
 <link rel="shortcut icon" type="image/x-icon" href="http://transaksi.cozzal.com/asset/images/fav.png">
 </head>

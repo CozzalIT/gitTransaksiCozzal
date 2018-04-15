@@ -6,8 +6,8 @@ class Booked {
       $this->db = $database;
   }
 
-  public function cancelBooked($kd_booked, $kd_unit, $check_in){
-    $sql = "DELETE FROM tb_booked WHERE kd_booked='$kd_booked'";
+  public function hapusBooked($kd_booked, $kd_unit, $check_in){
+    $sql = "UPDATE tb_booked SET status='0' WHERE kd_booked='$kd_booked'";
     $query = $this->db->query($sql);    
     $sql = "DELETE FROM tb_mod_calendar WHERE kd_unit='$kd_unit' AND start_date='$check_in'";
     $query = $this->db->query($sql);

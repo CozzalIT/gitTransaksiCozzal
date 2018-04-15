@@ -7,7 +7,7 @@ class Ics_unit {
   }
 
   public function cancelBooked($kd_unit, $check_in){
-    $sql = "UPDATE tb_booked SET status='0' WHERE kd_unit='$kd_unit' AND check_in='$check_in'";
+    $sql = "DELETE FROM tb_booked WHERE kd_unit='$kd_unit' AND check_in='$check_in'";
     $query = $this->db->query($sql);    
     $sql = "DELETE FROM tb_mod_calendar WHERE kd_unit='$kd_unit' AND start_date='$check_in'";
     $query = $this->db->query($sql);
@@ -34,7 +34,7 @@ class Ics_unit {
 
   public function showRecent_booked($kd_unit, $sekarang){
     $sql = "SELECT check_in FROM tb_booked WHERE kd_unit='$kd_unit' 
-    AND (check_in>='$sekarang' OR check_out>='$sekarang') AND status!='0'";
+    AND (check_in>='$sekarang' OR check_out>='$sekarang')";
     $query = $this->db->query($sql);
     return $query;
   }

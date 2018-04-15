@@ -54,7 +54,7 @@
                     <tr>
                     <tr>
                       <td class="width30">Invoice ID</td>
-                      <td class="width70"><strong>COZ-<?php echo $data->kd_confirm_transaksi; ?></strong></td>
+                      <td class="width70"><strong>COZ-<?php echo strtoupper(dechex($data->kd_confirm_transaksi)); ?></strong></td>
                     </tr>
                     <tr>
                       <td class="width30">Invoice Date</td>
@@ -138,7 +138,7 @@
 </div>
 <!--Footer-part-->
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
+  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
 <?php

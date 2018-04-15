@@ -12,13 +12,31 @@
         data: [
           <?php
             $proses_t = new Transaksi($db);
+            $other = new Other();
+            $jumlahHari2 = 0;
             for($i=1;$i<=12;$i++){
               $show_t = $proses_t->showSumMonth($i, 2018, 41);
               $jumlahHari=0;
               while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
-                $jumlahHari = $jumlahHari + $data_t->hari;
+                $bulanCI = explode("-",$data_t->check_in);
+                $bulanCO = explode("-",$data_t->check_out);
+                if($bulanCI[1] != $bulanCO[1]){
+                  $kabisat = $other->cekKabisat(2018);
+                  $hari1 = $other->cekJumHari($kabisat, $bulanCI[1]);
+                  $jumlahHari = $jumlahHari + $hari1 - $bulanCI[2];
+                  $jumlahHari2 += $bulanCO[2];
+                }else{
+                  $jumlahHari = $jumlahHari + $data_t->hari;
+                  $jumlahHari2 += 0;
+                }
               }
-              echo $jumlahHari.',';
+              $hariLebih[$i+1] = $jumlahHari2;
+              if(empty($hariLebih[$i])){
+                $hariLebih[$i] = 0;
+              }
+              $jumlahHari2=0;
+              $subJumlahHari[$i] = $jumlahHari + $hariLebih[$i];
+              echo $subJumlahHari[$i].',';
             }
           ?>
         ],
@@ -29,13 +47,30 @@
         borderColor: window.chartColors.blue,
         data: [
           <?php
+            $jumlahHari2 = 0;
             for($i=1;$i<=12;$i++){
               $show_t = $proses_t->showSumMonth($i, 2018, 1);
               $jumlahHari=0;
               while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
-                $jumlahHari = $jumlahHari + $data_t->hari;
+                $bulanCI = explode("-",$data_t->check_in);
+                $bulanCO = explode("-",$data_t->check_out);
+                if($bulanCI[1] != $bulanCO[1]){
+                  $kabisat = $other->cekKabisat(2018);
+                  $hari1 = $other->cekJumHari($kabisat, $bulanCI[1]);
+                  $jumlahHari = $jumlahHari + $hari1 - $bulanCI[2];
+                  $jumlahHari2 += $bulanCO[2];
+                }else{
+                  $jumlahHari = $jumlahHari + $data_t->hari;
+                  $jumlahHari2 += 0;
+                }
               }
-              echo $jumlahHari.',';
+              $hariLebih[$i+1] = $jumlahHari2;
+              if(empty($hariLebih[$i])){
+                $hariLebih[$i] = 0;
+              }
+              $jumlahHari2=0;
+              $subJumlahHari[$i] = $jumlahHari + $hariLebih[$i];
+              echo $subJumlahHari[$i].',';
             }
           ?>
         ],
@@ -50,9 +85,25 @@
               $show_t = $proses_t->showSumMonth($i, 2018, 2);
               $jumlahHari=0;
               while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
-                $jumlahHari = $jumlahHari + $data_t->hari;
+                $bulanCI = explode("-",$data_t->check_in);
+                $bulanCO = explode("-",$data_t->check_out);
+                if($bulanCI[1] != $bulanCO[1]){
+                  $kabisat = $other->cekKabisat(2018);
+                  $hari1 = $other->cekJumHari($kabisat, $bulanCI[1]);
+                  $jumlahHari = $jumlahHari + $hari1 - $bulanCI[2];
+                  $jumlahHari2 += $bulanCO[2];
+                }else{
+                  $jumlahHari = $jumlahHari + $data_t->hari;
+                  $jumlahHari2 += 0;
+                }
               }
-              echo $jumlahHari.',';
+              $hariLebih[$i+1] = $jumlahHari2;
+              if(empty($hariLebih[$i])){
+                $hariLebih[$i] = 0;
+              }
+              $jumlahHari2=0;
+              $subJumlahHari[$i] = $jumlahHari + $hariLebih[$i];
+              echo $subJumlahHari[$i].',';
             }
           ?>
         ],
@@ -201,10 +252,10 @@
               $show_t = $proses_t->showSumSewa($i, 2018);
               $keuntunganKotor=0;
               while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
-                //$totalOwner = ($data_t->harga_owner*$data->hari_weekday)+($data_t->harga_owner_weekend*$data->hari_weekend);
-                $keuntunganKotor = $data_t->total_tagihan;
+                $totalOwner = ($data_t->harga_owner*$data_t->hari_weekday)+($data_t->harga_owner_weekend*$data_t->hari_weekend);
+                $keuntunganKotor = $data_t->total_tagihan-$totalOwner;
               }
-              echo $jumlahPendapatan.',';
+              echo $keuntunganKotor.',';
             }
           ?>
         ],
@@ -225,6 +276,27 @@
       tooltips: {
         mode: 'index',
         intersect: false,
+        callbacks: {
+          label: function(tooltipItem, data) {
+            var label = data.datasets[tooltipItem.datasetIndex].label || '';
+            if (label) {
+              label += ' : ';
+            }
+            function formatRupiah(nominal){
+            	nominal += '';
+            	x = nominal.split('.');
+            	x1 = x[0];
+            	x2 = x.length > 1 ? '.' + x[1] : '';
+            	var rgx = /(\d+)(\d{3})/;
+            	while (rgx.test(x1)) {
+            		x1 = x1.replace(rgx, '$1' + '.' + '$2');
+            	}
+            	return x1 + x2;
+            }
+            label += formatRupiah(Math.round(tooltipItem.yLabel * 100) / 100) + ' IDR';
+            return label;
+          }
+        }
       },
       hover: {
         mode: 'nearest',
@@ -242,7 +314,7 @@
           display: true,
           scaleLabel: {
             display: true,
-            labelString: 'Hari'
+            labelString: 'Nominal *IDR'
           }
         }]
       }

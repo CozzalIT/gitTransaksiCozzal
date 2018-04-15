@@ -17,36 +17,8 @@
    <a href="#popup-saldo" data-toggle="modal" class="btn btn-success btn-add">Tambah Saldo</a>
    <a href="#popup-mutasi" data-toggle="modal" class="btn btn-success btn-add">Mutasi Dana</a>
   </div>
-  <div class="container-fluid">
+  <div class="row-fluid">
     <hr>
-    <div class="row-fluid">
-      <div class="span5">
-        <div class="widget-box" style="overflow-x:auto;">
-          <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5>Tambah Kas</h5>
-          </div>
-          <div class="widget-content">
-            <form action="../../../proses/kas.php" method="post">
-  			      <table class="">
-                <tbody>
-            			<tr>
-            				<td class="span4">Sumber Dana </td>
-            				<td class="span8"><input type="text" name="sumber_dana" required/></td>
-            			</tr>
-                  <tr>
-            				<td class="span4">Saldo </td>
-            				<td class="span8"><input type="number" name="saldo" required/></td>
-            			</tr>
-                  <tr>
-                    <td class="span4"></td>
-                    <td class="span8"><input type="submit" name="addKas" class="btn btn-success" value="Submit"/></td>
-                  </tr>
-                </tbody>
-              </table>
-            </form>
-          </div>
-        </div>
-      </div>
       <div class="span7">
         <div class="widget-box" style="overflow-x:auto;">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>

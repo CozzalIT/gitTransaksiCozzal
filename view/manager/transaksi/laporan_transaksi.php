@@ -1,8 +1,9 @@
 <?php
   require("../../../class/transaksi.php");
+  require("../../../class/kas.php");
   require("../../../../config/database.php");
 
-  $thisPage = "Transaksi";
+  $thisPage = "Laporan Transaksi";
 
   include "../template/head.php";
 ?>
@@ -15,6 +16,7 @@
   <div id="content-header">
    <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Laporan Transaksi</a></div>
     <a href="transaksi.php" class="btn btn-success btn-add"><i class="icon-plus"></i> Transaksi Baru</a>
+    <a href="confirm_transaksi.php" class="btn btn-primary btn-add"><i class="icon-edit"></i> Confirm Transaksi</a>
   </div>
   <div class="container-fluid">
     <hr>
@@ -29,8 +31,8 @@
               <thead>
                 <tr>
                   <th>No</th>
+                  <th>No Kwitansi</th>
                   <th>Penyewa</th>
-                  <th>Apartemen</th>
                   <th>Unit</th>
                   <th>Check In</th>
         				  <th>Check Out</th>
@@ -44,31 +46,33 @@
         				  $show = $Proses->showTransaksi();
         				  $i = 1;
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-          					echo "
-          					  <tr class='gradeC'>
-          					    <td>$i</td>
-          					    <td>$data->nama</td>
-          					    <td>$data->nama_apt</td>
-            						<td>$data->no_unit</td>
-            						<td>$data->check_in</td>
-            						<td>$data->check_out</td>
-                        <td>
-                          <center>
-                            <a class='btn btn-success' id='detail' name='detail' href='laporan_transaksi.php?detail=$data->kd_transaksi'>Detail</a>
-                            <a class='btn btn-info' href='../../../proses/transaksi.php?addConfirm=$data->kd_transaksi'>Confirm</a>
-                            <a class='btn btn-primary' href='kwitansi_dp.php?kwitansi=$data->kd_transaksi'>Kwitansi DP</a>
-                          </center>
-                        </td>
-            						<td>
-                          <center>
-                            <a class='btn btn-success' id='pembayaran' name='pembayaran' href='laporan_transaksi.php?pembayaran=$data->kd_transaksi'>Pembayaran</a>
-              						  <a class='btn btn-primary' href='edit.php?edit_transaksi=$data->kd_transaksi'>Edit</a>
-              						  <a class='btn btn-danger hapus' href='../../../proses/transaksi.php?delete_transaksi=$data->kd_transaksi'>Hapus</a>
-                          </center>
-                        </td>
-          					  </tr>
-                    ";
-          				$i++;
+                    if($data->status == 1){
+            					echo "
+            					  <tr class='gradeC'>
+            					    <td>$i</td>
+                          <td>COZ-".strtoupper(dechex($data->kd_transaksi))."</td>
+            					    <td>$data->nama</td>
+              						<td>$data->no_unit</td>
+              						<td>$data->check_in</td>
+              						<td>$data->check_out</td>
+                          <td>
+                            <center>
+                              <a class='btn btn-success' id='detail' name='detail' href='laporan_transaksi.php?detail=$data->kd_transaksi'>Detail</a>
+                              <a class='btn btn-info' href='../../../proses/transaksi.php?addConfirm=$data->kd_transaksi'>Confirm</a>
+                              <a class='btn btn-primary' href='kwitansi_dp.php?kwitansi=$data->kd_transaksi'>Slip DP</a>
+                            </center>
+                          </td>
+              						<td>
+                            <center>
+                              <a class='btn btn-success' id='pembayaran' name='pembayaran' href='laporan_transaksi.php?pembayaran=$data->kd_transaksi'>Bayar</a>
+                						  <a class='btn btn-primary' href='edit.php?edit_transaksi=$data->kd_transaksi'>Edit</a>
+                						  <a class='btn btn-warning cancel' href='../../../proses/transaksi.php?addCancel=$data->kd_transaksi&unitCancel=$data->kd_unit' style='color:black;'>Cancel</a>
+                            </center>
+                          </td>
+            					  </tr>
+                      ";
+                      $i++;
+                    }
         				  };
       				  ?>
               </tbody>
@@ -101,28 +105,62 @@ if(isset($_GET['pembayaran'])){
         <h3>Pembayaran</h3>
       </div>
       <div class="modal-body">
-      	<form action="" method="post" class="form-horizontal">
+      	<form action="../../../proses/transaksi.php" method="post" class="form-horizontal">
           <div class="control-group">
             <label class="control-label">Total Tagihan</label>
             <label class="control-label">'.number_format($data1->total_tagihan, 0, ".", ".").' IDR</label>
           </div>
           <div class="control-group">
             <label class="control-label">DP</label>
-            <label class="control-label">'.number_format($data1->sisa_pelunasan, 0, ".", ".").' IDR</label>
+            <label class="control-label">'.number_format($data1->dp, 0, ".", ".").' IDR</label>
           </div>
           <div class="control-group">
             <label class="control-label">Pembayaran</label>
-            <label class="control-label">0 IDR</label>
+            <label class="control-label">'.number_format($data1->pembayaran, 0, ".", ".").' IDR</label>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Pembayaran + DP</label>
+            <label class="control-label">'.number_format($data1->pembayaran + $data1->dp, 0, ".", ".").' IDR</label>
+          </div>
+          <hr>
+          <div class="control-group">
+            <label class="control-label">Sisa Pelunasan</label>
+            <label class="control-label">'.($data1->sisa_pelunasan <= 0 ? '0' : number_format($data1->sisa_pelunasan, 0, ".", ".") ).' IDR</label>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Kembalian</label>
+            <label class="control-label">'.($data1->sisa_pelunasan <= 0 ? number_format(abs($data1->sisa_pelunasan), 0, ".", ".") : '0' ).' IDR</label>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Satus</label>
+            <label class="control-label" style="color:red;">'.($data1->sisa_pelunasan <= 0 ? 'LUNAS' : 'BELUM LUNAS').'</label>
           </div>
           <div class="control-group">
       		  <label class="control-label">Jumlah Pembayaran</label>
         		<div class="controls">
         		  <input name="pembayaran" type="number" class="span2" placeholder="" value="0" required/>
-        		</div>
+              <input name="kd_transaksi" type="text" class="hide" value="'.$data1->kd_transaksi.'" />
+              <input name="sisa_pelunasan" type="text" class="hide" value="'.$data1->sisa_pelunasan.'" />
+            </div>
       	  </div>
+          <div class="control-group">
+            <label class="control-label">Via</label>
+            <div class="controls">
+              <select id="kas" name="kas" class="span2" required>
+                <option value="">-- Kas --</option>
+                ';
+                  $Proses = new Kas($db);
+                  $show = $Proses->showKas();
+                  while($data = $show->fetch(PDO::FETCH_OBJ)){
+                    echo "<option name='kd_kas' value='$data->kd_kas'>$data->sumber_dana</option>";
+                  }
+                echo '
+              </select>
+            </div>
+          </div>
       	  <div class="control-group">
         		<div class="controls">
-        		  <input type="submit" name="" class="btn btn-success" value="Tambah Pembayaran">
+        		  <input type="submit" name="addPembayaran" id="addPembayaran" class="btn btn-success" value="Tambah Pembayaran">
         		</div>
       	  </div>
       	</form>
@@ -189,7 +227,7 @@ if(isset($_GET['pembayaran'])){
                 <th colspan="2">Detail Kwitansi Penyewaan</th>
                 <tr>
                 <td class="width30">Kwitansi ID:</td>
-                <td class="width70"><strong>COZ-'.$detail->kd_transaksi.'</strong></td>
+                <td class="width70"><strong>COZ-'.strtoupper(dechex($detail->kd_transaksi)).'</strong></td>
                 </tr>
                 <tr>
                 <td>Invoice Date:</td>
@@ -224,8 +262,12 @@ if(isset($_GET['pembayaran'])){
                 <td class="width70"><strong>'.$detail->tamu.'</strong></td>
                 </tr>
                 <tr>
-                <td class="width30">Sewa Perhari:</td>
+                <td class="width30">Sewa Perhari (WD):</td>
                 <td class="width70"><strong>'.number_format($detail->harga_sewa, 0, ".", ".").' IDR</strong></td>
+                </tr>
+                <tr>
+                <td class="width30">Sewa Perhari (WE):</td>
+                <td class="width70"><strong>'.number_format($detail->harga_sewa_weekend, 0, ".", ".").' IDR</strong></td>
                 </tr>
                 <tr>
                 <td class="width30">Diskon:</td>
@@ -245,7 +287,7 @@ if(isset($_GET['pembayaran'])){
                 </tr>
                 <tr>
                 <td class="width30">DP Via:</td>
-                <td class="width70"><strong>'.$detail->nama_bank.'</strong></td>
+                <td class="width70"><strong>'.$detail->sumber_dana.'</strong></td>
                 </tr>
                 <tr>
                 <td class="width30">Sisa Pelunasan:</td>
@@ -278,7 +320,6 @@ if(isset($_GET['pembayaran'])){
 <script src="../../../asset/js/jquery.ui.custom.js"></script>
 <script src="../../../asset/js/bootstrap.min.js"></script>
 <script src="../../../asset/js/jquery.uniform.js"></script>
-<script src="../../../asset/js/select2.min.js"></script>
 <script src="../../../asset/js/jquery.dataTables.min.js"></script>
 <script src="../../../asset/js/matrix.js"></script>
 <script src="../../../asset/js/matrix.tables.js"></script>

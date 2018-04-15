@@ -65,7 +65,7 @@ elseif(isset($_GET["hapus"]) && $view=="superadmin"){
 	$kd_unit = $_GET["unit"];
 	$check_in = $_GET["ci"];
 	$Proses = new Booked($db);
-	$Proses->cancelBooked($kd_booked, $kd_unit, $check_in);
+	$Proses->hapusBooked($kd_booked, $kd_unit, $check_in);
 	header("location:../view/".$view."/booking/booked.php");
 }
 

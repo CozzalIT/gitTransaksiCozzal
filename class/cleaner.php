@@ -41,15 +41,9 @@ class Cleaner {
 
   public function showUnit_cek($tgl, $jenis, $method){
     if($method=="count"){
-      $sql = "SELECT COUNT(tb_unit.kd_unit)+(SELECT COUNT(kd_unit) FROM tb_booked WHERE status != '0') As jumlah ";
+      $sql = "SELECT COUNT(tb_unit.kd_unit) As jumlah ";
     } else {
-      $sql = "SELECT tb_booked.kd_unit, tb_unit.no_unit, tb_apt.nama_apt, tb_apt.alamat_apt,
-      '' AS jam_check_out, tb_booked.penyewa AS nama, tb_booked.no_tlp 
-      FROM tb_booked INNER JOIN tb_apt ON tb_apt.kd_apt = tb_booked.kd_apt
-      INNER JOIN tb_unit ON tb_unit.kd_unit = tb_booked.kd_unit
-      WHERE tb_booked.".$jenis."='$tgl'";
-      $sql .=" UNION ";
-      $sql .= "SELECT tb_unit.kd_unit, tb_unit.no_unit, tb_apt.nama_apt, tb_apt.alamat_apt, tb_unit_kotor.jam_check_out, tb_penyewa.nama, tb_penyewa.no_tlp ";   
+      $sql = "SELECT tb_unit.kd_unit, tb_unit.no_unit, tb_apt.nama_apt, tb_apt.alamat_apt, tb_unit_kotor.jam_check_out, tb_penyewa.nama, tb_penyewa.no_tlp ";   
     }
     $sql .= "FROM tb_unit INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt
     INNER JOIN tb_unit_kotor ON tb_unit_kotor.kd_unit = tb_unit.kd_unit

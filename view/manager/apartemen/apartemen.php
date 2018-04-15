@@ -48,7 +48,6 @@
             						  <td>$data->alamat_apt</td>
             						  <td>
             						    <a class='btn btn-primary' href='edit.php?edit_apt=$data->kd_apt'>Edit</a>
-            						    <a class='btn btn-danger hapus' href='../../../proses/apartemen.php?delete_apt=$data->kd_apt'>Hapus</a>
             						  </td>
             					  </tr>";
             					$i++;
@@ -100,8 +99,6 @@
   <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
 </div>
 <!--end-Footer-part-->
-<script src="../../../asset/js/sweetalert.min.js"></script>
-<script src="../../../asset/js/hapus.js"></script>
 <script src="../../../asset/js/jquery.min.js"></script>
 <script src="../../../asset/js/jquery.ui.custom.js"></script>
 <script src="../../../asset/js/bootstrap.min.js"></script>
