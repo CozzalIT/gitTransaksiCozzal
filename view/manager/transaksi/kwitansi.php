@@ -25,7 +25,7 @@
           </div>
           <?php
             $proses = new Transaksi($db);
-            $show = $proses->showConfirmById($_GET['kwitansi']);
+            $show = $proses->editTransaksi($_GET['kwitansi']);
             $data = $show->fetch(PDO::FETCH_OBJ);
           ?>
           <div class="widget-content">
@@ -54,7 +54,7 @@
                     <tr>
                     <tr>
                       <td class="width30">Invoice ID</td>
-                      <td class="width70"><strong>COZ-<?php echo strtoupper(dechex($data->kd_confirm_transaksi)); ?></strong></td>
+                      <td class="width70"><strong>COZ-<?php echo strtoupper(dechex($data->kd_transaksi)); ?></strong></td>
                     </tr>
                     <tr>
                       <td class="width30">Invoice Date</td>
@@ -120,14 +120,14 @@
                   <tbody>
                     <tr>
                       <td class="msg-invoice" width="85%"><h4>Payment method: </h4>
-                        Via Bank <?php echo $data->nama_bank; ?>
+                        Via Bank <?php echo $data->sumber_dana; ?>
                     </tr>
                   </tbody>
                 </table>
                 <div class="pull-right">
                   <h4><span>Total Amount:</span> <?php echo number_format($data->total_tagihan,0, ".", "."); ?> IDR</h4>
                   <br>
-                  <a class="btn btn-success btn-large pull-right" href="pdf.php?kwitansi=<?php echo $data->kd_confirm_transaksi; ?>">Download / Print</a> </div>
+                  <a class="btn btn-success btn-large pull-right" href="pdf.php?kwitansi=<?php echo $data->kd_transaksi; ?>">Download / Print</a> </div>
               </div>
             </div>
           </div>
@@ -137,12 +137,9 @@
   </div>
 </div>
 <!--Footer-part-->
-<div class="row-fluid">
-  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
-</div>
-<!--end-Footer-part-->
 <?php
   include("../template/footer.php");
 ?>
+<!--end-Footer-part-->
 </body>
 </html>

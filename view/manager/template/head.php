@@ -42,10 +42,6 @@
 <script src="../../../asset/chart/utils.js"></script>
 <!-- //Chart Js -->
 
-<!-- Chart Js -->
-<script src="../../../asset/js/Chart.bundle.js"></script>
-<script src="../../../asset/js/Chart.js/2.7.2/Chart.bundle.min.js"></script>
-<!-- //Chart Js -->
 
 <!-- Full Calendar -->
 <link href='../../../asset/fullcalendar/fullcalendar.min.css' rel='stylesheet' />

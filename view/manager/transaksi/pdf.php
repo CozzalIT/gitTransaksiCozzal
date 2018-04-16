@@ -40,7 +40,7 @@ $pdf->AddPage();
 $pdf->SetFont('Times','',12);
 
 $proses = new Transaksi($db);
-$show = $proses->showConfirmById($_GET['kwitansi']);
+$show = $proses->editTransaksi($_GET['kwitansi']);
 $data = $show->fetch(PDO::FETCH_OBJ);
 
 $pdf->SetFont('Arial','B',14);
@@ -57,7 +57,7 @@ $pdf->SetFont('Arial','',12);
 
 $pdf->Cell(120 ,5,$data->alamat,0,0);
 $pdf->Cell(25 ,5,'Invoice ID',0,0);//end of line
-$pdf->Cell(34 ,5,': COZ-'.$data->kd_confirm_transaksi,0,1);//end of line
+$pdf->Cell(34 ,5,': COZ-'.$data->kd_transaksi,0,1);//end of line
 
 $pdf->Cell(120 ,5,'Mobile Phone : '.$data->no_tlp,0,0);
 $pdf->Cell(25 ,5,'Invoice Date',0,0);
