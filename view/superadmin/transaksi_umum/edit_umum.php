@@ -46,6 +46,7 @@ include "../template/head.php";
                       <div class="control-group">
                         <input name="kd_kas" class="hide" type="text" value="'.$edit->kd_kas.'"/>
                         <input name="kd_transaksi_umum" class="hide" type="text" value="'.$edit->kd_transaksi_umum.'"/>
+                        <input name="tanggal_transaksi" class="hide" type="text" value="'.$edit->tanggal.'"/>
                         <label class="control-label">Sumber Dana :</label>
                         <div class="controls">
                         <select name="kas" required>

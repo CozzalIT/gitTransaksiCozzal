@@ -59,5 +59,6 @@ class TransaksiUmum {
     $query = $this->db->query($sql);
   }
 
+
 }
 ?>
