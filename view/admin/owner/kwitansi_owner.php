@@ -137,7 +137,7 @@
                       </tr>
                       <tr>
                         <th>No</th>
-                        <th>Tanggal</th>
+                        <th>Check In / Out</th>
                         <th>Nama</th>
                         <th>Jumlah</th>
                         <th>Weekend</th>

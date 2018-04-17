@@ -122,6 +122,8 @@ if(!empty($_POST['transaksiUmum'])){
     $pdf->Cell(40 ,5,'',1,0);
     $pdf->Cell(15 ,5,'',1,0);
     $pdf->Cell(40 ,5,'',1,1);
+
+  $total_out = 0;
 }
 
 $pdf->Cell(145 ,5,'Total Pengeluaran',1,0);
@@ -134,13 +136,13 @@ $pdf->SetFont('Arial','',9);
 
 $pdf->Cell(185 ,5,'Pendapatan Unit',1,1,'C');
 
-$pdf->Cell(10 ,5,'No',1,0);
-$pdf->Cell(30 ,5,'Tanggal',1,0);
+$pdf->Cell(8 ,5,'No',1,0);
+$pdf->Cell(38 ,5,'Check In / Out',1,0);
 $pdf->Cell(45 ,5,'Nama',1,0);
 $pdf->Cell(10 ,5,'Hari',1,0);
-$pdf->Cell(30 ,5,'Weekday',1,0);
-$pdf->Cell(30 ,5,'Weekend',1,0);
-$pdf->Cell(30 ,5,'Total',1,1);
+$pdf->Cell(28 ,5,'Weekday',1,0);
+$pdf->Cell(28 ,5,'Weekend',1,0);
+$pdf->Cell(28 ,5,'Total',1,1);
 
 $proses_t = new Transaksi($db);
 
@@ -150,25 +152,34 @@ if(!empty($_POST['transaksi'])){
   foreach ($_POST['transaksi'] as $kd_transaksi) {
     $show_t = $proses_t->editTransaksi($kd_transaksi);
     $data_t = $show_t->fetch(PDO::FETCH_OBJ);
-    $tanggal = explode(" ",$data_t->tgl_transaksi);
     $weekday = $data_t->harga_owner*$data_t->hari_weekday;
     $weekend = $data_t->harga_owner_weekend*$data_t->hari_weekend;
     $subTotal_in = $weekday+$weekend;
     $total_in=$total_in+$subTotal_in;
     echo
-      $pdf->Cell(10 ,5,$i,1,0);
-      $pdf->Cell(30 ,5,$tanggal[0],1,0);
+      $pdf->Cell(8 ,5,$i,1,0);
+      $pdf->Cell(38 ,5,$data_t->check_in.' / '.$data_t->check_out,1,0);
       $pdf->Cell(45 ,5,$data_t->nama,1,0);
       $pdf->Cell(10 ,5,$data_t->hari.' H',1,0);
-      $pdf->Cell(30 ,5,($weekday == 0 ? '-' : number_format($weekday, 0, '.','.').' IDR'),1,0);
-      $pdf->Cell(30 ,5,($weekend == 0 ? '-' : number_format($weekend, 0, '.','.').' IDR'),1,0);
-      $pdf->Cell(30 ,5,number_format($subTotal_in, 0, '.','.').' IDR',1,1);
+      $pdf->Cell(28 ,5,($weekday == 0 ? '-' : number_format($weekday, 0, '.','.').' IDR'),1,0);
+      $pdf->Cell(28 ,5,($weekend == 0 ? '-' : number_format($weekend, 0, '.','.').' IDR'),1,0);
+      $pdf->Cell(28 ,5,number_format($subTotal_in, 0, '.','.').' IDR',1,1);
     $i++;
   }
+}else {
+  echo
+    $pdf->Cell(8 ,5,'',1,0);
+    $pdf->Cell(38 ,5,'',1,0);
+    $pdf->Cell(45 ,5,'',1,0);
+    $pdf->Cell(10 ,5,'',1,0);
+    $pdf->Cell(28 ,5,'',1,0);
+    $pdf->Cell(28 ,5,'',1,0);
+    $pdf->Cell(28 ,5,'',1,1);
+  $total_in = 0;
 }
 
-$pdf->Cell(155 ,5,'Total Pendapatan',1,0);
-$pdf->Cell(30 ,5,number_format($total_in, 0, ".", ".").' IDR',1,1);
+$pdf->Cell(157 ,5,'Total Pendapatan',1,0);
+$pdf->Cell(28 ,5,number_format($total_in, 0, ".", ".").' IDR',1,1);
 
 $pdf->Cell(189 ,10,'',0,1);
 

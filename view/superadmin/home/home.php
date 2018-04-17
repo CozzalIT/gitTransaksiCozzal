@@ -68,6 +68,7 @@
                   <button class="bg_lb btn btn-success chart-button" type="button" onclick="viewPendapatan()">Pendapatan</button>
                   <br>
                   <button class="bg_lg btn btn-success chart-button" type="button" onclick="viewKeuntunganKotor()">Keuntungan Kotor</button>
+                  <br>
                 </center>
                 <ul class="site-stats" style="padding-top: 10px;padding-bottom: 10px;">
                   <li class="bg_lh"><i class="icon-user"></i> <strong>2540</strong> <small>Dummy</small></li>

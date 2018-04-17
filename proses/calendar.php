@@ -2,6 +2,7 @@
 require("../../config/database.php");
 require("../class/calendar.php");
 require("../class/unit.php");
+require("../class/ics_unit.php");
 session_start();
 $view = $_SESSION['hak_akses'];
 
@@ -19,6 +20,8 @@ if(isset($_POST['blokCalendar'])){
 
   $proses = new Calendar($db);
   $add = $proses->addModCalendar($kd_unit, $start_date, $end_date, $note, $jenis);
+  $ics = new Ics_unit($db);
+  $ics->buildIcs($kd_unit);
 
   if($add == "Success"){
 	  header('Location:../view/'.$view.'/unit/calendar.php?calendar_unit='.$kd_unit);
@@ -36,6 +39,9 @@ elseif(isset($_POST['addMaintenance']) && ($view == 'admin' || $view == 'superad
 
   $proses = new Calendar($db);
   $add = $proses->addModCalendar($kd_unit, $start_date, $end_date, $note, $jenis);
+
+  $ics = new Ics_unit($db);
+  $ics->buildIcs($kd_unit);
 
   if($add == "Success"){
     header('Location:../view/'.$view.'/unit/calendar.php?calendar_unit='.$kd_unit);
@@ -79,6 +85,9 @@ elseif(isset($_GET['delete_event'])){
   $kd_unit = $data->kd_unit;
 
   $del = $proses->deleteModCalendar($_GET['delete_event']);
+
+  $ics = new Ics_unit($db);
+  $ics->buildIcs($kd_unit);
   header("location:../view/".$view."/unit/calendar.php?calendar_unit=".$kd_unit);
 }
 
@@ -95,6 +104,9 @@ elseif(isset($_POST['updateModCal'])){
   $kd_unit = $data->kd_unit;
 
 	$update = $proses->updateModCal($kd_mod_calendar, $awal, $akhir, $catatan);
+
+  $ics = new Ics_unit($db);
+  $ics->buildIcs($kd_unit);
 
 
   if($update == "Success"){

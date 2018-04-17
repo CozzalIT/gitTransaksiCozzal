@@ -136,6 +136,7 @@ elseif(isset($_POST['updateTransaksiUmum'])){
 	$total_umum_lama = $_POST['total_umum_lama'];
 	$total_umum_baru = $_POST['total_umum_baru'];
 	$keterangan = $_POST['keterangan'];
+	$tanggal_transaksi = $_POST['tanggal_transaksi'];
 	$tanggal = date("Y-m-d H:i:s");
 
 	$Proses = new TransaksiUmum($db);
@@ -155,12 +156,17 @@ elseif(isset($_POST['updateTransaksiUmum'])){
 		$update_kas_lama = $Proses_k->updateKas($kd_kas_lama, $saldo_kas_lama, $tanggal);
 		$update_kas_baru = $Proses_k->updateKas($kas_selected, $saldo_kas_baru, $tanggal);
 
+		$update_mutasi = $Proses_k->updateMutasiByDate($total_umum_baru, $kas_selected, $tanggal_transaksi);
+
 	}elseif ($kd_kas_lama == $kas_selected) {
 		$show_saldo_lama = $Proses_k->editSaldo($kd_kas_lama);
 		$data_saldo_lama = $show_saldo_lama->fetch(PDO::FETCH_OBJ);
 		$saldo_kas_lama = $data_saldo_lama->saldo + $total_umum_lama - $total_umum_baru;
 
 		$update_kas_lama = $Proses_k->updateKas($kd_kas_lama, $saldo_kas_lama, $tanggal);
+
+		$update_mutasi = $Proses_k->updateMutasiByDate($total_umum_baru, $kd_kas_lama, $tanggal_transaksi);
+
 	}
 
 	$add = $Proses->updateTransaksiUmum($kd_transaksi_umum, $kas_selected, $kebutuhan, $harga_umum, $jumlah_umum, $keterangan, $tanggal);
@@ -170,7 +176,21 @@ elseif(isset($_POST['updateTransaksiUmum'])){
 //Delete Transaksi
 elseif(isset($_GET['delete_transaksi_umum']) && ($view=="superadmin" || $view=="manager")){
   $proses = new TransaksiUmum($db);
-  $del = $proses->deleteTransaksiUmum($_GET['delete_transaksi_umum']);
+	$Proses_k = new Kas($db);
+	$tanggal = date("Y-m-d H:i:s");
+
+	$show_transaksi = $proses->editTransaksiUmum($_GET['delete_transaksi_umum']);
+	$data_transaksi = $show_transaksi->fetch(PDO::FETCH_OBJ);
+
+	$show_saldo = $Proses_k->editSaldo($data_transaksi->kd_kas);
+	$data_saldo = $show_saldo->fetch(PDO::FETCH_OBJ);
+
+	$total = $data_transaksi->jumlah*$data_transaksi->harga;
+	$saldo_kas = $data_saldo->saldo + $total;
+
+	$update_saldo = $Proses_k->updateKas($data_transaksi->kd_kas, $saldo_kas, $tanggal);
+	$Proses_k->deleteMutasiByDate($data_transaksi->tanggal);
+	$del = $proses->deleteTransaksiUmum($_GET['delete_transaksi_umum']);
   header("location:../view/".$view."/transaksi_umum/laporan_transaksi_umum.php");
 }
 

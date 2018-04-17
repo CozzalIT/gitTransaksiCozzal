@@ -27,6 +27,16 @@
             <h5>Laporan Transaksi</h5>
           </div>
           <div class="widget-content nopadding">
+            <?php
+              if(isset($_GET['belum_lunas'])){
+                echo "
+                  <div class='alert alert-danger' role='alert'>
+                    <strong>Transaksi Belum Lunas!</strong>
+                  </div>
+                ";
+              }
+            ?>
+
 			      <table class="table table-bordered data-table">
               <thead>
                 <tr>

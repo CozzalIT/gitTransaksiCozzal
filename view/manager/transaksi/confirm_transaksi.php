@@ -30,8 +30,8 @@
               <thead>
                 <tr>
                   <th>No</th>
+                  <th>No Kwitansi</th>
                   <th>Penyewa</th>
-                  <th>Apartemen</th>
                   <th>Unit</th>
                   <th>Check In</th>
         				  <th>Check Out</th>
@@ -41,28 +41,26 @@
               <tbody>
                 <?php
         				  $Proses = new Transaksi($db);
-        				  $show = $Proses->showTransaksi();
+        				  $show = $Proses->showTransaksiC();
         				  $i = 1;
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-                    if($data->status == 42){
-            					echo "
-            					  <tr class='gradeC'>
-            					    <td>$i</td>
-            					    <td>$data->nama</td>
-            					    <td>$data->nama_apt</td>
-              						<td>$data->no_unit</td>
-              						<td>$data->check_in</td>
-              						<td>$data->check_out</td>
-            						<td>
+            				echo "
+            				  <tr class='gradeC'>
+            					  <td>$i</td>
+                        <td>COZ-".strtoupper(dechex($data->kd_transaksi))."</td>
+            					  <td>$data->nama</td>
+              					<td>$data->no_unit</td>
+              					<td>$data->check_in</td>
+              					<td>$data->check_out</td>
+              					<td>
                           <center>
                             <a class='btn btn-primary' href='kwitansi.php?kwitansi=$data->kd_transaksi'>Kwitansi</a>
-              						 
+                  					<a class='btn btn-danger hapus' href='../../../proses/transaksi.php?delete_confirm_transaksi=$data->kd_transaksi'>Hapus</a>
                           </center>
                         </td>
           					  </tr>
                     ";
                     $i++;
-                    }
                   };
                 ?>
               </tbody>

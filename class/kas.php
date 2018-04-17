@@ -124,5 +124,21 @@ class Kas {
     $query = $this->db->query($sql);
   }
 
+  //update berdasarkan
+  public function updateMutasiByDate($total_umum, $kas_selected, $tanggal){
+    $sql = "UPDATE tb_mutasi_kas SET mutasi_dana='$total_umum', kd_kas='$kas_selected' WHERE tanggal='$tanggal'";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
+  }
+
+  public function deleteMutasiByDate($tanggal){
+    $sql = "DELETE FROM tb_mutasi_kas WHERE tanggal='$tanggal'";
+    $query = $this->db->query($sql);
+  }
+
 }
 ?>
