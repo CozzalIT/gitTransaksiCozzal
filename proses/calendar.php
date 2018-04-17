@@ -1,6 +1,7 @@
 <?php
 require("../../config/database.php");
 require("../class/calendar.php");
+require("../class/unit.php");
 session_start();
 $view = $_SESSION['hak_akses'];
 
@@ -35,6 +36,34 @@ elseif(isset($_POST['addMaintenance']) && ($view == 'admin' || $view == 'superad
 
   $proses = new Calendar($db);
   $add = $proses->addModCalendar($kd_unit, $start_date, $end_date, $note, $jenis);
+
+  if($add == "Success"){
+    header('Location:../view/'.$view.'/unit/calendar.php?calendar_unit='.$kd_unit);
+  }else{
+    echo 'error';
+  }
+}
+
+elseif(isset($_POST['addModHarga'])){
+  $proses_c = new Calendar($db);
+  $proses_u = new Unit($db);
+  $jenis = $_POST['jenis'];
+  $kd_unit = $_POST['kd_unit'];
+  $note = $_POST['note'];
+  $start_date = $_POST['awal'];
+  $end_date = $_POST['akhir'];
+
+  if($jenis == 'hargaWeekend'){
+    $show_u = $proses_u->editUnit($kd_unit);
+    $data_u = $show_u->fetch(PDO::FETCH_OBJ);
+    $harga_sewa = $data_u->h_sewa_we;
+    $harga_owner = $data_u->h_owner_we;
+    $add = $proses_c->addModHarga($kd_unit, $start_date, $end_date, $harga_sewa, $harga_owner, $note);
+  }elseif($jenis == 'hargaBaru'){
+    $harga_sewa = $_POST['harga_sewa'];
+    $harga_owner = $_POST['harga_owner'];
+    $add = $proses_c->addModHarga($kd_unit, $start_date, $end_date, $harga_sewa, $harga_owner, $note);
+  }
 
   if($add == "Success"){
     header('Location:../view/'.$view.'/unit/calendar.php?calendar_unit='.$kd_unit);

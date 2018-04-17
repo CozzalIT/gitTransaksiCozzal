@@ -40,8 +40,8 @@
 <div id="content">
   <div id="content-header">
   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="unit.php" title="Go to Data Unit" class="tip-bottom">Data Unit</a> <a href="#" class="current">Kalender Unit <?php echo $no_unit; ?></a> </div>
-    <h1 onclick="triger()"><?php echo "<div id='nganu'>".$no_unit.' '.$nama_apt."</div>"; ?></h1>
-    <div id="apartement-dropdown" class="hide-dropdown">
+    <h4 onclick="triger()" style="margin-left: 20px;"><?php echo "<div id='nganu' style='width: 50%;height: 20px;'>".$no_unit.' '.$nama_apt."</div>"; ?></h4>
+    <div id="apartement-dropdown" class="hide-dropdown" style="left: 235px;">
       <input type="text" placeholder="Search.." id="keyword" onkeyup="filter()"/> <br>
       <?php
         if(count($arrayunit)>0){
@@ -151,6 +151,17 @@
                         },
                         ";
                       }
+                    }
+                    $show = $calendar->showModHarga($_GET['calendar_unit']);
+            		    while($data = $show->fetch(PDO::FETCH_OBJ)){
+                      echo "
+                      {
+                        title: '".number_format($data->harga_sewa, 0, ".", ".")." IDR',
+                        start: '".$data->start_date."T12:00:00',
+                        end: '".$data->end_date."T13:00:00',
+                        color: '#f48342'
+                      },
+                      ";
                     }
                     $show = $calendar->showModCalendar($_GET['calendar_unit']);
             		    while($data = $show->fetch(PDO::FETCH_OBJ)){
@@ -289,19 +300,36 @@
     		<div class="controls">
     		  <input name="unit" type="text" class="span2" value="<?php echo $no_unit.' ('.$nama_apt.')'; ?>" disabled/>
     		</div>
-        <label class="control-label">Tanggal :</label>
+        <label class="control-label">Awal : </label>
+    		<div class="controls">
+    		  <input name="awal" type="date" class="span2" required/>
+    		</div>
+        <label class="control-label">Akhir : </label>
+    		<div class="controls">
+    		  <input name="akhir" type="date" class="span2" required/>
+    		</div>
+        <label class="control-label">Catatan : </label>
+    		<div class="controls">
+    		  <input name="note" type="text" class="span2" required/>
+    		</div>
+        <label class="control-label">Edit Harga :</label>
         <div class="controls">
-          <input name="tanggal" type="date" class="span2" required/>
+          <input type="radio" name="jenis" value="hargaWeekend" onclick="(this.checked ? hargaWeekend() : '')" required> Harga Weekend<br>
+          <input type="radio" name="jenis" value="hargaBaru" onclick="(this.checked ? hargaBaru() : '')" required> Harga Baru
         </div>
-        <label class="control-label">Perubahan Harga :</label>
+        <label id="label_harga_sewa" class="control-label hide">Harga Sewa :</label>
         <div class="controls">
-          <input name="mod_harga" type="number" class="span2" required/>
-          <input name="kd_unit" type="text" class="span2 hide" value="<?php echo $kd_unit; ?>" required/>
+          <input name="harga_sewa" id="harga_sewa" type="number" class="span2 hide" value="0" required/>
+        </div>
+        <label id="label_harga_owner" class="control-label  hide">Harga Owner:</label>
+        <div class="controls">
+          <input name="harga_owner" id="harga_owner" type="number" class="span2 hide" value="0" required/>
         </div>
   	  </div>
+      <input name="kd_unit" type="text" class="span2 hide" value="<?php echo $kd_unit; ?>" required/>
   	  <div class="control-group">
     		<div class="controls">
-    		  <input type="submit" name="addMaintenance" value="submit" class="btn btn-success">
+    		  <input type="submit" name="addModHarga" value="Submit" class="btn btn-success">
     		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
     		</div>
   	  </div>
@@ -320,12 +348,11 @@
       }
     ?>
     <script type="text/javascript">
-      var  element = document.getElementById("close");
+      var element = document.getElementById("close");
       var popup = document.querySelectorAll(".hapus");
       element.onclick = function(){
         popup[0].classList.remove("show");
       }
-
       function hapusBlok(id){
         $("#hapusBlok").attr("href","../../../proses/calendar.php?delete_event="+id);
       }
@@ -414,6 +441,26 @@
   <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
 </div>
 <!--end-Footer-part-->
+<script>
+  var harga_sewa = document.getElementById("harga_sewa");
+  var harga_owner = document.getElementById("harga_owner");
+  var label_harga_sewa = document.getElementById("label_harga_sewa");
+  var label_harga_owner = document.getElementById("label_harga_owner");
+
+  function hargaBaru(){
+    label_harga_sewa.classList.remove("hide");
+    label_harga_owner.classList.remove("hide");
+    harga_sewa.classList.remove("hide");
+    harga_owner.classList.remove("hide");
+  }
+
+  function hargaWeekend(){
+    label_harga_sewa.classList.add("hide");
+    label_harga_owner.classList.add("hide");
+    harga_sewa.classList.add("hide");
+    harga_owner.classList.add("hide");
+  }
+</script>
 <script src="../../../asset/js/select2.min.js"></script>
 <script src="../../../asset/js/jquery.dataTables.min.js"></script>
 <script src="../../../asset/js/matrix.js"></script>
