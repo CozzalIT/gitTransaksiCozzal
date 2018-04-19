@@ -56,7 +56,7 @@
                       if($data1->total_harga_owner>0){
           						  $pendapatan = $data1->total_harga_owner;
           					  }else{
-          						  $pendapatan = ($data1->hari_weekend * $data1->h_owner_we) + ($data1->hari_weekday * $data1->h_owner_wd);
+          						  $pendapatan = ($data1->hari_weekend * $data1->harga_owner_weekend) + ($data1->hari_weekday * $data1->harga_owner);
           					  }
                       if($data1->status == '42' or $data1->status == '41'){
                         echo "
@@ -117,7 +117,7 @@
                       if($data1->total_harga_owner>0){
           						  $pendapatan = $data1->total_harga_owner;
           					  }else{
-          						  $pendapatan = ($data1->hari_weekend * $data1->h_owner_we) + ($data1->hari_weekday * $data1->h_owner_wd);
+          						  $pendapatan = ($data1->hari_weekend * $data1->harga_owner_weekend) + ($data1->hari_weekday * $data1->harga_owner);
           					  }
                       if($data1->status == '1'){
                         echo "
