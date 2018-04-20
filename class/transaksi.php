@@ -110,7 +110,7 @@ class Transaksi {
         INNER JOIN tb_apt ON tb_apt.kd_apt = tb_transaksi.kd_apt
         INNER JOIN tb_kas ON tb_kas.kd_kas = tb_transaksi.kd_kas
         INNER JOIN tb_unit ON tb_unit.kd_unit = tb_transaksi.kd_unit
-        WHERE tb_transaksi.kd_unit = '$kd_unit'";
+        WHERE tb_transaksi.kd_unit = '$kd_unit' ORDER BY tb_unit.no_unit";
     $query = $this->db->query($sql);
     return $query;
   }

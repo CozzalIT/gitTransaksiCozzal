@@ -32,7 +32,7 @@
                   echo "<option name='kd_owner' value='$data->kd_owner'>$data->nama</option>";
                 }
               }
-            }elseif(isset($_POST['kd_owner'])){
+            }elseif(isset($_POST['kd_owner']) && $_POST['kd_owner']){
               $kd_owner = $_POST['kd_owner'];
               $Proses = new Owner($db);
               $show = $Proses->showOwner();
@@ -47,6 +47,7 @@
               }
             }
           ?>
+          <option name='kd_apt' value='all' <?php if($_POST['kd_owner'] == 'all'){echo 'selected="true"';} ?> >Semua Owner</option>
         </select>
       </div>
       <button type="submit" class="btn btn-primary" style="margin-left:20px;">Tampilkan</button>
@@ -94,7 +95,11 @@
                         $proses_tu = new TransaksiUmum($db);
                         $proses_k = new Kas($db);
                         $_SESSION['kd_owner'] = $_POST['kd_owner'];
-              				  $show_u = $proses_u->showUnitbyOwner($_POST['kd_owner']);
+                        if($_POST['kd_owner'] == 'all'){
+                          $show_u = $proses_u->showUnit();
+                        }else{
+                          $show_u = $proses_u->showUnitbyOwner($_POST['kd_owner']);
+                        }
                         while($data_u = $show_u->fetch(PDO::FETCH_OBJ)){
                           $show_t = $proses_t->showTransaksiByUnit($data_u->kd_unit);
                           $i = 1;
@@ -188,7 +193,11 @@
                       $proses_tu = new TransaksiUmum($db);
                       $proses_k = new Kas($db);
                       $_SESSION['kd_owner'] = $_POST['kd_owner'];
-                      $show_u = $proses_u->showUnitbyOwner($_POST['kd_owner']);
+                      if($_POST['kd_owner'] == 'all'){
+                        $show_u = $proses_u->showUnit();
+                      }else{
+                        $show_u = $proses_u->showUnitbyOwner($_POST['kd_owner']);
+                      }
                       while($data_u = $show_u->fetch(PDO::FETCH_OBJ)){
                         $show_t = $proses_t->showTransaksiByUnit($data_u->kd_unit);
                         $i = 1;
@@ -223,8 +232,8 @@
                                 <td>".number_format($nominal, 0, ".", ".")." IDR</td>
                               </tr>
                             ";
-                            $i++;
                           }
+                          $i++;
                         }
                         $show_k = $proses_k->showMutasiDana('9/'.$data_u->kd_unit);
                         while($data_k = $show_k->fetch(PDO::FETCH_OBJ)){
