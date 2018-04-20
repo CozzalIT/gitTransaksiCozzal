@@ -1,9 +1,9 @@
 <?php
   require("../../../../config/database.php");
   require("../../../class/transaksi.php");
-  
+
   $thisPage = "Transaksi";
- 
+
   include "../template/head.php";
 ?>
 <body>
@@ -90,7 +90,7 @@
                       <td>Price Per Night for Weekday</td>
                       <td><strong><?php echo number_format($data->harga_sewa,0, ".", "."); ?> IDR</td>
                     </tr>
-					<tr>
+					          <tr>
                       <td>Price Per Night for Weekend</td>
                       <td><strong><?php echo number_format($data->harga_sewa_weekend,0, ".", "."); ?> IDR</td>
                     </tr>

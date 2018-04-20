@@ -20,13 +20,30 @@
     <form method="post" action="#">
       <div class="control-group btn-add">
         <select name="kd_owner" class="span2" style="">
-          <option>--Pilih Owner--</option>
           <?php
-            $Proses = new Owner($db);
-            $show = $Proses->showOwner();
-            while($data = $show->fetch(PDO::FETCH_OBJ)){
-              if ($data->kd_owner != 0){
-                echo "<option name='kd_owner' value='$data->kd_owner'>$data->nama</option>";
+            if(!isset($_POST['kd_owner'])){
+              echo "
+                <option>--Pilih Owner--</option>
+              ";
+              $Proses = new Owner($db);
+              $show = $Proses->showOwner();
+              while($data = $show->fetch(PDO::FETCH_OBJ)){
+                if ($data->kd_owner != 0){
+                  echo "<option name='kd_owner' value='$data->kd_owner'>$data->nama</option>";
+                }
+              }
+            }elseif(isset($_POST['kd_owner'])){
+              $kd_owner = $_POST['kd_owner'];
+              $Proses = new Owner($db);
+              $show = $Proses->showOwner();
+              while($data = $show->fetch(PDO::FETCH_OBJ)){
+                if ($data->kd_owner != 0){
+                  if ($kd_owner!=$data->kd_owner){
+                    echo "<option name='kd_apt' value='$data->kd_owner'>$data->nama</option>";
+                  }else{
+                    echo "<option name='kd_apt' value='$data->kd_owner' selected='true'>$data->nama</option>";
+                  }
+                }
               }
             }
           ?>
@@ -85,18 +102,18 @@
                             $owner_we = $data_t->harga_owner_weekend;
                             $owner_wd = $data_t->harga_owner;
                             if($data_t->status == 42){
-            								$testdata= $data_t->total_harga_owner;
-            								if($testdata>0){
-            									$nominal = $data_t->total_harga_owner;
-            								}else{
-            									if($data_t->hari_weekend == 0){
-            										$nominal = $data_t->hari_weekday*$owner_wd;
-            										}elseif($data_t->hari_weekday == 0){
-            										$nominal = $data_t->hari_weekend*$owner_we;
-            									}elseif($data_t->hari_weekday <> 0 && $data_t->hari_weekend <> 0){
-            										$nominal = ($data_t->hari_weekend*$owner_we)+($data_t->hari_weekday*$owner_wd);
-            									}
-            								}
+              								$testdata= $data_t->total_harga_owner;
+              								if($testdata>0){
+              									$nominal = $data_t->total_harga_owner;
+              								}else{
+              									if($data_t->hari_weekend == 0){
+              										$nominal = $data_t->hari_weekday*$owner_wd;
+              										}elseif($data_t->hari_weekday == 0){
+              										$nominal = $data_t->hari_weekend*$owner_we;
+              									}elseif($data_t->hari_weekday <> 0 && $data_t->hari_weekend <> 0){
+              										$nominal = ($data_t->hari_weekend*$owner_we)+($data_t->hari_weekday*$owner_wd);
+              									}
+              								}
                       				echo "
                       					<tr class='gradeC'>
                                   <td class='hide'>$i</td>

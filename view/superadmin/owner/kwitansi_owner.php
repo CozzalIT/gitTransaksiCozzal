@@ -24,12 +24,16 @@
     }
     $transaksi[999] = 'dummy';
     $transaksi_umum[999] = 'dummy';
+    $kd_owner = $_SESSION['kd_owner'];
   }
 ?>
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Owner Payment</a> </div>
-    <a href="owner_payment.php" class="btn btn-primary btn-add"><i class="icon-arrow-left"></i> Kembali</a>
+    <form action="owner_payment.php" method="post">
+      <button type="submit" class="btn btn-primary btn-add"><i class="icon-arrow-left"></i> Kembali</button>
+      <input type="text" name="kd_owner" value="<?php echo $kd_owner; ?>" style="visibility:hidden" />
+    </form>
   </div>
   <div class="container-fluid"><hr>
     <div class="row-fluid">
