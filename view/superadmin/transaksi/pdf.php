@@ -2,6 +2,7 @@
 require('../../../asset/fpdf/fpdf.php');
 require('../../../asset/fpdf/invoice.php');
 require("../../../class/transaksi.php");
+require("../../../class/unit.php");
 require("../../../../config/database.php");
 
 class PDF extends FPDF
@@ -43,6 +44,15 @@ $proses = new Transaksi($db);
 $show = $proses->editTransaksi($_GET['kwitansi']);
 $data = $show->fetch(PDO::FETCH_OBJ);
 
+$proses_u = new Unit($db);
+$show_u = $proses_u->showDetail_Unit($data->kd_unit);
+$data_u = $show_u->fetch(PDO::FETCH_OBJ);
+if($data_u->lantai == 0){
+  $lantai = '-';
+}else{
+  $lantai = $data_u->lantai;
+}
+
 $pdf->SetFont('Arial','B',14);
 //Cell(width , height , text , border , end line , [align] )
 
@@ -76,16 +86,19 @@ $pdf->Cell(25 ,5,'Apartemen',0,0);
 $pdf->Cell(34 ,5,': '.$data->nama_apt,0,1);//end of line
 
 $pdf->Cell(120 ,5,'',0,0);
-$pdf->Cell(25 ,5,'No Unit',0,0);
-$pdf->Cell(34 ,5,': '.$data->no_unit,0,1);//end of line
+$pdf->Cell(25 ,5,'Lantai',0,0);
+$pdf->Cell(34 ,5,': '.$lantai,0,1);//end of line
 
 $pdf->Cell(189 ,10,'',0,1);
 
 //invoice contents
 $pdf->SetFont('Arial','',12);
 
-$pdf->Cell(90 ,5,'Price Per Night',1,0);
+$pdf->Cell(90 ,5,'Price Per Night Weekday',1,0);
 $pdf->Cell(90 ,5,number_format($data->harga_sewa,0, ".", ".").' IDR',1,1);
+
+$pdf->Cell(90 ,5,'Price Per Night Weekend',1,0);
+$pdf->Cell(90 ,5,number_format($data->harga_sewa_weekend,0, ".", ".").' IDR',1,1);
 
 $pdf->Cell(90 ,5,'Discount',1,0);
 $pdf->Cell(90 ,5,number_format($data->diskon,0, ".", ".").' IDR',1,1);
@@ -103,7 +116,7 @@ $pdf->Cell(90 ,5,'Payment',1,0);
 $pdf->Cell(90 ,5,number_format($data->dp,0, ".", ".").' IDR',1,1);
 
 $pdf->Cell(90 ,5,'Outstanding Balance',1,0);
-$pdf->Cell(90 ,5,number_format($data->total_tagihan,0, ".", ".").' IDR',1,1);
+$pdf->Cell(90 ,5,number_format($data->sisa_pelunasan,0, ".", ".").' IDR',1,1);
 
 $pdf->Cell(189 ,10,'',0,1);
 
