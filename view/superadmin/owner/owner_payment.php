@@ -43,7 +43,7 @@
           <div class="widget-title">
             <span class="icon"><i class="icon-th"></i></span>
             <ul class="nav nav-tabs">
-			  <li><a href="#unpaid" data-toggle="tab">Unpaid</a></li>
+			        <li><a href="#unpaid" data-toggle="tab">Unpaid</a></li>
               <li><a href="#paid" data-toggle="tab">Paid</a></li>
               <li><a href="#history" data-toggle="tab">Payment History</a></li>
             </ul>
@@ -79,24 +79,24 @@
                         $_SESSION['kd_owner'] = $_POST['kd_owner'];
               				  $show_u = $proses_u->showUnitbyOwner($_POST['kd_owner']);
                         while($data_u = $show_u->fetch(PDO::FETCH_OBJ)){
-                          $owner_we = $data_u->h_owner_we;
-                          $owner_wd = $data_u->h_owner_wd;
                           $show_t = $proses_t->showTransaksiByUnit($data_u->kd_unit);
                           $i = 1;
                 				  while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
+                            $owner_we = $data_t->harga_owner_weekend;
+                            $owner_wd = $data_t->harga_owner;
                             if($data_t->status == 42){
-								$testdata= $data_t->total_harga_owner;
-								if($testdata>0){
-									$nominal = $data_t->total_harga_owner;
-								}else{
-									if($data_t->hari_weekend == 0){
-										$nominal = $data_t->hari_weekday*$owner_wd;
-										}elseif($data_t->hari_weekday == 0){
-										$nominal = $data_t->hari_weekend*$owner_we;
-									}elseif($data_t->hari_weekday <> 0 && $data_t->hari_weekend <> 0){
-										$nominal = ($data_t->hari_weekend*$owner_we)+($data_t->hari_weekday*$owner_wd);
-									}
-								}
+            								$testdata= $data_t->total_harga_owner;
+            								if($testdata>0){
+            									$nominal = $data_t->total_harga_owner;
+            								}else{
+            									if($data_t->hari_weekend == 0){
+            										$nominal = $data_t->hari_weekday*$owner_wd;
+            										}elseif($data_t->hari_weekday == 0){
+            										$nominal = $data_t->hari_weekend*$owner_we;
+            									}elseif($data_t->hari_weekday <> 0 && $data_t->hari_weekend <> 0){
+            										$nominal = ($data_t->hari_weekend*$owner_we)+($data_t->hari_weekday*$owner_wd);
+            									}
+            								}
                       				echo "
                       					<tr class='gradeC'>
                                   <td class='hide'>$i</td>
@@ -173,23 +173,23 @@
                       $_SESSION['kd_owner'] = $_POST['kd_owner'];
                       $show_u = $proses_u->showUnitbyOwner($_POST['kd_owner']);
                       while($data_u = $show_u->fetch(PDO::FETCH_OBJ)){
-                        $owner_we = $data_u->h_owner_we;
-                        $owner_wd = $data_u->h_owner_wd;
                         $show_t = $proses_t->showTransaksiByUnit($data_u->kd_unit);
                         $i = 1;
                         while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
+                          $owner_we = $data_t->harga_owner_weekend;
+                          $owner_wd = $data_t->harga_owner;
                           if($data_t->status == 41){
-							if($data_t->total_harga_owner >0){
-								$nominal = $data_t->total_harga_owner;
-							}else{
-								if($data_t->hari_weekend == 0){
-								$nominal = $data_t->hari_weekday*$owner_wd;
-								}elseif($data_t->hari_weekday == 0){
-								$nominal = $data_t->hari_weekend*$owner_we;
-								}elseif($data_t->hari_weekday <> 0 && $data_t->hari_weekend <> 0){
-								$nominal = ($data_t->hari_weekend*$owner_we)+($data_t->hari_weekday*$owner_wd);
-								}
-							}
+              							if($data_t->total_harga_owner >0){
+              								$nominal = $data_t->total_harga_owner;
+              							}else{
+              								if($data_t->hari_weekend == 0){
+              								$nominal = $data_t->hari_weekday*$owner_wd;
+              								}elseif($data_t->hari_weekday == 0){
+              								$nominal = $data_t->hari_weekend*$owner_we;
+              								}elseif($data_t->hari_weekday <> 0 && $data_t->hari_weekend <> 0){
+              								$nominal = ($data_t->hari_weekend*$owner_we)+($data_t->hari_weekday*$owner_wd);
+              								}
+              							}
                             $dateTimeT = explode(" ",$data_t->tgl_transaksi);
                             echo "
                               <tr class='gradeC'>

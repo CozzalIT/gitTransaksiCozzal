@@ -102,7 +102,7 @@ class Transaksi {
   public function showTransaksiByUnit($kd_unit){
     $sql = "SELECT
       tb_transaksi.kd_transaksi, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.harga_sewa, tb_transaksi.harga_sewa_weekend, tb_transaksi.tgl_transaksi, tb_transaksi.status,
-      tb_transaksi.hari_weekend, tb_transaksi.hari_weekday, tb_transaksi.total_harga_owner,
+      tb_transaksi.hari_weekend, tb_transaksi.hari_weekday, tb_transaksi.total_harga_owner, tb_transaksi.harga_owner, tb_transaksi.harga_owner_weekend,
       tb_apt.kd_apt, tb_apt.nama_apt,
       tb_unit.kd_unit, tb_unit.no_unit
         from tb_transaksi
