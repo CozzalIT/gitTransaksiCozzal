@@ -49,7 +49,7 @@ class Cleaner {
     INNER JOIN tb_unit_kotor ON tb_unit_kotor.kd_unit = tb_unit.kd_unit
     INNER JOIN tb_transaksi ON tb_transaksi.kd_unit = tb_unit.kd_unit AND tb_transaksi.".$jenis."='$tgl'"."
     INNER JOIN tb_penyewa ON tb_penyewa.kd_penyewa = tb_transaksi.kd_penyewa
-    WHERE tb_unit_kotor.".$jenis."='$tgl'";
+    WHERE tb_unit_kotor.".$jenis."='$tgl' AND (tb_transaksi.status!='2' AND tb_transaksi.status!='3')";
     $query = $this->db->query($sql);
     return $query;
   } 
