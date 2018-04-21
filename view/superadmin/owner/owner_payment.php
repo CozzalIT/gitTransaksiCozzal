@@ -32,7 +32,7 @@
                   echo "<option name='kd_owner' value='$data->kd_owner'>$data->nama</option>";
                 }
               }
-            }elseif(isset($_POST['kd_owner']) && $_POST['kd_owner']){
+            }elseif(isset($_POST['kd_owner'])){
               $kd_owner = $_POST['kd_owner'];
               $Proses = new Owner($db);
               $show = $Proses->showOwner();
@@ -46,8 +46,14 @@
                 }
               }
             }
+            echo "<option name='kd_apt' value='all'";
+            if(isset($_POST['kd_owner'])){
+              if($_POST['kd_owner'] == 'all'){
+                echo 'selected="true"';
+              }
+            }
+            echo ">Semua Owner</option>";
           ?>
-          <option name='kd_apt' value='all' <?php if($_POST['kd_owner'] == 'all'){echo 'selected="true"';} ?> >Semua Owner</option>
         </select>
       </div>
       <button type="submit" class="btn btn-primary" style="margin-left:20px;">Tampilkan</button>

@@ -251,9 +251,15 @@
             for($i=1;$i<=12;$i++){
               $show_t = $proses_t->showSumSewa($i, 2018);
               $keuntunganKotor=0;
+              $subKeuntunganKotor=0;
               while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
                 $totalOwner = ($data_t->harga_owner*$data_t->hari_weekday)+($data_t->harga_owner_weekend*$data_t->hari_weekend);
-                $keuntunganKotor = $data_t->total_tagihan-$totalOwner;
+                if($data_t->total_harga_owner != 0){
+                  $subKeuntunganKotor = $data_t->total_tagihan-$data_t->total_harga_owner;
+                }else{
+                  $subKeuntunganKotor = $data_t->total_tagihan-$totalOwner;
+                }
+                $keuntunganKotor += $subKeuntunganKotor;
               }
               echo $keuntunganKotor.',';
             }
