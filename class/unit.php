@@ -47,6 +47,12 @@ class Unit {
     return $query;
   }
 
+  public function showHarga_unit_mod($kd_apt){
+    $sql = "SELECT tb_mod_harga.kd_unit, tb_mod_harga.start_date, tb_mod_harga.end_date, tb_mod_harga.harga_sewa FROM tb_mod_harga INNER JOIN tb_unit ON tb_unit.kd_unit = tb_mod_harga.kd_unit WHERE tb_unit.kd_apt='$kd_apt'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
   //Proses Show
   public function showUnitbyOwner($kd_owner){
     $sql = "SELECT * FROM tb_unit

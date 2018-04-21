@@ -23,7 +23,7 @@ $nil = $_POST['par'];
 
 // Set defaultnya dengan tag option Pilih
 $html = "<option value=''>-- Pilih Unit --</option>";
-
+$mod_harga="0";
 $Proses = new Unit($db);
 $show = $Proses->showUnit();
 while($data = $show->fetch(PDO::FETCH_OBJ)){
@@ -32,7 +32,12 @@ while($data = $show->fetch(PDO::FETCH_OBJ)){
 	}
 }
 
-$callback = array('data_unit'=>$html, 'nilai'=>$nil); // Masukan variabel html tadi ke dalam array $callback dengan index array : data_kota
+$show = $Proses->showHarga_unit_mod($kd_apt);
+while($data = $show->fetch(PDO::FETCH_OBJ)){
+	$mod_harga .= "  ".$data->kd_unit." ".$data->start_date." ".$data->end_date." ".$data->harga_sewa;
+}
+
+$callback = array('data_unit'=>$html, 'nilai'=>$nil, 'mod_harga'=>$mod_harga); // Masukan variabel html tadi ke dalam array $callback dengan index array : data_kota
 
 echo json_encode($callback); // konversi varibael $callback menjadi JSON
 }
