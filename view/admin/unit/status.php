@@ -17,6 +17,7 @@
   <div id="content-header">
    <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Data Unit</a></div>
    <a href="timeline.php" class="btn btn-primary btn-add"><i class="icon-calendar"></i> Cek Timeline</a>
+   <a href="#popup-setting" data-toggle="modal" class="btn btn-ligth btn-add"><i class="icon-cogs"></i> Pengaturan Waktu</a>
   </div>
   <div class="container-fluid">
     <hr>
@@ -60,7 +61,7 @@
                 }
 
               function get_value_config($parameter){
-                  $myfile = fopen("../../../config.ini", "r") or die("Unable to open file!");
+                  $myfile = fopen("../../../../inifiles/config.ini", "r") or die("Unable to open file!");
                   while(!feof($myfile)){
                     $string = fgets($myfile);
                     $arr = explode("=", $string);
@@ -225,7 +226,7 @@
       </div>
     </div>
 
-    <!--Status Part-->
+    <!--Sttatus Part-->
     <div id="stat-induk">
       <div class="widget-title" id="stat-bar" style="cursor:pointer;"> <span class="icon"><i class="icon-leaf"></i></span>
         <h5>Status Unit</h5>
@@ -272,6 +273,34 @@
 </div>
 <!-- //modal popup tambah unit-->
 
+<!--modal popup Action unit-->
+<div id="popup-setting" class="modal hide">
+  <div class="modal-header">
+    <button data-dismiss="modal" class="close" type="button">×</button>
+    <h3 id='head-cap'>Pengaturan waktu standar</h3>
+  </div>
+  <form action="../../../proses/cleaner.php" method="post" class="form-horizontal">
+    <div class="control-group">
+      <label class="control-label">Jam Check Out :</label>
+      <div class="controls">
+        <input name="jam_check_out" type="text" class="span2 houronly" value="<?php echo $default_CO; ?>" placeholder="hh:mm"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">Extra time bersihkan :</label>
+      <div class="controls">
+        <input name="injury_bersih" type="text" class="span2 houronly" value="<?php echo formated_injury_bersih($injury_bersih); ?>" placeholder="hh:mm"/>
+      </div>
+    </div>    
+    <div class="control-group">
+      <div class="controls">
+        <input type="submit" name="setTime" class="btn btn-success" value="Perbarui"/>
+        <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- //modal popup tambah unit-->
 
 <!--Footer-part-->
 <div class="row-fluid">

@@ -17,7 +17,7 @@
   <div id="content-header">
    <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Data Unit</a></div>
    <a href="timeline.php" class="btn btn-primary btn-add"><i class="icon-calendar"></i> Cek Timeline</a>
- 
+   <a href="#popup-setting" data-toggle="modal" class="btn btn-ligth btn-add"><i class="icon-cogs"></i> Pengaturan Waktu</a>
   </div>
   <div class="container-fluid">
     <hr>
@@ -61,7 +61,7 @@
                 }
 
               function get_value_config($parameter){
-                  $myfile = fopen("../../../config.ini", "r") or die("Unable to open file!");
+                  $myfile = fopen("../../../../inifiles/config.ini", "r") or die("Unable to open file!");
                   while(!feof($myfile)){
                     $string = fgets($myfile);
                     $arr = explode("=", $string);
