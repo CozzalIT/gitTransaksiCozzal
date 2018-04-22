@@ -16,13 +16,22 @@
   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="unit.php" title="Go to Data Unit" class="tip-bottom">Data Unit</a> <a href="#" class="current">Kalender Unit</a> </div>
     <?php
       if (isset($_GET['calendar_unit'])){
-        $calendar = new Calendar($db);
-        $show = $calendar->showNoUnit($_GET['calendar_unit']);
-        $data = $show->fetch(PDO::FETCH_OBJ);
-        $kd_unit = $_GET['calendar_unit'];
+        $arrayunit = array();
+    $calendar = new Calendar($db);
+    $kd_unit = $_GET['calendar_unit'];
+    $show = $calendar->showNoUnit();
+    while($data = $show->fetch(PDO::FETCH_OBJ)){
+      if($data->kd_unit==$kd_unit){
         $no_unit = $data->no_unit;
         $nama_apt = $data->nama_apt;
+        $kd_apt = $data->kd_apt;
+        
+      } else {
+        $arrayunit[] = $data->kd_unit;
+        $arrayunit[] = $data->no_unit." - ".$data->nama_apt;
       }
+    }
+  }
     ?>
     <h1>Calendar Unit <?php echo $no_unit.' ('.$nama_apt.')'; ?></h1>
     <a href="unit.php" class="btn btn-primary btn-add"><i class="icon-chevron-left"></i> Kembali</a>
