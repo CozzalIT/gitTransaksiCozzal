@@ -2,7 +2,7 @@
 require("../../config/database.php");
 
 function get_value_config($parameter){
-  $myfile = fopen("../config.ini", "r") or die("Unable to open file!");
+  $myfile = fopen("../../inifiles/config.ini", "r") or die("Unable to open file!");
   while(!feof($myfile)){
     $string = fgets($myfile);
     $arr = explode("=", $string);

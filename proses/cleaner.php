@@ -7,15 +7,15 @@ $view = $_SESSION['hak_akses'];
 
 function set_value_config($parameter, $value){
   $arr_val = array();
-  $isi = fread(fopen("../config.ini","r"),filesize("../config.ini"));
-  $myfile = fopen("../config.ini","r");
+  $isi = fread(fopen("../../inifiles/config.ini","r"),filesize("../../inifiles/config.ini"));
+  $myfile = fopen("../../inifiles/config.ini","r");
   while (!feof($myfile)) {
     $string = fgets($myfile);
     $arr = explode('=', $string); 
     $arr_val[$arr[0]]=$arr[1];
   }
   $isi2 = str_replace($parameter."=".$arr_val[$parameter], $parameter."=".$value."\n", $isi);
-  $tmp = fopen("../config.ini", "w") or die("Unable to open file!");
+  $tmp = fopen("../../inifiles/config.ini", "w") or die("Unable to open file!");
   fwrite($tmp,$isi2);
   fclose($tmp);
 } 

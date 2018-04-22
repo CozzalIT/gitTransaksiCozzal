@@ -40,10 +40,7 @@ function selisih_tanggal(start_time, end_time){
 }
 
 function std(x){
-	if(x!='')
-		return new Date();
-	else
-		return new Date(x);
+	return new Date(x);
 }
 
 //------------------------------------------------------------------------
@@ -133,7 +130,8 @@ function biaya(form)
 
 function keepvalid(form){
 	var hari= Number(form.jumhari.value);
-	form.check_out.value = nilaitanggal(std(form.check_in.valu),1);
+	var CI = std(form.check_in.value);
+	form.check_out.value = nilaitanggal(CI,1);
 	if(hari>5) {$("#total_harga_owner").val("0");$("#total_harga_owner-C").show();} 
 	else {$("#total_harga_owner").val("0");$("#total_harga_owner-C").hide();};
 	updateselisih(form);

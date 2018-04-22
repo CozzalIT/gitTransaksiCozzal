@@ -266,12 +266,22 @@ class Transaksi {
     $query = $this->db->query($sql);
   }
 
+public function jumlah_duplikasi_transaksi($kd_unit, $check_in, $check_out){
+    $sql = "SELECT COUNT(kd_unit) AS jumlah FROM tb_transaksi WHERE kd_unit='$kd_unit'
+    AND check_in='$check_in' AND check_out='$check_out'";
+    $q = $this->db->query($sql);
+    $result = $q->fetch();
+    return $result["jumlah"];
+}
+
   public function deleteUnit_kotor($kd_transaksi){
     $locsql = "SELECT kd_unit, check_in, check_out from tb_transaksi where kd_transaksi='$kd_transaksi'";
     $locq = $this->db->query($locsql);
     $trx = $locq->fetch();
-    $sql = "DELETE FROM tb_unit_kotor WHERE kd_unit='".$trx["kd_unit"]."' and check_in='".$trx["check_in"]."' and check_out='".$trx["check_out"]."'";
-    $query = $this->db->query($sql);
+    if($this->jumlah_duplikasi_transaksi($trx["kd_unit"],$trx["check_in"],$trx["check_out"])=="1"){
+      $sql = "DELETE FROM tb_unit_kotor WHERE kd_unit='".$trx["kd_unit"]."' and check_in='".$trx["check_in"]."' and check_out='".$trx["check_out"]."'";
+      $query = $this->db->query($sql);
+    }
   }
 
   public function deleteBooked_list($kd_booked, $check_in, $kd_unit){
