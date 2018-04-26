@@ -88,6 +88,15 @@
       <div class="span12">
         <script>
           function popupEdit(id, title, awal, akhir){
+            var lbl_sewa = document.getElementById('lbl_sewa');
+            var lbl_owner = document.getElementById('lbl_owner');
+            var sewa = document.getElementById('sewa');
+            var owner = document.getElementById('owner');
+            lbl_sewa.classList.add('hide');
+            lbl_owner.classList.add('hide');
+            sewa.classList.add('hide');
+            owner.classList.add('hide');
+
             $('#popup-editEvent').modal('show');
             arrayNote = id.split("+");
             document.editEvent.id.value = arrayNote[0];
@@ -95,7 +104,34 @@
             document.editEvent.awal.value = awal;
             document.editEvent.akhir.value = akhir;
             document.editEvent.catatan.value = arrayNote[1];
-            hapusBlok(arrayNote[0]);
+            document.editEvent.sewa.value = 0;
+            document.editEvent.sewa_clone.value = 0;
+            document.editEvent.owner.value = 0;
+            document.editEvent.owner_clone.value = 0;
+            hapusBlok(arrayNote[0], 'false');
+          }
+          function editModHarga(id, title, awal, akhir){
+            var lbl_sewa = document.getElementById('lbl_sewa');
+            var lbl_owner = document.getElementById('lbl_owner');
+            var sewa = document.getElementById('sewa');
+            var owner = document.getElementById('owner');
+            lbl_sewa.classList.remove('hide');
+            lbl_owner.classList.remove('hide');
+            sewa.classList.remove('hide');
+            owner.classList.remove('hide');
+
+            $('#popup-editEvent').modal('show');
+            arrayNote = id.split("+");
+            document.editEvent.id.value = arrayNote[0];
+            document.editEvent.jenis.value = title;
+            document.editEvent.awal.value = awal;
+            document.editEvent.akhir.value = akhir;
+            document.editEvent.catatan.value = arrayNote[1];
+            document.editEvent.sewa.value = arrayNote[2];
+            document.editEvent.sewa_clone.value = arrayNote[2];
+            document.editEvent.owner.value = arrayNote[3];
+            document.editEvent.owner_clone.value = arrayNote[3];
+            hapusBlok(arrayNote[0], 'true');
           }
           $(document).ready(function() {
             $('#calendar').fullCalendar({
@@ -103,12 +139,20 @@
                   if(isset($_POST['editCalendar']) || isset($_POST['editBlok']) || isset($_POST['close'])){
                     echo "
                       eventClick: function(event, element) {
-                        if(event.title != 'Confirm' && event.title != 'Booked') {
+                        var cekTitle = event.title.split(' ');
+                        if(event.title != 'Confirm' && event.title != 'Booked' && cekTitle[1] != 'IDR') {
                           id = event.id;
                           title = event.title;
                           awal = event.start.format('DD MMM YYYY');
                           akhir = event.end.format('DD MMM YYYY');
                           popupEdit(id, title, awal, akhir);
+                          $('#calendar').fullCalendar('updateEvent', event);
+                        }else if(cekTitle[1] == 'IDR'){
+                          id = event.id;
+                          title = 'Mod Harga';
+                          awal = event.start.format('DD MMM YYYY');
+                          akhir = event.end.format('DD MMM YYYY');
+                          editModHarga(id, title, awal, akhir);
                           $('#calendar').fullCalendar('updateEvent', event);
                         }
                       },
@@ -156,6 +200,7 @@
             		    while($data = $show->fetch(PDO::FETCH_OBJ)){
                       echo "
                       {
+                        id: '$data->kd_mod_harga+$data->note+$data->harga_sewa+$data->harga_owner',
                         title: '".number_format($data->harga_sewa, 0, ".", ".")." IDR',
                         start: '".$data->start_date."T12:00:00',
                         end: '".$data->end_date."T13:00:00',
@@ -353,8 +398,8 @@
       element.onclick = function(){
         popup[0].classList.remove("show");
       }
-      function hapusBlok(id){
-        $("#hapusBlok").attr("href","../../../proses/calendar.php?delete_event="+id);
+      function hapusBlok(id, modHarga){
+        $("#hapusBlok").attr("href","../../../proses/calendar.php?delete_event="+id+"&status_mod="+modHarga);
       }
     </script>
     <h3>Edit Event</h3>
@@ -370,7 +415,7 @@
               <div class="controls">
                 <input name="id" type="text" class="span2 hide"/>
               </div>
-              <label class="control-label">Jenis :</label>
+              <label id="lbl_jenis" class="control-label">Jenis :</label>
               <div class="controls">
                 <input name="jenis" type="text" class="span2" disabled/>
               </div>
@@ -382,6 +427,16 @@
               <div class="controls">
                 <input name="akhir" type="text" class="span2" disabled/>
               </div>
+              <label id="lbl_sewa" class="control-label">Harga Sewa :</label>
+              <div id="sewa" class="controls">
+                <input name="sewa" type="text" value="0" class="span2 hide" />
+                <input name="sewa_clone" type="text" value="0" class="span2" disabled/>
+              </div>
+              <label id="lbl_owner" class="control-label">Harga Owner :</label>
+              <div id="owner" class="controls">
+                <input name="owner" type="text" value="0" class="span2 hide" />
+                <input name="owner_clone" type="text" value="0" class="span2" disabled/>
+              </div>
               <label class="control-label">Catatan :</label>
               <div class="controls">
                 <input name="catatan" type="text" class="span2" disabled/>
@@ -389,7 +444,7 @@
             </div>
             <div class="control-group">
               <div class="controls">
-                <input type="submit" name="editBlok" class="btn btn-primary" value="Edit" />
+                <input type="submit" id="editBlok" name="editBlok" class="btn btn-primary" value="Edit" />
                 <a class="btn btn-danger" id="hapusBlok">Hapus</a>
               </div>
             </div>
@@ -398,15 +453,24 @@
         ';
       }elseif(isset($_POST['editBlok'])){
         $calendar = new Calendar($db);
-        $show = $calendar->editModCalendar($_POST['id']);
-        $data = $show->fetch(PDO::FETCH_OBJ);
+        if($_POST['sewa'] == 0 && $_POST['owner'] == 0){
+          $show = $calendar->editModCalendar($_POST['id']);
+          $data = $show->fetch(PDO::FETCH_OBJ);
+          $kode = $data->kd_mod_calendar;
+          $modHarga = false;
+        }elseif($_POST['sewa'] != 0 && $_POST['owner'] != 0){
+          $show = $calendar->editModHarga($_POST['id']);
+          $data = $show->fetch(PDO::FETCH_OBJ);
+          $kode = $data->kd_mod_harga;
+          $modHarga = true;
+        }
         echo '
         <form action="../../../proses/calendar.php" method="post" class="form-horizontal">
           <div class="control-group">
             <div class="control-group">
               <label class="control-label hide">ID :</label>
               <div class="controls">
-                <input name="id" type="text" class="span2 hide" value="'.$data->kd_mod_calendar.'" required/>
+                <input name="id" type="text" class="span2 hide" value="'.$kode.'" required/>
               </div>
               <label class="control-label">Tanggal Awal :</label>
               <div class="controls">
@@ -416,6 +480,20 @@
               <div class="controls">
                 <input name="akhir" type="date" class="span2" value="'.$data->end_date.'" />
               </div>
+        ';
+        if($modHarga == true){
+          echo '
+              <label class="control-label">Harga Sewa :</label>
+              <div class="controls">
+                <input name="sewa" type="number" class="span2" value="'.$data->harga_sewa.'" />
+              </div>
+              <label class="control-label">Harga Owner :</label>
+              <div class="controls">
+                <input name="owner" type="number" class="span2" value="'.$data->harga_owner.'" />
+              </div>
+          ';
+        }
+        echo '
               <label class="control-label">Catatan :</label>
               <div class="controls">
                 <input name="catatan" type="text" class="span2" value="'.$data->note.'" />
@@ -423,7 +501,7 @@
             </div>
             <div class="control-group">
               <div class="controls">
-                <button type="submit" name="updateModCal" class="btn btn-success">Update</button>
+                '.($modHarga == true ? '<button type="submit" name="updateModHarga" class="btn btn-success">Update</button>' : '<button type="submit" name="updateModCal" class="btn btn-success">Update</button>').'
               </div>
             </div>
           </div>
