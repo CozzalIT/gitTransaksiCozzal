@@ -17,21 +17,21 @@
     <?php
       if (isset($_GET['calendar_unit'])){
         $arrayunit = array();
-    $calendar = new Calendar($db);
-    $kd_unit = $_GET['calendar_unit'];
-    $show = $calendar->showNoUnit();
-    while($data = $show->fetch(PDO::FETCH_OBJ)){
-      if($data->kd_unit==$kd_unit){
-        $no_unit = $data->no_unit;
-        $nama_apt = $data->nama_apt;
-        $kd_apt = $data->kd_apt;
-        
-      } else {
-        $arrayunit[] = $data->kd_unit;
-        $arrayunit[] = $data->no_unit." - ".$data->nama_apt;
+        $calendar = new Calendar($db);
+        $kd_unit = $_GET['calendar_unit'];
+        $show = $calendar->showNoUnit();
+        while($data = $show->fetch(PDO::FETCH_OBJ)){
+          if($data->kd_unit==$kd_unit){
+            $no_unit = $data->no_unit;
+            $nama_apt = $data->nama_apt;
+            $kd_apt = $data->kd_apt;
+
+          } else {
+            $arrayunit[] = $data->kd_unit;
+            $arrayunit[] = $data->no_unit." - ".$data->nama_apt;
+          }
+        }
       }
-    }
-  }
     ?>
     <h1>Calendar Unit <?php echo $no_unit.' ('.$nama_apt.')'; ?></h1>
     <a href="unit.php" class="btn btn-primary btn-add"><i class="icon-chevron-left"></i> Kembali</a>
@@ -59,8 +59,8 @@
               events: [
                 <?php
                   if (isset($_GET['calendar_unit'])){
-            		    $show = $calendar->showCalendar($_GET['calendar_unit']);
-            		    while($data = $show->fetch(PDO::FETCH_OBJ)){
+                    $show = $calendar->showCalendar($_GET['calendar_unit']);
+                    while($data = $show->fetch(PDO::FETCH_OBJ)){
                       if($data->status == '1'){
                         echo "
                         {
@@ -71,8 +71,8 @@
                         ";
                       }
                     }
-            		    $show = $calendar->showCalendar($_GET['calendar_unit']);
-            		    while($data = $show->fetch(PDO::FETCH_OBJ)){
+                    $show = $calendar->showCalendar($_GET['calendar_unit']);
+                    while($data = $show->fetch(PDO::FETCH_OBJ)){
                       if($data->status == '42' or $data->status == '41'){
                         echo "
                         {
@@ -85,13 +85,14 @@
                       }
                     }
                     $show = $calendar->showModCalendar($_GET['calendar_unit']);
-            		    while($data = $show->fetch(PDO::FETCH_OBJ)){
+                    while($data = $show->fetch(PDO::FETCH_OBJ)){
                       if($data->jenis == 1 ){
                         echo "
                         {
+                          id: '$data->kd_mod_calendar+$data->note',
                           title: 'Maintenance',
-                          start: '$data->start_date',
-                          end: '$data->end_date',
+                          start: '".$data->start_date."T12:00:00',
+                          end: '".$data->end_date."T13:00:00',
                           color: '#faa732',
                           textColor: '#000000'
                         },
@@ -99,18 +100,20 @@
                       }elseif($data->jenis == 2){
                         echo "
                         {
+                          id: '$data->kd_mod_calendar+$data->note',
                           title: 'Block by Owner',
-                          start: '$data->start_date',
-                          end: '$data->end_date',
+                          start: '".$data->start_date."T12:00:00',
+                          end: '".$data->end_date."T13:00:00',
                           color: '#da4f49',
                         },
                         ";
                       }elseif($data->jenis == 3){
                         echo "
                         {
+                          id: '$data->kd_mod_calendar+$data->note',
                           title: 'Block by Admin',
-                          start: '$data->start_date',
-                          end: '$data->end_date',
+                          start: '".$data->start_date."T12:00:00',
+                          end: '".$data->end_date."T13:00:00',
                           color: '#da4f49',
                         },
                         ";
