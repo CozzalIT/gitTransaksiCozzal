@@ -115,6 +115,12 @@
                     <input name="ekstra_charge" min="0" value="0" placeholder="Ekstra Charge" type="number" id="ekstra_charge" onChange="hasil();" class="span11"/>
                     </div>
                   </div>
+				  <div class="control-group">
+                    <label class="control-label">Booking Via :</label>
+                    <div class="controls">
+                      <input type="text" class="span11" value="Airbnb" disabled/>
+                    </div>
+                  </div>
                   <div class="control-group">
                     <label class="control-label">Total Biaya :</label>
                     <div class="controls">
@@ -122,12 +128,6 @@
                       <div class="loading">
                         <img src="../../../asset/images/loading.gif" width="18"> <small>Loading...</small>
                       </div>                        
-                    </div>
-                  </div>
-                  <div class="control-group">
-                    <label class="control-label">Booking Via :</label>
-                    <div class="controls">
-                      <input type="text" class="span11" value="Airbnb" disabled/>
                     </div>
                   </div>
                   <div class="control-group">
