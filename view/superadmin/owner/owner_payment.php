@@ -279,7 +279,11 @@
                 <tbody>
                   <?php
                     $i=1;
-                    $show_history = $Proses->showOwnerPayment($_POST['kd_owner']);
+                    if($_POST['kd_owner'] == 'all'){
+                      $show_history = $Proses->showAllOwnerPayment($_POST['kd_owner']);
+                    }else{
+                      $show_history = $Proses->showOwnerPayment($_POST['kd_owner']);
+                    }
                     while($data_history = $show_history->fetch(PDO::FETCH_OBJ)){
                       $tanggal = explode(" ",$data_history->tgl_pembayaran);
                       $formatTanggal = explode("-",$tanggal[0]);

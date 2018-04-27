@@ -43,6 +43,12 @@ class Owner {
     return $query;
   }
 
+  public function showAllOwnerPayment(){
+    $sql = "SELECT * from tb_owner_payment ORDER BY tgl_pembayaran DESC";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
   public function showBooking($kd_unit){
     $sql = "SELECT
       tb_transaksi.kd_transaksi, tb_transaksi.kd_penyewa, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.tamu, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.hari, tb_transaksi.tgl_transaksi, tb_transaksi.hari_weekday, tb_transaksi.hari_weekend, tb_transaksi.total_harga_owner, tb_transaksi.status,
