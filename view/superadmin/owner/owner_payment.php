@@ -61,7 +61,7 @@
   </div>
   <div class="container-fluid">
     <hr>
-    <div class="row-fluid">
+    <div <?php if(!isset($_POST['kd_owner'])){ echo 'class="row-fluid hide"';}else{ echo 'class="row-fluid"';} ?>>
       <div class="span12">
         <div class="widget-box" style="overflow-x:auto;">
           <div class="widget-title">
@@ -172,7 +172,17 @@
                       }
                     ?>
                     <tr>
-                      <td colspan="6"><button type="submit" class="btn btn-success">Bayar</button> Transaksi yang di pilih.</td>
+                      <?php
+                        if($i == 1){
+                          echo '
+                            <td colspan="6">No data available in table</td>
+                          ';
+                        }else{
+                          echo '
+                            <td colspan="6"><button type="submit" class="btn btn-success">Bayar</button> Transaksi yang di pilih.</td>
+                          ';
+                        }
+                      ?>
                     </tr>
                   </tbody>
                 </table>
