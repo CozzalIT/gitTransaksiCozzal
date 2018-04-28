@@ -315,5 +315,17 @@ public function jumlah_duplikasi_transaksi($kd_unit, $check_in, $check_out){
     $query = $this->db->query($sql);
   }
 
+  //tambahan
+  public function showSumMonthWithKdUnit($kd_unit, $noBulan, $tahun, $status){
+    if($status==41 OR $status==2){
+      $status2=$status+1;
+    }else{
+      $status2=$status;
+    }
+    $sql = "SELECT check_in, check_out, hari FROM tb_transaksi WHERE kd_unit='$kd_unit' AND MONTH(check_in)='$noBulan' AND YEAR(check_in)='$tahun' AND (status='$status' OR status='$status2') ";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
 }
 ?>
