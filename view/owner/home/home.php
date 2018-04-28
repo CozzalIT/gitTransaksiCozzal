@@ -1,5 +1,6 @@
 <?php
   require("../../../class/transaksi.php");
+  require("../../../class/transaksi_umum.php");
   require("../../../class/unit.php");
   require("../../../class/owner.php");
   require("../../../class/other.php");
@@ -36,87 +37,45 @@
 <!--End-Action boxes-->
 
     <div class="row-fluid">
-      <div class="span6">
+      <div class="">
       <div class="widget-box">
         <div class="widget-title bg_lg"><span class="icon"><i class="icon-signal"></i></span>
-          <h5>Pendapatan dan Pengeluaran</h5>
+          <h5>Statistik Owner</h5>
         </div>
-        <div class="widget-content" >
-          <div class="row-fluid">
+        <div class="widget-content nopadding">
+          <div class="row-fluid" style="overflow-x">
             <!-- Chart -->
+          <div class="span9">
+              <center>
+                <div id="ctr_pendapatan" style="width: 100%;">
+                  <canvas id="cv_pendapatan"></canvas>
+                </div>
+                <div id="ctr_pengeluaran" style="width: 100%;" class="hide">
+                  <canvas id="cv_pengeluaran"></canvas>
+                </div>
+                <div id="ctr_booking" style="width: 100%;" class="hide">
+                  <canvas id="cv_booking"></canvas>
+                </div>
+              </center>
+          </div>
+          <div class="span3">
             <center>
-              <div id="container" style="width: 100%; overflow-x: auto;">
-            		<canvas id="canvas"></canvas>
-            	</div>
-            	<script>
-            		var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-            		var color = Chart.helpers.color;
-            		var barChartData = {
-            			labels: ['January', 'February', 'March', 'April'],
-                  datasets: [
-                    <?php
-                      $kd_owner = $_SESSION['pemilik'];
-                      $proses_u = new Unit($db);
-                      $other = new Other();
-                      $show_u = $proses_u->showUnitbyOwner($kd_owner);
-                      $bulan = date('m');
-                      for($i=0;$i<=3;$i++) {
-                        //$listBulan
-                      }
-                      $i = 1;
-                      while($data_u = $show_u->fetch(PDO::FETCH_OBJ)){
-                        $color = $other->selectColor($i);
-                        echo "
-                        {
-                            label: '$data_u->no_unit', //optional
-                            backgroundColor: color(window.chartColors.$color).alpha(0.5).rgbString(),
-                            borderColor: window.chartColors.$color,
-                            data: [6500, 5900, 8000, 8100] // y-axis
-                        },
-                        ";
-                        $i++;
-                      }
-                    ?>
-                ]
-            		};
-
-            		window.onload = function() {
-            			var ctx = document.getElementById('canvas').getContext('2d');
-            			window.myBar = new Chart(ctx, {
-            				type: 'bar',
-            				data: barChartData,
-            				options: {
-            					responsive: true,
-            					legend: {
-            						position: 'top',
-            					},
-            					title: {
-            						display: true,
-            						text: 'Nomor Unit'
-            					}
-            				}
-            			});
-            		};
-            	</script>
+              <button class="bg_ls btn btn-success chart-button" type="button" onclick="viewPendapatan()">Pendapatan</button>
+              <br>
+              <button class="bg_lb btn btn-success chart-button" type="button" onclick="viewPengeluaran()">Pengeluaran</button>
+              <br>
+              <button class="bg_lo btn btn-success chart-button" type="button" onclick="viewBooking()">Data Booking</button>
+              <br>
             </center>
-            <!-- //Chart -->
-		      </div>
-        </div>
-      </div>
-    </div>
-    <div class="span6">
-      <div class="widget-box">
-        <div class="widget-title bg_lg"><span class="icon"><i class="icon-signal"></i></span>
-          <h5>Data Booking</h5>
-        </div>
-        <div class="widget-content" >
-          <div class="row-fluid">
-            <!-- Chart -->
-            <center>
-              <div id="container" style="width: 100%; overflow-x: auto;">
-            		<canvas id="canvas"></canvas>
-            	</div>
-            </center>
+            <ul class="site-stats" style="padding-top: 10px;padding-bottom: 10px;">
+              <li class="bg_lh"><i class="icon-user"></i> <strong>2540</strong> <small>Dummy</small></li>
+              <li class="bg_lh"><i class="icon-plus"></i> <strong>120</strong> <small>Dummy</small></li>
+              <li class="bg_lh"><i class="icon-shopping-cart"></i> <strong>656</strong> <small>Dummy</small></li>
+              <li class="bg_lh"><i class="icon-tag"></i> <strong>9540</strong> <small>Dummy</small></li>
+              <li class="bg_lh"><i class="icon-repeat"></i> <strong>10</strong> <small>Dummy</small></li>
+              <li class="bg_lh"><i class="icon-globe"></i> <strong>8540</strong> <small>Dummy</small></li>
+            </ul>
+          </div>
             <!-- //Chart -->
 		      </div>
         </div>
@@ -129,8 +88,14 @@
 <!--end-main-container-part-->
 
 <?php
-  include "../template/footer.php";
+  include "../../../asset/chart/chart_owner.php"
 ?>
+
+<!--Footer-part-->
+<div class="row-fluid">
+  <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
+</div>
+<!--end-Footer-part-->
 
 <script src="../../../asset/js/bootstrap.min.js"></script>
 <script src="../../../asset/js/unit.js"></script>
