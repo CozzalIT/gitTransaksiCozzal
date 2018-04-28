@@ -63,6 +63,12 @@
       return $query;
     }
 
+    public function editModHarga($kd_mod_harga){
+      $sql = "SELECT * FROM tb_mod_harga where kd_mod_harga='$kd_mod_harga'";
+      $query = $this->db->query($sql);
+      return $query;
+    }
+
     //Delete
     public function deleteModCalendar($kd_mod_calendar){
       $sql = "DELETE FROM tb_mod_calendar WHERE kd_mod_calendar='$kd_mod_calendar'";
@@ -70,9 +76,25 @@
       return $query;
     }
 
+    public function deleteModHarga($kd_mod_harga){
+      $sql = "DELETE FROM tb_mod_harga WHERE kd_mod_harga='$kd_mod_harga'";
+      $query = $this->db->query($sql);
+      return $query;
+    }
+
     //Proses Update
     public function updateModCal($kd_mod_calendar, $awal, $akhir, $catatan){
       $sql = "UPDATE tb_mod_calendar SET start_date='$awal', end_date='$akhir', note='$catatan' WHERE kd_mod_calendar='$kd_mod_calendar'";
+      $query = $this->db->query($sql);
+      if(!$query){
+        return "Failed";
+      }else{
+        return "Success";
+      }
+    }
+
+    public function updateModHarga($kd_mod_harga, $awal, $akhir, $sewa, $owner, $catatan){
+      $sql = "UPDATE tb_mod_harga SET start_date='$awal', end_date='$akhir', harga_sewa='$sewa', harga_owner='$owner', note='$catatan' WHERE kd_mod_harga='$kd_mod_harga'";
       $query = $this->db->query($sql);
       if(!$query){
         return "Failed";

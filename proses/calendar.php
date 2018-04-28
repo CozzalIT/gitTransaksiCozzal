@@ -79,15 +79,22 @@ elseif(isset($_POST['addModHarga'])){
 }
 
 elseif(isset($_GET['delete_event'])){
+#  echo $_GET['status_mod'];
+#  die;
   $proses = new Calendar($db);
-  $show = $proses->editModCalendar($_GET['delete_event']);
+
+  if($_GET['status_mod'] == 'true'){
+    $show = $proses->editModHarga($_GET['delete_event']);
+    $del = $proses->deleteModHarga($_GET['delete_event']);
+  }elseif($_GET['status_mod'] == 'false'){
+    $show = $proses->editModCalendar($_GET['delete_event']);
+    $del = $proses->deleteModCalendar($_GET['delete_event']);
+    $ics = new Ics_unit($db);
+    $ics->buildIcs($kd_unit);
+  }
+
   $data = $show->fetch(PDO::FETCH_OBJ);
   $kd_unit = $data->kd_unit;
-
-  $del = $proses->deleteModCalendar($_GET['delete_event']);
-
-  $ics = new Ics_unit($db);
-  $ics->buildIcs($kd_unit);
   header("location:../view/".$view."/unit/calendar.php?calendar_unit=".$kd_unit);
 }
 
@@ -114,5 +121,31 @@ elseif(isset($_POST['updateModCal'])){
   }else{
     echo 'error';
   }
+}
+
+elseif(isset($_POST['updateModHarga'])){
+	$kd_mod_harga = $_POST['id'];
+  $awal = $_POST['awal'];
+  $akhir = $_POST['akhir'];
+  $catatan = $_POST['catatan'];
+  $sewa = $_POST['sewa'];
+  $owner = $_POST['owner'];
+
+  $proses = new Calendar($db);
+  $show = $proses->editModHarga($_POST['id']);
+  $data = $show->fetch(PDO::FETCH_OBJ);
+  $kd_unit = $data->kd_unit;
+
+	$update = $proses->updateModHarga($kd_mod_harga, $awal, $akhir, $sewa, $owner, $catatan);
+
+  if($update == "Success"){
+    header('Location:../view/'.$view.'/unit/calendar.php?calendar_unit='.$kd_unit);
+  }else{
+    echo 'error';
+  }
+}
+
+else{
+  header('Location:../view/'.$view.'/home/home.php');
 }
 ?>

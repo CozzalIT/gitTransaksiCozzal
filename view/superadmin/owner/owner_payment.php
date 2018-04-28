@@ -279,7 +279,11 @@
                 <tbody>
                   <?php
                     $i=1;
-                    $show_history = $Proses->showOwnerPayment($_POST['kd_owner']);
+                    if($_POST['kd_owner'] == 'all'){
+                      $show_history = $Proses->showAllOwnerPayment($_POST['kd_owner']);
+                    }else{
+                      $show_history = $Proses->showOwnerPayment($_POST['kd_owner']);
+                    }
                     while($data_history = $show_history->fetch(PDO::FETCH_OBJ)){
                       $tanggal = explode(" ",$data_history->tgl_pembayaran);
                       $formatTanggal = explode("-",$tanggal[0]);
@@ -350,7 +354,7 @@
 
 <!--Footer-part-->
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
+  <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
 </div>
 <!--end-Footer-part-->
 <script src="../../../asset/js/sweetalert.min.js"></script>
