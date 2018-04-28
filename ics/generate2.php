@@ -15,7 +15,7 @@ function getrealdate($date){
 }
 
 function getlocalics($url, $kd_unit){	
-	$local_file = "../../listicscache/".$kd_unit.".ics";
+	$local_file = "../../listics/cache/".$kd_unit.".ics";
 	$remote_file  = $url; // url nya
 	$ch = curl_init();
 	$fp = fopen($local_file,"w"); // mungkin pake yg "w" aja
@@ -27,7 +27,7 @@ function getlocalics($url, $kd_unit){
 	curl_exec($ch);
 	curl_close($ch);
 	fclose($fp);
-	return "../../listicscache/".$kd_unit.".ics";
+	return "../../listics/cache/".$kd_unit.".ics";
 }
 
 if(isset($_POST['cek_by_id'])){
@@ -79,6 +79,8 @@ if(isset($_POST['cek_by_id'])){
 			$unit->cancelBooked($kd_unit, $current_booked[$i]);
 		}
 	}
+
+    $unit->buildIcs($kd_unit);
 	$callback = array('status'=>'done');
 	echo json_encode($callback);
 }

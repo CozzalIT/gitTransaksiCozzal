@@ -67,7 +67,7 @@ class Ics_unit {
 
   public function createIcs($kd_unit){
     $this->buildIcs($kd_unit);
-    $this->setURL($kd_unit, 'transaksi.cozzal.com/ics/listing/'.$kd_unit.'.ics', 'url_cozzal');
+    $this->setURL($kd_unit, 'transaksi.cozzal.com/ics/shared_ics.php?request='.$kd_unit, 'url_cozzal');
     return true;
   }  
 
@@ -75,11 +75,11 @@ class Ics_unit {
     include 'ics.php';
     $day_before = strtotime('-90 Days');
     $minimum_date = date('Y-m-d',$day_before);    
-    $ics = new ICS("../ics/listing/".$kd_unit.".ics");
+    $ics = new ICS("../../listics/".$kd_unit.".ics");
     $unit = explode('/',$kd_unit);
     for($i=0;$i<count($unit);$i++){
       $kd_unit = $unit[$i];
-      $ics->change_file("../ics/listing/".$kd_unit.".ics");
+      $ics->change_file("../../listics/".$kd_unit.".ics");
       $ics->create_ical();
       $show = $this->showUnit_byId($kd_unit, $minimum_date);
       while($data = $show->fetch(PDO::FETCH_OBJ)){

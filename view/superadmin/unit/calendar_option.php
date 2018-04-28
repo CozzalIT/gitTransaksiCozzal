@@ -66,6 +66,13 @@
 		    text-decoration: none;
 		    display: block;
 		}
+		.content-dropdown-selected{
+		    background-color: black;
+		    color: white;
+		    padding: 8px 6px;
+		    text-decoration: none;
+		    display: block;
+		}		
 		.content-dropdown:hover{
 			background-color: #D5D1D1;
 			box-shadow: 2px 2px 4px #D5D1D1;
@@ -88,6 +95,8 @@
 		var kd_unit = <?php echo $kd_unit.";"; ?>
 		var kd_apt = <?php echo $kd_apt.";"; ?>
 		var url_bnb = $("#url-bnb").text();
+
+		$("#sel-"+kd_unit).attr("class","content-dropdown-selected");
 
 		function triger(){
 			document.getElementById("apartement-dropdown").classList.toggle("show-dropdown");	

@@ -29,10 +29,9 @@
         if($cal_bnb==""){
           $cal_bnb = "Belum Tersedia";
         }
-      } else {
-        $arrayunit[] = $data->kd_unit;
-        $arrayunit[] = $data->no_unit." - ".$data->nama_apt;
-      }
+      } 
+      $arrayunit[] = $data->kd_unit;
+      $arrayunit[] = $data->no_unit." - ".$data->nama_apt;
     }
   }
 ?>
@@ -46,7 +45,7 @@
       <?php
         if(count($arrayunit)>0){
           for($i=0;$i<count($arrayunit);$i+=2){
-            echo '<a class="content-dropdown" href="calendar.php?calendar_unit='.$arrayunit[$i].'">';
+            echo '<a id="sel-'.$arrayunit[$i].'" class="content-dropdown" href="calendar.php?calendar_unit='.$arrayunit[$i].'">';
             echo $arrayunit[$i+1]."</a>";
           }
         }
