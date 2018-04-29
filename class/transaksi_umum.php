@@ -66,6 +66,11 @@ class TransaksiUmum {
     return $query;
   }
 
+  public function showTUByKebutuhan($kebutuhan){
+    $sql = "SELECT * FROM tb_transaksi_umum WHERE kebutuhan='$kebutuhan'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
 
 }
 ?>

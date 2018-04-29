@@ -28,10 +28,11 @@
   <div class="container-fluid">
     <div class="quick-actions_homepage">
       <ul class="quick-actions">
-        <li class="bg_lb span5"> <a href="home.php"> <i class="icon-home"></i> <span class="label label-important"></span> Dashboard </a> </li>
+        <li class="bg_lb span6"> <a href="home.php"> <i class="icon-home"></i> <span class="label label-important"></span> Dashboard </a> </li>
         <li class="bg_lg span6"> <a href="../unit/unit.php"> <i class="icon-edit"></i> Listing Unit</a> </li>
-        <li class="bg_ly span5"> <a href="../booking/laporan_booking.php"> <i class="icon-th-large"></i><span class="label label-success"></span> Laporan Booking </a> </li>
-        <li class="bg_lo span6"> <a href="../booking/pendapatan.php"> <i class="icon-money"></i> Pendapatan</a> </li>
+        <li class="bg_ly span4"> <a href="../booking/laporan_booking.php"> <i class="icon-th-large"></i><span class="label label-success"></span> Laporan Booking </a> </li>
+        <li class="bg_lo span4"> <a href="../booking/pendapatan.php"> <i class="icon-money"></i> Pendapatan</a> </li>
+        <li class="bg_ls span4"> <a href="../booking/pengeluaran.php"> <i class="icon-money"></i> Pengeluaran</a> </li>
       </ul>
     </div>
 <!--End-Action boxes-->
