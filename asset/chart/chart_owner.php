@@ -16,7 +16,7 @@ var pendapatan = {
         $j = 1;
         while($data_u = $show_u->fetch(PDO::FETCH_OBJ)){
           $kd_unit = $data_u->kd_unit;
-          $proses_t = new Owner($db);
+		  $proses_t = new Owner($db);
           $color = $other->selectColor($j);
           echo "
           {
@@ -24,21 +24,40 @@ var pendapatan = {
               backgroundColor: window.chartColors.$color,
               borderColor: window.chartColors.$color,
               data: [";
-              $proses_t = new Owner($db);
+			   $proses_t = new Owner($db);
+              $jumlahHari2 = 0;
               for($i=1;$i<=12;$i++){
-                $show_t = $proses_t->showBookingByMY($kd_unit, $i, 2018);
+				$show_t = $proses_t->showBookingByMY($kd_unit, $i, 2018, 41);
                 $pendapatanTotOwner = 0;
-                while ($data_t = $show_t->fetch(PDO::FETCH_OBJ)) {
-                 if($data_t->total_harga_owner > 0){
+                $jumlahHari = 0;
+                while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
+                  $bulanCI = explode("-",$data_t->check_in);
+                  $bulanCO = explode("-",$data_t->check_out);
+                  if($bulanCI[1] != $bulanCO[1]){
+                    $kabisat = $other->cekKabisat(2018);
+                    $hari1 = $other->cekJumHari($kabisat, $bulanCI[1]);
+                    $jumlahHari =  $hari1 + 1 - $bulanCI[2];
+                    $jumlahHari2 = $bulanCO[2] - 1;
+                  }else{
+                    $jumlahHari = $data_t->hari;
+                    $jumlahHari2 = 0;
+                  }
+				  if($data_t->total_harga_owner > 0){
                    $pendapatanOwner = $data_t->total_harga_owner;
+				   $pendapatanRata2 = $pendapatanOwner /($data_t->hari);
+				   $pendapatanBulanIni = $pendapatanRata2 * $jumlahHari;
                  }else{
                    $pendapatanOwner = ($data_t->hari_weekend * $data_t->h_owner_we) + ($data_t->hari_weekday * $data_t->h_owner_wd);
+				   $pendapatanRata2 = $pendapatanOwner / ($data_t->hari_weekend + $data_t->hari_weekday);
+				   $pendapatanBulanIni = $pendapatanRata2 * $jumlahHari;
                  }
-                 $pendapatanTotOwner = $pendapatanTotOwner + $pendapatanOwner;
+                 $pendapatanTotOwner = $pendapatanTotOwner + $pendapatanBulanIni;
                 }
                 echo $pendapatanTotOwner.',';
               }
+   
 
+                
           echo
             "],
               fill: false
@@ -252,8 +271,8 @@ var booking = {
                   if($bulanCI[1] != $bulanCO[1]){
                     $kabisat = $other->cekKabisat(2018);
                     $hari1 = $other->cekJumHari($kabisat, $bulanCI[1]);
-                    $jumlahHari = $jumlahHari + $hari1 - $bulanCI[2];
-                    $jumlahHari2 += $bulanCO[2];
+                    $jumlahHari = $jumlahHari + $hari1 + 1 - $bulanCI[2];
+                    $jumlahHari2 += $bulanCO[2] - 1;
                   }else{
                     $jumlahHari = $jumlahHari + $data_t->hari;
                     $jumlahHari2 += 0;

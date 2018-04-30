@@ -23,7 +23,7 @@
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box" style="overflow-x:auto;">
-          <div class="widget-title"> <span class="icon"><i class="icon-money" style="color:#da4444;"></i></span>
+          <div class="widget-title"> <span class="icon"><i class="icon-credit-card" style="color:#da4444;"></i></span>
             <h5 style="color:#da4444;">Pengeluaran</h5>
           </div>
           <div class="widget-content nopadding">
