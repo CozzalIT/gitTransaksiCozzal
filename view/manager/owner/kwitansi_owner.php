@@ -24,12 +24,16 @@
     }
     $transaksi[999] = 'dummy';
     $transaksi_umum[999] = 'dummy';
+    $kd_owner = $_SESSION['kd_owner'];
   }
 ?>
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Owner Payment</a> </div>
-    <a href="owner_payment.php" class="btn btn-primary btn-add"><i class="icon-arrow-left"></i> Kembali</a>
+    <form action="owner_payment.php" method="post">
+      <button type="submit" class="btn btn-primary btn-add"><i class="icon-arrow-left"></i> Kembali</button>
+      <input type="text" name="kd_owner" value="<?php echo $kd_owner; ?>" style="visibility:hidden" />
+    </form>
   </div>
   <div class="container-fluid"><hr>
     <div class="row-fluid">
@@ -232,10 +236,18 @@
     document.getElementById('formOwnerPayment').submit();
   }
 </script>
-
+<div class="row-fluid">
+  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
+</div>
 <!--end-Footer-part-->
-<?php
-  include("../template/footer.php");
-?>
+<script src="../../../asset/js/sweetalert.min.js"></script>
+<script src="../../../asset/js/hapus.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.ui.custom.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/jquery.dataTables.min.js"></script>
+<script src="../../../asset/js/matrix.js"></script>
+<script src="../../../asset/js/matrix.tables.js"></script>
+<!--end-Footer-part-->
 </body>
 </html>
