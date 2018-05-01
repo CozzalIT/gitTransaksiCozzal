@@ -89,10 +89,10 @@ $pdf->Cell(185 ,5,'Pengeluaran Unit',1,1,'C');
 
 $pdf->Cell(10 ,5,'No',1,0);
 $pdf->Cell(30 ,5,'Tanggal',1,0);
-$pdf->Cell(50 ,5,'Keterangan',1,0);
-$pdf->Cell(40 ,5,'Harga',1,0);
+$pdf->Cell(70 ,5,'Keterangan',1,0);
+$pdf->Cell(30 ,5,'Harga',1,0);
 $pdf->Cell(15 ,5,'Jumlah',1,0);
-$pdf->Cell(40 ,5,'Total',1,1);
+$pdf->Cell(30 ,5,'Total',1,1);
 
 $proses_tu = new TransaksiUmum($db);
 
@@ -107,10 +107,10 @@ if(!empty($_POST['transaksiUmum'])){
     echo
       $pdf->Cell(10 ,5,$i,1,0);
       $pdf->Cell(30 ,5,$tanggal[0],1,0);
-      $pdf->Cell(50 ,5,$data_tu->keterangan,1,0);
-      $pdf->Cell(40 ,5,number_format($data_tu->harga, 0, '.', '.').' IDR',1,0);
+      $pdf->Cell(70 ,5,$data_tu->keterangan,1,0);
+      $pdf->Cell(30 ,5,number_format($data_tu->harga, 0, '.', '.').' IDR',1,0);
       $pdf->Cell(15 ,5,$data_tu->jumlah,1,0);
-      $pdf->Cell(40 ,5,number_format($subTotal_out, 0, '.', '.').' IDR',1,1);
+      $pdf->Cell(30 ,5,number_format($subTotal_out, 0, '.', '.').' IDR',1,1);
     $i++;
     $total_out = $total_out+$subTotal_out;
   }
@@ -118,10 +118,10 @@ if(!empty($_POST['transaksiUmum'])){
   echo
     $pdf->Cell(10 ,5,'',1,0);
     $pdf->Cell(30 ,5,'',1,0);
-    $pdf->Cell(50 ,5,'',1,0);
-    $pdf->Cell(40 ,5,'',1,0);
+    $pdf->Cell(70 ,5,'',1,0);
+    $pdf->Cell(30 ,5,'',1,0);
     $pdf->Cell(15 ,5,'',1,0);
-    $pdf->Cell(40 ,5,'',1,1);
+    $pdf->Cell(30 ,5,'',1,1);
 
   $total_out = 0;
 }
