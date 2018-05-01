@@ -115,6 +115,15 @@ if(isset($_GET['pembayaran'])){
         <h3>Pembayaran</h3>
       </div>
       <div class="modal-body">
+      ';
+  if(isset($_GET['warning'])){
+    echo'
+      <div class="alert alert-danger" role="alert">
+        <strong>WARNING! </strong>Pembayaran masuk tidak boleh 0.
+      </div>
+    ';
+  }
+  echo'
       	<form action="../../../proses/transaksi.php" method="post" class="form-horizontal">
           <div class="control-group">
             <label class="control-label">Total Tagihan</label>

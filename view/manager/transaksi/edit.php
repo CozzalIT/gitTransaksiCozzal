@@ -144,10 +144,10 @@
                     <input name="total" min="0"  class="span11" type="number" required value="'.$edit->total_tagihan.'"/>
                     </div>
                   </div>
-				  <div class="control-group">
+				          <div class="control-group">
                     <label class="control-label">Total Harga Owner :</label>
                     <div class="controls">
-                    <input name="total_harga_owner" min="0"  class="span11" type="number" required value="'.$edit->tota_harga_owner.'"/>
+                    <input name="total_harga_owner" min="0"  class="span11" type="number" required value="'.$edit->total_harga_owner.'"/>
                     </div>
                   </div>
                   <div class="control-group">
