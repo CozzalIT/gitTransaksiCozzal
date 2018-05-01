@@ -152,10 +152,14 @@ if(!empty($_POST['transaksi'])){
   foreach ($_POST['transaksi'] as $kd_transaksi) {
     $show_t = $proses_t->editTransaksi($kd_transaksi);
     $data_t = $show_t->fetch(PDO::FETCH_OBJ);
+	if($data_t->total_harga_owner > 0){
+       $subTotal_in = $data_t->total_harga_owner;
+	}else{
     $weekday = $data_t->harga_owner*$data_t->hari_weekday;
     $weekend = $data_t->harga_owner_weekend*$data_t->hari_weekend;
     $subTotal_in = $weekday+$weekend;
-    $total_in=$total_in+$subTotal_in;
+    }
+	$total_in=$total_in+$subTotal_in;
     echo
       $pdf->Cell(8 ,5,$i,1,0);
       $pdf->Cell(38 ,5,$data_t->check_in.' / '.$data_t->check_out,1,0);
