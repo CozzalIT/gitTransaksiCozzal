@@ -56,9 +56,7 @@
                     if($kd_transaksi <> 'dummy'){
                       $show_t = $proses_t->editTransaksi($kd_transaksi);
                       $data_t = $show_t->fetch(PDO::FETCH_OBJ);
-                      $show_u = $proses_u->showHargaOwner($data_t->no_unit);
-        							$data_u = $show_u->fetch(PDO::FETCH_OBJ);
-        							$subtest= $data_t ->total_harga_owner;
+                      $subtest= $data_t ->total_harga_owner;
         							if($subtest>0){
         								$nominal = $data_t->total_harga_owner;
         								$weekend = 0;
