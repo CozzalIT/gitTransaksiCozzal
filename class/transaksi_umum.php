@@ -61,7 +61,7 @@ class TransaksiUmum {
 
   //show berdasarkan kebutuhan dan MY
   public function showTUByKebutMY($kebutuhan, $noBulan, $tahun){
-    $sql = "SELECT harga FROM tb_transaksi_umum WHERE kebutuhan='$kebutuhan' AND MONTH(tanggal)='$noBulan' AND YEAR(tanggal)='$tahun'";
+    $sql = "SELECT harga, jumlah FROM tb_transaksi_umum WHERE kebutuhan='$kebutuhan' AND MONTH(tanggal)='$noBulan' AND YEAR(tanggal)='$tahun'";
     $query = $this->db->query($sql);
     return $query;
   }

@@ -55,9 +55,9 @@ var pendapatan = {
                 }
                 echo $pendapatanTotOwner.',';
               }
-   
 
-                
+
+
           echo
             "],
               fill: false
@@ -160,7 +160,8 @@ var pendapatan = {
                   $show_tu = $proses_tu->showTUByKebutMY($kebutuhan, $i, 2018);
                   $jumlahPengeluaran = 0;
                   while($data_tu = $show_tu->fetch(PDO::FETCH_OBJ)){
-                   $jumlahPengeluaran = $jumlahPengeluaran + $data_tu->harga;
+                    $total = $data_tu->harga * $data_tu->jumlah;
+                    $jumlahPengeluaran = $jumlahPengeluaran + $total;
                   }
                   echo $jumlahPengeluaran.',';
                 }
