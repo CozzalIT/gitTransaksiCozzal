@@ -37,6 +37,7 @@
                   <th>Jumlah</th>
                   <th>Nominal</th>
                   <th>Tanggal</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -92,17 +93,20 @@
                           break;
                       }
                       $tanggalIndo = $formatTanggal[2]." ".$formatTanggal[1]." ".$formatTanggal[0];
-                      echo "
-                        <tr class='gradeC'>
-                          <td>$i</td>
-                          <td>$data_t->keterangan</td>
-                          <td>$data_u->nama_apt</td>
-                          <td>$data_u->no_unit</td>
-                          <td>$data_t->jumlah</td>
-                          <td>".number_format($data_t->harga*$data_t->jumlah, 0, ".", ".")." IDR</td>
-                          <td>$tanggalIndo</td>
-                      ";
-                      $i++;
+                      if($data_t->kode == "9/$kd_unit" or $data_t->kode == "10/$kd_unit"){
+                        echo "
+                          <tr class='gradeC'>
+                            <td>$i</td>
+                            <td>$data_t->keterangan</td>
+                            <td>$data_u->nama_apt</td>
+                            <td>$data_u->no_unit</td>
+                            <td>$data_t->jumlah</td>
+                            <td>".number_format($data_t->harga*$data_t->jumlah, 0, ".", ".")." IDR</td>
+                            <td>$tanggalIndo</td>
+                            ".($data_t->kode == "9/$kd_unit" ? '<td style="color:green;"><strong>Paid</strong></td>' : '<td style="color:red;"><strong>Unpaid</strong></td>')."
+                        ";
+                        $i++;
+                      }
                     }
                   }
                  ?>
