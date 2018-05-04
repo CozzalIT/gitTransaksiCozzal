@@ -17,9 +17,10 @@
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Owner Payment</a></div>
-    <form method="post" action="#">
+    <form id="formSelectOwner" method="post" action="#">
       <div class="control-group btn-add">
-        <select name="kd_owner" class="span2" style="">
+        <p>Pilih owner untuk menampilkan data.</p>
+        <select name="kd_owner" class="span2" style="" id="mySelect" onchange="selectOwner()">
           <?php
             if(!isset($_POST['kd_owner'])){
               echo "
@@ -56,7 +57,11 @@
           ?>
         </select>
       </div>
-      <button type="submit" class="btn btn-primary" style="margin-left:20px;">Tampilkan</button>
+      <script>
+        function selectOwner() {
+            document.getElementById("formSelectOwner").submit();
+        }
+      </script>
     </form>
   </div>
   <div class="container-fluid">
@@ -283,6 +288,7 @@
                     <th>Tanggal Pembayaran</th>
                     <th>Jumlah Transaksi</th>
                     <th>Nominal</th>
+                    <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -295,6 +301,18 @@
                       $show_history = $Proses->showOwnerPayment($_POST['kd_owner']);
                     }
                     while($data_history = $show_history->fetch(PDO::FETCH_OBJ)){
+                      $status = $data_history->status;
+                      switch ($status) {
+                        case '3':
+                          $status = 'Reject';
+                          break;
+                        case '2':
+                          $status = 'Waiting List';
+                          break;
+                        default:
+                          $status = 'Confirm';
+                          break;
+                      }
                       $tanggal = explode(" ",$data_history->tgl_pembayaran);
                       $formatTanggal = explode("-",$tanggal[0]);
                       switch ($formatTanggal[1]) {
@@ -342,10 +360,27 @@
                           <td>$tanggalIndo</td>
                           <td>$data_history->jumlah_transaksi Transaksi</td>
                           <td>".number_format($data_history->nominal, 0, ".", ".")." IDR</td>
+                          <td>$status</td>
                           <td>
-                            <center>
-                              <a class='btn btn-success' id='detail' name='detail' href='detail_payment.php?detail=$data_history->kd_owner_payment'>Detail</a>
-                            </center>
+                            <div class='btn-group' style='margin-left: 20px;'>
+                              <button data-toggle='dropdown' class='btn btn-success dropdown-toggle'>Action <span class='caret'></span></button>
+                              <ul class='dropdown-menu'>
+                                <li><a id='detail' name='detail' href='detail_payment.php?detail=$data_history->kd_owner_payment'>Detail</a></li>
+                                ";
+                                if($status == 'Reject'){
+                                  echo"
+                                    <li class='divider'></li>
+                                    <li><a href='#'>Edit</a></li>
+                                  ";
+                                }elseif($status == 'Waiting List'){
+                                  echo"
+                                    <li class='divider'></li>
+                                    <li><a href='#'>Confirm</a></li>
+                                  ";
+                                }
+                                echo"
+                              </ul>
+                            </div>
                           </td>
                         </tr>
                       ";

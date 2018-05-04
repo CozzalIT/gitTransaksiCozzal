@@ -17,26 +17,8 @@
 ?>
 <div id="content">
   <div id="content-header">
-    <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Laporan Transaksi</a></div>
-    <form id="formBack" method="post">
-      <?php
-        if(isset($_GET['detail'])){
-          $proses_o = new Owner($db);
-          $show_o = $proses_o->editOwnerPayment($_GET['detail']);
-          $data_o = $show_o->fetch(PDO::FETCH_OBJ);
-          echo "
-            <input name='kd_owner' value='$data_o->kd_owner' class='hide' />
-          ";
-        }
-      ?>
-      <button class="btn btn-success btn-add" onclick="submitForm('owner_payment.php')"> Owner Payment</button>
-    </form>
-    <script>
-      function submitForm(action){
-        document.getElementById('formBack').action = action;
-        document.getElementById('formBack').submit();
-      }
-    </script>
+   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Detail Payment</a></div>
+   <a href="list_kwitansi.php" class="btn btn-primary btn-add"> Waiting List Kwitansi</a>
   </div>
   <div class="container-fluid">
     <hr>
@@ -128,7 +110,25 @@
                     }
                   }
                 ?>
-
+                <td colspan="6">
+                  <form id="formRespon" action="../../../proses/owner.php" method="post">
+                    <?php
+                      if(isset($_GET['detail'])){
+                        $kd_owner_payment = $_GET['detail'];
+                        echo "
+                          <input name='kd_owner_payment' value='$kd_owner_payment' class='hide' />
+                        ";
+                      }
+                    ?>
+                    <button class="btn btn-danger pull-right" name="rejectKwitansi" style="margin-left: 15px;" onclick="kirimRespon()">Reject</button>
+                    <button class="btn btn-success pull-right" name="confirmKwitansi" onclick="kirimRespon()">Confirm</button>
+                  </form>
+                  <script>
+                    function kirimRespon(){
+                      document.getElementById('formRespon').submit();
+                    }
+                  </script>
+                </td>
               </tbody>
             </table>
           </div>

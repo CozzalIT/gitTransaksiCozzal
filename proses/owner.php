@@ -115,8 +115,60 @@ elseif(isset($_POST['ownerPayment'])){
 			}
 		}
 	}
-	$add_owner_payment = $proses_o->addOwnerPayment($kd_owner_payment, $kd_owner, $tanggal, $jumlah_transaksi, $earnings);
+	$add_owner_payment = $proses_o->addOwnerPayment($kd_owner_payment, $kd_owner, $tanggal, $jumlah_transaksi, $earnings, 1);
 	header("Location:../view/".$view."/owner/owner_payment.php");
+}
+
+//Kirim Kwitansi
+elseif(isset($_POST['kirimKwitansi'])){
+	$kd_kas = $_POST['kas'];
+	$earnings = $_POST['earnings'];
+	$tanggal = date('Y-m-d H:i:s');
+	$status = '41';
+	$jenis = 2;
+	$keterangan = 4;
+	$kd_owner = $_SESSION['kd_owner'];
+
+	if(isset($_POST['transaksi'])){
+		$jumlah_t = count($_POST['transaksi']);
+	}else{
+		$jumlah_t = 0;
+	}
+	if(isset($_POST['transaksiUmum'])){
+		$jumlah_tu = count($_POST['transaksiUmum']);
+	}else{
+		$jumlah_tu = 0;
+	}
+
+	$jumlah_transaksi = $jumlah_t + $jumlah_tu;
+	$proses_o = new Owner($db);
+
+	if(isset($_POST['transaksi'])){
+		$kd_op_t = implode("a",$_POST['transaksi']);
+	}
+	if(isset($_POST['transaksiUmum'])){
+		$kd_op_tu = implode("b",$_POST['transaksiUmum']);
+	}
+
+	$kd_owner_payment = $kd_op_t."x".$kd_op_tu;
+	$add_owner_payment = $proses_o->addOwnerPayment($kd_owner_payment, $kd_owner, $tanggal, $jumlah_transaksi, $earnings, 2);
+	header("Location:../view/".$view."/owner/owner_payment.php");
+}
+
+elseif(isset($_POST['rejectKwitansi'])){
+	$kd_owner_payment =  $_POST['kd_owner_payment'];
+	$status = 3;
+	$proses_o = new Owner($db);
+	$update_o = $proses_o->modStatusOwnerPayment($kd_owner_payment, $status);
+	if($update_o == "Success"){
+		header("Location:../view/".$view."/kwitansi/list_kwitansi.php");
+	}
+}
+
+elseif(isset($_POST['confirmKwitansi'])){
+	echo "
+		Confirm under maintenace!!
+	";
 }
 
 else header('Location:../view/'.$view.'/home/home.php');

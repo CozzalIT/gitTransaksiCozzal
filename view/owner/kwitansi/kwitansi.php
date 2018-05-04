@@ -13,7 +13,17 @@
   include "../template/header.php";
   include "../template/sidebar.php";
 
-  if(!empty($_POST['ownerPayment'])) {
+  if(!empty($_GET['detail'])) {
+    $kd_owner_payment = $_GET['detail'];
+    if(isset($kd_owner_payment)){
+      $kode = explode("x",$kd_owner_payment);
+      $transaksi = explode("a",$kode[0]);
+      if($kode[1] <> ''){
+        $transaksi_umum = explode("b",$kode[1]);
+      }
+    }
+
+    /*
     foreach($_POST['ownerPayment'] as $ownerPayment) {
       $cek = explode("/",$ownerPayment);
       if($cek[0] == 't'){
@@ -22,18 +32,16 @@
         $transaksi_umum[] = $cek[1];
       }
     }
+    */
     $transaksi[999] = 'dummy';
     $transaksi_umum[999] = 'dummy';
-    $kd_owner = $_SESSION['kd_owner'];
+    $kd_owner = $_SESSION['pemilik'];
   }
 ?>
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Owner Payment</a> </div>
-    <form action="owner_payment.php" method="post">
-      <button type="submit" class="btn btn-primary btn-add"><i class="icon-arrow-left"></i> Kembali</button>
-      <input type="text" name="kd_owner" value="<?php echo $kd_owner; ?>" style="visibility:hidden" />
-    </form>
+    <a type="submit" class="btn btn-primary btn-add" href="list_kwitansi.php"><i class="icon-arrow-left"></i> Kembali</a>
   </div>
   <div class="container-fluid"><hr>
     <div class="row-fluid">
@@ -51,9 +59,9 @@
                   <table class="table table-bordered table-invoice">
                     <tbody>
                       <?php
-                        if(isset($_SESSION['kd_owner'])){
+                        if(isset($_SESSION['pemilik'])){
                           $proses_o = new Owner($db);
-                          $show_o = $proses_o->editOwner($_SESSION['kd_owner']);
+                          $show_o = $proses_o->editOwner($_SESSION['pemilik']);
                           $data_o = $show_o->fetch(PDO::FETCH_OBJ);
                         }
                       ?>
@@ -194,32 +202,16 @@
                       </tr>
                     </tbody>
                   </table>
-                  <table class="table table-bordered table-invoice-full">
-                    <tbody>
-                      <tr>
-                        <td class="msg-invoice" width="85%"><h4>Payment method: </h4>
-                          <select id="kas" name="kas" class="span4" required>
-              					    <option value="">-- Kas --</option>
-                					  <?php
-                              $Proses = new Kas($db);
-                    				  $show = $Proses->showKas();
-                    				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-                  						  echo "<option name='kd_kas' value='$data->kd_kas'>$data->sumber_dana</option>";
-                  						}
-                					  ?>
-              					  </select>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+
                   <div class="pull-right">
+                    <input name="kd_owner_payment" value="<?php echo $kd_owner_payment; ?>" class="hide"/>
                     <h4 class="pull-right"><span>EARNINGS: </span><?php echo number_format($earnings, 0, ".","."); ?> IDR</h4>
                     <br>
                     <br>
                     <div class='hide'><input type='text' name='earnings' value='<?php echo $earnings;?>' /></div>
-                    <button class="btn btn-success btn-large pull-right" type="submit" name="ownerPayment" style="margin-left:10px;" onclick="submitForm('../../../proses/owner.php')">Bayar</button>
                     <button class="btn btn-primary btn-large pull-right" type="submit" style="margin-left:10px;" onclick="submitForm('pdf.php')">Download/Print</button>
-                    <button class="btn btn-warning btn-large pull-right" type="submit" name="kirimKwitansi" style="margin-left:10px;" onclick="submitForm('../../../proses/owner.php')">Kirim Kwitansi</button>
+                    <button class="btn btn-danger btn-large pull-right" type="submit" name="rejectKwitansi" style="margin-left:10px;" onclick="submitForm('../../../proses/owner.php')">Reject</button>
+                    <button class="btn btn-success btn-large pull-right" type="submit" name="confirmKwitansi" style="margin-left:10px;" onclick="submitForm('../../../proses/owner.php')">Confirm</button>
                   </div>
                 </div>
               </div>

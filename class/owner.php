@@ -18,9 +18,9 @@ class Owner {
     }
   }
 
-  public function addOwnerPayment($kd_owner_payment, $kd_owner, $tgl_pembayaran, $jumlah_transaksi, $nominal){
-    $sql = "INSERT INTO tb_owner_payment (kd_owner_payment, kd_owner, tgl_pembayaran, jumlah_transaksi, nominal)
-    VALUES('$kd_owner_payment', '$kd_owner', '$tgl_pembayaran', '$jumlah_transaksi', '$nominal')";
+  public function addOwnerPayment($kd_owner_payment, $kd_owner, $tgl_pembayaran, $jumlah_transaksi, $nominal, $status){
+    $sql = "INSERT INTO tb_owner_payment (kd_owner_payment, kd_owner, tgl_pembayaran, jumlah_transaksi, nominal, status)
+    VALUES('$kd_owner_payment', '$kd_owner', '$tgl_pembayaran', '$jumlah_transaksi', '$nominal', '$status')";
     $query = $this->db->query($sql);
     if(!$query){
       return "Failed";
@@ -86,10 +86,26 @@ class Owner {
     return $query;
   }
 
+  public function editOwnerPayment($kd_owner_payment){
+    $sql = "SELECT * from tb_owner_payment WHERE kd_owner_payment='$kd_owner_payment'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
   //Proses Update
   public function updateOwner($kd_owner ,$nama, $alamat, $no_tlp, $kd_bank, $no_rek, $email, $jenis_kelamin){
     $sql = "update tb_owner SET nama='$nama', alamat='$alamat', no_tlp='$no_tlp', kd_bank='$kd_bank', no_rek='$no_rek',
     email='$email', jenis_kelamin='$jenis_kelamin' WHERE kd_owner='$kd_owner'";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
+  }
+
+  public function modStatusOwnerPayment($kd_owner_payment, $status){
+    $sql = "UPDATE tb_owner_payment SET status='$status' WHERE kd_owner_payment='$kd_owner_payment'";
     $query = $this->db->query($sql);
     if(!$query){
       return "Failed";
