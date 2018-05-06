@@ -192,6 +192,12 @@
                     <input name="dp" type="number" class="span11" placeholder="Alamat" value="'.$edit->dp.'" required/>
                     </div>
                   </div>
+				  <div class="control-group">
+					<label class="control-label">Catatan :</label>
+					<div class="controls">
+						<input name="catatan" type="text" class="span11" value="'.$edit->catatan.'">
+					</div>
+				</div>
                   <div class="control-group">
                     <div class="controls">
                       <div class="form-actions" style="text-align:right">

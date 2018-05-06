@@ -191,15 +191,15 @@
             </div>
             <div class="collapse accordion-body" id="collapseGFour">
     			    <div class="control-group">
-      				  <label class="control-label">Check In :  <?$tgl=date('d-m-Y');echo $tgl;?></label>
+      				  <label class="control-label">Check In : </label>
       				  <div class="controls">
-      				    <input name="check_in" id="check_in" type="date" onchange="validasi(this.form)"/>
+      				    <input name="check_in" id="check_in" type="date" onchange="keepvalid(this.form)"/>
       				  </div>
     			    </div>
       				<div class="control-group">
       				  <label class="control-label">Check Out :</label>
       				  <div class="controls">
-      				    <input name="check_out" id="check_out" type="date" onchange="validasi2(this.form)"/>
+      				    <input name="check_out" id="check_out" type="date" onchange="keepvalid2(this.form)"/>
       				  </div>
       				</div>
       				<div class="control-group">
@@ -281,6 +281,12 @@
                   <input name="total" id="total" min="0"  type="number" />
                 </div>
               </div>
+			        <div class="control-group" id="total_harga_owner-C">
+                <label class="control-label">Total Harga Owner :</label>
+                <div class="controls">
+                  <input name="total_harga_owner" min="0" id="total_harga_owner"  type="number" />
+                </div>
+              </div>
     			    <div class="control-group">
       				  <div class="controls">
       				    <button data-parent="#collapse-group" href="#" id="btn2" data-toggle="collapse" class="btn btn-success">Lanjut</button>
@@ -332,7 +338,13 @@
   				  <div class="controls">
   				    <input name="dp" min="0"  type="number" required/>
   				  </div>
-  			  </div>
+  			    </div>
+				<div class="control-group">
+					<label class="control-label">Catatan :</label>
+					<div class="controls">
+						<input name="catatan" type="text" class="span4" rows = "5">
+					</div>
+				</div>
 			    <div class="control-group" >
   				  <div class="controls">
   				    <input type="submit" name="addTransaksi" value="Submit" class="btn btn-success">
