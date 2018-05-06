@@ -58,8 +58,8 @@
                           </td>
             					    <td>$data->nama_apt</td>
             						  <td>$data->nama</td>
-            						  <td><a title='' id='owner_wd' data-content='".number_format($data->h_owner_wd, 0, ".", ".")." IDR' data-placement='right' data-toggle='popover' href='' data-original-title='Owner WeekDay'>".number_format($data->h_sewa_wd, 0, ".", ".")." IDR</a></td>
-            						  <td><a title='' id='owner_we' data-content='".number_format($data->h_owner_we, 0, ".", ".")." IDR' data-placement='right' data-toggle='popover' href='' data-original-title='Owner WeekEnd'>".number_format($data->h_sewa_we, 0, ".", ".")." IDR</a></td>
+            						  <td><a title='' id='owner_wd' data-content='".number_format($data->h_owner_wd, 0, ".", ".")." IDR' data-placement='right' data-toggle='popover' href='#' data-original-title='Owner WeekDay'>".number_format($data->h_sewa_wd, 0, ".", ".")." IDR</a></td>
+            						  <td><a title='' id='owner_we' data-content='".number_format($data->h_owner_we, 0, ".", ".")." IDR' data-placement='right' data-toggle='popover' href='#' data-original-title='Owner WeekEnd'>".number_format($data->h_sewa_we, 0, ".", ".")." IDR</a></td>
                           <!-- ('In Active')
                             <td>".number_format($data->h_owner_wd, 0, ".", ".")." IDR</td>
               						  <td>".number_format($data->h_owner_we, 0, ".", ".")." IDR</td>

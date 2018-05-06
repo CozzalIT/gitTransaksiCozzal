@@ -11,22 +11,43 @@ if(isset($_POST['addTask'])){
   $task = $_POST['task'];
   $unit = $_POST['unit'];
   $sifat = $_POST['sifat'];
+  $kd_unit = $_POST['kd_unit'];
+  if($sifat=="Sekali"){
+    $tgl_task = $_POST['tgl_task'];
+    $tgl_task = "'".$tgl_task."'";
+  } else {
+    $tgl_task = "null";
+  }
+  if(($unit=="Semua" && $kd_unit!="") || $unit!="Semua"){
+    $unit = $kd_unit;
+  }
+ // die($task.", ".$unit.", ".$sifat.", ".$tgl_task);
   $proses = new Task($db);
-  $add = $proses->addTask($task, $unit, $sifat);
-  if($sifat!="Sekali"){
+  $add = $proses->addTask($task, $unit, $sifat, $tgl_task);
+
+
+//sementara di offkan  
+/*  if($sifat!="Sekali"){ //untuk yang sifatnya rutin
+
     $kd_unit_base = "0";
+    //$kd_unit_base diisi dengan unit yang sedang aktif task nya
     while($data = $add->fetch(PDO::FETCH_OBJ)){$kd_unit_base .= "/".$data->kd_unit;}
+    
+    //jika tidak ada yang aktif maka tambahka dari unit yang sudah check_out
     if($kd_unit_base=="0"){
       $show_kotor = $proses->showUnit_kotor($sekarang);
       while($data = $show_kotor->fetch(PDO::FETCH_OBJ)){$kd_unit_base .= "/".$data->kd_unit;}
     }
+
     if($kd_unit_base!="0"){
       $kd_unit = explode("/", $kd_unit_base);
       for($i=1; $i<count($kd_unit); $i++) {
         $proses->updateTask_Unit2($kd_unit[$i]);
       }
     }
+
   }
+*/  
   header('Location:../view/'.$view.'/unit/task.php');
 }
 
@@ -99,6 +120,34 @@ elseif(isset($_POST['bersih_task'])){
 
 // ------------- JSON PART -----------------------
 
+//edit task sekali
+elseif(isset($_POST['update_sekali'])){
+  $Proses = new Task($db);
+  $show = $Proses->showTask_sekali($sekarang);
+  while($data = $show->fetch(PDO::FETCH_OBJ)){
+    $unit = $data->unit;
+    if($unit='Semua'){
+      $where = "1=1";
+    } elseif($unit[0]=='&'){
+        $arr_kd = explode("&",$unit);
+        $where = "kd_unit='$arr_kd[1]' ";
+        for($i=2;$i<count($arr_kd);$i++){
+          $where.= "OR kd_unit='$arr_kd[$i]' ";
+        }
+    } elseif($unit[0]=='!'){
+        $arr_kd = explode("!",$unit);
+        $where = "kd_unit!='$arr_kd[1]' ";
+        for($i=2;$i<count($arr_kd);$i++){
+          $where.= "OR kd_unit!='$arr_kd[$i]' ";
+        }
+    }
+    $Proses->addTask_unit_sekali($data->kd_task,$where);
+  }
+  $Proses->deleteTask_sekali($sekarang);
+  $callback = array('status'=>"OK");
+  echo json_encode($callback);  
+}
+
 // edit task with popup 
 elseif(isset($_POST['id'])){
   $kd_task = $_POST['id'];
@@ -108,7 +157,8 @@ elseif(isset($_POST['id'])){
   $task = $data->task;
   $unit = $data->unit;
   $sifat = $data->sifat;
-  $callback = array('task'=>$task, 'unit'=>$unit, 'sifat'=>$sifat);
+  $tgl_task = $data->tgl_task;
+  $callback = array('task'=>$task, 'unit'=>$unit, 'sifat'=>$sifat, 'tgl_task'=>$tgl_task);
   echo json_encode($callback);  
 }
 
@@ -120,17 +170,17 @@ elseif(isset($_POST['updateTask_unit'])){
   while($data = $show->fetch(PDO::FETCH_OBJ)){
     $CO = $data->check_out;
   }
-  $is_updated = $Proses->isTask_updated($kd_unit, $CO);
-  if($is_updated==false){
+//  $is_updated = $Proses->isTask_updated($kd_unit, $CO);
+//  if($is_updated==false){
     $update = $Proses->updateTask_Unit($kd_unit, $CO);
-  }
+//  }
   require("../class/catatan.php"); $i=0;
   $Proses2 = new Catatan($db);
   $show2 = $Proses2->showCatatanUnit($kd_unit);
   while($data2 = $show2->fetch(PDO::FETCH_OBJ)){
     $i++;
   } 
-  $callback = array('done'=>$CO,'catatan'=>$i);
+  $callback = array('done'=>$CO,'catatan'=>$i,'r'=>$update);
   echo json_encode($callback);  
 }
 

@@ -34,50 +34,78 @@ function updateelementtask(konten2, jumlah2, task){
 	$("#task-temp").val(task);
 }
 
-	$(".status").click(function(){
-		var id = $(this).attr('id'); id = id.split("-");
-		var a = id[0];
-	    $.post('../../../proses/option_unit.php', {status : a},
-        function (data) {
-          response = JSON.parse(data); jenis = 'none';
-          ret = response.stat; $("#"+a+"-muatstat").text(ret);
-		  if(ret=="Check In") {
-		  	if(response.lihat=="Null"){
+function r_status_bersih(id){
+	id = id.split("-");
+	var a = id[0];
+    $.post('../../../proses/option_unit.php', {status : a},
+    function (data) {
+      response = JSON.parse(data); jenis = 'none';
+      ret = response.stat; $("#"+a+"-muatstat").text(ret);
+	  if(ret=="Check In") {
+	  	if(response.lihat=="Null"){
 //		  		if($(this).text()=="Memuat..."){
-			  		$("#"+a+"-none").attr("class", "btn btn-primary popup"); //set warna button biru
-			  		$("#"+a+"-none").text("Lihat Unit"); $("#"+a+"-none").attr("id", a+"-lihat"); //set button jadi lihat
-			  		$("#"+a+"-nourut").text("3"); jenis = 'lihat';
+		  		$("#"+a+"-none").attr("class", "btn btn-primary popup"); //set warna button biru
+		  		$("#"+a+"-none").text("Lihat Unit"); $("#"+a+"-none").attr("id", a+"-lihat"); //set button jadi lihat
+		  		$("#"+a+"-nourut").text("3"); jenis = 'lihat';
 //		  		}
-		  	} else {
-		  		if(response.lihat == "N"){
-			  		$("#"+a+"-none").attr("class", "btn btn-danger popup"); $("#"+a+"-muatstat").text('Belum Siap');
-			  		$("#"+a+"-none").text("Ubah Status"); $("#"+a+"-none").attr("id", a+"-ubah");	
-			  		$("#"+a+"-nourut").text("2"); jenis = 'ubah';  			
-		  		} else if(response.lihat =="Y"){
-		  			$("#"+a+"-muatstat").text('Siap Pakai');
-		  		}
-		  	}
-		  }
-		  if (response.catatan!=0){
-		  	var buttontext = getButtonText(jenis);
-		  	$("#"+a+"-"+jenis).text(buttontext+' ('+response.catatan+')');	
-		  }	  
-        });
-	});	
+	  	} else {
+	  		if(response.lihat == "N"){
+		  		$("#"+a+"-none").attr("class", "btn btn-danger popup"); $("#"+a+"-muatstat").text('Belum Siap');
+		  		$("#"+a+"-none").text("Ubah Status"); $("#"+a+"-none").attr("id", a+"-ubah");	
+		  		$("#"+a+"-nourut").text("2"); jenis = 'ubah';  			
+	  		} else if(response.lihat =="Y"){
+	  			$("#"+a+"-muatstat").text('Siap Pakai');
+	  		}
+	  	}
+	  }
+	  if (response.catatan!=0){
+	  	var buttontext = getButtonText(jenis);
+	  	$("#"+a+"-"+jenis).text(buttontext+' ('+response.catatan+')');	
+	  }	  
+    });
+}	
+		
+function r_status_kotor(id){
+	id = id.split("-");
+	var a = id[0]; var jenis = id[2];
+	$.post('../../../proses/task.php', {updateTask_unit : a},
+	function (data) {
+	  response = JSON.parse(data);
+	  if (response.catatan!=0){
+	  	var buttontext = getButtonText(jenis);
+	  	$("#"+a+"-"+jenis).text(buttontext+' ('+response.catatan+')');	
+	  }	 
+	  alert(data);
+	});			
+}
 
-	$(".kotor").click(function(){
-		var id = $(this).attr('id'); id = id.split("-");
-		var a = id[0]; var jenis = id[2];
-	    $.post('../../../proses/task.php', {updateTask_unit : a},
-        function (data) {
-          response = JSON.parse(data);
-		  if (response.catatan!=0){
-		  	var buttontext = getButtonText(jenis);
-		  	$("#"+a+"-"+jenis).text(buttontext+' ('+response.catatan+')');	
-		  }	 
-        });		
-	});
+function status_bersih(){
+	var x = document.getElementsByClassName("status");
+	for(i=0;i<x.length;i++){
+		r_status_bersih(x[i].id);
+	}
+}
 
+function status_kotor(){
+	var x = document.getElementsByClassName("kotor");
+	for(i=0;i<x.length;i++){
+		r_status_kotor(x[i].id);
+	}
+}
+
+function update_task_sekali(){
+	$.post('../../../proses/task.php', {update_sekali : "start"},
+	function (data) {
+		status_bersih(); status_kotor(); 
+		$("#sortmanual").click();$("#sortmanual").click();
+
+	});		
+}
+
+//proses ini di jalankan pertama kali saat halaman muncul
+update_task_sekali();	 
+
+//dibawah ini adalah event handler
 	$("#has_look").click(function(){
 		if (this.checked) {
 			$("#stat-option").show();
@@ -87,8 +115,6 @@ function updateelementtask(konten2, jumlah2, task){
 			$("#update-stat").hide();			
 		}
 	});
-
-	$(".status").click(); $(".kotor").click(); $("#sortmanual").click(); 
 
 	$(".popup").click(function(){
 		$(".newnote").hide();$("#tambah-note").show();
