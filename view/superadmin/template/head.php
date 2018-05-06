@@ -50,6 +50,5 @@
 <script src='../../../asset/fullcalendar/fullcalendar.min.js'></script>
 <!-- //Full Calendar -->
 
-<script src="../../../asset/js/numeral.min.js"></script>
 <link rel="shortcut icon" type="image/x-icon" href="http://transaksi.cozzal.com/asset/images/fav.png">
 </head>

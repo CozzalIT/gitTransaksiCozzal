@@ -183,7 +183,6 @@
 <script src="../../../asset/js/sweetalert.min.js"></script>
 <script src="../../../asset/js/hapus.js"></script>
 <script src="../../../asset/js/bootstrap.min.js"></script>
-<script src="../../../asset/js/unit.js"></script>
 <script src="../../../asset/js/jquery.gritter.min.js"></script>
 <script src="../../../asset/js/jquery.peity.min.js"></script>
 <script src="../../../asset/js/matrix.interface.js"></script>

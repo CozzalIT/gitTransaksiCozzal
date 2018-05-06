@@ -23,8 +23,8 @@
                 if($bulanCI[1] != $bulanCO[1]){
                   $kabisat = $other->cekKabisat(2018);
                   $hari1 = $other->cekJumHari($kabisat, $bulanCI[1]);
-                  $jumlahHari = $jumlahHari + $hari1 - $bulanCI[2];
-                  $jumlahHari2 += $bulanCO[2];
+                  $jumlahHari = $jumlahHari + $hari1 + 1 - $bulanCI[2];
+                  $jumlahHari2 += $bulanCO[2] - 1 ;
                 }else{
                   $jumlahHari = $jumlahHari + $data_t->hari;
                   $jumlahHari2 += 0;
@@ -57,8 +57,8 @@
                 if($bulanCI[1] != $bulanCO[1]){
                   $kabisat = $other->cekKabisat(2018);
                   $hari1 = $other->cekJumHari($kabisat, $bulanCI[1]);
-                  $jumlahHari = $jumlahHari + $hari1 - $bulanCI[2];
-                  $jumlahHari2 += $bulanCO[2];
+                  $jumlahHari = $jumlahHari + $hari1 + 1 - $bulanCI[2];
+                  $jumlahHari2 += $bulanCO[2] - 1;
                 }else{
                   $jumlahHari = $jumlahHari + $data_t->hari;
                   $jumlahHari2 += 0;
@@ -90,8 +90,8 @@
                 if($bulanCI[1] != $bulanCO[1]){
                   $kabisat = $other->cekKabisat(2018);
                   $hari1 = $other->cekJumHari($kabisat, $bulanCI[1]);
-                  $jumlahHari = $jumlahHari + $hari1 - $bulanCI[2];
-                  $jumlahHari2 += $bulanCO[2];
+                  $jumlahHari = $jumlahHari + $hari1 + 1 - $bulanCI[2];
+                  $jumlahHari2 += $bulanCO[2] - 1;
                 }else{
                   $jumlahHari = $jumlahHari + $data_t->hari;
                   $jumlahHari2 += 0;

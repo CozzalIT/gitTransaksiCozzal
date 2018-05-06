@@ -201,17 +201,21 @@ elseif(isset($_POST['addPembayaran'])){
   $tanggal = date('Y-m-d H:i:s');
   $keterangan = '7/'.$kd_transaksi;
 
-  $add = $proses->addPembayaran($kd_transaksi, $pembayaran_baru, $sisa_pelunasan);
-  if($add == "Success"){
-    $show_saldo = $proses_kas->editSaldo($kd_kas);
-    $edit_saldo = $show_saldo->fetch(PDO::FETCH_OBJ);
-    $saldo_baru = $edit_saldo->saldo + $pembayaran_masuk;
+  if($pembayaran_masuk <= 0){
+    header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php?pembayaran='.$kd_transaksi.'&warning=0');
+  }else{
+    $add = $proses->addPembayaran($kd_transaksi, $pembayaran_baru, $sisa_pelunasan);
+    if($add == "Success"){
+      $show_saldo = $proses_kas->editSaldo($kd_kas);
+      $edit_saldo = $show_saldo->fetch(PDO::FETCH_OBJ);
+      $saldo_baru = $edit_saldo->saldo + $pembayaran_masuk;
 
-    $update_kas = $proses_kas->updateKas($kd_kas, $saldo_baru, $tanggal);
-    $add_mutasi = $proses_kas->addMutasiKas($kd_kas, $pembayaran_masuk, 1, $tanggal, $keterangan);
+      $update_kas = $proses_kas->updateKas($kd_kas, $saldo_baru, $tanggal);
+      $add_mutasi = $proses_kas->addMutasiKas($kd_kas, $pembayaran_masuk, 1, $tanggal, $keterangan);
 
-    header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php?pembayaran='.$kd_transaksi);
-  } else echo 'error';
+      header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php?pembayaran='.$kd_transaksi);
+    } else echo 'error';
+  }
 }
 
 //Tambah Penyewa di Halaman Transaksi

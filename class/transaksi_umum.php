@@ -59,6 +59,20 @@ class TransaksiUmum {
     $query = $this->db->query($sql);
   }
 
+  //show berdasarkan kebutuhan dan MY
+  public function showTUByKebutMY($kebutuhan, $noBulan, $tahun){
+    $sql = "SELECT harga, jumlah FROM tb_transaksi_umum WHERE kebutuhan='$kebutuhan' AND MONTH(tanggal)='$noBulan' AND YEAR(tanggal)='$tahun'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
+  public function showTUByKebutuhan($kebutuhan){
+    $sql = "SELECT
+            tb_transaksi_umum.kebutuhan, tb_transaksi_umum.harga, tb_transaksi_umum.jumlah, tb_transaksi_umum.keterangan, tb_transaksi_umum.tanggal,
+            tb_mutasi_kas.keterangan AS kode FROM tb_transaksi_umum INNER JOIN tb_mutasi_kas ON tb_mutasi_kas.tanggal = tb_transaksi_umum.tanggal WHERE tb_transaksi_umum.kebutuhan = '$kebutuhan'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
 
 }
 ?>

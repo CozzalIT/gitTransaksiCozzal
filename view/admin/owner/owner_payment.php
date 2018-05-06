@@ -20,15 +20,39 @@
     <form method="post" action="#">
       <div class="control-group btn-add">
         <select name="kd_owner" class="span2" style="">
-          <option>--Pilih Owner--</option>
           <?php
-            $Proses = new Owner($db);
-            $show = $Proses->showOwner();
-            while($data = $show->fetch(PDO::FETCH_OBJ)){
-              if ($data->kd_owner != 0){
-                echo "<option name='kd_owner' value='$data->kd_owner'>$data->nama</option>";
+            if(!isset($_POST['kd_owner'])){
+              echo "
+                <option>--Pilih Owner--</option>
+              ";
+              $Proses = new Owner($db);
+              $show = $Proses->showOwner();
+              while($data = $show->fetch(PDO::FETCH_OBJ)){
+                if ($data->kd_owner != 0){
+                  echo "<option name='kd_owner' value='$data->kd_owner'>$data->nama</option>";
+                }
+              }
+            }elseif(isset($_POST['kd_owner'])){
+              $kd_owner = $_POST['kd_owner'];
+              $Proses = new Owner($db);
+              $show = $Proses->showOwner();
+              while($data = $show->fetch(PDO::FETCH_OBJ)){
+                if ($data->kd_owner != 0){
+                  if ($kd_owner!=$data->kd_owner){
+                    echo "<option name='kd_apt' value='$data->kd_owner'>$data->nama</option>";
+                  }else{
+                    echo "<option name='kd_apt' value='$data->kd_owner' selected='true'>$data->nama</option>";
+                  }
+                }
               }
             }
+            echo "<option name='kd_apt' value='all'";
+            if(isset($_POST['kd_owner'])){
+              if($_POST['kd_owner'] == 'all'){
+                echo 'selected="true"';
+              }
+            }
+            echo ">Semua Owner</option>";
           ?>
         </select>
       </div>
@@ -37,13 +61,13 @@
   </div>
   <div class="container-fluid">
     <hr>
-    <div class="row-fluid">
+    <div <?php if(!isset($_POST['kd_owner'])){ echo 'class="row-fluid hide"';}else{ echo 'class="row-fluid"';} ?>>
       <div class="span12">
         <div class="widget-box" style="overflow-x:auto;">
           <div class="widget-title">
             <span class="icon"><i class="icon-th"></i></span>
             <ul class="nav nav-tabs">
-			  <li><a href="#unpaid" data-toggle="tab">Unpaid</a></li>
+			        <li><a href="#unpaid" data-toggle="tab">Unpaid</a></li>
               <li><a href="#paid" data-toggle="tab">Paid</a></li>
               <li><a href="#history" data-toggle="tab">Payment History</a></li>
             </ul>
@@ -77,26 +101,30 @@
                         $proses_tu = new TransaksiUmum($db);
                         $proses_k = new Kas($db);
                         $_SESSION['kd_owner'] = $_POST['kd_owner'];
-              				  $show_u = $proses_u->showUnitbyOwner($_POST['kd_owner']);
+                        if($_POST['kd_owner'] == 'all'){
+                          $show_u = $proses_u->showUnit();
+                        }else{
+                          $show_u = $proses_u->showUnitbyOwner($_POST['kd_owner']);
+                        }
                         while($data_u = $show_u->fetch(PDO::FETCH_OBJ)){
-                          $owner_we = $data_u->h_owner_we;
-                          $owner_wd = $data_u->h_owner_wd;
                           $show_t = $proses_t->showTransaksiByUnit($data_u->kd_unit);
                           $i = 1;
                 				  while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
+                            $owner_we = $data_t->harga_owner_weekend;
+                            $owner_wd = $data_t->harga_owner;
                             if($data_t->status == 42){
-								$testdata= $data_t->total_harga_owner;
-								if($testdata>0){
-									$nominal = $data_t->total_harga_owner;
-								}else{
-									if($data_t->hari_weekend == 0){
-										$nominal = $data_t->hari_weekday*$owner_wd;
-										}elseif($data_t->hari_weekday == 0){
-										$nominal = $data_t->hari_weekend*$owner_we;
-									}elseif($data_t->hari_weekday <> 0 && $data_t->hari_weekend <> 0){
-										$nominal = ($data_t->hari_weekend*$owner_we)+($data_t->hari_weekday*$owner_wd);
-									}
-								}
+              								$testdata= $data_t->total_harga_owner;
+              								if($testdata>0){
+              									$nominal = $data_t->total_harga_owner;
+              								}else{
+              									if($data_t->hari_weekend == 0){
+              										$nominal = $data_t->hari_weekday*$owner_wd;
+              										}elseif($data_t->hari_weekday == 0){
+              										$nominal = $data_t->hari_weekend*$owner_we;
+              									}elseif($data_t->hari_weekday <> 0 && $data_t->hari_weekend <> 0){
+              										$nominal = ($data_t->hari_weekend*$owner_we)+($data_t->hari_weekday*$owner_wd);
+              									}
+              								}
                       				echo "
                       					<tr class='gradeC'>
                                   <td class='hide'>$i</td>
@@ -144,7 +172,17 @@
                       }
                     ?>
                     <tr>
-                      <td colspan="6"><button type="submit" class="btn btn-success">Bayar</button> Transaksi yang di pilih.</td>
+                      <?php
+                        if($i == 1){
+                          echo '
+                            <td colspan="6">No data available in table</td>
+                          ';
+                        }else{
+                          echo '
+                            <td colspan="6"><button type="submit" class="btn btn-success">Bayar</button> Transaksi yang di pilih.</td>
+                          ';
+                        }
+                      ?>
                     </tr>
                   </tbody>
                 </table>
@@ -171,25 +209,29 @@
                       $proses_tu = new TransaksiUmum($db);
                       $proses_k = new Kas($db);
                       $_SESSION['kd_owner'] = $_POST['kd_owner'];
-                      $show_u = $proses_u->showUnitbyOwner($_POST['kd_owner']);
+                      if($_POST['kd_owner'] == 'all'){
+                        $show_u = $proses_u->showUnit();
+                      }else{
+                        $show_u = $proses_u->showUnitbyOwner($_POST['kd_owner']);
+                      }
                       while($data_u = $show_u->fetch(PDO::FETCH_OBJ)){
-                        $owner_we = $data_u->h_owner_we;
-                        $owner_wd = $data_u->h_owner_wd;
                         $show_t = $proses_t->showTransaksiByUnit($data_u->kd_unit);
                         $i = 1;
                         while($data_t = $show_t->fetch(PDO::FETCH_OBJ)){
+                          $owner_we = $data_t->harga_owner_weekend;
+                          $owner_wd = $data_t->harga_owner;
                           if($data_t->status == 41){
-							if($data_t->total_harga_owner >0){
-								$nominal = $data_t->total_harga_owner;
-							}else{
-								if($data_t->hari_weekend == 0){
-								$nominal = $data_t->hari_weekday*$owner_wd;
-								}elseif($data_t->hari_weekday == 0){
-								$nominal = $data_t->hari_weekend*$owner_we;
-								}elseif($data_t->hari_weekday <> 0 && $data_t->hari_weekend <> 0){
-								$nominal = ($data_t->hari_weekend*$owner_we)+($data_t->hari_weekday*$owner_wd);
-								}
-							}
+              							if($data_t->total_harga_owner >0){
+              								$nominal = $data_t->total_harga_owner;
+              							}else{
+              								if($data_t->hari_weekend == 0){
+              								$nominal = $data_t->hari_weekday*$owner_wd;
+              								}elseif($data_t->hari_weekday == 0){
+              								$nominal = $data_t->hari_weekend*$owner_we;
+              								}elseif($data_t->hari_weekday <> 0 && $data_t->hari_weekend <> 0){
+              								$nominal = ($data_t->hari_weekend*$owner_we)+($data_t->hari_weekday*$owner_wd);
+              								}
+              							}
                             $dateTimeT = explode(" ",$data_t->tgl_transaksi);
                             echo "
                               <tr class='gradeC'>
@@ -206,8 +248,8 @@
                                 <td>".number_format($nominal, 0, ".", ".")." IDR</td>
                               </tr>
                             ";
-                            $i++;
                           }
+                          $i++;
                         }
                         $show_k = $proses_k->showMutasiDana('9/'.$data_u->kd_unit);
                         while($data_k = $show_k->fetch(PDO::FETCH_OBJ)){
@@ -247,7 +289,11 @@
                 <tbody>
                   <?php
                     $i=1;
-                    $show_history = $Proses->showOwnerPayment($_POST['kd_owner']);
+                    if($_POST['kd_owner'] == 'all'){
+                      $show_history = $Proses->showAllOwnerPayment($_POST['kd_owner']);
+                    }else{
+                      $show_history = $Proses->showOwnerPayment($_POST['kd_owner']);
+                    }
                     while($data_history = $show_history->fetch(PDO::FETCH_OBJ)){
                       $tanggal = explode(" ",$data_history->tgl_pembayaran);
                       $formatTanggal = explode("-",$tanggal[0]);
@@ -318,7 +364,7 @@
 
 <!--Footer-part-->
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
+  <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
 </div>
 <!--end-Footer-part-->
 <script src="../../../asset/js/sweetalert.min.js"></script>

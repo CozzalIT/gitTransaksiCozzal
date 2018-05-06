@@ -160,16 +160,14 @@
                           if($kd_transaksi <> 'dummy'){
                             $show_t = $proses_t->editTransaksi($kd_transaksi);
                             $data_t = $show_t->fetch(PDO::FETCH_OBJ);
-                            $show_u = $proses_u->showHargaOwner($data_t->no_unit);
-                            $data_u = $show_u->fetch(PDO::FETCH_OBJ);
-              							$subtest= $data_t ->total_harga_owner;
+                            $subtest= $data_t ->total_harga_owner;
               							if($subtest>0){
               								$subtotal_in = $data_t->total_harga_owner;
               								$weekend = 0;
               								$weekday = 0;
               							}else{
-              								$weekend = $data_t->hari_weekend*$data_u->h_owner_we;
-              								$weekday = $data_t->hari_weekday*$data_u->h_owner_wd;
+              								$weekend = $data_t->hari_weekend*$data_t->harga_owner_weekend;
+              								$weekday = $data_t->hari_weekday*$data_t->harga_owner;
               								$subtotal_in = $weekday+$weekend;
               							}
                             echo "
@@ -210,15 +208,18 @@
                   						}
                 					  ?>
               					  </select>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
                   <div class="pull-right">
-                    <h4><span>EARNINGS: </span><?php echo number_format($earnings, 0, ".","."); ?> IDR</h4>
+                    <h4 class="pull-right"><span>EARNINGS: </span><?php echo number_format($earnings, 0, ".","."); ?> IDR</h4>
+                    <br>
                     <br>
                     <div class='hide'><input type='text' name='earnings' value='<?php echo $earnings;?>' /></div>
                     <button class="btn btn-success btn-large pull-right" type="submit" name="ownerPayment" style="margin-left:10px;" onclick="submitForm('../../../proses/owner.php')">Bayar</button>
                     <button class="btn btn-primary btn-large pull-right" type="submit" style="margin-left:10px;" onclick="submitForm('pdf.php')">Download/Print</button>
+                    <button class="btn btn-warning btn-large pull-right" type="submit" name="kirimKwitansi" style="margin-left:10px;" onclick="submitForm('../../../proses/owner.php')">Kirim Kwitansi</button>
                   </div>
                 </div>
               </div>

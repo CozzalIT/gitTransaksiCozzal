@@ -199,7 +199,7 @@ class Transaksi {
   public function editTransaksi($kd_transaksi){
     $sql = "SELECT
       tb_transaksi.kd_transaksi, tb_transaksi.kd_penyewa, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.tamu, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.harga_sewa, tb_transaksi.harga_sewa_weekend, tb_transaksi.ekstra_charge, tb_transaksi.kd_booking, tb_transaksi.kd_kas, tb_transaksi.dp, tb_transaksi.total_tagihan, tb_transaksi.total_harga_owner, tb_transaksi.sisa_pelunasan, tb_transaksi.pembayaran, tb_transaksi.tgl_transaksi, tb_transaksi.diskon,
-      tb_transaksi.hari, tb_transaksi.hari_weekday, tb_transaksi.hari_weekend, tb_transaksi.harga_owner, tb_transaksi.harga_owner_weekend, tb_transaksi.catatan,
+      tb_transaksi.hari, tb_transaksi.hari_weekday, tb_transaksi.hari_weekend, tb_transaksi.harga_owner, tb_transaksi.harga_owner_weekend, tb_transaksi.catatan,  tb_transaksi.total_harga_owner,
       tb_penyewa.kd_penyewa, tb_penyewa.nama, tb_penyewa.alamat, tb_penyewa.no_tlp, tb_penyewa.email, tb_penyewa.jenis_kelamin,
       tb_apt.kd_apt, tb_apt.nama_apt,
       tb_kas.kd_kas, tb_kas.sumber_dana,
@@ -313,6 +313,18 @@ public function jumlah_duplikasi_transaksi($kd_unit, $check_in, $check_out){
   public function deleteReservasi($kd_reservasi){
     $sql = "DELETE FROM tb_reservasi where kd_reservasi='$kd_reservasi'";
     $query = $this->db->query($sql);
+  }
+
+  //tambahan
+  public function showSumMonthWithKdUnit($kd_unit, $noBulan, $tahun, $status){
+    if($status==41 OR $status==2){
+      $status2=$status+1;
+    }else{
+      $status2=$status;
+    }
+    $sql = "SELECT check_in, check_out, hari FROM tb_transaksi WHERE kd_unit='$kd_unit' AND MONTH(check_in)='$noBulan' AND YEAR(check_in)='$tahun' AND (status='$status' OR status='$status2') ";
+    $query = $this->db->query($sql);
+    return $query;
   }
 
 }

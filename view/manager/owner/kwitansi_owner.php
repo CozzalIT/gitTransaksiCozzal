@@ -24,12 +24,16 @@
     }
     $transaksi[999] = 'dummy';
     $transaksi_umum[999] = 'dummy';
+    $kd_owner = $_SESSION['kd_owner'];
   }
 ?>
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Owner Payment</a> </div>
-    <a href="owner_payment.php" class="btn btn-primary btn-add"><i class="icon-arrow-left"></i> Kembali</a>
+    <form action="owner_payment.php" method="post">
+      <button type="submit" class="btn btn-primary btn-add"><i class="icon-arrow-left"></i> Kembali</button>
+      <input type="text" name="kd_owner" value="<?php echo $kd_owner; ?>" style="visibility:hidden" />
+    </form>
   </div>
   <div class="container-fluid"><hr>
     <div class="row-fluid">
@@ -156,16 +160,14 @@
                           if($kd_transaksi <> 'dummy'){
                             $show_t = $proses_t->editTransaksi($kd_transaksi);
                             $data_t = $show_t->fetch(PDO::FETCH_OBJ);
-                            $show_u = $proses_u->showHargaOwner($data_t->no_unit);
-                            $data_u = $show_u->fetch(PDO::FETCH_OBJ);
-              							$subtest= $data_t ->total_harga_owner;
+                            $subtest= $data_t ->total_harga_owner;
               							if($subtest>0){
               								$subtotal_in = $data_t->total_harga_owner;
               								$weekend = 0;
               								$weekday = 0;
               							}else{
-              								$weekend = $data_t->hari_weekend*$data_u->h_owner_we;
-              								$weekday = $data_t->hari_weekday*$data_u->h_owner_wd;
+              								$weekend = $data_t->hari_weekend*$data_t->harga_owner_weekend;
+              								$weekday = $data_t->hari_weekday*$data_t->harga_owner;
               								$subtotal_in = $weekday+$weekend;
               							}
                             echo "
@@ -232,10 +234,18 @@
     document.getElementById('formOwnerPayment').submit();
   }
 </script>
-
+<div class="row-fluid">
+  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
+</div>
 <!--end-Footer-part-->
-<?php
-  include("../template/footer.php");
-?>
+<script src="../../../asset/js/sweetalert.min.js"></script>
+<script src="../../../asset/js/hapus.js"></script>
+<script src="../../../asset/js/jquery.min.js"></script>
+<script src="../../../asset/js/jquery.ui.custom.js"></script>
+<script src="../../../asset/js/bootstrap.min.js"></script>
+<script src="../../../asset/js/jquery.dataTables.min.js"></script>
+<script src="../../../asset/js/matrix.js"></script>
+<script src="../../../asset/js/matrix.tables.js"></script>
+<!--end-Footer-part-->
 </body>
 </html>

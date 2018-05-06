@@ -18,9 +18,9 @@ class Owner {
     }
   }
 
-  public function addOwnerPayment($kd_owner_payment, $kd_owner, $tgl_pembayaran, $jumlah_transaksi, $nominal){
-    $sql = "INSERT INTO tb_owner_payment (kd_owner_payment, kd_owner, tgl_pembayaran, jumlah_transaksi, nominal)
-    VALUES('$kd_owner_payment', '$kd_owner', '$tgl_pembayaran', '$jumlah_transaksi', '$nominal')";
+  public function addOwnerPayment($kd_owner_payment, $kd_owner, $tgl_pembayaran, $jumlah_transaksi, $nominal, $status){
+    $sql = "INSERT INTO tb_owner_payment (kd_owner_payment, kd_owner, tgl_pembayaran, jumlah_transaksi, nominal, status)
+    VALUES('$kd_owner_payment', '$kd_owner', '$tgl_pembayaran', '$jumlah_transaksi', '$nominal', '$status')";
     $query = $this->db->query($sql);
     if(!$query){
       return "Failed";
@@ -86,6 +86,12 @@ class Owner {
     return $query;
   }
 
+  public function editOwnerPayment($kd_owner_payment){
+    $sql = "SELECT * from tb_owner_payment WHERE kd_owner_payment='$kd_owner_payment'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
   //Proses Update
   public function updateOwner($kd_owner ,$nama, $alamat, $no_tlp, $kd_bank, $no_rek, $email, $jenis_kelamin){
     $sql = "update tb_owner SET nama='$nama', alamat='$alamat', no_tlp='$no_tlp', kd_bank='$kd_bank', no_rek='$no_rek',
@@ -98,10 +104,35 @@ class Owner {
     }
   }
 
+  public function modStatusOwnerPayment($kd_owner_payment, $status){
+    $sql = "UPDATE tb_owner_payment SET status='$status' WHERE kd_owner_payment='$kd_owner_payment'";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
+  }
+
   //Proses Delete
   public function deleteOwner($kd_owner){
     $sql = "DELETE FROM tb_owner WHERE kd_owner='$kd_owner'";
     $query = $this->db->query($sql);
+  }
+
+  //tambahan
+  public function showBookingByMY($kd_unit, $noBulan, $tahun){
+    $sql = "SELECT
+      tb_transaksi.kd_transaksi, tb_transaksi.kd_penyewa, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.tamu, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.hari, tb_transaksi.tgl_transaksi, tb_transaksi.hari_weekday, tb_transaksi.hari_weekend, tb_transaksi.total_harga_owner, tb_transaksi.status,
+      tb_penyewa.kd_penyewa, tb_penyewa.nama,
+      tb_apt.kd_apt, tb_apt.nama_apt,
+      tb_unit.kd_unit, tb_unit.no_unit, tb_unit.h_owner_wd, tb_unit.h_owner_we
+        from tb_transaksi
+        INNER JOIN tb_penyewa ON tb_penyewa.kd_penyewa = tb_transaksi.kd_penyewa
+        INNER JOIN tb_apt ON tb_apt.kd_apt = tb_transaksi.kd_apt
+        INNER JOIN tb_unit ON tb_unit.kd_unit = tb_transaksi.kd_unit WHERE tb_transaksi.kd_unit='$kd_unit' AND MONTH(tb_transaksi.tgl_transaksi)='$noBulan' AND YEAR(tb_transaksi.tgl_transaksi)='$tahun' AND tb_transaksi.status=41 ORDER BY tb_transaksi.status DESC, tb_transaksi.check_in DESC";
+    $query = $this->db->query($sql);
+    return $query;
   }
 }
 ?>
