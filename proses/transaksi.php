@@ -71,7 +71,8 @@ if(isset($_POST['addTransaksi']) || isset($_POST["Transaksi_booked"])){
     $kode = explode("+",$_POST['unit']);
     $kd_unit = $kode[0];
   }
-
+  $catatan = $_POST['catatan'];
+  
   $proses_u = new Unit($db);
   $show_u = $proses_u->editUnit($kd_unit);
   $data_u = $show_u->fetch(PDO::FETCH_OBJ);
@@ -102,7 +103,7 @@ if(isset($_POST['addTransaksi']) || isset($_POST["Transaksi_booked"])){
   $proses = new Transaksi($db);
   $proses2 = new Kas($db);
 
-  $add_transaksi = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $check_in, $check_out, $jumlah_weekend, $jumlah_weekday, $hari, $harga_sewa, $harga_sewa_we, $tgl_transaksi, $diskon, $ekstra_charge, $kd_kas, $tamu, $kd_booking, $dp, $total, $total_harga_owner, $sisa_pelunasan, 1, $h_owner_wd, $h_owner_we);
+  $add_transaksi = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $check_in, $check_out, $jumlah_weekend, $jumlah_weekday, $hari, $harga_sewa, $harga_sewa_we, $tgl_transaksi, $diskon, $ekstra_charge, $kd_kas, $tamu, $kd_booking, $dp, $total, $total_harga_owner, $sisa_pelunasan, 1, $h_owner_wd, $h_owner_we,$catatan);
 
   if(isset($_POST["Transaksi_booked"])){
     $proses->deleteBooked_list($_POST["kd_booked"], $check_in, $kd_unit);
@@ -263,6 +264,7 @@ elseif(isset($_POST['updateTransaksi'])){
   $week = date("w",strtotime($check_in))+1;
   $tanggal = date('Y-m-d H:i:s');
   $keterangan = '6/'.$kd_transaksi;
+  $catatan = $_POST['catatan'];
 
   $proses_u = new Unit($db);
   $show_u = $proses_u->editUnit($kd_unit);
@@ -338,7 +340,7 @@ elseif(isset($_POST['updateTransaksi'])){
   }
 
   $unit = $proses->updateUnit_kotor($kd_transaksi ,$kd_unit, $check_in, $check_out);
-  $add = $proses->updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $harga_sewa_we, $diskon, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total_tagihan, $total_harga_owner,$sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday, $h_owner_wd, $h_owner_we);
+  $add = $proses->updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $harga_sewa_we, $diskon, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total_tagihan, $total_harga_owner,$sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday, $h_owner_wd, $h_owner_we,$catatan);
   if($add == "Success"){
   require("../class/ics_unit.php");
   $ics = new Ics_unit($db);

@@ -151,6 +151,12 @@
                     <input name="dp" type="number" class="span11" placeholder="Nominal DP" id="dp" value="0" disabled/>
                     </div>
                   </div>
+				  <div class="control-group">
+					<label class="control-label">Catatan :</label>
+					<div class="controls">
+						<input name="catatan" type="text" class="span11" id="catatan">
+					</div>
+				</div>
                   <div class="control-group">
                     <div class="controls">
                       <div class="form-actions" style="text-align:right">

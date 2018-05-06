@@ -338,7 +338,13 @@
   				  <div class="controls">
   				    <input name="dp" min="0"  type="number" required/>
   				  </div>
-  			  </div>
+  			    </div>
+				<div class="control-group">
+					<label class="control-label">Catatan :</label>
+					<div class="controls">
+						<input name="catatan" type="text" class="span4" rows = "5">
+					</div>
+				</div>
 			    <div class="control-group" >
   				  <div class="controls">
   				    <input type="submit" name="addTransaksi" value="Submit" class="btn btn-success">
