@@ -39,8 +39,8 @@
 <div id="content">
   <div id="content-header">
   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="unit.php" title="Go to Data Unit" class="tip-bottom">Data Unit</a> <a href="#" class="current">Kalender Unit <?php echo $no_unit; ?></a> </div>
-    <h4 onclick="triger()" style="margin-left: 20px;"><?php echo "<div id='nganu' style='width: 50%;height: 20px;'>".$no_unit.' '.$nama_apt."</div>"; ?></h4>
-    <div id="apartement-dropdown" class="hide-dropdown" style="left: 235px;">
+    <h4 onclick="triger()" style="margin-left: 20px;"><?php echo "<div id='drop-sel' style='width: 50%;height: 20px;'>".$no_unit.' '.$nama_apt."</div>"; ?></h4>
+    <div id="apartement-dropdown" class="hide-dropdown" style="left: 20px;">
       <input type="text" placeholder="Search.." id="keyword" onkeyup="filter()"/> <br>
       <?php
         if(count($arrayunit)>0){

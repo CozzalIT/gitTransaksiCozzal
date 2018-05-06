@@ -40,24 +40,22 @@
 		.iconM{
 			margin-right: 5px;
 		}
-		#nganu,#apartement-dropdown{
+		#drop-sel,#apartement-dropdown{
 			width: 80%;
 			border: 1px solid #D5D1D1;
 			padding: 5px;
 			background-color: #FCFCFC;
 			cursor: pointer;
 		}
-		#nganu:hover{
+		#drop-sel:hover{
 			box-shadow: 2px 2px 4px #D5D1D1;
 		}
 		#apartement-dropdown{
 			width: 60%;
 			max-height: 200px;
 			overflow-y: auto;
-			top: 30%;
-			left: 24%;
 			z-index: 9999;
-			position: fixed;
+			position: absolute;
 
 		}
 		.content-dropdown{
@@ -66,7 +64,7 @@
 		    text-decoration: none;
 		    display: block;
 		}
-		.content-dropdown-selected{
+		.selected-drop{
 		    background-color: black;
 		    color: white;
 		    padding: 8px 6px;
@@ -96,7 +94,8 @@
 		var kd_apt = <?php echo $kd_apt.";"; ?>
 		var url_bnb = $("#url-bnb").text();
 
-		$("#sel-"+kd_unit).attr("class","content-dropdown-selected");
+		$("#sel-"+kd_unit).attr("class","content-dropdown selected-drop");
+		$("#sel-"+kd_unit).attr("href","#");
 
 		function triger(){
 			document.getElementById("apartement-dropdown").classList.toggle("show-dropdown");	

@@ -119,6 +119,8 @@ class Cleaner {
   public function deleteUnit_kotor($kd_unit, $sekarang){
     $sql = "DELETE FROM tb_unit_kotor where kd_unit='$kd_unit' and check_out<='$sekarang'";
     $query = $this->db->query($sql);
+    $sql = "DELETE FROM tb_task_unit WHERE kd_unit='$kd_unit'";
+    $query = $this->db->query($sql);
   } 
 
   public function kosongkan_unit($kd_unit, $sekarang, $jam_sekarang){
