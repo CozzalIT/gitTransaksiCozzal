@@ -58,8 +58,8 @@
                           </td>
             					    <td>$data->nama_apt</td>
             						  <td>$data->nama</td>
-            						  <td><a title='' id='owner_wd' data-content='".number_format($data->h_owner_wd, 0, ".", ".")." IDR' data-placement='right' data-toggle='popover' href='' data-original-title='Owner WeekDay'>".number_format($data->h_sewa_wd, 0, ".", ".")." IDR</a></td>
-            						  <td><a title='' id='owner_we' data-content='".number_format($data->h_owner_we, 0, ".", ".")." IDR' data-placement='right' data-toggle='popover' href='' data-original-title='Owner WeekEnd'>".number_format($data->h_sewa_we, 0, ".", ".")." IDR</a></td>
+            						  <td><a title='' id='owner_wd' data-content='".number_format($data->h_owner_wd, 0, ".", ".")." IDR' data-placement='right' data-toggle='popover' href='#' data-original-title='Owner WeekDay'>".number_format($data->h_sewa_wd, 0, ".", ".")." IDR</a></td>
+            						  <td><a title='' id='owner_we' data-content='".number_format($data->h_owner_we, 0, ".", ".")." IDR' data-placement='right' data-toggle='popover' href='#' data-original-title='Owner WeekEnd'>".number_format($data->h_sewa_we, 0, ".", ".")." IDR</a></td>
                           <!-- ('In Active')
                             <td>".number_format($data->h_owner_wd, 0, ".", ".")." IDR</td>
               						  <td>".number_format($data->h_owner_we, 0, ".", ".")." IDR</td>
@@ -69,7 +69,8 @@
                             <center>
                               <a class='btn btn-info' href='calendar.php?calendar_unit=$data->kd_unit'>Calendar</a>
                               <a class='btn btn-success' href='detail_unit.php?detail_unit=".$data->kd_unit."' >Kelola</a>
-                              </center>
+                              <a class='btn btn-danger hapus' href='../../../proses/unit.php?delete_unit=$data->kd_unit&kurangi_ju=$data->kd_owner'>Hapus</a>
+                            </center>
                           </td>
             					  </tr>
                       ";
@@ -147,6 +148,18 @@
 		</div>
 	  </div>
 	  <div class="control-group">
+		<label class="control-label">Harga Owner Mingguan :</label>
+		<div class="controls">
+		  <input name="h_owner_mg" type="number" min="0" step="1000"  class="span2" placeholder="Owner Weekly"  />
+		</div>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label">Harga Owner Bulanan :</label>
+		<div class="controls">
+		  <input name="h_owner_bln" type="number" min="0" step="1000"  class="span2" placeholder="Owner Monthly"  />
+		</div>
+	  </div>
+	  <div class="control-group">
 		<label class="control-label">Harga Sewa WD :</label>
 		<div class="controls">
 		  <input name="h_sewa_wd" type="number" min="0" step="1000"  class="span2" placeholder="Sewa Week Day"  />
@@ -157,7 +170,20 @@
 		<div class="controls">
 		  <input name="h_sewa_we" type="number" min="0" step="1000"  class="span2" placeholder="Sewa Week End"  />
 		</div>
-	  </div><div class="control-group">
+	  </div>
+	  <div class="control-group">
+		<label class="control-label">Harga Sewa Mingguan :</label>
+		<div class="controls">
+		  <input name="h_sewa_mg" type="number" min="0" step="1000"  class="span2" placeholder="Sewa Weekly"  />
+		</div>
+	  </div>
+	  <div class="control-group">
+		<label class="control-label">Harga Sewa Bulanan :</label>
+		<div class="controls">
+		  <input name="h_sewa_bln" type="number" min="0" step="1000"  class="span2" placeholder="Sewa Monthly"  />
+		</div>
+	  </div>
+	  <div class="control-group">
 		<label class="control-label">Ekstra Charge :</label>
 		<div class="controls">
 		  <input name="ekstra_charge" type="number" min="0" step="1000"  class="span2" placeholder="Sewa Week Day"  />
