@@ -154,13 +154,13 @@
 				  <div class="control-group">
 					<label class="control-label">Catatan :</label>
 					<div class="controls">
-						<input name="catatan" type="text" class="span11" id="catatan">
+						<textarea id = "catatan" name="catatan" rows="5" class="span11"></textarea>
 					</div>
 				</div>
                   <div class="control-group">
                     <div class="controls">
                       <div class="form-actions" style="text-align:right">
-                         <button type="submit" name="Transaksi_booked" class="btn btn-success">Transaksi</button>
+                         <button type="submit" name="Transaksi_booked" class="btn btn-success" onclick="ConvertText()">Transaksi</button>
                       </div>
                     </div>
                   </div>
@@ -193,6 +193,12 @@
     </div>
   </div>    
 </div>
+<script>
+function ConvertText() {
+    var x = document.getElementById("catatan").value;
+    
+}
+</script>
 
 <!--Footer-part-->
 div class="row-fluid">

@@ -342,12 +342,12 @@
 				<div class="control-group">
 					<label class="control-label">Catatan :</label>
 					<div class="controls">
-						<input name="catatan" type="text" class="span4" rows = "5">
+						<textarea id = "catatan" name="catatan" rows="5" class="span11"></textarea>
 					</div>
 				</div>
 			    <div class="control-group" >
   				  <div class="controls">
-  				    <input type="submit" name="addTransaksi" value="Submit" class="btn btn-success">
+  				    <input type="submit" name="addTransaksi" value="Submit" class="btn btn-success" onclick="ConvertText()">
   				    <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
   				  </div>
 			    </div>
@@ -413,6 +413,12 @@
   </div>
 </div>
 <!-- //modal popup tambah unit-->
+<script>
+function ConvertText() {
+    var x = document.getElementById("catatan").value;
+    
+}
+</script>
 
 <!--Footer-part-->
 <div class="row-fluid">
