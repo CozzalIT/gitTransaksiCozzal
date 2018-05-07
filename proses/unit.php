@@ -104,14 +104,18 @@ elseif(isset($_POST['updateHargaUnit']) || isset($_POST['updateHargaUnitbyOwner'
   $kd_unit= $_POST['kd_unit'];
   $h_owner_wd= $_POST['h_owner_wd'];
   $h_owner_we= $_POST['h_owner_we'];
-  $h_sewa_wd = ''; $h_sewa_we=''; $ekstra_charge='';
+  $h_owner_mg = $_POST['h_owner_mg'];
+  $h_owner_bln= $_POST['h_owner_bln'];
+  $h_sewa_wd = ''; $h_sewa_we=''; $h_sewa_mg='';$h_sewa_bln=''; $ekstra_charge='';
   if(isset($_POST['updateHargaUnit'])){
-      $h_sewa_wd= $_POST['h_sewa_wd'];
-    $h_sewa_we= $_POST['h_sewa_we'];
+    $h_sewa_wd = $_POST['h_sewa_wd'];
+    $h_sewa_we = $_POST['h_sewa_we'];
+	$h_sewa_mg = $_POST['h_sewa_mg'];
+	$h_sewa_bln = $_POST['h_sewa_bln'];
   }
   $ekstra_charge= $_POST['ekstra_charge'];
   $proses = new Unit($db);
-  $add = $proses->updateHarga_Unit($kd_unit , $h_owner_wd, $h_owner_we, $h_sewa_wd, $h_sewa_we, $ekstra_charge);
+  $add = $proses->updateHarga_Unit($kd_unit , $h_owner_wd, $h_owner_we, $h_owner_mg, $h_owner_bln, $h_sewa_wd, $h_sewa_we, $h_sewa_mg, $h_sewa_bln, $ekstra_charge);
   if($add == "Success"){
     header('Location:../view/'.$view.'/unit/detail_unit.php?detail_unit='.$kd_unit);
   }else echo 'error';
@@ -209,13 +213,17 @@ elseif(isset($_POST['addUnit']) && $view!="owner"){
   $no_unit = $_POST['no_unit'];
   $h_sewa_wd = $_POST['h_sewa_wd'];
   $h_sewa_we = $_POST['h_sewa_we'];
+  $h_sewa_mg = $_POST['h_sewa_mg'];
+  $h_sewa_bln = $_POST['h_sewa_bln'];
   $h_owner_wd = $_POST['h_owner_wd'];
   $h_owner_we = $_POST['h_owner_we'];
+  $h_owner_mg = $_POST['h_owner_mg'];
+  $h_owner_bln = $_POST['h_owner_bln'];
   $ekstra_charge = $_POST['ekstra_charge'];
   $kd_owner = $_POST['kd_owner'];
 
   $proses = new Unit($db);
-  $add = $proses->addUnit($kd_apt,$kd_owner, $no_unit, $h_sewa_wd, $h_sewa_we, $h_owner_wd, $h_owner_we, $ekstra_charge);
+  $add = $proses->addUnit($kd_apt,$kd_owner, $no_unit, $h_sewa_wd, $h_sewa_we, $h_sewa_mg, $h_sewa_bln, $h_owner_wd, $h_owner_we, $h_owner_mg, $h_owner_bln, $ekstra_charge);
 
   if(($add == "Success") || ($add2 == "Success")){
     $add2 = $proses->updateJumlah_unit_owner($kd_owner);

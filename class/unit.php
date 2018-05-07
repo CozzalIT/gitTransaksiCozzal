@@ -7,8 +7,8 @@ class Unit {
   }
 
   //Proses Add
-  public function addUnit($kd_apt,$kd_owner, $no_unit, $h_sewa_wd, $h_sewa_we, $h_owner_wd, $h_owner_we, $ekstra_charge){
-    $sql = "INSERT INTO tb_unit (kd_apt, kd_owner, no_unit, h_sewa_wd, h_sewa_we, h_owner_wd, h_owner_we, ekstra_charge) VALUES('$kd_apt', '$kd_owner', '$no_unit', '$h_sewa_wd', '$h_sewa_we', '$h_owner_wd', '$h_owner_we', '$ekstra_charge')";
+  public function addUnit($kd_apt,$kd_owner, $no_unit, $h_sewa_wd, $h_sewa_we, $h_sewa_mg, $h_sewa_bln, $h_owner_wd, $h_owner_we, $h_owner_mg, $h_owner_bln,$ekstra_charge){
+    $sql = "INSERT INTO tb_unit (kd_apt, kd_owner, no_unit, h_sewa_wd, h_sewa_we, h_sewa_mg, h_sewa_bln, h_owner_wd, h_owner_we, h_owner_mg, h_owner_bln, ekstra_charge) VALUES('$kd_apt', '$kd_owner', '$no_unit', '$h_sewa_wd', '$h_sewa_we', '$h_sewa_mg', '$h_sewa_bln','$h_owner_wd', '$h_owner_we', '$h_owner_mg', '$h_owner_bln', '$ekstra_charge')";
     $query = $this->db->query($sql);
     if(!$query){
       return "Failed";
@@ -85,7 +85,7 @@ class Unit {
   }
 
   public function showHargaOwner($no_unit){
-    $sql = "SELECT h_owner_wd, h_owner_we from tb_unit WHERE no_unit='$no_unit'";
+    $sql = "SELECT h_owner_wd, h_owner_we, h_owner_mg, h_owner_bln from tb_unit WHERE no_unit='$no_unit'";
     $query = $this->db->query($sql);
     return $query;
   }
@@ -107,9 +107,8 @@ class Unit {
   }
 
   //Proses Update
-  public function updateUnit($kd_unit ,$kd_apt,$kd_owner, $no_unit, $h_owner_wd, $h_owner_we, $h_sewa_wd, $h_sewa_we, $ekstra_charge){
-    $sql = "update tb_unit SET kd_apt='$kd_apt', kd_owner='$kd_owner', no_unit='$no_unit', h_owner_wd='$h_owner_wd', h_owner_we='$h_owner_we',
-    h_sewa_wd='$h_sewa_wd', h_sewa_we='$h_sewa_we', ekstra_charge='$ekstra_charge' where kd_unit='$kd_unit'";
+  public function updateUnit($kd_unit ,$kd_apt,$kd_owner, $no_unit, $h_owner_wd, $h_owner_we, $h_owner_mg, $h_owner_bln, $h_sewa_wd, $h_sewa_we, $h_sewa_mg, $h_sewa_bln, $ekstra_charge){
+    $sql = "update tb_unit SET kd_apt='$kd_apt', kd_owner='$kd_owner', no_unit='$no_unit', h_owner_wd='$h_owner_wd', h_owner_we='$h_owner_we',  h_owner_mg='$h_owner_mg', h_owner_bln='$h_owner_bln', h_sewa_wd='$h_sewa_wd', h_sewa_we='$h_sewa_we', h_sewa_mg='$h_sewa_mg', h_sewa_bln='$h_sewa_bln', ekstra_charge='$ekstra_charge' where kd_unit='$kd_unit'";
     $query = $this->db->query($sql);
     if(!$query){
       return "Failed";
@@ -134,10 +133,10 @@ class Unit {
   }
 
   //Proses Update harga unit
-  public function updateHarga_Unit($kd_unit , $h_owner_wd, $h_owner_we, $h_sewa_wd, $h_sewa_we, $ekstra_charge){
-    $sql = "update tb_unit SET h_owner_wd='$h_owner_wd', h_owner_we='$h_owner_we'";
+  public function updateHarga_Unit($kd_unit , $h_owner_wd, $h_owner_we, $h_owner_mg, $h_owner_bln, $h_sewa_wd, $h_sewa_we, $h_sewa_mg, $h_sewa_bln, $ekstra_charge){
+    $sql = "update tb_unit SET h_owner_wd='$h_owner_wd', h_owner_we='$h_owner_we', h_owner_mg='$h_owner_mg', h_owner_bln='$h_owner_bln'";
     if($ekstra_charge!=''){
-      $sql = $sql.", h_sewa_we='$h_sewa_we', h_sewa_wd='$h_sewa_wd', ekstra_charge='$ekstra_charge'";
+      $sql = $sql.", h_sewa_we='$h_sewa_we', h_sewa_wd='$h_sewa_wd', h_sewa_mg='$h_sewa_mg', h_sewa_bln='$h_sewa_bln', ekstra_charge='$ekstra_charge'";
     }
     $sql = $sql." where kd_unit='$kd_unit'";
     $query = $this->db->query($sql);

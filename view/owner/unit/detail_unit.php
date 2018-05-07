@@ -162,9 +162,17 @@
                                       <td>Sewa WeekEnd</td>
                                       <td>: '.number_format($data->h_owner_we, 0, ".", ".").' IDR</td>
                                       </tr>
+									  <tr>
+                                      <td>Sewa Mingguan</td>
+                                      <td>: '.number_format($data->h_owner_mg, 0, ".", ".").' IDR</td>
+                                      </tr>
+									  <tr>
+                                      <td>Sewa Bulanan</td>
+                                      <td>: '.number_format($data->h_owner_bln, 0, ".", ".").' IDR</td>
+                                      </tr>
                                       <tr>
                                         <td>
-                                           <a class="btn btn-small" style="margin-bottom: 12px;" href="edit.php?edit_harga_owner='.$data->kd_unit.'">Edit Harga</a>
+                                           <!--<a class="btn btn-small" style="margin-bottom: 12px;" href="edit.php?edit_harga_owner='.$data->kd_unit.'">Edit Harga</a>-->
                                         </td>
                                       </tr>
                                       <tr style="border-bottom-width: 2px;border-bottom-style: solid;">
