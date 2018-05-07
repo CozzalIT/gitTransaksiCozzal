@@ -211,6 +211,8 @@
                                       <td>: '.number_format($data->h_owner_bln, 0, ".", ".").' IDR</td>
                                       </tr>
                                       <tr>
+									  </tr>
+                                      <tr>
                                       <td>Sewa WeekDay</td>
                                       <td>: '.number_format($data->h_sewa_wd, 0, ".", ".").' IDR</td>
                                       </tr>

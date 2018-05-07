@@ -201,7 +201,7 @@ function ConvertText() {
 </script>
 
 <!--Footer-part-->
-div class="row-fluid">
+<div class="row-fluid">
   <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
 </div>
 <!--end-Footer-part-->
