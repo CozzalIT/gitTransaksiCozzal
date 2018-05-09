@@ -63,6 +63,14 @@ $(".exclusions").popover();
 		$("#searchh").focus();
 	}
 
+	function setDefaultCombo(){
+		var x = document.getElementsByClassName("items");
+		for(i=0;i<x.length;i++){
+			str2 = x[i].id.split("-");
+			del_sel(str2[1]);
+		}		
+	}
+
 	$("#searchh").focus(function(){
     	$(".text-box").attr("class","text-box sel-text-box");
 	});
@@ -137,7 +145,7 @@ $(".exclusions").popover();
 			$("#has_look").hide();
 		}
 		document.getElementById("unit-option").style.visibility = "hidden";
-		$(".items").remove();
+		setDefaultCombo();
 		document.getElementById("has_look").checked = false;
 	});
 
@@ -147,6 +155,7 @@ $(".exclusions").popover();
 		} else {
 			$("#searchh").attr({'disabled':'disabled'});
 		}
+		setDefaultCombo();
 	});
 
 	$("#sifat").change(function (){

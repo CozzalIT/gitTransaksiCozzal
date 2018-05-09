@@ -126,7 +126,7 @@ elseif(isset($_POST['update_sekali'])){
   $show = $Proses->showTask_sekali($sekarang);
   while($data = $show->fetch(PDO::FETCH_OBJ)){
     $unit = $data->unit;
-    if($unit='Semua'){
+    if($unit=='Semua'){
       $where = "1=1";
     } elseif($unit[0]=='&'){
         $arr_kd = explode("&",$unit);
@@ -138,13 +138,13 @@ elseif(isset($_POST['update_sekali'])){
         $arr_kd = explode("!",$unit);
         $where = "kd_unit!='$arr_kd[1]' ";
         for($i=2;$i<count($arr_kd);$i++){
-          $where.= "OR kd_unit!='$arr_kd[$i]' ";
+          $where.= "AND kd_unit!='$arr_kd[$i]' ";
         }
     }
     $Proses->addTask_unit_sekali($data->kd_task,$where);
   }
   $Proses->deleteTask_sekali($sekarang);
-  $callback = array('status'=>"OK");
+  $callback = array('status'=>"done");
   echo json_encode($callback);  
 }
 

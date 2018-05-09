@@ -35,9 +35,8 @@ class Task {
 
   public function addTask_unit_sekali($kd_task,$where){
     $sql = "INSERT INTO tb_task_unit (kd_unit,kd_task)
-    SELECT kd_unit, '$kd_task' AS kd_task FROM tb_unit 
-    WHERE $where";
-    $query = $this->db->query($sql);
+    SELECT kd_unit, $kd_task AS kd_task FROM tb_unit WHERE $where";
+    $this->db->query($sql);
   }
 
   public function updateTask($kd_task ,$task, $unit, $sifat, $tgl_task){
@@ -70,6 +69,8 @@ class Task {
   public function deleteTask_sekali($sekarang){
     $sql = "UPDATE tb_task SET tgl_task=null WHERE sifat='Sekali' AND tgl_task<='$sekarang'";
     $this->db->query($sql);
+     $sql = "DELETE FROM tb_task_unit WHERE status='D' and kd_task IN (SELECT kd_task FROM tb_task where sifat='Sekali')";
+    $this->db->query($sql);   
     $sql = "DELETE FROM tb_task WHERE tgl_task is null and kd_task not in (SELECT kd_task FROM tb_task_unit) AND sifat='Sekali'";
     $this->db->query($sql);
   }

@@ -75,7 +75,6 @@ function r_status_kotor(id){
 	  	var buttontext = getButtonText(jenis);
 	  	$("#"+a+"-"+jenis).text(buttontext+' ('+response.catatan+')');	
 	  }	 
-	  alert(data);
 	});			
 }
 
@@ -96,6 +95,7 @@ function status_kotor(){
 function update_task_sekali(){
 	$.post('../../../proses/task.php', {update_sekali : "start"},
 	function (data) {
+		//alert(data);
 		status_bersih(); status_kotor(); 
 		$("#sortmanual").click();$("#sortmanual").click();
 
