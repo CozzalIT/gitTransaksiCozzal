@@ -202,6 +202,16 @@
                                       <td>Owner WeekEnd</td>
                                       <td>: '.number_format($data->h_owner_we, 0, ".", ".").' IDR</td>
                                       </tr>
+									  <tr>
+                                      <td>Owner Mingguan</td>
+                                      <td>: '.number_format($data->h_owner_mg, 0, ".", ".").' IDR</td>
+                                      </tr>
+									  <tr>
+                                      <td>Owner Bulanan</td>
+                                      <td>: '.number_format($data->h_owner_bln, 0, ".", ".").' IDR</td>
+                                      </tr>
+                                      <tr>
+									  </tr>
                                       <tr>
                                       <td>Sewa WeekDay</td>
                                       <td>: '.number_format($data->h_sewa_wd, 0, ".", ".").' IDR</td>
@@ -209,6 +219,14 @@
                                       <tr>
                                       <td>Sewa WeekEnd</td>
                                       <td>: '.number_format($data->h_sewa_we, 0, ".", ".").' IDR</td>
+                                      </tr>
+									  <tr>
+                                      <td>Sewa Mingguan</td>
+                                      <td>: '.number_format($data->h_sewa_mg, 0, ".", ".").' IDR</td>
+                                      </tr>
+									  <tr>
+                                      <td>Sewa Bulanan</td>
+                                      <td>: '.number_format($data->h_sewa_bln, 0, ".", ".").' IDR</td>
                                       </tr>
                                       <tr>
                                       <td>Ekstra Charge</td>
@@ -288,23 +306,7 @@
                                           </tr>
                                         ';
                                       }
-                                      echo'
-                                      <tr style="border-bottom-width: 2px;border-bottom-style: solid;">
-                                      <td><strong>Sync Cal</strong></td>
-                                      </tr>
-                                      <tr>
-                                      <td>URL Airbnb</td>
-                                      <td>: '.$url_bnb.'</td>
-                                      </tr>
-                                      <tr>
-                                      <td>URL Cozzal</td>
-                                      <td>: '.$url_cozzal.'</td>
-                                      </tr>
-                                      <tr>
-                                        <td>
-                                           <a class="btn btn-small" href="edit.php?edit_url='.$data->kd_unit.'" style="margin-bottom: 12px;" >Edit URL Airbnb</a>
-                                        </td>                                    
-                                      </tr>                                      
+                                      echo'                                    
                                     </tbody>
                                   </table>
                                 </center>

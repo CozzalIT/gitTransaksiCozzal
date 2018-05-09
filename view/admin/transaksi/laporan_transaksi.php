@@ -240,7 +240,7 @@ if(isset($_GET['pembayaran'])){
           </div>
           <div class="row-fluid">
             <div class="span12">
-            <table style="margin-top: 20px;" class="table table-bordered table-invoice">
+            <table style="margin-top: 20px;" style="margin-right: 0px;" class="table table-bordered table-invoice">
               <tbody>
               <tr>
                 <th colspan="2">Detail Kwitansi Penyewaan</th>
@@ -314,7 +314,7 @@ if(isset($_GET['pembayaran'])){
                 </tr>
                 <tr>
                 <td class="width30">Note:</td>
-                <td class="width70"><strong>'.$detail->catatan.'</strong></td>
+                <td class="width120" style="max-width:300px;"><strong>'.$detail->catatan.'</strong></td>
                 </tr>
               </tr>
               </tbody>

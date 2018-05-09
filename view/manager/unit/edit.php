@@ -167,6 +167,18 @@
               <input name="h_owner_we" type="number" min="0" step="1000" value="'.$edit->h_owner_we.'" />
             </div>
             </div>
+			<div class="control-group">
+            <label class="control-label">Harga Owner Mingguan :</label>
+            <div class="controls">
+              <input name="h_owner_mg" type="number" min="0" step="1000" value="'.$edit->h_owner_mg.'" />
+            </div>
+            </div>
+			<div class="control-group">
+            <label class="control-label">Harga Owner Bulanan :</label>
+            <div class="controls">
+              <input name="h_owner_bln" type="number" min="0" step="1000" value="'.$edit->h_owner_bln.'" />
+            </div>
+            </div>
             <div class="control-group">
             <label class="control-label">Harga Sewa WD :</label>
             <div class="controls">
@@ -178,7 +190,20 @@
             <div class="controls">
               <input name="h_sewa_we" type="number" min="0" step="1000" value="'.$edit->h_sewa_we.'" />
             </div>
-            </div><div class="control-group">
+            </div>
+			<div class="control-group">
+            <label class="control-label">Harga Sewa Mingguan :</label>
+            <div class="controls">
+              <input name="h_sewa_mg" type="number" min="0" step="1000" value="'.$edit->h_sewa_mg.'" />
+            </div>
+            </div>
+			<div class="control-group">
+            <label class="control-label">Harga Sewa Bulanan :</label>
+            <div class="controls">
+              <input name="h_sewa_bln" type="number" min="0" step="1000" value="'.$edit->h_sewa_bln.'" />
+            </div>
+            </div>
+			<div class="control-group">
             <label class="control-label">Ekstra Charge :</label>
             <div class="controls">
               <input name="ekstra_charge" type="number" min="0" step="1000" value="'.$edit->ekstra_charge.'" />

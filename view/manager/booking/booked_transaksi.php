@@ -115,6 +115,12 @@
                     <input name="ekstra_charge" min="0" value="0" placeholder="Ekstra Charge" type="number" id="ekstra_charge" onChange="hasil();" class="span11"/>
                     </div>
                   </div>
+				  <div class="control-group">
+                    <label class="control-label">Booking Via :</label>
+                    <div class="controls">
+                      <input type="text" class="span11" value="Airbnb" disabled/>
+                    </div>
+                  </div>
                   <div class="control-group">
                     <label class="control-label">Total Biaya :</label>
                     <div class="controls">
@@ -122,12 +128,6 @@
                       <div class="loading">
                         <img src="../../../asset/images/loading.gif" width="18"> <small>Loading...</small>
                       </div>                        
-                    </div>
-                  </div>
-                  <div class="control-group">
-                    <label class="control-label">Booking Via :</label>
-                    <div class="controls">
-                      <input type="text" class="span11" value="Airbnb" disabled/>
                     </div>
                   </div>
                   <div class="control-group">
@@ -151,10 +151,16 @@
                     <input name="dp" type="number" class="span11" placeholder="Nominal DP" id="dp" value="0" disabled/>
                     </div>
                   </div>
+				  <div class="control-group">
+					<label class="control-label">Catatan :</label>
+					<div class="controls">
+						<textarea id = "catatan" name="catatan" rows="5" class="span11"></textarea>
+					</div>
+				</div>
                   <div class="control-group">
                     <div class="controls">
                       <div class="form-actions" style="text-align:right">
-                         <button type="submit" name="Transaksi_booked" class="btn btn-success">Transaksi</button>
+                         <button type="submit" name="Transaksi_booked" class="btn btn-success" onclick="ConvertText()">Transaksi</button>
                       </div>
                     </div>
                   </div>
@@ -187,9 +193,15 @@
     </div>
   </div>    
 </div>
+<script>
+function ConvertText() {
+    var x = document.getElementById("catatan").value;
+    
+}
+</script>
 
 <!--Footer-part-->
-div class="row-fluid">
+<div class="row-fluid">
   <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
 </div>
 <!--end-Footer-part-->

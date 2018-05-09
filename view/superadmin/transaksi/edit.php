@@ -191,11 +191,17 @@
                     <div class="controls">
                     <input name="dp" type="number" class="span11" placeholder="Alamat" value="'.$edit->dp.'" required/>
                     </div>
-                  </div>
+                  </div> 
+				  <div class="control-group">
+					<label class="control-label">Catatan :</label>
+					<div class="controls">
+						<textarea id = "catatan" name="catatan" rows="4" class="span11">' .$edit->catatan. '</textarea>
+					</div>
+				</div>
                   <div class="control-group">
                     <div class="controls">
                       <div class="form-actions" style="text-align:right">
-                			   <button name="updateTransaksi" type="submit" class="btn btn-success">Update</button>
+                			   <button name="updateTransaksi" type="submit" class="btn btn-success" onclick="ConvertText()">Update</button>
                 		  </div>
                     </div>
                   </div>
@@ -210,9 +216,15 @@
       }
 ?>
 
+<script>
+function ConvertText() {
+    var x = document.getElementById("catatan").value;
+    
+}
+</script>
 <!--Footer-part-->
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
+  <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
 </div>
 <!--end-Footer-part-->
 <script src="../../../asset/js/jquery.min.js"></script>

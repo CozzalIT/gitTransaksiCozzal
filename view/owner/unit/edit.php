@@ -118,7 +118,7 @@
             </div>';
           echo '
           <div class="form-actions" style="text-align:right">
-          <button name="updateHargaUnitbyOwner" type="submit" class="btn btn-success">Update</button>
+          <!-- ga berfungsi <button name="updateHargaUnitbyOwner" type="submit" class="btn btn-success">Update</button> -->
           </div>
         </form>
         </div>

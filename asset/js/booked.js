@@ -75,7 +75,8 @@ function tampilkanharga(kd_unit, check_in, check_out){
 		} else $("#harga_sewa_we-C").hide();
 		$("#harga_sewa_asli").val(response.wd+"/"+response.we);
 		$('#total').show(); 
-		$('#total').val((Number(response.we)*we_G)+(Number(response.wd)*wd_G));
+		harga = (Number(response.we)*we_G)+(Number(response.wd)*wd_G);
+		$('#total').val(harga-(harga*0.03));
 		ec = response.ec;
 	});	
 }
