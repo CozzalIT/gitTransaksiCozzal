@@ -374,7 +374,7 @@
                                 if($status == 'Reject'){
                                   echo"
                                     <li class='divider'></li>
-                                    <li><a href='#'>Edit</a></li>
+                                    <li><a href='../../../proses/owner.php?deletePayment=$data_history->kd_owner_payment'>Delete</a></li>
                                   ";
                                 }elseif($status == 'Waiting List'){
                                   echo"

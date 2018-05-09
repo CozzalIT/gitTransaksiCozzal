@@ -119,7 +119,7 @@ elseif(isset($_POST['ownerPayment'])){
 	header("Location:../view/".$view."/owner/owner_payment.php");
 }
 
-//Kirim Kwitansi
+//Kirim Kwitansi ke owner
 elseif(isset($_POST['kirimKwitansi'])){
 	$kd_kas = $_POST['kas'];
 	$earnings = $_POST['earnings'];
@@ -155,6 +155,7 @@ elseif(isset($_POST['kirimKwitansi'])){
 	header("Location:../view/".$view."/owner/owner_payment.php");
 }
 
+//Reject Kwitansi Owner Payment
 elseif(isset($_POST['rejectKwitansi'])){
 	$kd_owner_payment =  $_POST['kd_owner_payment'];
 	$status = 3;
@@ -165,6 +166,7 @@ elseif(isset($_POST['rejectKwitansi'])){
 	}
 }
 
+//Confirm Kwitansi Owner Payment
 elseif(isset($_POST['confirmKwitansi'])){
 	$kd_owner_payment =  $_POST['kd_owner_payment'];
 	$status = 4;
@@ -175,6 +177,7 @@ elseif(isset($_POST['confirmKwitansi'])){
 	}
 }
 
+//Pebayaran kwitansi yang confirm
 elseif(isset($_POST['paymentConfirmKwitansi'])){
 	$kd_owner_payment = $_POST['kd_owner_payment'];
 	$kd_kas = $_POST['kas'];
@@ -229,6 +232,12 @@ elseif(isset($_POST['paymentConfirmKwitansi'])){
 		}
 	}
 	$mod_owner_payment = $proses_o->modStatusOwnerPayment($kd_owner_payment, $status_op);
+	header("Location:../view/".$view."/owner/owner_payment.php");
+}
+
+elseif(isset($_GET['deletePayment'])){
+	$proses = new Owner($db);
+	$del = $proses->deleteOwnerPayment($_GET['deletePayment']);
 	header("Location:../view/".$view."/owner/owner_payment.php");
 }
 

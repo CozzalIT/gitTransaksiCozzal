@@ -120,6 +120,11 @@ class Owner {
     $query = $this->db->query($sql);
   }
 
+  public function deleteOwnerPayment($kd_owner_payment){
+    $sql = "DELETE FROM tb_owner_payment WHERE kd_owner_payment='$kd_owner_payment'";
+    $query = $this->db->query($sql);
+  }
+
   //tambahan
   public function showBookingByMY($kd_unit, $noBulan, $tahun){
     $sql = "SELECT
