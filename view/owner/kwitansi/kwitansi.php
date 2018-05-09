@@ -17,22 +17,13 @@
     $kd_owner_payment = $_GET['detail'];
     if(isset($kd_owner_payment)){
       $kode = explode("x",$kd_owner_payment);
-      $transaksi = explode("a",$kode[0]);
+      if($kode[0] <> ''){
+        $transaksi = explode("a",$kode[0]);
+      }
       if($kode[1] <> ''){
         $transaksi_umum = explode("b",$kode[1]);
       }
     }
-
-    /*
-    foreach($_POST['ownerPayment'] as $ownerPayment) {
-      $cek = explode("/",$ownerPayment);
-      if($cek[0] == 't'){
-        $transaksi[] = $cek[1];
-      }elseif($cek[0] == 'mk'){
-        $transaksi_umum[] = $cek[1];
-      }
-    }
-    */
     $transaksi[999] = 'dummy';
     $transaksi_umum[999] = 'dummy';
     $kd_owner = $_SESSION['pemilik'];
