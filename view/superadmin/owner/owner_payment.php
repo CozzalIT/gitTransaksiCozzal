@@ -303,6 +303,9 @@
                     while($data_history = $show_history->fetch(PDO::FETCH_OBJ)){
                       $status = $data_history->status;
                       switch ($status) {
+                        case '4':
+                          $status = 'Confirm';
+                          break;
                         case '3':
                           $status = 'Reject';
                           break;
@@ -310,7 +313,7 @@
                           $status = 'Waiting List';
                           break;
                         default:
-                          $status = 'Confirm';
+                          $status = 'Paid';
                           break;
                       }
                       $tanggal = explode(" ",$data_history->tgl_pembayaran);
@@ -354,6 +357,7 @@
                           break;
                       }
                       $tanggalIndo = $formatTanggal[2]." ".$formatTanggal[1]." ".$formatTanggal[0];
+                      $kode = '"'.$data_history->kd_owner_payment.'"';
                       echo "
                         <tr class='gradeC'>
                           <td class='hide'>$i</td>
@@ -377,6 +381,11 @@
                                     <li class='divider'></li>
                                     <li><a href='#'>Confirm</a></li>
                                   ";
+                                }elseif($status == 'Confirm'){
+                                  echo"
+                                    <li class='divider'></li>
+                                    <li><a href='#popup-bayar' data-toggle='modal' onClick='btnBayar($kode)'>Bayar</a></li>
+                                  ";
                                 }
                                 echo"
                               </ul>
@@ -396,6 +405,46 @@
     </div>
   </div>
 </div>
+
+<!-- Modal Popup Bayar -->
+<div id="popup-bayar" class="modal hide">
+  <div class="modal-header">
+    <button data-dismiss="modal" class="close" type="button">×</button>
+    <h3>Pilih sumber dana pembayaran</h3>
+  </div>
+  <div class="modal-body">
+	<form action="../../../proses/owner.php" method="post" class="form-horizontal">
+	  <div class="control-group">
+      <script>
+        function btnBayar(kode){
+          document.getElementById('kd_owner_payment').value = kode;
+        }
+      </script>
+  		<label class="control-label">Nama :</label>
+  		<div class="controls">
+        <input id="kd_owner_payment" name="kd_owner_payment" value="tes" class="hide" />
+        <select id="kas" name="kas" required>
+          <option value="">-- Kas --</option>
+          <?php
+            $Proses = new Kas($db);
+            $show = $Proses->showKas();
+            while($data = $show->fetch(PDO::FETCH_OBJ)){
+              echo "<option name='kd_kas' value='$data->kd_kas'>$data->sumber_dana</option>";
+            }
+          ?>
+        </select>
+  		</div>
+	  </div>
+	  <div class="control-group">
+  		<div class="controls">
+  		  <input type="submit" name="paymentConfirmKwitansi" class="btn btn-success" value="Bayar">
+  		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+  		</div>
+	  </div>
+	</form>
+  </div>
+</div>
+<!-- //Modal Popup Bayar -->
 
 <!--Footer-part-->
 <div class="row-fluid">
