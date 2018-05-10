@@ -123,7 +123,7 @@ class Task {
   private function whereKondition($kd_unit){
     $sql = "WHERE ((unit LIKE '%&$kd_unit%') OR ";
     $sql .= "(unit='Semua') OR ";
-    $sql .= "(unit not like '%!$kd_unit%')) AND sifat='Rutin' AND ";
+    $sql .= "(unit like '!%' AND unit not like '%!$kd_unit%')) AND sifat='Rutin' AND ";
     $sql .= "kd_task not in (SELECT kd_task FROM tb_task_unit WHERE kd_unit='$kd_unit')";
     return $sql;
   }
