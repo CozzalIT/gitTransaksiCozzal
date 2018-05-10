@@ -76,6 +76,7 @@
                 </form>
                 <form id="p_lama" action="booked_transaksi.php" method="post" class="form-horizontal">
                   <div id="note-anak">
+                    <input type="text" id="kd_penyewa" class="search" placeholder="Cari Penyewa" style="margin:10px;width: 80%;" onkeyup="filter()" />
                     <div class="control-group newpadd" style="max-height: 290px;">
                       <div id="note-anak-isi">
                         <div class="note loading">
@@ -121,6 +122,22 @@
 
   function setkelamin(jenis){
       $("#jenis_kelamin").val(jenis);
+  }
+
+  function filter() {
+    var input, filter, ul, li, a, i, x=0;
+    input = $(".search").val(); 
+    filter = input.toUpperCase();
+    a = $(".list-penyewa");
+    for (i = 0; i < a.length; i++) {
+      //alert(a[i].innerHTML);
+        if (a[i].innerHTML.toUpperCase().indexOf(filter)>=0) {
+            a[i].style.display = ""; x++;
+        } else {
+           a[i].style.display = "none";
+        }
+       }
+      return x;
   }
 
   function request_penyewa(jenis){
