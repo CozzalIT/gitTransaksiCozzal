@@ -36,6 +36,7 @@
                   <th>Jumlah</th>
         				  <th>Total</th>
                   <th>Keterangan</th>
+                  <th>Status</th>
         				  <th>Action</th>
                 </tr>
               </thead>
@@ -55,6 +56,11 @@
                       $show_unit = $proses_unit->editUnit($arrayKebutuhan[1]);
                       $data_unit = $show_unit->fetch(PDO::FETCH_OBJ);
                     }
+                    if($data->status == 1){
+                      $status = "Billing";
+                    }else{
+                      $status = "-";
+                    }
           					echo "
           					  <tr class='gradeC'>
           					    <td>$i</td>
@@ -64,6 +70,7 @@
             						<td>$data->jumlah</td>
             						<td>".number_format($data->harga*$data->jumlah, 0, ".", ".")." IDR</td>
                         <td>$data->keterangan</td>
+                        <td>$status</td>
             						<td>
                           <center>
               						  <a class='btn btn-primary' href=edit_umum.php?edit_transaksi_umum=$data->kd_transaksi_umum>Edit</a>

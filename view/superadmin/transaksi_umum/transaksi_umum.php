@@ -36,89 +36,47 @@
                 </div>
                 ';
               }
-              if((!isset($_POST['kebutuhanUmum']) && !isset($_POST['kebutuhanUnit'])) and !isset($_GET['umum']) and !isset($_GET['unit'])){
-                echo '
-                  <div class="widget-content center" style="text-align:center"> Jenis Transaksi </div>
-                  <div class="widget-content">
-                    <ul class="bs-docs-tooltip-examples">
-                      <form method="POST">
-                        <li><button name="kebutuhanUmum" type="submit" class="btn btn-success" class="btn btn-info btn-add">Kebutuhan Umum</button> </li>
-                        <li><button name="kebutuhanUnit" type="submit" class="btn btn-success" class="btn btn-info btn-add">Kebutuhan Unit</button> </li>
-                      </form>
-                    </ul>
+            ?>
+            <div class="widget-content">
+              <form  action="../../../proses/transaksi_umum.php" method="POST" class="form-horizontal">
+                <div class="control-group">
+                  <label class="control-label">Kebutuhan : </label>
+                  <div class="controls">
+                    <select name="kebutuhan">
+                      <option>-- Pilih Kebutuhan --</option>
+                      <option value="tu" onclick="jenisKebutuhan('TU')">Transaksi Umum</option>
+                      <option value="u" onclick="jenisKebutuhan('U')">Kebutuhan Unit</option>
+                      <option value="btu" onclick="jenisKebutuhan('BTU')">Billing Transaksi Umum</option>
+                      <option value="bu" onclick="jenisKebutuhan('BU')">Billing Kebutuhan Unit</option>
+                    </select>
                   </div>
-                ';
-              }
-              if(isset($_POST['kebutuhanUmum']) || isset($_GET['umum'])){
-                echo '
-                <div class="widget-content">
-                  <form action="../../../proses/transaksi_umum.php" method="POST" class="form-horizontal">
-                    <div class="control-group">
-                      <div class="controls">
-                        <label class="control-label"><strong>KEBUTUHAN UMUM</strong></label>
-                      </div>
-                    </div>
-                    <div class="control-group">
-                      <label class="control-label">Harga : </label>
-                      <div class="controls">
-                        <input name="harga" type="number" value="0"/>
-                      </div>
-                    </div>
-                    <div class="control-group">
-                      <label class="control-label">Jumlah :</label>
-                      <div class="controls">
-                        <input name="jumlah" type="number" value="1"/>
-                      </div>
-                    </div>
-                    <div class="control-group">
-                      <label class="control-label">Keterangan :</label>
-                      <div class="controls">
-                        <input name="keterangan" type="Text"/>
-                        <input name="kebutuhan" type="Text" value="umum" class="hide"/>
-                      </div>
-                    </div>
-                    <div class="control-group">
-                      <label class="control-label">Sumber Dana :</label>
-                      <div class="controls">
-                        <select name="kd_kas">
-                          <option name="kd_kas" value="">-- Pilih Sumber Dana --</option>
-                          ';
-                            $Proses = new Kas($db);
-                            $show = $Proses->showKas();
-                            while($data = $show->fetch(PDO::FETCH_OBJ)){
-                              if ($data->kd_kas != 0){
-                                echo "<option name='kd_kas' value='$data->kd_kas'>$data->sumber_dana</option>";
-                              }
-                            }
-                          echo '
-                        </select>
-                      </div>
-                    </div>
-                    <div class="control-group">
-                      <div class="controls">
-                        <button class="btn btn-success" name="addTransaksiUmum" type="submit">Submit</button>
-                        <a href="transaksi_umum.php" class="btn btn-inverse">Kembali</a>
-                      </div>
-                    </div>
-                  </form>
                 </div>
-                ';
-              }elseif(isset($_POST['kebutuhanUnit']) || isset($_GET['unit'])){
-                echo '
-                <div class="widget-content">
-                <form action="../../../proses/transaksi_umum.php" method="POST" class="form-horizontal">
-                  <div class="control-group">
-                    <div class="controls">
-                      <label class="control-label"><strong>KEBUTUHAN UNIT</strong></label>
-                    </div>
-                  </div>
-                  <div class="control-group">
-                    <label class="control-label">Apartemen :</label>
-                    <div class="controls" id="form_apt" name="form_apt">
-                      <select id="apartemen" name="apartemen" class="span4">
-                        <option name="" value="">-- Pilih Apartemen --</option>
-                        ';
+                <script>
+                  function jenisKebutuhan(jenis){
+                    var selectApt = document.getElementById("controlApt");
+                    var selectUnit = document.getElementById("controlUnit");
+                    var allForm = document.getElementById("allForm");
+                    allForm.classList.remove("hide");
 
+                    if(jenis=="TU" || jenis=="BTU"){
+                      selectApt.classList.add("hide");
+                      selectUnit.classList.add("hide");
+                    }else if(jenis=="U" || jenis=="BU"){
+                      selectApt.classList.remove("hide");
+                      selectUnit.classList.remove("hide");
+                    }else{
+                      selectApt.classList.add("hide");
+                      selectUnit.classList.add("hide");
+                    }
+                  }
+                </script>
+                <div id="allForm" class="hide">
+                  <div id="controlApt" class="control-group">
+                    <label id="lblApt" class="control-label">Apartemen :</label>
+                    <div class="controls" id="form_apt" name="form_apt">
+                      <select id="apartemen" name="apartemen" class="">
+                        <option name="" value="">-- Pilih Apartemen --</option>
+                        <?php
                           $Proses = new Apartemen($db);
                           $show = $Proses->showApartemen();
                           while($data = $show->fetch(PDO::FETCH_OBJ)){
@@ -126,14 +84,14 @@
                               echo "<option name='kd_apt' value='$data->kd_apt'>$data->nama_apt</option>";
                             }
                           }
-                        echo '
+                        ?>
                       </select>
                     </div>
                   </div>
-                  <div class="control-group">
-                    <label class="control-label">Unit :</label>
+                  <div id="controlUnit" class="control-group">
+                    <label id="lblUnit" class="control-label">Unit :</label>
                     <div class="controls">
-                      <select name="unit" id="unit" class="span4" onchange="biaya(this.form)">
+                      <select name="unit" id="unit" class="" onchange="biaya(this.form)">
                         <option value="">-- Pilih Unit --</option>
                       </select>
                       <div id="loading">
@@ -141,7 +99,6 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="control-group">
                     <label class="control-label">Harga : </label>
                     <div class="controls">
@@ -163,31 +120,29 @@
                   <div class="control-group">
                     <label class="control-label">Sumber Dana :</label>
                     <div class="controls">
-                      <select name="kd_kas">
-                        <option name="" value="">-- Pilih Sumber Dana --</option>
-                        ';
+                      <select name="kd_kas" id="kd_kas">
+                        <option value="">-- Pilih Sumber Dana --</option>
+                        <?php
                           $Proses = new Kas($db);
                           $show = $Proses->showKas();
                           while($data = $show->fetch(PDO::FETCH_OBJ)){
                             if ($data->kd_kas != 0){
-                              echo "<option name='kd_kas' value='$data->kd_kas'>$data->sumber_dana</option>";
+                              echo "<option value='$data->kd_kas'>$data->sumber_dana</option>";
                             }
                           }
-                        echo '
+                        ?>
                       </select>
                     </div>
                   </div>
                   <div class="control-group">
                     <div class="controls">
-                      <button class="btn btn-success" name="addTransaksiUnit" type="submit">Submit</button>
+                      <button class="btn btn-success" type="submit" name="addTU">Submit</button>
                       <a href="transaksi_umum.php" class="btn btn-inverse">Kembali</a>
                     </div>
                   </div>
-                </form>
                 </div>
-                ';
-              }
-            ?>
+              </form>
+            </div>
           </div>
         </div>
       </div>
