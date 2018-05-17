@@ -1,6 +1,7 @@
 <?php
   require("../../../class/transaksi_umum.php");
   require("../../../class/unit.php");
+  require("../../../class/kas.php");
   require("../../../../config/database.php");
 
   $thisPage = "Billing Transaksi Umum";
@@ -45,6 +46,7 @@
         				  $i = 1;
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
                     if($data->status == 1){
+                      $kode = $data->kd_transaksi_umum;
                       if($data->kebutuhan == "umum"){
                         $kebutuhan = $data->kebutuhan;
                       }else{
@@ -68,7 +70,7 @@
                               <center>
                                 <button data-toggle='dropdown' class='btn btn-success dropdown-toggle'>Action <span class='caret'></span></button>
                                 <ul class='dropdown-menu'>
-                                  <li><a href='#'>Bayar</a></li>
+                                  <li><a href='#popup-bayar' data-toggle='modal' onClick='btnBayar($kode)'>Bayar</a></li>
                                   <li class='divider'></li>
                                   <li><a class='hapus' href='../../../proses/transaksi_umum.php?delete_transaksi_umum=$data->kd_transaksi_umum'>Hapus</a></li>
                                 </ul>
@@ -90,6 +92,46 @@
   </div>
 </div>
 
+<!-- Modal Popup Bayar -->
+<div id="popup-bayar" class="modal hide">
+  <div class="modal-header">
+    <button data-dismiss="modal" class="close" type="button">×</button>
+    <h3>Pilih sumber dana pembayaran</h3>
+  </div>
+  <div class="modal-body">
+	<form action="../../../proses/transaksi_umum.php" method="post" class="form-horizontal">
+	  <div class="control-group">
+      <script>
+        function btnBayar(kode){
+          document.getElementById('kd_transaksi_umum').value = kode;
+        }
+      </script>
+  		<label class="control-label">Sumber Dana :</label>
+  		<div class="controls">
+        <input id="kd_transaksi_umum" name="kd_transaksi_umum" value="tes" class="hide" />
+        <select id="kas" name="kas" required>
+          <option value="">-- Kas --</option>
+          <?php
+            $Proses = new Kas($db);
+            $show = $Proses->showKas();
+            while($data = $show->fetch(PDO::FETCH_OBJ)){
+              echo "<option name='kd_kas' value='$data->kd_kas'>$data->sumber_dana</option>";
+            }
+          ?>
+        </select>
+  		</div>
+	  </div>
+	  <div class="control-group">
+  		<div class="controls">
+  		  <input type="submit" name="paymentBilling" class="btn btn-success" value="Bayar">
+  		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+  		</div>
+	  </div>
+	</form>
+  </div>
+</div>
+<!-- //Modal Popup Bayar -->
+
 <!--Footer-part-->
 <div class="row-fluid">
   <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
@@ -101,7 +143,6 @@
 <script src="../../../asset/js/jquery.ui.custom.js"></script>
 <script src="../../../asset/js/bootstrap.min.js"></script>
 <script src="../../../asset/js/jquery.uniform.js"></script>
-<script src="../../../asset/js/select2.min.js"></script>
 <script src="../../../asset/js/jquery.dataTables.min.js"></script>
 <script src="../../../asset/js/matrix.js"></script>
 <script src="../../../asset/js/matrix.tables.js"></script>

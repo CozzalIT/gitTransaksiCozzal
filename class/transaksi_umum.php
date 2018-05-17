@@ -53,6 +53,17 @@ class TransaksiUmum {
     }
   }
 
+  //payment billing
+  public function paymentBilling($kd_transaksi_umum, $kd_kas, $kebutuhan, $harga_umum, $jumlah_umum, $keterangan, $tanggal, $status){
+    $sql = "UPDATE tb_transaksi_umum SET kd_kas ='$kd_kas', kebutuhan='$kebutuhan', harga='$harga_umum', jumlah='$jumlah_umum', keterangan='$keterangan', status='$status' where kd_transaksi_umum='$kd_transaksi_umum'";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
+  }
+
   //Proses Delete
   public function deleteTransaksiUmum($kd_transaksi_umum){
     $sql = "DELETE FROM tb_transaksi_umum WHERE kd_transaksi_umum='$kd_transaksi_umum'";

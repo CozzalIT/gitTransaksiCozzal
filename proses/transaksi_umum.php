@@ -62,17 +62,9 @@ if(isset($_POST['addTU'])){
 		    }elseif($update == "Failed"){
 		      echo 'Saldo Kas Gagal di Update!!';
 		    }
-				if($status == 0){
-					header('Location:../view/'.$view.'/transaksi_umum/laporan_transaksi_umum.php');
-				}else{
-					header('Location:../view/'.$view.'/transaksi_umum/billing_transaksi_umum.php');
-				}
+				header('Location:../view/'.$view.'/transaksi_umum/laporan_transaksi_umum.php');
 			}else{
-				if($status == 0){
-					header('Location:../view/'.$view.'/transaksi_umum/laporan_transaksi_umum.php');
-				}else{
-					header('Location:../view/'.$view.'/transaksi_umum/billing_transaksi_umum.php');
-				}
+				header('Location:../view/'.$view.'/transaksi_umum/billing_transaksi_umum.php');
 			}
 	  }elseif($add == "Failed"){
 	    echo 'Proses Gagal!!';
@@ -86,120 +78,55 @@ if(isset($_POST['addTU'])){
 	}
 }
 
-/*
-//Tambah Transaksi Umum
-if(isset($_POST['addTransaksiUmum'])){
-	if(isset($_POST['apartemen'])){
-		$kd_apt = $_POST['apartemen'];
-		if(isset($_POST['unit'])){
-			$kd_unit = $_POST['unit'];
-			$kd_unit_real = explode("+",$kd_unit);
-		}
+//Payment Billing
+elseif(isset($_POST['paymentBilling'])){
+	$kd_transaksi_umum = $_POST['kd_transaksi_umum'];
+	$kd_kas_baru = $_POST['kas'];
+
+	$proses = new TransaksiUmum($db);
+	$show_tu = $proses->editTransaksiUmum($kd_transaksi_umum);
+	$edit_tu = $show_tu->fetch(PDO::FETCH_OBJ);
+
+	$kebutuhan = $edit_tu->kebutuhan;
+	$harga_umum = $edit_tu->harga;
+	$jumlah_umum = $edit_tu->jumlah;
+	$keterangan = $edit_tu->keterangan;
+	$tanggal = date('Y-m-d H:i:s');
+	$status = 0;
+	$mutasi_dana = $harga_umum*$jumlah_umum;
+	$jenis = 2;
+	if($kebutuhan == 'umum'){
+		$keterangan_mutasi = 3;
+	}else{
+		$kd_unit = explode("/",$kebutuhan);
+		$keterangan_mutasi = "10/".$kd_unit[1];
 	}
 
-  if(isset($_POST['kebutuhan'])){
-    $kebutuhan = $_POST['kebutuhan'];
-  }else{
-		$kebutuhan = "unit/".$kd_unit_real[0];
-  }
+	$update = $proses->paymentBilling($kd_transaksi_umum, $kd_kas_baru, $kebutuhan, $harga_umum, $jumlah_umum, $keterangan, $tanggal, $status);
+	if($update == "Success"){
+		$proses2 = new Kas($db);
+		$edit = $proses2->editSaldo($kd_kas_baru);
+		$data = $edit->fetch(PDO::FETCH_OBJ);
 
-	$kd_kas = $_POST['kd_kas'];
-  $harga = $_POST['harga'];
-  $jumlah = $_POST['jumlah'];
-  $keterangan = $_POST['keterangan'];
-  $keterangan_mutasi = 3;
-  $tanggal = date('Y-m-d H:i:s');
-  $mutasi_dana = $harga*$jumlah;
-  $jenis = 2;
-
-  $proses = new TransaksiUmum($db);
-  $proses2 = new Kas($db);
-
-	$edit = $proses2->editSaldo($kd_kas);
-	$data = $edit->fetch(PDO::FETCH_OBJ);
-	if($mutasi_dana < $data->saldo){
-		$add = $proses->addTransaksiUmum($kd_kas, $kebutuhan, $harga, $jumlah, $keterangan, $tanggal);
-	  if($add == "Success"){
-	    $add_mutasi = $proses2->addMutasiKas($kd_kas, $mutasi_dana, $jenis, $tanggal, $keterangan_mutasi);
-	    $saldo = $data->saldo - ($harga*$jumlah);
-	    $update = $proses2->updateKas($kd_kas, $saldo, $tanggal);
-
+		if($mutasi_dana < $data->saldo){
+		  $add_mutasi = $proses2->addMutasiKas($kd_kas_baru, $mutasi_dana, $jenis, $tanggal, $keterangan_mutasi);
+		  $saldo = $data->saldo - $mutasi_dana;
+		  $update = $proses2->updateKas($kd_kas_baru, $saldo, $tanggal);
 	    if($add_mutasi == "Failed"){
 	      echo 'Penambahan Mutasi Dana Gagal!!';
 	    }elseif($update == "Failed"){
 	      echo 'Saldo Kas Gagal di Update!!';
 	    }
-
-	    header('Location:../view/'.$view.'/transaksi_umum/laporan_transaksi_umum.php');
-	  }elseif($add == "Failed"){
-	    echo 'Proses Gagal!!';
-		}
-	}elseif($mutasi_dana > $data->saldo){
-		if($kebutuhan == 'umum'){
-			header('Location:../view/'.$view.'/transaksi_umum/transaksi_umum.php?umum');
-		}else{
-			header('Location:../view/'.$view.'/transaksi_umum/transaksi_umum.php?unit');
+			header('Location:../view/'.$view.'/transaksi_umum/billing_transaksi_umum.php');
+		}elseif($mutasi_dana > $data->saldo){
+			if($kebutuhan == 'umum'){
+				header('Location:../view/'.$view.'/transaksi_umum/billing_transaksi_umum.php?umum');
+			}else{
+				header('Location:../view/'.$view.'/transaksi_umum/billing_transaksi_umum.php?unit');
+			}
 		}
 	}
 }
-
-//Tambah Transaksi Unit
-elseif(isset($_POST['addTransaksiUnit'])){
-	if(isset($_POST['apartemen'])){
-		$kd_apt = $_POST['apartemen'];
-		if(isset($_POST['unit'])){
-			$kd_unit = $_POST['unit'];
-			$kd_unit_real = explode("+",$kd_unit);
-		}
-	}
-
-  if(isset($_POST['kebutuhan'])){
-    $kebutuhan = $_POST['kebutuhan'];
-  }else{
-		$kebutuhan = "unit/".$kd_unit_real[0];
-  }
-
-	$kd_kas = $_POST['kd_kas'];
-  $harga = $_POST['harga'];
-  $jumlah = $_POST['jumlah'];
-  $keterangan = $_POST['keterangan'];
-  $tanggal = date('Y-m-d H:i:s');
-	$keterangan_mutasi = '10/'.$kd_unit_real[0];
-  $mutasi_dana = $harga*$jumlah;
-  $jenis = 2;
-
-  $proses = new TransaksiUmum($db);
-  $proses2 = new Kas($db);
-
-	$edit = $proses2->editSaldo($kd_kas);
-	$data = $edit->fetch(PDO::FETCH_OBJ);
-	if($mutasi_dana < $data->saldo){
-		$add = $proses->addTransaksiUmum($kd_kas, $kebutuhan, $harga, $jumlah, $keterangan, $tanggal);
-	  if($add == "Success"){
-	    $add_mutasi = $proses2->addMutasiKas($kd_kas, $mutasi_dana, $jenis, $tanggal, $keterangan_mutasi);
-	    $saldo = $data->saldo - ($harga*$jumlah);
-	    $update = $proses2->updateKas($kd_kas, $saldo, $tanggal);
-
-	    if($add_mutasi == "Failed"){
-	      echo 'Penambahan Mutasi Dana Gagal!!';
-	    }elseif($update == "Failed"){
-	      echo 'Saldo Kas Gagal di Update!!';
-	    }
-
-	    header('Location:../view/'.$view.'/transaksi_umum/laporan_transaksi_umum.php');
-	  }elseif($add == "Failed"){
-	    echo 'Proses Gagal!!';
-		}
-
-	}elseif($mutasi_dana > $data->saldo){
-		if($kebutuhan == 'umum'){
-			header('Location:../view/'.$view.'/transaksi_umum/transaksi_umum.php?umum');
-		}else{
-			header('Location:../view/'.$view.'/transaksi_umum/transaksi_umum.php?unit');
-		}
-	}
-}
-*/
 
 //update transaksi umum
 elseif(isset($_POST['updateTransaksiUmum'])){

@@ -420,7 +420,7 @@
           document.getElementById('kd_owner_payment').value = kode;
         }
       </script>
-  		<label class="control-label">Nama :</label>
+  		<label class="control-label">Sumber Dana :</label>
   		<div class="controls">
         <input id="kd_owner_payment" name="kd_owner_payment" value="tes" class="hide" />
         <select id="kas" name="kas" required>
