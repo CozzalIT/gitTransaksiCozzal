@@ -62,9 +62,17 @@ if(isset($_POST['addTU'])){
 		    }elseif($update == "Failed"){
 		      echo 'Saldo Kas Gagal di Update!!';
 		    }
-				header('Location:../view/'.$view.'/transaksi_umum/laporan_transaksi_umum.php');
+				if($status == 0){
+					header('Location:../view/'.$view.'/transaksi_umum/laporan_transaksi_umum.php');
+				}else{
+					header('Location:../view/'.$view.'/transaksi_umum/billing_transaksi_umum.php');
+				}
 			}else{
-	    	header('Location:../view/'.$view.'/transaksi_umum/laporan_transaksi_umum.php');
+				if($status == 0){
+					header('Location:../view/'.$view.'/transaksi_umum/laporan_transaksi_umum.php');
+				}else{
+					header('Location:../view/'.$view.'/transaksi_umum/billing_transaksi_umum.php');
+				}
 			}
 	  }elseif($add == "Failed"){
 	    echo 'Proses Gagal!!';
@@ -264,7 +272,11 @@ elseif(isset($_GET['delete_transaksi_umum']) && ($view=="superadmin" || $view=="
 	$update_saldo = $Proses_k->updateKas($data_transaksi->kd_kas, $saldo_kas, $tanggal);
 	$Proses_k->deleteMutasiByDate($data_transaksi->tanggal);
 	$del = $proses->deleteTransaksiUmum($_GET['delete_transaksi_umum']);
-  header("location:../view/".$view."/transaksi_umum/laporan_transaksi_umum.php");
+	if($data_transaksi->status == 0){
+		header("location:../view/".$view."/transaksi_umum/laporan_transaksi_umum.php");
+	}else{
+		header("location:../view/".$view."/transaksi_umum/billing_transaksi_umum.php");
+	}
 }
 
 else header('Location:../view/'.$view.'/home/home.php');

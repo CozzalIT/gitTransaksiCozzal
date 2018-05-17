@@ -14,6 +14,7 @@
       <ul>
         <li <?php if($thisPage == "Transaksi Umum") echo "class='active'"; ?>><a href="../transaksi_umum/transaksi_umum.php">Input Transaksi Umum</a></li>
         <li <?php if($thisPage == "Laporan Transaksi Umum") echo "class='active'"; ?>><a href="../transaksi_umum/laporan_transaksi_umum.php">Laporan Transaksi Umum</a></li>
+        <li <?php if($thisPage == "Billing Transaksi Umum") echo "class='active'"; ?>><a href="../transaksi_umum/billing_transaksi_umum.php">Billing Transaksi Umum</a></li>
       </ul>
     </li>
     <li <?php if($thisPage == "Kas") echo "class='active'"; ?>><a href="../kas/kas.php"><i class="icon icon-credit-card"></i> <span>Kas Cozzal</span></a> </li>

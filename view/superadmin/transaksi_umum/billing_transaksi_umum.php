@@ -3,7 +3,7 @@
   require("../../../class/unit.php");
   require("../../../../config/database.php");
 
-  $thisPage = "Laporan Transaksi Umum";
+  $thisPage = "Billing Transaksi Umum";
 
   include "../template/head.php";
 ?>
@@ -14,23 +14,22 @@
 ?>
 <div id="content">
   <div id="content-header">
-   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Laporan Transaksi Umum</a></div>
+   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Billing Transaksi Umum</a></div>
     <a href="transaksi_umum.php" class="btn btn-success btn-add"><i class="icon-plus"></i> Transaksi Umum Baru</a>
   </div>
   <div class="container-fluid">
     <hr>
     <div class="row-fluid">
       <div class="span12">
-        <div class="widget-box" style="overflow-x:auto;">
+        <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5>Laporan Transaksi Umum</h5>
+            <h5>Billing Transaksi Umum</h5>
           </div>
           <div class="widget-content nopadding">
 			      <table class="table table-bordered data-table">
               <thead>
                 <tr>
                   <th>No</th>
-                  <th>Sumber Dana</th>
                   <th>Kebutuhan</th>
                   <th>Harga</th>
                   <th>Jumlah</th>
@@ -45,7 +44,7 @@
         				  $show = $Proses->showTransaksiUmum();
         				  $i = 1;
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-                    if($data->status == 0){
+                    if($data->status == 1){
                       if($data->kebutuhan == "umum"){
                         $kebutuhan = $data->kebutuhan;
                       }else{
@@ -57,23 +56,28 @@
                         $data_unit = $show_unit->fetch(PDO::FETCH_OBJ);
                       }
                       echo "
-                        <tr class='gradeC'>
-                          <td>$i</td>
-                          <td>$data->sumber_dana</td>
-                          <td>".($kebutuhan == 'umum' ? 'Umum' : 'Unit '.$data_unit->no_unit)."</td>
-                          <td>".number_format($data->harga, 0, ".", ".")." IDR</td>
-                          <td>$data->jumlah</td>
-                          <td>".number_format($data->harga*$data->jumlah, 0, ".", ".")." IDR</td>
+            					  <tr class='gradeC'>
+            					    <td>$i</td>
+            					    <td>".($kebutuhan == 'umum' ? 'Umum' : 'Unit '.$data_unit->no_unit)."</td>
+              						<td>".number_format($data->harga, 0, ".", ".")." IDR</td>
+              						<td>$data->jumlah</td>
+              						<td>".number_format($data->harga*$data->jumlah, 0, ".", ".")." IDR</td>
                           <td>$data->keterangan</td>
-                          <td>
-                            <center>
-                              <a class='btn btn-primary' href=edit_umum.php?edit_transaksi_umum=$data->kd_transaksi_umum>Edit</a>
-                              <a class='btn btn-danger hapus' href='../../../proses/transaksi_umum.php?delete_transaksi_umum=$data->kd_transaksi_umum'>Hapus</a>
-                            </center>
+              						<td>
+                            <div class='btn-group'>
+                              <center>
+                                <button data-toggle='dropdown' class='btn btn-success dropdown-toggle'>Action <span class='caret'></span></button>
+                                <ul class='dropdown-menu'>
+                                  <li><a href='#'>Bayar</a></li>
+                                  <li class='divider'></li>
+                                  <li><a class='hapus' href='../../../proses/transaksi_umum.php?delete_transaksi_umum=$data->kd_transaksi_umum'>Hapus</a></li>
+                                </ul>
+                              </center>
+                            </div>
                           </td>
-                        </tr>
+            					  </tr>
                       ";
-                      $i++;
+            				$i++;
                     }
         				  };
       				  ?>

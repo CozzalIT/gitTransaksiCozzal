@@ -131,7 +131,6 @@
                     <label class="control-label">Sumber Dana :</label>
                     <div class="controls">
                       <select name="kd_kas" id="kd_kas">
-                        <option value="">-- Pilih Sumber Dana --</option>
                         <?php
                           $Proses = new Kas($db);
                           $show = $Proses->showKas();
