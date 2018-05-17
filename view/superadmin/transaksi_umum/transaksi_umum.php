@@ -42,31 +42,41 @@
                 <div class="control-group">
                   <label class="control-label">Kebutuhan : </label>
                   <div class="controls">
-                    <select name="kebutuhan">
+                    <select id="kebutuhan" name="kebutuhan" onchange="jenisKebutuhan()">
                       <option>-- Pilih Kebutuhan --</option>
-                      <option value="tu" onclick="jenisKebutuhan('TU')">Transaksi Umum</option>
-                      <option value="u" onclick="jenisKebutuhan('U')">Kebutuhan Unit</option>
-                      <option value="btu" onclick="jenisKebutuhan('BTU')">Billing Transaksi Umum</option>
-                      <option value="bu" onclick="jenisKebutuhan('BU')">Billing Kebutuhan Unit</option>
+                      <option value="tu">Transaksi Umum</option>
+                      <option value="u">Kebutuhan Unit</option>
+                      <option value="btu">Billing Transaksi Umum</option>
+                      <option value="bu">Billing Kebutuhan Unit</option>
                     </select>
                   </div>
                 </div>
                 <script>
-                  function jenisKebutuhan(jenis){
+                  function jenisKebutuhan(){
                     var selectApt = document.getElementById("controlApt");
                     var selectUnit = document.getElementById("controlUnit");
+                    var selectKas = document.getElementById("controlKas");
                     var allForm = document.getElementById("allForm");
+                    var kebutuhan = document.getElementById("kebutuhan");
+                    var valKebutuhan = kebutuhan.options[kebutuhan.selectedIndex].value;
                     allForm.classList.remove("hide");
 
-                    if(jenis=="TU" || jenis=="BTU"){
+                    if(valKebutuhan=="tu" || valKebutuhan=="btu"){
                       selectApt.classList.add("hide");
                       selectUnit.classList.add("hide");
-                    }else if(jenis=="U" || jenis=="BU"){
+                      if(valKebutuhan=="btu"){
+                        selectKas.classList.add("hide");
+                      }else{
+                        selectKas.classList.remove("hide");
+                      }
+                    }else if(valKebutuhan=="u" || valKebutuhan=="bu"){
                       selectApt.classList.remove("hide");
                       selectUnit.classList.remove("hide");
-                    }else{
-                      selectApt.classList.add("hide");
-                      selectUnit.classList.add("hide");
+                      if(valKebutuhan=="bu"){
+                        selectKas.classList.add("hide");
+                      }else{
+                        selectKas.classList.remove("hide");
+                      }
                     }
                   }
                 </script>
@@ -95,7 +105,7 @@
                         <option value="">-- Pilih Unit --</option>
                       </select>
                       <div id="loading">
-                        <img src="../../asset/images/loading.gif" width="18"> <small>Loading...</small>
+                        <img src="" width="18"> <small>Loading...</small>
                       </div>
                     </div>
                   </div>
@@ -117,7 +127,7 @@
                       <input name="keterangan" type="Text"/>
                     </div>
                   </div>
-                  <div class="control-group">
+                  <div id="controlKas" class="control-group">
                     <label class="control-label">Sumber Dana :</label>
                     <div class="controls">
                       <select name="kd_kas" id="kd_kas">
