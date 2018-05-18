@@ -17,9 +17,10 @@
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Owner Payment</a></div>
-    <form method="post" action="#">
+    <form id="formSelectOwner" method="post" action="#">
       <div class="control-group btn-add">
-        <select name="kd_owner" class="span2" style="">
+        <p>Pilih owner untuk menampilkan data.</p>
+        <select name="kd_owner" class="span2" style="" id="mySelect" onchange="selectOwner()">
           <?php
             if(!isset($_POST['kd_owner'])){
               echo "
@@ -56,7 +57,11 @@
           ?>
         </select>
       </div>
-      <button type="submit" class="btn btn-primary" style="margin-left:20px;">Tampilkan</button>
+      <script>
+        function selectOwner() {
+            document.getElementById("formSelectOwner").submit();
+        }
+      </script>
     </form>
   </div>
   <div class="container-fluid">
@@ -283,6 +288,7 @@
                     <th>Tanggal Pembayaran</th>
                     <th>Jumlah Transaksi</th>
                     <th>Nominal</th>
+                    <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -295,6 +301,21 @@
                       $show_history = $Proses->showOwnerPayment($_POST['kd_owner']);
                     }
                     while($data_history = $show_history->fetch(PDO::FETCH_OBJ)){
+                      $status = $data_history->status;
+                      switch ($status) {
+                        case '4':
+                          $status = 'Confirm';
+                          break;
+                        case '3':
+                          $status = 'Reject';
+                          break;
+                        case '2':
+                          $status = 'Waiting List';
+                          break;
+                        default:
+                          $status = 'Paid';
+                          break;
+                      }
                       $tanggal = explode(" ",$data_history->tgl_pembayaran);
                       $formatTanggal = explode("-",$tanggal[0]);
                       switch ($formatTanggal[1]) {
@@ -336,16 +357,39 @@
                           break;
                       }
                       $tanggalIndo = $formatTanggal[2]." ".$formatTanggal[1]." ".$formatTanggal[0];
+                      $kode = '"'.$data_history->kd_owner_payment.'"';
                       echo "
                         <tr class='gradeC'>
                           <td class='hide'>$i</td>
                           <td>$tanggalIndo</td>
                           <td>$data_history->jumlah_transaksi Transaksi</td>
                           <td>".number_format($data_history->nominal, 0, ".", ".")." IDR</td>
+                          <td>$status</td>
                           <td>
-                            <center>
-                              <a class='btn btn-success' id='detail' name='detail' href='detail_payment.php?detail=$data_history->kd_owner_payment'>Detail</a>
-                            </center>
+                            <div class='btn-group' style='margin-left: 20px;'>
+                              <button data-toggle='dropdown' class='btn btn-success dropdown-toggle'>Action <span class='caret'></span></button>
+                              <ul class='dropdown-menu'>
+                                <li><a id='detail' name='detail' href='detail_payment.php?detail=$data_history->kd_owner_payment'>Detail</a></li>
+                                ";
+                                if($status == 'Reject'){
+                                  echo"
+                                    <li class='divider'></li>
+                                    <li><a href='../../../proses/owner.php?deletePayment=$data_history->kd_owner_payment'>Delete</a></li>
+                                  ";
+                                }elseif($status == 'Waiting List'){
+                                  echo"
+                                    <li class='divider'></li>
+                                    <li><a href='#'>Confirm</a></li>
+                                  ";
+                                }elseif($status == 'Confirm'){
+                                  echo"
+                                    <li class='divider'></li>
+                                    <li><a href='#popup-bayar' data-toggle='modal' onClick='btnBayar($kode)'>Bayar</a></li>
+                                  ";
+                                }
+                                echo"
+                              </ul>
+                            </div>
                           </td>
                         </tr>
                       ";
@@ -361,6 +405,46 @@
     </div>
   </div>
 </div>
+
+<!-- Modal Popup Bayar -->
+<div id="popup-bayar" class="modal hide">
+  <div class="modal-header">
+    <button data-dismiss="modal" class="close" type="button">×</button>
+    <h3>Pilih sumber dana pembayaran</h3>
+  </div>
+  <div class="modal-body">
+	<form action="../../../proses/owner.php" method="post" class="form-horizontal">
+	  <div class="control-group">
+      <script>
+        function btnBayar(kode){
+          document.getElementById('kd_owner_payment').value = kode;
+        }
+      </script>
+  		<label class="control-label">Sumber Dana :</label>
+  		<div class="controls">
+        <input id="kd_owner_payment" name="kd_owner_payment" value="tes" class="hide" />
+        <select id="kas" name="kas" required>
+          <option value="">-- Kas --</option>
+          <?php
+            $Proses = new Kas($db);
+            $show = $Proses->showKas();
+            while($data = $show->fetch(PDO::FETCH_OBJ)){
+              echo "<option name='kd_kas' value='$data->kd_kas'>$data->sumber_dana</option>";
+            }
+          ?>
+        </select>
+  		</div>
+	  </div>
+	  <div class="control-group">
+  		<div class="controls">
+  		  <input type="submit" name="paymentConfirmKwitansi" class="btn btn-success" value="Bayar">
+  		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+  		</div>
+	  </div>
+	</form>
+  </div>
+</div>
+<!-- //Modal Popup Bayar -->
 
 <!--Footer-part-->
 <div class="row-fluid">

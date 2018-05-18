@@ -208,15 +208,18 @@
                   						}
                 					  ?>
               					  </select>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
                   <div class="pull-right">
-                    <h4><span>EARNINGS: </span><?php echo number_format($earnings, 0, ".","."); ?> IDR</h4>
+                    <h4 class="pull-right"><span>EARNINGS: </span><?php echo number_format($earnings, 0, ".","."); ?> IDR</h4>
+                    <br>
                     <br>
                     <div class='hide'><input type='text' name='earnings' value='<?php echo $earnings;?>' /></div>
-                    <button class="btn btn-success btn-large pull-right" type="submit" name="ownerPayment" style="margin-left:10px;" onclick="submitForm('../../../proses/owner.php')">Bayar</button>
-                    <button class="btn btn-primary btn-large pull-right" type="submit" style="margin-left:10px;" onclick="submitForm('pdf.php')">Download/Print</button>
+                    <button class="btn btn-success btn-large pull-right" type="submit" name="ownerPayment" style="margin-left:10px;" onclick="submitForm('../../../proses/owner.php',0)">Bayar</button>
+                    <button class="btn btn-primary btn-large pull-right" type="submit" style="margin-left:10px;" onclick="submitForm('pdf.php',0)">Download/Print</button>
+                    <button class="btn btn-warning btn-large pull-right" type="submit" name="kirimKwitansi" style="margin-left:10px;" onclick="submitForm('../../../proses/owner.php',1)">Kirim Kwitansi</button>
                   </div>
                 </div>
               </div>
@@ -227,9 +230,11 @@
     </div>
   </div>
 </div>
-
 <script>
-  function submitForm(action){
+  function submitForm(action,status){
+    if(status == 1){
+      $('#kas').removeAttr('required');
+    }
     document.getElementById('formOwnerPayment').action = action;
     document.getElementById('formOwnerPayment').submit();
   }
