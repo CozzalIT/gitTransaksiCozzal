@@ -19,7 +19,7 @@ class Penyewa {
 
   //Proses Show
   public function showPenyewa(){
-    $sql = "SELECT * FROM tb_penyewa";
+    $sql = "SELECT * FROM tb_penyewa ORDER BY nama ASC";
     $query = $this->db->query($sql);
     return $query;
   }
@@ -40,6 +40,15 @@ class Penyewa {
     }else{
       return "Success";
     }
+  }
+
+  public function solveRedudansi($kd_penyewa_baru, $kd_penyewa_lama){
+    $sql = "UPDATE tb_transaksi SET kd_penyewa='$kd_penyewa_baru' 
+    WHERE kd_penyewa='$kd_penyewa_lama'";
+    $this->db->query($sql);
+    $sql = "UPDATE tb_recommended SET kd_penyewa='$kd_penyewa_baru' 
+    WHERE kd_penyewa='$kd_penyewa_lama'";
+    $this->db->query($sql);
   }
 
   //Proses Delete

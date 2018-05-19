@@ -48,5 +48,22 @@ elseif(isset($_GET['delete_penyewa']) && ($view=="superadmin" || $view=="manager
   header("location:../view/".$view."/penyewa/penyewa.php");
 }
 
+elseif(isset($_POST['kd_redudansi'])){
+  $string_red = $_POST['kd_redudansi'];
+  $kd_penyewa = $_POST['kd_penyewa'];
+  $arr_red = explode("*", $string_red);
+  $proses = new Penyewa($db);
+  $wait = "";
+  for($i=0;$i<count($arr_red);$i++){
+    if($arr_red[$i]!=$kd_penyewa){
+      $proses->solveRedudansi($kd_penyewa, $arr_red[$i]);
+      $wait .= "*".$arr_red[$i];
+      $proses->deletePenyewa($arr_red[$i]);
+    }
+  }
+  $callback = array('error'=>$wait);
+  echo json_encode($callback);  
+}
+
 else header('Location:../view/'.$view.'/home/home.php');
 ?>

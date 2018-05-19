@@ -14,7 +14,8 @@
 <div id="content">
   <div id="content-header">
    <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Data Penyewa</a></div>
-    <a href="#popup-penyewa" data-toggle="modal" class="btn btn-info btn-add"><i class="icon-plus"></i> Tambah Data</a>
+    <a onclick="$('#popup-penyewa').show();$('#popup-redudansi').hide();" href="#popup-general" data-toggle="modal" class="btn btn-info btn-add"><i class="icon-plus"></i> Tambah Data</a>
+    <a onclick="$('#popup-penyewa').hide();$('#popup-redudansi').show();" href="#popup-general" data-toggle="modal" class="btn btn-warning btn-add"><i class="icon-copy"></i> Cek Redudansi</a>
   </div>
   <div class="container-fluid">
     <hr>
@@ -42,18 +43,19 @@
         				  $Proses = new Penyewa($db);
         				  $show = $Proses->showPenyewa();
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-        					echo "
-        					  <tr class=gradeC'>
-        					    <td>$data->nama</td>
-        					    <td>$data->alamat</td>
-        						  <td>$data->no_tlp</td>
-        						  <td>$data->jenis_kelamin</td>
-                      <td>$data->email</td>
+        					$kd = $data->kd_penyewa;
+                  echo "
+        					  <tr class='gradeC'>
+        					    <td class='penyewa' id='$kd'>$data->nama</td>
+        					    <td id='alamat-$kd'>$data->alamat</td>
+        						  <td id='tlp-$kd'>$data->no_tlp</td>
+        						  <td id='jk-$kd'>$data->jenis_kelamin</td>
+                      <td id='email-$kd'>$data->email</td>
         						  <td>$data->tgl_gabung</td>
         						<td>
-        						  <a class='btn btn-success' href='../transaksi/transaksi.php?transaksi=$data->kd_penyewa'>Transaksi</a>
-        						  <a class='btn btn-primary' href='edit.php?edit=$data->kd_penyewa'>Edit</a>
-        						  <a class='btn btn-danger hapus' href='../../../proses/penyewa.php?delete_penyewa=$data->kd_penyewa'>Hapus</a>
+        						  <a class='btn btn-success' href='../transaksi/transaksi.php?transaksi=$kd'>Transaksi</a>
+        						  <a class='btn btn-primary' href='edit.php?edit=$kd'>Edit</a>
+        						  <a class='btn btn-danger hapus' href='../../../proses/penyewa.php?delete_penyewa=$kd'>Hapus</a>
         						</td>
         					  </tr>";
         				  }
@@ -67,8 +69,10 @@
   </div>
 </div>
 
+<!-- Modal Popup General -->
+<div id="popup-general" class="modal hide">
 <!-- Modal Popup Tambah Penyewa -->
-<div id="popup-penyewa" class="modal hide">
+<div id="popup-penyewa">
   <div class="modal-header">
     <button data-dismiss="modal" class="close" type="button">×</button>
     <h3>Pelanggan Baru</h3>
@@ -121,11 +125,57 @@
 </div>
 <!-- //Modal Popup Tambah Penyewa -->
 
+<!-- Modal Popup Redudansi -->
+<div id="popup-redudansi">
+  <div class="modal-header">
+    <button data-dismiss="modal" class="close" type="button">×</button>
+    <h3 id="head-cap">Data Redudansi Penyewa</h3>
+  </div>
+  <form action="../../../proses/task.php" method="post" class="form-horizontal">
+   <div style="overflow-y: auto; max-height: 250px;" id="global-red">
+
+    <!-- Dynamic Element -->
+   
+   </div>
+    <div class="controls" style="margin: 0px;">
+      <center>
+        <img id="gif-status" src="../../../asset/images/loading.gif" width="18"> 
+        <small id="text-status">Menganalisis Data Penyewa ...</small>
+      </center>
+    </div> 
+  </form>
+</div>
+<!-- //Modal Popup Redudansi -->
+</div>
+
 <!--Footer-part-->
 <div class="row-fluid">
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
+<style type="text/css">
+  .selected, .selected2{
+    font-size: 10px;
+    float: right;
+    border-radius: 2px;
+    color: white;
+    padding: 3px;
+    cursor: pointer;
+    margin-left: 5px;
+  }
+   .selected:hover, .selected2:hover{
+    color: white;
+    padding: 4px;
+    cursor: pointer;
+  } 
+  .selected{
+    background-color: blue;
+  }
+  .selected2{
+    background-color: red;
+  }
+</style>
+<script src="../../../asset/js/penyewa.js"></script>
 <script src="../../../asset/js/sweetalert.min.js"></script>
 <script src="../../../asset/js/hapus.js"></script>
 <script src="../../../asset/js/jquery.min.js"></script>
@@ -136,5 +186,6 @@
 <script src="../../../asset/js/jquery.dataTables.min.js"></script>
 <script src="../../../asset/js/matrix.js"></script>
 <script src="../../../asset/js/matrix.tables.js"></script>
+
 </body>
 </html>

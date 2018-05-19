@@ -72,7 +72,7 @@ elseif(isset($_POST['get_property'])){
 	echo json_encode($callback);
 }
 
-elseif(isset($_GET["hapus"]) && $view=="superadmin"){
+elseif(isset($_GET["hapus"]) && $view!="owner" && $view!="cleaner"){
 	$kd_booked = $_GET["hapus"];
 	$kd_unit = $_GET["unit"];
 	$check_in = $_GET["ci"];

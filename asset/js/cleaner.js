@@ -261,4 +261,14 @@ $(".fg-button").click(function(){
 	$(".status").click();
 });
 
+$(".status").hover(function(){
+	if($(this).text()=="Memuat...")
+		this.style.cursor = "pointer";
+}, function(){});
+
+$(".status").click(function(){
+	r_status_bersih(this.id);
+	this.style.cursor = "text";
+});
+
 }); //on document ready
