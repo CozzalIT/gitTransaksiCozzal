@@ -56,14 +56,9 @@ if(isset($_POST['addTU'])){
 		    $add_mutasi = $proses2->addMutasiKas($kd_kas, $mutasi_dana, $jenis, $tanggal, $keterangan_mutasi);
 		    $saldo = $data->saldo - ($harga*$jumlah);
 		    $update = $proses2->updateKas($kd_kas, $saldo, $tanggal);
-
-		    if($add_mutasi == "Failed"){
-		      echo 'Penambahan Mutasi Dana Gagal!!';
-		    }elseif($update == "Failed"){
-		      echo 'Saldo Kas Gagal di Update!!';
-		    }
 				header('Location:../view/'.$view.'/transaksi_umum/laporan_transaksi_umum.php');
-			}else{
+			}elseif($status == 1){
+				$add_mutasi = $proses2->addMutasiKas($kd_kas, 0, $jenis, $tanggal, $keterangan_mutasi);
 				header('Location:../view/'.$view.'/transaksi_umum/billing_transaksi_umum.php');
 			}
 	  }elseif($add == "Failed"){
