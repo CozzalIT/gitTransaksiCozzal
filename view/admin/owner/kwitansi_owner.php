@@ -152,10 +152,11 @@
                     <tbody>
                       <?php
                       $proses_t = new Transaksi($db);
-                      $i=1;
-                      $total_in=0;
-                      $subtotal_in=0;
-                      foreach($transaksi as $kd_transaksi) {
+                      $proses_u = new Unit($db);
+                        $i=1;
+                        $total_in=0;
+                        $subtotal_in=0;
+                        foreach($transaksi as $kd_transaksi) {
                           if($kd_transaksi <> 'dummy'){
                             $show_t = $proses_t->editTransaksi($kd_transaksi);
                             $data_t = $show_t->fetch(PDO::FETCH_OBJ);
@@ -207,15 +208,18 @@
                   						}
                 					  ?>
               					  </select>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
                   <div class="pull-right">
-                    <h4><span>EARNINGS: </span><?php echo number_format($earnings, 0, ".","."); ?> IDR</h4>
+                    <h4 class="pull-right"><span>EARNINGS: </span><?php echo number_format($earnings, 0, ".","."); ?> IDR</h4>
+                    <br>
                     <br>
                     <div class='hide'><input type='text' name='earnings' value='<?php echo $earnings;?>' /></div>
-                    <button class="btn btn-success btn-large pull-right" type="submit" name="ownerPayment" style="margin-left:10px;" onclick="submitForm('../../../proses/owner.php')">Bayar</button>
-                    <button class="btn btn-primary btn-large pull-right" type="submit" style="margin-left:10px;" onclick="submitForm('pdf.php')">Download/Print</button>
+                    <button class="btn btn-success btn-large pull-right" type="submit" name="ownerPayment" style="margin-left:10px;" onclick="submitForm('../../../proses/owner.php',0)">Bayar</button>
+                    <button class="btn btn-primary btn-large pull-right" type="submit" style="margin-left:10px;" onclick="submitForm('pdf.php',0)">Download/Print</button>
+                    <button class="btn btn-warning btn-large pull-right" type="submit" name="kirimKwitansi" style="margin-left:10px;" onclick="submitForm('../../../proses/owner.php',1)">Kirim Kwitansi</button>
                   </div>
                 </div>
               </div>
@@ -226,15 +230,17 @@
     </div>
   </div>
 </div>
-
 <script>
-  function submitForm(action){
+  function submitForm(action,status){
+    if(status == 1){
+      $('#kas').removeAttr('required');
+    }
     document.getElementById('formOwnerPayment').action = action;
     document.getElementById('formOwnerPayment').submit();
   }
 </script>
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
+  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
 <script src="../../../asset/js/sweetalert.min.js"></script>

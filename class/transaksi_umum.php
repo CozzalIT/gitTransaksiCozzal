@@ -26,8 +26,8 @@ class TransaksiUmum {
   }
 
   //Proses Add
-  public function addTransaksiUmum($kd_kas, $kebutuhan, $harga, $jumlah, $keterangan, $tanggal){
-    $sql = "INSERT INTO tb_transaksi_umum (kd_kas, kebutuhan, harga, jumlah, keterangan, tanggal) VALUES('$kd_kas', '$kebutuhan', '$harga', '$jumlah', '$keterangan', '$tanggal')";
+  public function addTransaksiUmum($kd_kas, $kebutuhan, $harga, $jumlah, $keterangan, $tanggal, $status){
+    $sql = "INSERT INTO tb_transaksi_umum (kd_kas, kebutuhan, harga, jumlah, keterangan, tanggal, status) VALUES('$kd_kas', '$kebutuhan', '$harga', '$jumlah', '$keterangan', '$tanggal', '$status')";
     $query = $this->db->query($sql);
     if(!$query){
       return "Failed";
@@ -53,6 +53,17 @@ class TransaksiUmum {
     }
   }
 
+  //payment billing
+  public function paymentBilling($kd_transaksi_umum, $kd_kas, $kebutuhan, $harga_umum, $jumlah_umum, $keterangan, $tanggal, $status){
+    $sql = "UPDATE tb_transaksi_umum SET kd_kas ='$kd_kas', kebutuhan='$kebutuhan', harga='$harga_umum', jumlah='$jumlah_umum', keterangan='$keterangan', status='$status' where kd_transaksi_umum='$kd_transaksi_umum'";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
+  }
+
   //Proses Delete
   public function deleteTransaksiUmum($kd_transaksi_umum){
     $sql = "DELETE FROM tb_transaksi_umum WHERE kd_transaksi_umum='$kd_transaksi_umum'";
@@ -68,7 +79,7 @@ class TransaksiUmum {
 
   public function showTUByKebutuhan($kebutuhan){
     $sql = "SELECT
-            tb_transaksi_umum.kebutuhan, tb_transaksi_umum.harga, tb_transaksi_umum.jumlah, tb_transaksi_umum.keterangan, tb_transaksi_umum.tanggal,
+            tb_transaksi_umum.kebutuhan, tb_transaksi_umum.harga, tb_transaksi_umum.jumlah, tb_transaksi_umum.keterangan, tb_transaksi_umum.tanggal, tb_transaksi_umum.status,
             tb_mutasi_kas.keterangan AS kode FROM tb_transaksi_umum INNER JOIN tb_mutasi_kas ON tb_mutasi_kas.tanggal = tb_transaksi_umum.tanggal WHERE tb_transaksi_umum.kebutuhan = '$kebutuhan'";
     $query = $this->db->query($sql);
     return $query;

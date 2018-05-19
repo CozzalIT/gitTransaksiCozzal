@@ -2,6 +2,7 @@
 require('../../../asset/fpdf/fpdf.php');
 require('../../../asset/fpdf/invoice.php');
 require("../../../class/transaksi.php");
+require("../../../class/unit.php");
 require("../../../../config/database.php");
 
 class PDF extends FPDF
@@ -12,13 +13,17 @@ function Header()
     // Logo
     $this->Image('../../../asset/img/logo2.png',10,12,30);
     // Arial bold 15
-    $this->SetFont('Arial','B',15);
+    $this->SetFont('Arial','',8);
     // Move to the right
     $this->Cell(80);
     // Title
-    //$this->Cell(50,10,'Title',1,0,'C');
+    $this->Cell(50,10,'',0,0,'C');
+    $this->Cell(50,10,'',0,1,'C');
+    $this->Cell(70,5,'Gateway Apartemen, Tower Shappire A - Lantai G - A 10,',0,1,'C');
+    $this->Cell(42,2,'Jl. Jend. A. Yani no. 669, Bandung.',0,1,'C');
+    $this->Cell(36,5,'022 7998544 / 081809824448',0,1,'C');
     // Line break
-    $this->Ln(20);
+    $this->Ln(10);
 }
 
 // Page footer
@@ -40,8 +45,17 @@ $pdf->AddPage();
 $pdf->SetFont('Times','',12);
 
 $proses = new Transaksi($db);
-$show = $proses->showConfirmById($_GET['kwitansi']);
+$show = $proses->editTransaksi($_GET['kwitansi']);
 $data = $show->fetch(PDO::FETCH_OBJ);
+
+$proses_u = new Unit($db);
+$show_u = $proses_u->showDetail_Unit($data->kd_unit);
+$data_u = $show_u->fetch(PDO::FETCH_OBJ);
+if($data_u->lantai == 0){
+  $lantai = '-';
+}else{
+  $lantai = $data_u->lantai;
+}
 
 $pdf->SetFont('Arial','B',14);
 //Cell(width , height , text , border , end line , [align] )
@@ -57,7 +71,7 @@ $pdf->SetFont('Arial','',12);
 
 $pdf->Cell(120 ,5,$data->alamat,0,0);
 $pdf->Cell(25 ,5,'Invoice ID',0,0);//end of line
-$pdf->Cell(34 ,5,': COZ-'.$data->kd_confirm_transaksi,0,1);//end of line
+$pdf->Cell(34 ,5,': COZ-'.$data->kd_transaksi,0,1);//end of line
 
 $pdf->Cell(120 ,5,'Mobile Phone : '.$data->no_tlp,0,0);
 $pdf->Cell(25 ,5,'Invoice Date',0,0);
@@ -76,16 +90,19 @@ $pdf->Cell(25 ,5,'Apartemen',0,0);
 $pdf->Cell(34 ,5,': '.$data->nama_apt,0,1);//end of line
 
 $pdf->Cell(120 ,5,'',0,0);
-$pdf->Cell(25 ,5,'No Unit',0,0);
-$pdf->Cell(34 ,5,': '.$data->no_unit,0,1);//end of line
+$pdf->Cell(25 ,5,'Lantai',0,0);
+$pdf->Cell(34 ,5,': '.$lantai,0,1);//end of line
 
 $pdf->Cell(189 ,10,'',0,1);
 
 //invoice contents
 $pdf->SetFont('Arial','',12);
 
-$pdf->Cell(90 ,5,'Price Per Night',1,0);
+$pdf->Cell(90 ,5,'Price Per Night Weekday',1,0);
 $pdf->Cell(90 ,5,number_format($data->harga_sewa,0, ".", ".").' IDR',1,1);
+
+$pdf->Cell(90 ,5,'Price Per Night Weekend',1,0);
+$pdf->Cell(90 ,5,number_format($data->harga_sewa_weekend,0, ".", ".").' IDR',1,1);
 
 $pdf->Cell(90 ,5,'Discount',1,0);
 $pdf->Cell(90 ,5,number_format($data->diskon,0, ".", ".").' IDR',1,1);
@@ -103,7 +120,7 @@ $pdf->Cell(90 ,5,'Payment',1,0);
 $pdf->Cell(90 ,5,number_format($data->dp,0, ".", ".").' IDR',1,1);
 
 $pdf->Cell(90 ,5,'Outstanding Balance',1,0);
-$pdf->Cell(90 ,5,number_format($data->total_tagihan,0, ".", ".").' IDR',1,1);
+$pdf->Cell(90 ,5,number_format($data->sisa_pelunasan,0, ".", ".").' IDR',1,1);
 
 $pdf->Cell(189 ,10,'',0,1);
 

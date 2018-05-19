@@ -17,8 +17,26 @@
 ?>
 <div id="content">
   <div id="content-header">
-   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Laporan Transaksi</a></div>
-    <a href="owner_payment.php" class="btn btn-success btn-add"> Owner Payment</a>
+    <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Laporan Transaksi</a></div>
+    <form id="formBack" method="post">
+      <?php
+        if(isset($_GET['detail'])){
+          $proses_o = new Owner($db);
+          $show_o = $proses_o->editOwnerPayment($_GET['detail']);
+          $data_o = $show_o->fetch(PDO::FETCH_OBJ);
+          echo "
+            <input name='kd_owner' value='$data_o->kd_owner' class='hide' />
+          ";
+        }
+      ?>
+      <button class="btn btn-success btn-add" onclick="submitForm('owner_payment.php')"> Owner Payment</button>
+    </form>
+    <script>
+      function submitForm(action){
+        document.getElementById('formBack').action = action;
+        document.getElementById('formBack').submit();
+      }
+    </script>
   </div>
   <div class="container-fluid">
     <hr>
@@ -47,26 +65,25 @@
                     $transaksi = explode("a",$kode[0]);
                     $transaksi_umum = explode("b",$kode[1]);
                   }
-				  $proses_t = new Transaksi($db);
+				          $proses_t = new Transaksi($db);
                   $proses_u = new Unit($db);
-                        $i=1;
-                        $total_in=0;
-                        $subtotal_in=0;
-                        foreach($transaksi as $kd_transaksi) {
-                          if($kd_transaksi <> 'dummy'){
-                            $show_t = $proses_t->editTransaksi($kd_transaksi);
-                            $data_t = $show_t->fetch(PDO::FETCH_OBJ);
-                            $subtest= $data_t ->total_harga_owner;
-							if($subtest>0){
-								$nominal = $data_t->total_harga_owner;
-								$weekend = 0;
-								$weekday = 0;
-							}else{
-
-								$weekend = $data_t->hari_weekend*$data_t->harga_owner_weekend;
-								$weekday = $data_t->hari_weekday*$data_t->harga_owner;
-								$nominal = $weekday+$weekend;
-							}
+                  $i=1;
+                  $total_in=0;
+                  $subtotal_in=0;
+                  foreach($transaksi as $kd_transaksi) {
+                    if($kd_transaksi <> 'dummy'){
+                      $show_t = $proses_t->editTransaksi($kd_transaksi);
+                      $data_t = $show_t->fetch(PDO::FETCH_OBJ);
+                      $subtest= $data_t ->total_harga_owner;
+        							if($subtest>0){
+        								$nominal = $data_t->total_harga_owner;
+        								$weekend = 0;
+        								$weekday = 0;
+        							}else{
+        								$weekend = $data_t->hari_weekend*$data_t->harga_owner_weekend;
+        								$weekday = $data_t->hari_weekday*$data_t->harga_owner;
+        								$nominal = $weekday+$weekend;
+        							}
                       echo "
                         <tr class='gradeC'>
                           <td>$i</td>
@@ -111,7 +128,7 @@
                     }
                   }
                 ?>
-				
+
               </tbody>
             </table>
           </div>

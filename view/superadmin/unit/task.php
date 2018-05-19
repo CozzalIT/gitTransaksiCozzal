@@ -32,18 +32,18 @@
               <thead>
                 <tr>
                   <th>Nama Task</th>
-				          <th>Unit</th>
+                  <th>Unit</th>
                   <th>Berlaku</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 <?php
-        				  $Proses = new Task($db);
-        				  $show = $Proses->showTask_semua();
-        				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-            					echo "
-            					  <tr class=gradeC'>
+                  $Proses = new Task($db);
+                  $show = $Proses->showTask_semua();
+                  while($data = $show->fetch(PDO::FETCH_OBJ)){
+                      echo "
+                        <tr class=gradeC'>
                           <td>$data->task</td>";
 
                           if($data->unit=="Semua"){
@@ -59,7 +59,7 @@
                             }
                           }
 
-            					    if($data->sifat=="Rutin"){
+                          if($data->sifat=="Rutin"){
                             echo "<td>$data->sifat</td>";
                           } else {
                             if($data->tgl_task==null){
@@ -76,10 +76,10 @@
                             <a class='btn btn-info edit' id='$data->kd_task' href='#'>Edit</a>
                             </center>
                           </td>
-            					  </tr>
+                        </tr>
                       ";
-            			};
-        				?>
+                  };
+                ?>
               </tbody>
             </table>
           </div>
@@ -97,27 +97,27 @@
     <h3>Task Baru</h3>
   </div>
   <div class="modal-body">
-	<form action="../../../proses/task.php" onsubmit="return validate()" id="act" method="post" class="form-horizontal">
-	  <div class="control-group">
-  		<label class="control-label">Nama Task :</label>
-  		<div class="controls">
-  		  <input name="task" id="task" type="text" class="span2" placeholder="Task" />
-  		</div>
-	  </div>
+  <form action="../../../proses/task.php" onsubmit="return validate()" id="act" method="post" class="form-horizontal">
+    <div class="control-group">
+      <label class="control-label">Nama Task :</label>
+      <div class="controls">
+        <input name="task" id="task" type="text" class="span2" placeholder="Task" />
+      </div>
+    </div>
     <div class="control-group hidden-C" style="display: none;">
       <div class="controls">
         <input name="kd_task" id="kd_task" type="text" class="span2" />
       </div>
     </div>    
-	  <div class="control-group">
-  		<label class="control-label">Sasaran Unit :</label>
-  		<div class="controls">
-  		  <select name="unit" id="unit" class="span2">
-  		  <option value="Semua">Semua Unit</option>
+    <div class="control-group">
+      <label class="control-label">Sasaran Unit :</label>
+      <div class="controls">
+        <select name="unit" id="unit" class="span2">
+        <option value="Semua">Semua Unit</option>
         <option value="Beberapa">Beberapa Unit</option>
-  		  </select>
-  		</div>
-	  </div>
+        </select>
+      </div>
+    </div>
     <div class="control-group">
       <label class="control-label">Periode Waktu :</label>
       <div class="controls">
@@ -156,13 +156,13 @@
         </div>      
       </div>
     </div>        
-	  <div class="control-group">
-    	<div class="controls">
-    	  <input type="submit" id="submit" name="addTask" class="btn btn-success" value="Tambah"/>
-    	  <a data-dismiss="modal" class="btn btn-inverse closes" href="#">Cancel</a>
-    	</div>
-	  </div>
-	</form>
+    <div class="control-group">
+      <div class="controls">
+        <input type="submit" id="submit" name="addTask" class="btn btn-success" value="Tambah"/>
+        <a data-dismiss="modal" class="btn btn-inverse closes" href="#">Cancel</a>
+      </div>
+    </div>
+  </form>
   </div>
 </div>
 <!-- //modal popup tambah unit-->

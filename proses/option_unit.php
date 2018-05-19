@@ -27,7 +27,7 @@ $mod_harga="0";
 $Proses = new Unit($db);
 $show = $Proses->showUnit();
 while($data = $show->fetch(PDO::FETCH_OBJ)){
-	if ($data->kd_apt==$kd_apt){ $val=$data->kd_unit.'+'.$data->h_sewa_wd.'+'.$data->h_sewa_we.'+'.$data->ekstra_charge;
+	if ($data->kd_apt==$kd_apt){ $val=$data->kd_unit.'+'.$data->h_sewa_wd.'+'.$data->h_sewa_we.'+'.$data->h_sewa_mg.'+'.$data->h_sewa_bln.'+'.$data->h_owner_mg.'+'.$data->h_owner_bln.'+'.$data->ekstra_charge.'+'.$data->h_owner_wd.'+'.$data->h_owner_we;
 	$html .= "<option name='kd_unit' value='$val'>$data->no_unit</option>"; // Tambahkan tag option ke variabel $html
 	}
 }

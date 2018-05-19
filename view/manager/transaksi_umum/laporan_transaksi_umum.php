@@ -3,7 +3,7 @@
   require("../../../class/unit.php");
   require("../../../../config/database.php");
 
-  $thisPage = "Laporan Transaksi";
+  $thisPage = "Laporan Transaksi Umum";
 
   include "../template/head.php";
 ?>
@@ -14,7 +14,7 @@
 ?>
 <div id="content">
   <div id="content-header">
-   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Laporan Transaksi</a></div>
+   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a> <a href="#" class="current">Laporan Transaksi Umum</a></div>
     <a href="transaksi_umum.php" class="btn btn-success btn-add"><i class="icon-plus"></i> Transaksi Umum Baru</a>
   </div>
   <div class="container-fluid">
@@ -23,7 +23,7 @@
       <div class="span12">
         <div class="widget-box" style="overflow-x:auto;">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5>Laporan Transaksi</h5>
+            <h5>Laporan Transaksi Umum</h5>
           </div>
           <div class="widget-content nopadding">
 			      <table class="table table-bordered data-table">
@@ -45,34 +45,36 @@
         				  $show = $Proses->showTransaksiUmum();
         				  $i = 1;
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-                    if($data->kebutuhan == "umum"){
-                      $kebutuhan = $data->kebutuhan;
-                    }else{
-                      $arrayKebutuhan = explode("/",$data->kebutuhan);
-                      $kebutuhan = $arrayKebutuhan[0];
+                    if($data->status == 0){
+                      if($data->kebutuhan == "umum"){
+                        $kebutuhan = $data->kebutuhan;
+                      }else{
+                        $arrayKebutuhan = explode("/",$data->kebutuhan);
+                        $kebutuhan = $arrayKebutuhan[0];
 
-                      $proses_unit = new Unit($db);
-                      $show_unit = $proses_unit->editUnit($arrayKebutuhan[1]);
-                      $data_unit = $show_unit->fetch(PDO::FETCH_OBJ);
+                        $proses_unit = new Unit($db);
+                        $show_unit = $proses_unit->editUnit($arrayKebutuhan[1]);
+                        $data_unit = $show_unit->fetch(PDO::FETCH_OBJ);
+                      }
+                      echo "
+                        <tr class='gradeC'>
+                          <td>$i</td>
+                          <td>$data->sumber_dana</td>
+                          <td>".($kebutuhan == 'umum' ? 'Umum' : 'Unit '.$data_unit->no_unit)."</td>
+                          <td>".number_format($data->harga, 0, ".", ".")." IDR</td>
+                          <td>$data->jumlah</td>
+                          <td>".number_format($data->harga*$data->jumlah, 0, ".", ".")." IDR</td>
+                          <td>$data->keterangan</td>
+                          <td>
+                            <center>
+                              <a class='btn btn-primary' href=edit_umum.php?edit_transaksi_umum=$data->kd_transaksi_umum>Edit</a>
+                              <a class='btn btn-danger hapus' href='../../../proses/transaksi_umum.php?delete_transaksi_umum=$data->kd_transaksi_umum'>Hapus</a>
+                            </center>
+                          </td>
+                        </tr>
+                      ";
+                      $i++;
                     }
-          					echo "
-          					  <tr class='gradeC'>
-          					    <td>$i</td>
-          					    <td>$data->sumber_dana</td>
-          					    <td>".($kebutuhan == 'umum' ? 'Umum' : 'Unit '.$data_unit->no_unit)."</td>
-            						<td>".number_format($data->harga, 0, ".", ".")." IDR</td>
-            						<td>$data->jumlah</td>
-            						<td>".number_format($data->harga*$data->jumlah, 0, ".", ".")." IDR</td>
-                        <td>$data->keterangan</td>
-            						<td>
-                          <center>
-              						  <a class='btn btn-primary' href=edit_umum.php?edit_transaksi_umum=$data->kd_transaksi_umum>Edit</a>
-                            <a class='btn btn-danger hapus' href='../../../proses/transaksi_umum.php?delete_transaksi_umum=$data->kd_transaksi_umum'>Hapus</a>
-                          </center>
-                        </td>
-          					  </tr>
-                    ";
-          				$i++;
         				  };
       				  ?>
               </tbody>
