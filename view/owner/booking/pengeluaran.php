@@ -103,7 +103,10 @@
                             <td>$data_t->jumlah</td>
                             <td>".number_format($data_t->harga*$data_t->jumlah, 0, ".", ".")." IDR</td>
                             <td>$tanggalIndo</td>
-                            ".($data_t->kode == "9/$kd_unit" ? '<td style="color:green;"><strong>Paid</strong></td>' : '<td style="color:red;"><strong>Unpaid</strong></td>')."
+                            ".($data_t->status == 0 ?
+                              ($data_t->kode == "9/$kd_unit" ? '<td style="color:green;"><strong>Paid</strong></td>' : '<td style="color:red;"><strong>Unpaid</strong></td>') :
+                              ($data_t->kode == "9/$kd_unit" ? '<td style="color:green;"><strong>Billing Paid</strong></td>' : '<td style="color:red;"><strong>Billing Unpaid</strong></td>')
+                            )."
                         ";
                         $i++;
                       }

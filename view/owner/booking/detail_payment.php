@@ -48,23 +48,22 @@
                     $transaksi_umum = explode("b",$kode[1]);
                   }
                   $proses_t = new Transaksi($db);
-                        $i=1;
-                        $total_in=0;
-                        $subtotal_in=0;
-                        foreach($transaksi as $kd_transaksi) {
-                          if($kd_transaksi <> null){
-                            $show_t = $proses_t->editTransaksi($kd_transaksi);
-                            $data_t = $show_t->fetch(PDO::FETCH_OBJ);
-							if($data_t ->total_harga_owner > 0){
-								$nominal = $data_t ->total_harga_owner;
-								$weekend = 0;
-								$weekday = 0;
-							}else{
-
-								$weekend = $data_t->hari_weekend*$data_t -> harga_owner_weekend;
-								$weekday = $data_t->hari_weekday*$data_t -> harga_owner;
-								$nominal = $weekday+$weekend;
-							}
+                  $i=1;
+                  $total_in=0;
+                  $subtotal_in=0;
+                  foreach($transaksi as $kd_transaksi) {
+                    if($kd_transaksi <> null){
+                      $show_t = $proses_t->editTransaksi($kd_transaksi);
+                      $data_t = $show_t->fetch(PDO::FETCH_OBJ);
+        							if($data_t ->total_harga_owner > 0){
+        								$nominal = $data_t ->total_harga_owner;
+        								$weekend = 0;
+        								$weekday = 0;
+        							}else{
+        								$weekend = $data_t->hari_weekend*$data_t -> harga_owner_weekend;
+        								$weekday = $data_t->hari_weekday*$data_t -> harga_owner;
+        								$nominal = $weekday+$weekend;
+        							}
                       echo "
                         <tr class='gradeC'>
                           <td>$i</td>
