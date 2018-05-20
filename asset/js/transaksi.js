@@ -119,61 +119,59 @@ function proses_mod_harga(form, a){
     }
 }
 
+function harga_mingguan(a, hari){
+	var x1 = Math.floor(hari/7);
+	var y1 = hari - (7*x1);
+
+	$("#harga_sewa_gbg").val((a[3]*x1)+(y1*a[1])); $("#total_sewa_gbg-C").show();
+	$("#total_harga_owner").val((a[5]*x1)+(y1*a[8]));$("#total_harga_owner-C").show();
+	$("#deposit").val("0");$("#deposit-C").hide();
+	$("#harga_sewa_we").val("0"); $("#harga_sewa_we-C").hide();
+	$("#harga_sewa").val("0"); $("#harga_sewa-C").hide();	
+}
+
+function harga_bulanan(a, hari){
+	var x1 = Math.floor(hari/28);
+	// dipake ga ? : $("#deposit").val("2000000");$("#deposit-C").show();
+	//proses_mod_harga(form, a[0]); // proses moddig harga
+	$("#harga_sewa_gbg").val(a[4]*x1);$("#total_sewa_gbg-C").hide();
+	$("#total_harga_owner").val(a[6]*x1);$("#total_harga_owner-C").show();
+	$("#total_bayar").val($("#total").val()+$("#deposit").val());$("#total_bayar-C").show();
+	$("#tamu").val("5");$("#tamu-C").hide();
+	$("#ekstra_charge").val("0");$("#ekstra_charge-C").hide();
+	$("#harga_sewa_we").val("0"); $("#harga_sewa_we-C").hide();
+	$("#harga_sewa").val("0"); $("#harga_sewa-C").hide();
+}
+
 function biaya(form)
 { 
-
 	var we =0; 
 	var hari= Number(form.jumhari.value);
 	var weeks = getdetailweek(form.check_in.value, hari).split("&&");
 	wd_G = weeks[0]; we_G = weeks[1];
 	var a= form.unit.value;  a = a.split("+");
 	if(hari>6) {
-		if (hari>27){
-			var x1 = Math.floor(hari/28);
-			$("#deposit").val("2000000");$("#deposit-C").show();
-			//proses_mod_harga(form, a[0]); // proses moddig harga
-			$("#harga_sewa_gbg").val(a[4]*x1);$("#total_sewa_gbg-C").hide();
-			$("#total_harga_owner").val(a[6]*x1);$("#total_harga_owner-C").show();
-			$("#total_bayar").val($("#total").val()+$("#deposit").val());$("#total_bayar-C").show();
-			$("#tamu").val("5");$("#tamu-C").hide();
-			$("#ekstra_charge").val("0");$("#ekstra_charge-C").hide();
-			$("#harga_sewa_we").val("0"); $("#harga_sewa_we-C").hide();
-			$("#harga_sewa").val("0"); $("#harga_sewa-C").hide();
-			} else{
-				var x1 = Math.floor(hari/7);
-				var y1 = hari - ((x1*7));
-			
-				$("#total_harga_owner").val((a[5]*x1)+(y1*a[8]));
-				$("#total_harga_owner-C").show();
-				$("#deposit").val("0");$("#deposit-C").hide();
-				$("#harga_sewa_we").val("0"); $("#harga_sewa_we-C").hide();
-				$("#harga_sewa").val("0"); $("#harga_sewa-C").hide();
-				$("#tamu").val("5");$("#tamu-C").hide();
-				$("#ekstra_charge").val("0");$("#ekstra_charge-C").hide();
-				$("#harga_sewa_gbg").val((a[3]*x1)+(y1*a[1])); 
-				$("#total_sewa_gbg-C").hide();
-			};
+		if (hari>27){ // 27 atau 28 ?
+			harga_bulanan(a, hari);
+		} else{
+			harga_mingguan(a, hari);
+		}
 	
 		$("#total_harga_owner").val("0");$("#total_harga_owner-C").hide();
 		$("#deposit").val("0");$("#deposit-C").hide();
-	
-	};
-	
-	var a= form.unit.value;  a = a.split("+");
-
-	//proses_mod_harga(form, a[0]); // proses moddig harga
-
-	if(we_G!=0) {$("#harga_sewa_we").val(a[2]); $("#harga_sewa_we-C").show();} 
-	else {$("#harga_sewa_we").val("0"); $("#harga_sewa_we-C").hide();};
-	
-	if(wd_G!=0) {$("#harga_sewa").val(a[1]); $("#harga_sewa-C").show();} 
-	else {$("#harga_sewa").val("0"); $("#harga_sewa-C").hide();};
-	form.harga_sewa_gbg.value = Number(form.harga_sewa.value)*Number(wd_G) + Number(form.harga_sewa_we.value)*Number(we_G);
+	} else {
+		if(we_G!=0) {$("#harga_sewa_we").val(a[2]); $("#harga_sewa_we-C").show();} 
+		else {$("#harga_sewa_we").val("0"); $("#harga_sewa_we-C").hide();};
 		
+		if(wd_G!=0) {$("#harga_sewa").val(a[1]); $("#harga_sewa-C").show();} 
+		else {$("#harga_sewa").val("0"); $("#harga_sewa-C").hide();};
+		form.harga_sewa_gbg.value = Number(form.harga_sewa.value)*Number(wd_G) + Number(form.harga_sewa_we.value)*Number(we_G);
+	} 
+	
+	//proses_mod_harga(form, a[0]); // proses moddig harga		
 	form.harga_sewa_asli.value = a[1]+"/"+a[2];
 	form.ekstra_charge.value=0; 
-	hasil(form);
-	
+	hasil(form);	
 }
 
 function keepvalid(form)
@@ -183,95 +181,38 @@ function keepvalid(form)
 	//var weeks = getdetailweek(form.check_in.value, hari).split("&&");
 	//wd_G = weeks[0]; we_G = weeks[1];
 	form.check_out.value = nilaitanggal(CI,1);
-	var hari= Number(form.jumhari.value);
-	
-	if(hari>6){
-		
-			$("#total_harga_owner").val("0");$("#total_harga_owner-C").hide();
-			$("#harga_sewa_we").val("0"); $("#harga_sewa_we-C").hide();
-			$("#harga_sewa").val("0"); $("#harga_sewa-C").hide();
-			$("#tamu").val("5");$("#tamu-C").show();
-			$("#ekstra_charge").val("0");$("#ekstra_charge-C").show();
-			$("#deposit").val("0");$("#deposit-C").hide();
-			//form.harga_sewa_gbg.value = Number(form.harga_sewa.value)*Number(wd_G) + Number(form.harga_sewa_we.value)*Number(we_G);
-			$("#harga_sewa_gbg-C").show();$("#total_bayar-C").hide();
-	}else{
-		$("#total_harga_owner").val("0");$("#total_harga_owner-C").hide();
-		$("#deposit").val("0");$("#deposit-C").hide();
-		//form.harga_sewa_gbg.value = Number(form.harga_sewa.value)*Number(wd_G) + Number(form.harga_sewa_we.value)*Number(we_G);
-		}
-	
 	ECH(form); 
 	updateselisih(form);
 	biaya(form);
 }
 
-function keepvalid2(form){
-	if (form.check_in.value!="")
-	{
-	var d = new Date(form.check_in.value);
-	var h = nilaitanggal(d,Number(form.jumhari.value));
-	var we =0; 
-	var weeks = getdetailweek(form.check_in.value, hari).split("&&");
-	var wd_G = weeks[0]; we_G = weeks[1];
+function ubahHarga(form){
 	var hari= Number(form.jumhari.value);
 	var a= form.unit.value;  a = a.split("+");
-	updateselisih(form);
-	if(hari<7) {
-			
-			//proses_mod_harga(form, a[0]); // proses moddig harga
-
-			if(we_G!=0) {
-			$("#harga_sewa_we").val(a[2]); $("#harga_sewa_we-C").show();
-			}else {
-				$("#harga_sewa_we").val("0"); $("#harga_sewa_we-C").hide();
-			};
 	
-			if(wd_G!=0) {
-				$("#harga_sewa").val(a[1]); $("#harga_sewa-C").show();
-			} else{
-			$("#harga_sewa").val("0"); $("#harga_sewa-C").hide();
-			};
-			$("#total_harga_owner").val("0");$("#total_harga_owner-C").hide();
-			$("#tamu").val("5");$("#tamu-C").show();
-			$("#ekstra_charge").val("0");$("#ekstra_charge-C").show();
-			$("#deposit").val("0");$("#deposit-C").hide();
-			form.harga_sewa_gbg.value = Number(form.harga_sewa.value)*Number(wd_G) + Number(form.harga_sewa_we.value)*Number(we_G);
-			$("#harga_sewa_gbg-C").show();$("#total_bayar-C").hide();
-			
-			biaya(form);
+	if(hari<7) {		
+		//proses_mod_harga(form, a[0]); // proses moddig harga
+		$("#total_harga_owner").val("0");$("#total_harga_owner-C").hide();
+		$("#tamu").val("5");$("#tamu-C").show();
+		$("#ekstra_charge").val("0");$("#ekstra_charge-C").show();
+		$("#deposit").val("0");$("#deposit-C").hide();
+		$("#harga_sewa_gbg-C").show();$("#total_bayar-C").hide();
+		biaya(form);
 	} else{
 		if (hari<29){
-			var x1 = Math.floor(hari/7);
-			var y1 = hari - (7*x1);
-			$("#harga_sewa_gbg").val((a[3]*x1)+(y1*a[1])); $("#total_sewa_gbg-C").show();
-			$("#total_harga_owner").val((a[5]*x1)+(y1*a[8]));$("#total_harga_owner-C").show();
-			$("#deposit").val("0");$("#deposit-C").hide();
-			$("#harga_sewa_we").val("0"); $("#harga_sewa_we-C").hide();
-			$("#harga_sewa").val("0"); $("#harga_sewa-C").hide();
-			
-			hasil(form);
+			harga_mingguan(a, hari);
 		}else{
-			var x1 = Math.floor(hari/28);
-			$("#deposit").val("2000000");$("#deposit-C").show();
-			//proses_mod_harga(form, a[0]); // proses moddig harga
-			$("#harga_sewa_gbg").val(a[4]*x1);$("#total_sewa_gbg-C").hide();
-			$("#total_harga_owner").val(a[6]*x1);$("#total_harga_owner-C").show();
-			$("#total_bayar").val($("#total").val()+$("#deposit").val());$("#total_bayar-C").show();$("#total_bayar-C").show();
-			$("#tamu").val("5");$("#tamu-C").hide();
-			$("#ekstra_charge").val("0");$("#ekstra_charge-C").hide();
-			$("#harga_sewa_we").val("0"); $("#harga_sewa_we-C").hide();
-			$("#harga_sewa").val("0"); $("#harga_sewa-C").hide();
-			
-			hasil(form);
-
+			harga_bulanan(a, hari);
 		}
-	};
-		 //updateselisih(form);
-		// biaya(form);
+		hasil(form);
 	}
-	else
-	{
+}
+
+function keepvalid2(form){
+	if (form.check_in.value!=""){
+		updateselisih(form);
+		ubahHarga(form);
+	} else {
 		form.check_out.value="";
 		alert("Isi terlebih dahulu tanggal check in");
 	}	
@@ -313,67 +254,11 @@ function validasi2(form)
 }
 
 function tambah(form)
-{
+{	
 	var d = new Date(form.check_in.value);
 	var h = nilaitanggal(d,Number(form.jumhari.value));
-	var we =0; 
-	var weeks = getdetailweek(form.check_in.value, hari).split("&&");
-	var wd_G = weeks[0]; we_G = weeks[1];
-	var hari= Number(form.jumhari.value);
-	var a= form.unit.value;  a = a.split("+");
-	
-	if(hari<7) {
-			
-			//proses_mod_harga(form, a[0]); // proses moddig harga
-
-			if(we_G!=0) {
-			$("#harga_sewa_we").val(a[2]); $("#harga_sewa_we-C").show();
-			}else {
-				$("#harga_sewa_we").val("0"); $("#harga_sewa_we-C").hide();
-			};
-	
-			if(wd_G!=0) {
-				$("#harga_sewa").val(a[1]); $("#harga_sewa-C").show();
-			} else{
-			$("#harga_sewa").val("0"); $("#harga_sewa-C").hide();
-			};
-			$("#total_harga_owner").val("0");$("#total_harga_owner-C").hide();
-			$("#tamu").val("5");$("#tamu-C").show();
-			$("#ekstra_charge").val("0");$("#ekstra_charge-C").show();
-			$("#deposit").val("0");$("#deposit-C").hide();
-			form.harga_sewa_gbg.value = Number(form.harga_sewa.value)*Number(wd_G) + Number(form.harga_sewa_we.value)*Number(we_G);
-			$("#harga_sewa_gbg-C").show();$("#total_bayar-C").hide();
-			
-			form.check_out.value=h;
-			biaya(form);
-	} else{
-		if (hari<29){
-			var x1 = Math.floor(hari/7);
-			var y1 = hari - (7*x1);
-			$("#harga_sewa_gbg").val((a[3]*x1)+(y1*a[1])); $("#total_sewa_gbg-C").show();
-			$("#total_harga_owner").val((a[5]*x1)+(y1*a[8]));$("#total_harga_owner-C").show();
-			$("#deposit").val("0");$("#deposit-C").hide();
-			$("#harga_sewa_we").val("0"); $("#harga_sewa_we-C").hide();
-			$("#harga_sewa").val("0"); $("#harga_sewa-C").hide();
-			form.check_out.value=h;
-			hasil(form);
-		}else{
-			var x1 = Math.floor(hari/28);
-			$("#deposit").val("2000000");$("#deposit-C").show();
-			//proses_mod_harga(form, a[0]); // proses moddig harga
-			$("#harga_sewa_gbg").val(a[4]*x1);$("#total_sewa_gbg-C").hide();
-			$("#total_harga_owner").val(a[6]*x1);$("#total_harga_owner-C").show();
-			$("#total_bayar").val($("#total").val()+$("#deposit").val());$("#total_bayar-C").show();$("#total_bayar-C").show();
-			$("#tamu").val("5");$("#tamu-C").hide();
-			$("#ekstra_charge").val("0");$("#ekstra_charge-C").hide();
-			$("#harga_sewa_we").val("0"); $("#harga_sewa_we-C").hide();
-			$("#harga_sewa").val("0"); $("#harga_sewa-C").hide();
-			form.check_out.value=h;
-			updateselisih(form);
-			hasil(form);
-		}
-	};
-    
+	form.check_out.value=h;
+	ubahHarga(form);
 }
 
 function valid1(form)
