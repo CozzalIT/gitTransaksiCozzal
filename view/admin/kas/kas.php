@@ -17,8 +17,36 @@
    <a href="#popup-saldo" data-toggle="modal" class="btn btn-success btn-add">Tambah Saldo</a>
    <a href="#popup-mutasi" data-toggle="modal" class="btn btn-success btn-add">Mutasi Dana</a>
   </div>
-  <div class="row-fluid">
+  <div class="container-fluid">
     <hr>
+    <div class="row-fluid">
+      <div class="span5">
+        <div class="widget-box" style="overflow-x:auto;">
+          <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+            <h5>Tambah Kas</h5>
+          </div>
+          <div class="widget-content">
+            <form action="../../../proses/kas.php" method="post">
+  			      <table class="">
+                <tbody>
+            			<tr>
+            				<td class="span4">Sumber Dana </td>
+            				<td class="span8"><input type="text" name="sumber_dana" required/></td>
+            			</tr>
+                  <tr>
+            				<td class="span4">Saldo </td>
+            				<td class="span8"><input type="number" name="saldo" required/></td>
+            			</tr>
+                  <tr>
+                    <td class="span4"></td>
+                    <td class="span8"><input type="submit" name="addKas" class="btn btn-success" value="Submit"/></td>
+                  </tr>
+                </tbody>
+              </table>
+            </form>
+          </div>
+        </div>
+      </div>
       <div class="span7">
         <div class="widget-box" style="overflow-x:auto;">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
@@ -85,58 +113,72 @@
                   $show = $proses->showMutasiKas();
                   $i = 1;
                   while($data = $show->fetch(PDO::FETCH_OBJ)){
-                    if($data->jenis == 1){
-                      $jenis = "Masuk";
-                    }else{
-                      $jenis = "Keluar";
-                    }
+                    if($data->mutasi_dana != 0){
+                      if($data->jenis == 1){
+                        $jenis = "Masuk";
+                      }else{
+                        $jenis = "Keluar";
+                      }
 
-                    if(strlen($data->keterangan > 1)){
-                      $arrayKeterangan = explode("/",$data->keterangan);
-                      $indikator = $arrayKeterangan[0];
-                    }elseif(strlen($data->keterangan == 1)){
-                      $indikator = $data->keterangan;
-                    }
+                      if(strlen($data->keterangan > 1)){
+                        $arrayKeterangan = explode("/",$data->keterangan);
+                        $indikator = $arrayKeterangan[0];
+                      }elseif(strlen($data->keterangan == 1)){
+                        $indikator = $data->keterangan;
+                      }
 
-                    switch($indikator){
-                      case 1:
-                        $keterangan = "Dari Kas";
-                        break;
-                      case 2:
-                        $keterangan = "Sumber Non Kas";
-                        break;
-                      case 3:
-                        $keterangan = "Transaksi Umum";
-                        break;
-                      case 4:
-                        $keterangan = "Pembayaran Owner";
-                        break;
-                      case 5:
-                        $keterangan = "Penggajian Karyawan";
-                        break;
-                      case 6:
-                        $keterangan = "Transaksi : COZ-".strtoupper(dechex($arrayKeterangan[1]));
-                        break;
-                      case 7:
-                        $keterangan = "Pembayaran : COZ-".strtoupper(dechex($arrayKeterangan[1]));
-                        break;
-                      case 8:
-                        $keterangan = "Setlement DP : COZ-".strtoupper(dechex($arrayKeterangan[1]));
-                        break;
+                      if($indikator == 10 or $indikator == 9){
+                        $show_unit = $proses->showNoUnit($arrayKeterangan[1]);
+                        $data_unit = $show_unit->fetch(PDO::FETCH_OBJ);
+                      }
+
+                      switch($indikator){
+                        case 1:
+                          $keterangan = "Dari Kas";
+                          break;
+                        case 2:
+                          $keterangan = "Sumber Non Kas";
+                          break;
+                        case 3:
+                          $keterangan = "Transaksi Umum";
+                          break;
+                        case 4:
+                          $keterangan = "Pembayaran Owner";
+                          break;
+                        case 5:
+                          $keterangan = "Penggajian Karyawan";
+                          break;
+                        case 6:
+                          $keterangan = "Transaksi : COZ-".strtoupper(dechex($arrayKeterangan[1]));
+                          break;
+                        case 7:
+                          $keterangan = "Pembayaran : COZ-".strtoupper(dechex($arrayKeterangan[1]));
+                          break;
+                        case 8:
+                          $keterangan = "Setlement DP : COZ-".strtoupper(dechex($arrayKeterangan[1]));
+                          break;
+                        case 9:
+                          $keterangan = "Transaksi Unit : ".$data_unit->no_unit;
+                          break;
+                        case 10:
+                          $keterangan = "Transaksi Unit : ".$data_unit->no_unit;
+                          break;
+                      }
+                      // 1:kas, 2:non-kas, 3:TU, 4:owner, 5:karyawan, 6:Transaksi, 7:Pembayaran, 8:Setlement, 9:tUnitL, 10:tUnitBL
+                      $dateTime = explode(" ",$data->tanggal);
+                      echo "
+                      <tr class='gradeC'>
+                        <td>$i</td>
+                        <td>".$dateTime[0]."</td>
+                        <td>".$dateTime[1]." WIB</td>
+                        <td>$data->sumber_dana</td>
+                        <td ".($jenis == 'Masuk' ? 'style="color:green;"' : 'style="background-color:red;color:white;"')."><strong>".number_format($data->mutasi_dana, 0, ".", ".")." IDR</strong></td>
+                        <td ".($jenis == 'Masuk' ? 'style="color:green;"' : 'style="background-color:red;color:white;"')."><strong>$jenis</strong></td>
+                        <td>$keterangan</td>
+                      </tr>
+                      ";
+                      $i++;
                     }
-                    $dateTime = explode(" ",$data->tanggal);
-                    echo "
-                    <tr class='gradeC'>
-                      <td>$i</td>
-                      <td>".$dateTime[0]."</td>
-                      <td>".$dateTime[1]." WIB</td>
-                      <td>$data->sumber_dana</td>
-                      <td ".($jenis == 'Masuk' ? 'style="color:green;"' : 'style="background-color:red;color:white;"')."><strong>".number_format($data->mutasi_dana, 0, ".", ".")." IDR</strong></td>
-                      <td ".($jenis == 'Masuk' ? 'style="color:green;"' : 'style="background-color:red;color:white;"')."><strong>$jenis</strong></td>
-                      <td>$keterangan</td>
-                    </tr>
-                    ";
-                    $i++;
                   }
                 ?>
               </tbody>
@@ -251,7 +293,7 @@
 
 <!--Footer-part-->
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
+  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 <!--end-Footer-part-->
 <script src="../../../asset/js/sweetalert.min.js"></script>

@@ -1,23 +1,23 @@
 var we_G = 0;
 var wd_G = 0;
-var special_price = 0; 
+var special_price = 0;
 
 function startinweekend(hari, week, jumlah_weekday, jumlah_weekend){
   var we =0; var wd =hari+5;
   while(wd>5){
-    we = 8-week; hari = wd-5; 
-    if(hari==1) we=1; wd=hari-we; 
-    jumlah_weekend = jumlah_weekend+we; 
-    if(wd>5) jumlah_weekday = jumlah_weekday+5; else jumlah_weekday = jumlah_weekday+wd;     
+    we = 8-week; hari = wd-5;
+    if(hari==1) we=1; wd=hari-we;
+    jumlah_weekend = jumlah_weekend+we;
+    if(wd>5) jumlah_weekday = jumlah_weekday+5; else jumlah_weekday = jumlah_weekday+wd;
   }
   return jumlah_weekday+"&&"+jumlah_weekend;
 }
 
 function getdetailweek(start_time, hari){
 	var wd;
-	var week = new Date(start_time).getDay(); 
+	var week = new Date(start_time).getDay();
 	week++;
-	
+
 	if(week>5){ //jika dimuai dari weekend
 		return startinweekend(hari, week, 0, 0);
 	}
@@ -65,21 +65,11 @@ function nilaitanggal(t, b)
 
 function hasil(form)
 {
-	//var hari= form.jumhari.value;
-	//if(hari<7) {
-	
-		//form.harga_sewa_gbg.value = Number($("#harga_sewa").val())*wd_G  + Number($("#harga_sewa_we").val())*we_G;
-		//form.total.value=Number(form.harga_sewa_gbg.value)+ Number(form.ekstra_charge.value);
-	//}else{
+
 	form.total.value=Number(form.harga_sewa_gbg.value)+ Number(form.ekstra_charge.value);
-		
-		//}else(
-		//$("#total").val( $("#harga_sewa_gbg").val() + special_price + ($("#ekstra_charge").val()));
-	//form.total.value= Number($("#harga_sewa_gbg").val()) + Number($("#ekstra_charge").val());
-	//}
-	//form.total.value=Number(form.harga_sewa_gbg.value) + Number(form.ekstra_charge.value);
+
 	form.total_bayar.value = Number(form.total.value)+Number(form.deposit.value);
-	//}
+
 }
 
 function ECH(form)
@@ -115,7 +105,7 @@ function proses_mod_harga(form, a){
     		weeks = getdetailweek(sdt, selisih).split("&&");
     		wd_G -= Number(weeks[0]); we_G -= Number(weeks[1]);
     		special_price += Number(selisih) * Number(harga_mod[i].harga_sewa);
-    	} 
+    	}
     }
 }
 
@@ -127,12 +117,12 @@ function harga_mingguan(a, hari){
 	$("#total_harga_owner").val((a[5]*x1)+(y1*a[8]));$("#total_harga_owner-C").show();
 	$("#deposit").val("0");$("#deposit-C").hide();
 	$("#harga_sewa_we").val("0"); $("#harga_sewa_we-C").hide();
-	$("#harga_sewa").val("0"); $("#harga_sewa-C").hide();	
+	$("#harga_sewa").val("0"); $("#harga_sewa-C").hide();
 }
 
 function harga_bulanan(a, hari){
 	var x1 = Math.floor(hari/28);
-	// dipake ga ? : $("#deposit").val("2000000");$("#deposit-C").show();
+	$("#deposit").val("2000000");$("#deposit-C").show();
 	//proses_mod_harga(form, a[0]); // proses moddig harga
 	$("#harga_sewa_gbg").val(a[4]*x1);$("#total_sewa_gbg-C").hide();
 	$("#total_harga_owner").val(a[6]*x1);$("#total_harga_owner-C").show();
@@ -144,44 +134,48 @@ function harga_bulanan(a, hari){
 }
 
 function biaya(form)
-{ 
-	var we =0; 
+{
+	var we =0;
 	var hari= Number(form.jumhari.value);
 	var weeks = getdetailweek(form.check_in.value, hari).split("&&");
 	wd_G = weeks[0]; we_G = weeks[1];
 	var a= form.unit.value;  a = a.split("+");
 	if(hari>6) {
-		if (hari>27){ // 27 atau 28 ?
+		if (hari>28){ // 27 atau 28 ?
 			harga_bulanan(a, hari);
 		} else{
 			harga_mingguan(a, hari);
 		}
-	
-		$("#total_harga_owner").val("0");$("#total_harga_owner-C").hide();
-		$("#deposit").val("0");$("#deposit-C").hide();
+
+
+		//$("#deposit").val("0");$("#deposit-C").hide();
 	} else {
-		if(we_G!=0) {$("#harga_sewa_we").val(a[2]); $("#harga_sewa_we-C").show();} 
+    $("#total_harga_owner").val("0");$("#total_harga_owner-C").hide();
+    $("#deposit").val("0");$("#deposit-C").hide();
+    $("#harga_sewa_gbg-C").hide();
+    $("#total_bayar-C").hide();
+    if(we_G!=0) {$("#harga_sewa_we").val(a[2]); $("#harga_sewa_we-C").show();}
 		else {$("#harga_sewa_we").val("0"); $("#harga_sewa_we-C").hide();};
-		
-		if(wd_G!=0) {$("#harga_sewa").val(a[1]); $("#harga_sewa-C").show();} 
+
+		if(wd_G!=0) {$("#harga_sewa").val(a[1]); $("#harga_sewa-C").show();}
 		else {$("#harga_sewa").val("0"); $("#harga_sewa-C").hide();};
 		form.harga_sewa_gbg.value = Number(form.harga_sewa.value)*Number(wd_G) + Number(form.harga_sewa_we.value)*Number(we_G);
-	} 
-	
-	//proses_mod_harga(form, a[0]); // proses moddig harga		
+	}
+
+	//proses_mod_harga(form, a[0]); // proses moddig harga
 	form.harga_sewa_asli.value = a[1]+"/"+a[2];
-	form.ekstra_charge.value=0; 
-	hasil(form);	
+	form.ekstra_charge.value=0;
+	hasil(form);
 }
 
 function keepvalid(form)
 {
 	var CI = std(form.check_in.value);
-	//var we =0; 
+	//var we =0;
 	//var weeks = getdetailweek(form.check_in.value, hari).split("&&");
 	//wd_G = weeks[0]; we_G = weeks[1];
 	form.check_out.value = nilaitanggal(CI,1);
-	ECH(form); 
+	ECH(form);
 	updateselisih(form);
 	biaya(form);
 }
@@ -189,8 +183,8 @@ function keepvalid(form)
 function ubahHarga(form){
 	var hari= Number(form.jumhari.value);
 	var a= form.unit.value;  a = a.split("+");
-	
-	if(hari<7) {		
+
+	if(hari<7) {
 		//proses_mod_harga(form, a[0]); // proses moddig harga
 		$("#total_harga_owner").val("0");$("#total_harga_owner-C").hide();
 		$("#tamu").val("5");$("#tamu-C").show();
@@ -215,7 +209,7 @@ function keepvalid2(form){
 	} else {
 		form.check_out.value="";
 		alert("Isi terlebih dahulu tanggal check in");
-	}	
+	}
 }
 
 function validasi(form)
@@ -232,14 +226,14 @@ function validasi(form)
 	} else
 	form.check_out.value = nilaitanggal(b,1);
 	updateselisih(form);
-	ECH(form); biaya(form); 
+	ECH(form); biaya(form);
 }
 
 function validasi2(form)
 {
 	if (form.check_in.value!="")
 	{
-		if (std(form.check_out.value)<=std(form.check_in.value)) 
+		if (std(form.check_out.value)<=std(form.check_in.value))
 		{
 			alert("Pilih tanggal setelah tanggal check in");
 			form.check_out.value="";
@@ -254,7 +248,7 @@ function validasi2(form)
 }
 
 function tambah(form)
-{	
+{
 	var d = new Date(form.check_in.value);
 	var h = nilaitanggal(d,Number(form.jumhari.value));
 	form.check_out.value=h;
@@ -273,32 +267,32 @@ function valid1(form)
 	return false;
 }
 
-$(document).ready(function(){ 
+$(document).ready(function(){
 	$("#btn2").click(function(){
 	if ($("#unit").val()!="" && $("#total").val()!=0){
 	idd = $("#unit").val().split("+");
 		$.ajax({
-			type: "POST", 
-			url: "../../../proses/option_unit.php", 
-			data: {id1 : idd[0], tci1:$("#check_in").val(), tco1:$("#check_out").val()}, 
+			type: "POST",
+			url: "../../../proses/option_unit.php",
+			data: {id1 : idd[0], tci1:$("#check_in").val(), tco1:$("#check_out").val()},
 			dataType: "json",
-			beforeSend: function(e) { 
+			beforeSend: function(e) {
 				if(e && e.overrideMimeType) {
 					e.overrideMimeType("application/json;charset=UTF-8");
 				}
 			},
-			success: function(response){ 
+			success: function(response){
 					ret = response.ketersediaan;
 					if (ret=="Ada"){
-						$("#col2").attr("href","#collapseGFive");$("#col2").click(); 
+						$("#col2").attr("href","#collapseGFive");$("#col2").click();
 						$("#col2").attr("href","#");
 					}
 					else alert(ret);
 			},
-			error: function (xhr, ajaxOptions, thrownError) { 
-				alert(thrownError); 
+			error: function (xhr, ajaxOptions, thrownError) {
+				alert(thrownError);
 			}
 		});
-	} 
+	}
 	});
  });
