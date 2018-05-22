@@ -199,7 +199,7 @@
       				<div class="control-group">
       				  <label class="control-label">Check Out :</label>
       				  <div class="controls">
-      				    <input name="check_out" id="check_out" type="date" onchange="keepvalid2(this.form)"/>
+      				    <input name="check_out" id="check_out" type="date" onchange="keepvalid2(this.form); validasi2(this.form)"/>
       				  </div>
       				</div>
       				<div class="control-group">
@@ -253,36 +253,54 @@
               <div class="control-group" id="harga_sewa-C">
       				  <label class="control-label">Harga Sewa Weekday:</label>
       				  <div class="controls">
-      				    <input name="harga_sewa" min="0"  id="harga_sewa" type="number" onChange="hasil(this.form)" />
+      				    <input name="harga_sewa" min="0"  id="harga_sewa" type="number" onChange="biaya(this.form)" />
                 </div>
       			  </div>
               <div class="control-group" id="harga_sewa_we-C">
                 <label class="control-label">Harga Sewa Weekend:</label>
                 <div class="controls">
-                  <input name="harga_sewa_we" min="0"  id="harga_sewa_we" type="number" onChange="hasil(this.form)" />
+                  <input name="harga_sewa_we" min="0"  id="harga_sewa_we" type="number" onChange="biaya(this.form)" />
                 </div>
               </div>
-      				<div class="control-group">
+			  <div class="control-group" id="harga_sewa_gbg-C">
+                <label class="control-label">Harga Sewa :</label>
+                <div class="controls">
+                  <input name="harga_sewa_gbg" min="0"  id="harga_sewa_gbg" type="number" onChange="hasil(this.form)" />
+                </div>
+              </div>
+			 <div class="control-group" id="tamu-C">
       				  <label class="control-label">Jumlah Tamu :</label>
       				  <div class="controls">
       				    <input name="tamu" min="0" type="number" value="5" onChange="ECH(this.form)"/>
                   <input name="harga_sewa_asli" type="text" style="display:none;"/>
       				  </div>
       			  </div>
-              <div class="control-group">
+              <div class="control-group" id="ekstra_charge-C">
                 <label class="control-label">Ekstra Charge :</label>
                 <div class="controls">
                   <input name="ekstra_charge" min="0"  type="number" onChange="hasil(this.form)" />
                 </div>
               </div>
-		          <div class="control-group">
+			  <div class="control-group">
                 <label class="control-label">Total Biaya :</label>
                 <div class="controls">
                   <input name="total" id="total" min="0"  type="number" />
                 </div>
               </div>
-			        <div class="control-group" id="total_harga_owner-C">
-                <label class="control-label">Total Harga Owner :</label>
+			  <div class="control-group" id="deposit-C">
+              <label class="control-label">Deposit :</label>
+                <div class="controls">
+                  <input name="deposit" min = "0" id="deposit"  type="number" />
+                </div>
+              </div>
+		      <div class="control-group" id="total_bayar-C">
+                <label class="control-label">Total Bayar :</label>
+                <div class="controls">
+                  <input name="total_bayar" id="total_bayar" min="0"  type="number" disabled />
+                </div>
+              </div>
+			  <div class="control-group" id="total_harga_owner-C">
+              <label class="control-label">Total Harga Owner :</label>
                 <div class="controls">
                   <input name="total_harga_owner" min="0" id="total_harga_owner"  type="number" />
                 </div>
@@ -347,7 +365,7 @@
 				</div>
 			    <div class="control-group" >
   				  <div class="controls">
-  				    <input type="submit" name="addTransaksi" value="Submit" class="btn btn-success" onclick="ConvertText()">
+  				    <input type="submit" name="addTransaksi" value="Submit" class="btn btn-success">
   				    <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
   				  </div>
 			    </div>
@@ -360,7 +378,7 @@
 </div>
 </div>
 
-<!--modal popup tambah penyyewa baru-->
+<!--modal popup tambah penyewa baru-->
 <div id="popup-penyewa-baru" class="modal hide">
   <div class="modal-header">
     <button data-dismiss="modal" class="close" type="button">×</button>
@@ -413,12 +431,6 @@
   </div>
 </div>
 <!-- //modal popup tambah unit-->
-<script>
-function ConvertText() {
-    var x = document.getElementById("catatan").value;
-    
-}
-</script>
 
 <!--Footer-part-->
 <div class="row-fluid">

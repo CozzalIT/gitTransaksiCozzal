@@ -138,6 +138,12 @@
                     <input name="ekstra_charge" min="0"  type="number" onChange="hasil(this.form)" required class="span11" value="'.$edit->ekstra_charge.'"/>
                     </div>
                   </div>
+				  <div class="control-group">
+					<label class="control-label">Deposit :</label>
+					<div class="controls">
+						<input name="deposit" min = "0" id="deposit"  type="number" value="'.$edit->deposit.'" />
+					</div>
+				  </div>
                   <div class="control-group">
                     <label class="control-label">Total Biaya :</label>
                     <div class="controls">
