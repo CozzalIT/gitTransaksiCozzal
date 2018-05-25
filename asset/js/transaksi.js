@@ -1,6 +1,7 @@
 var we_G = 0;
 var wd_G = 0;
 var special_price = 0; 
+var bool_detail;
 
 function startinweekend(hari, week, jumlah_weekday, jumlah_weekend){
   var we =0; var wd =hari+5;
@@ -273,7 +274,78 @@ function valid1(form)
 	return false;
 }
 
+function setDetailVisible(n){
+	bool_detail = n;
+	if(n){
+		$("#icon-detail").attr("class","icon-chevron-up");
+		$("#detail_red").show();
+	} else {
+		$("#icon-detail").attr("class","icon-chevron-down");
+		$("#detail_red").hide();
+	}
+}
+
+function showDetail(){
+	if(bool_detail)
+		setDetailVisible(false);
+	else 
+		setDetailVisible(true);
+}
+
+function cancelSubmit(){
+	if($("#button-sub").text()=="Tambahkan"){
+		$(".close").click();
+	} else {
+		$("#detail").hide();
+		$("#gif-cek-penyewa").hide();
+		$("#stat-cek-penyewa").hide();
+    	$("#button-sub").attr("class","btn btn-success");
+    	$("#button-sub").text("Tambahkan");		
+	}
+}
+
+function submite(n){
+	window.location = "transaksi.php?transaksi="+n;
+}
+
+function cekPenyewa(){
+	$("#gif-cek-penyewa").show();
+	$("#stat-cek-penyewa").text("Menganalisis Data Penyewa ...");
+	$("#stat-cek-penyewa").show(); $("#detail").hide();
+	document.getElementById("stat-cek-penyewa").style.color = "black";
+    $.post("../../../proses/penyewa.php", {
+    	cek_penyewa : $("#nama").val(),
+    	alamat : $("#alamat").val(),
+    	no_tlp : $("#no_tlp").val(),
+    },
+    function (data) {
+    	var res = JSON.parse(data);
+    	$("#gif-cek-penyewa").hide();
+    	$(".note").remove();
+    	if(res.length==0){
+    		document.getElementById('addPenyewa').submit();
+    		$("#stat-cek-penyewa").hide(); 
+    	} else {
+    		$("#stat-cek-penyewa").text("Ditemukan data yang sama");
+    		document.getElementById("stat-cek-penyewa").style.color = "red";
+    		$("#button-sub").attr("class","btn btn-warning");
+    		$("#button-sub").text("Lanjutkan Saja");
+    		for(var i=0;i<res.length;i++){
+    			var tmp_str = "<div class='note'><a onclick='submite("+res[i].kd_penyewa+");'";
+    			tmp_str += " class='selected'>Gunakan Ini</a>"+res[i].nama+" - "+res[i].jenis_kelamin;
+    			tmp_str += "<br>"+res[i].alamat+" - "+res[i].no_tlp+"<br>"+res[i].email+"</div>";
+    			$("#detail_red").append(tmp_str);
+    		}
+    		$("#detail").show();
+    		setDetailVisible(false);
+    	}
+    });		 
+}
+
 $(document).ready(function(){ 
+	$("#gif-cek-penyewa").hide();
+	$("#stat-cek-penyewa").hide();
+	$("#detail").hide();
 	$("#btn2").click(function(){
 	if ($("#unit").val()!="" && $("#total").val()!=0){
 	idd = $("#unit").val().split("+");

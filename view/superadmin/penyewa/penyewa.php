@@ -82,19 +82,19 @@
 	  <div class="control-group">
 		<label class="control-label">Nama :</label>
 		<div class="controls">
-		  <input name="nama" type="text" class="span2" placeholder="Nama" required/>
+		  <input id="nama" name="nama" type="text" class="span2" placeholder="Nama" required/>
 		</div>
 	  </div>
 	  <div class="control-group">
 		<label class="control-label">Alamat :</label>
 		<div class="controls">
-		  <input name="alamat" type="text" class="span2" placeholder="Alamat" required/>
+		  <input id="alamat" name="alamat" type="text" class="span2" placeholder="Alamat" required/>
 		</div>
 	  </div>
 	  <div class="control-group">
 		<label class="control-label">No Telpon :</label>
 		<div class="controls">
-		  <input name="no_tlp" type="text"  class="span2" placeholder="ex: 0812...." required/>
+		  <input id="no_tlp" name="no_tlp" type="text"  class="span2" placeholder="ex: 0812...." required/>
 		</div>
 	  </div>
 	  <div class="control-group">
@@ -118,6 +118,8 @@
 		<div class="controls">
 		  <input type="submit" name="addPenyewa" class="btn btn-success">
 		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+      <br> <img id="gif-cek-penyewa" src="../../../asset/images/loading.gif" width="18"> 
+      <small id="stat-cek-penyewa">Menganalisis Data Penyewa ...</small>
 		</div>
 	  </div>
 	</form>

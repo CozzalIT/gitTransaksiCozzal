@@ -182,6 +182,7 @@
     var jenis_kelamin = $("#jenis_kelamin").val();
     var email = $("#email").val();
     var no_tlp = $("#no_tlp").val();
+    no_tlp = no_tlp.replace(" ","");
     if(nama!="" && alamat!="" && jenis_kelamin!="" && email!="" && no_tlp!=""){
       $(this).attr({"disabled":"disabled"});
       $(this).text("Mendaftaran Penyewa...");

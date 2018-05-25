@@ -240,7 +240,7 @@ elseif(isset($_POST['addPenyewaTransaksi'])){
   $data = $show->fetch(PDO::FETCH_OBJ);
 
   if($add == "Success"){
-	  header('Location:../view/'.$view.'/transaksi/transaksi.php?nama='.$nama.'&alamat='.$alamat.'&no_tlp='.$no_tlp.'&jenis_kelamin='.$jenis_kelamin.'&kd_penyewa='.$data->kd_penyewa);
+	  header('Location:../view/'.$view.'/transaksi/transaksi.php?transaksi='.$data->kd_penyewa);
   }
 }
 
