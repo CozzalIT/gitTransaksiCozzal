@@ -324,19 +324,19 @@
     <div class="control-group">
     <label class="control-label">Nama :</label>
     <div class="controls">
-      <input id="nama" name="nama" type="text" class="span2" placeholder="Nama" required/>
+      <input id="nama" name="nama" type="text" class="ipt span2" placeholder="Nama" required/>
     </div>
     </div>
     <div class="control-group">
     <label class="control-label">Alamat :</label>
     <div class="controls">
-      <input id="alamat" name="alamat" type="text" class="span2" placeholder="Alamat" required/>
+      <input id="alamat" name="alamat" type="text" class="ipt span2" placeholder="Alamat" required/>
     </div>
     </div>
     <div class="control-group">
       <label class="control-label">No Telpon :</label>
       <div class="controls">
-        <input id="no_tlp" name="no_tlp" type="text"  class="span2" placeholder="ex: 0812...." required/>
+        <input id="no_tlp" name="no_tlp" type="text"  class="ipt span2" placeholder="ex: 0812...." required/>
       </div>
     </div>
     <div class="control-group">
@@ -354,12 +354,12 @@
     <div class="control-group">
       <label class="control-label">Email :</label>
       <div class="controls">
-        <input name="email" type="text"  class="span2" placeholder="ex: abc@gmail.com" required/>
+        <input name="email" type="text"  class="ipt span2" placeholder="ex: abc@gmail.com" required/>
       </div>
     </div>
     <div class="control-group">
       <div class="controls">
-        <input style="display: none;" type="submit" name="addPenyewaTransaksi">
+        <input id="submit-btn" style="display: none;" type="submit" name="addPenyewaTransaksi">
         <a id="button-sub" onclick="cekPenyewa()" class="btn btn-success">Tambahkan</a>
         <a id="btn-cnc" onclick="cancelSubmit()" class="btn btn-inverse">Cancel</a><br>
         <img id="gif-cek-penyewa" src="../../../asset/images/loading.gif" width="18"> 

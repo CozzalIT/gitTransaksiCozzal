@@ -113,70 +113,72 @@
                   $show = $proses->showMutasiKas();
                   $i = 1;
                   while($data = $show->fetch(PDO::FETCH_OBJ)){
-                    if($data->jenis == 1){
-                      $jenis = "Masuk";
-                    }else{
-                      $jenis = "Keluar";
-                    }
+                    if($data->mutasi_dana != 0){
+                      if($data->jenis == 1){
+                        $jenis = "Masuk";
+                      }else{
+                        $jenis = "Keluar";
+                      }
 
-                    if(strlen($data->keterangan > 1)){
-                      $arrayKeterangan = explode("/",$data->keterangan);
-                      $indikator = $arrayKeterangan[0];
-                    }elseif(strlen($data->keterangan == 1)){
-                      $indikator = $data->keterangan;
-                    }
+                      if(strlen($data->keterangan > 1)){
+                        $arrayKeterangan = explode("/",$data->keterangan);
+                        $indikator = $arrayKeterangan[0];
+                      }elseif(strlen($data->keterangan == 1)){
+                        $indikator = $data->keterangan;
+                      }
 
-                    if($indikator == 10 or $indikator == 9){
-                      $show_unit = $proses->showNoUnit($arrayKeterangan[1]);
-                      $data_unit = $show_unit->fetch(PDO::FETCH_OBJ);
-                    }
+                      if($indikator == 10 or $indikator == 9){
+                        $show_unit = $proses->showNoUnit($arrayKeterangan[1]);
+                        $data_unit = $show_unit->fetch(PDO::FETCH_OBJ);
+                      }
 
-                    switch($indikator){
-                      case 1:
-                        $keterangan = "Dari Kas";
-                        break;
-                      case 2:
-                        $keterangan = "Sumber Non Kas";
-                        break;
-                      case 3:
-                        $keterangan = "Transaksi Umum";
-                        break;
-                      case 4:
-                        $keterangan = "Pembayaran Owner";
-                        break;
-                      case 5:
-                        $keterangan = "Penggajian Karyawan";
-                        break;
-                      case 6:
-                        $keterangan = "Transaksi : COZ-".strtoupper(dechex($arrayKeterangan[1]));
-                        break;
-                      case 7:
-                        $keterangan = "Pembayaran : COZ-".strtoupper(dechex($arrayKeterangan[1]));
-                        break;
-                      case 8:
-                        $keterangan = "Setlement DP : COZ-".strtoupper(dechex($arrayKeterangan[1]));
-                        break;
-                      case 9:
-                        $keterangan = "Transaksi Unit : ".$data_unit->no_unit;
-                        break;
-                      case 10:
-                        $keterangan = "Transaksi Unit : ".$data_unit->no_unit;
-                        break;
+                      switch($indikator){
+                        case 1:
+                          $keterangan = "Dari Kas";
+                          break;
+                        case 2:
+                          $keterangan = "Sumber Non Kas";
+                          break;
+                        case 3:
+                          $keterangan = "Transaksi Umum";
+                          break;
+                        case 4:
+                          $keterangan = "Pembayaran Owner";
+                          break;
+                        case 5:
+                          $keterangan = "Penggajian Karyawan";
+                          break;
+                        case 6:
+                          $keterangan = "Transaksi : COZ-".strtoupper(dechex($arrayKeterangan[1]));
+                          break;
+                        case 7:
+                          $keterangan = "Pembayaran : COZ-".strtoupper(dechex($arrayKeterangan[1]));
+                          break;
+                        case 8:
+                          $keterangan = "Setlement DP : COZ-".strtoupper(dechex($arrayKeterangan[1]));
+                          break;
+                        case 9:
+                          $keterangan = "Transaksi Unit : ".$data_unit->no_unit;
+                          break;
+                        case 10:
+                          $keterangan = "Transaksi Unit : ".$data_unit->no_unit;
+                          break;
+                      }
+                      // 1:kas, 2:non-kas, 3:TU, 4:owner, 5:karyawan, 6:Transaksi, 7:Pembayaran, 8:Setlement, 9:tUnitL, 10:tUnitBL
+                      $dateTime = explode(" ",$data->tanggal);
+                      echo "
+                      <tr class='gradeC'>
+                        <td>$i</td>
+                        <td>".$dateTime[0]."</td>
+                        <td>".$dateTime[1]." WIB</td>
+                        <td>$data->sumber_dana</td>
+                        <td ".($jenis == 'Masuk' ? 'style="color:green;"' : 'style="background-color:red;color:white;"')."><strong>".number_format($data->mutasi_dana, 0, ".", ".")." IDR</strong></td>
+                        <td ".($jenis == 'Masuk' ? 'style="color:green;"' : 'style="background-color:red;color:white;"')."><strong>$jenis</strong></td>
+                        <td>$keterangan</td>
+                      </tr>
+                      ";
+                      $i++;
                     }
-                    // 1:kas, 2:non-kas, 3:TU, 4:owner, 5:karyawan, 6:Transaksi, 7:Pembayaran, 8:Setlement, 9:tUnitL, 10:tUnitBL
-                    $dateTime = explode(" ",$data->tanggal);
-                    echo "
-                    <tr class='gradeC'>
-                      <td>$i</td>
-                      <td>".$dateTime[0]."</td>
-                      <td>".$dateTime[1]." WIB</td>
-                      <td>$data->sumber_dana</td>
-                      <td ".($jenis == 'Masuk' ? 'style="color:green;"' : 'style="background-color:red;color:white;"')."><strong>".number_format($data->mutasi_dana, 0, ".", ".")." IDR</strong></td>
-                      <td ".($jenis == 'Masuk' ? 'style="color:green;"' : 'style="background-color:red;color:white;"')."><strong>$jenis</strong></td>
-                      <td>$keterangan</td>
-                    </tr>
-                    ";
-                    $i++;
                   }
                 ?>
               </tbody>
