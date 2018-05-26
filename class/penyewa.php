@@ -58,7 +58,8 @@ class Penyewa {
   }
 
   public function showPenyewa_cek($nama, $alamat){
-  	$sql = "SELECT * FROM tb_penyewa WHERE UCASE(nama) like UCASE('$nama') AND UCASE(alamat) like UCASE('$alamat')";
+  	$sql = "SELECT * FROM tb_penyewa WHERE UCASE(nama) like UCASE('$nama')";
+    if($alamat!="") $sql .= " AND UCASE(alamat) like UCASE('$alamat')";
   	$query = $this->db->query($sql);
   	return $query;  	
   }
