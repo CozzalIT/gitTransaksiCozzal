@@ -109,71 +109,6 @@
         					</div>
         			      </div>
         				</div>';}
-
-        			  if(isset($_GET['nama'])){
-        				echo '
-        				<div class="widget-content">
-        				  <div class="control-group">
-        				    <label class="control-label hide">ID :</label>
-        				    <div class="controls">
-        				      <input name="kd_penyewa" type="text" class="span3 hide" placeholder="ID" value="'.$_GET['kd_penyewa'].'" />
-        				    </div>
-        			      </div>
-        			      <div class="control-group">
-        				    <label class="control-label">Nama :</label>
-        				    <div class="controls">
-        				      <input name="nama" type="text" class="span3" placeholder="Nama" value="'.$_GET['nama'].'" />
-        				    </div>
-        			      </div>
-        			      <div class="control-group">
-        				    <label class="control-label">Alamat :</label>
-        				    <div class="controls">
-        				      <input name="alamat" type="text" class="span3" placeholder="Alamat" value="'.$_GET['alamat'].'" />
-        				    </div>
-        			      </div>
-        			      <div class="control-group">
-        			  	    <label class="control-label">No Telpon :</label>
-        				    <div class="controls">
-        				      <input name="no_tlp" type="text"  class="span3" placeholder="ex: 0812...." value="'.$_GET['no_tlp'].'" />
-        				    </div>
-        			      </div>
-        			      <div class="control-group">
-        				    <label class="control-label">Jenis Kelamin :</label>
-        				    ';
-
-        					if ($_GET['jenis_kelamin'] == 'Laki-laki') {
-        					  echo '
-        						<div class="controls">
-        						  <label>
-        							<input type="radio" name="jenis_kelamin" value="Laki-laki" checked/> Laki-laki
-        						  </label>
-        						  <label>
-        							<input type="radio" name="jenis_kelamin" value="Perempuan" /> Perempuan
-        						  </label>
-        						</div>
-
-        					  ';
-        					} else {
-        					  echo '
-        						<div class="controls">
-        						  <label>
-        							<input type="radio" name="jenis_kelamin" value="Laki-laki" /> Laki-laki
-        						  </label>
-        						  <label>
-        							<input type="radio" name="jenis_kelamin" value="Perempuan" checked/> Perempuan
-        						  </label>
-        						</div>
-        					  ';
-        					}
-
-        				  echo '
-        			      </div>
-        			      <div class="control-group">
-        				    <div class="controls">
-        					  <button data-parent="#collapse-group" href="#collapseGFour" data-toggle="collapse" class="btn btn-success">Lanjut</button>
-        					</div>
-        			      </div>
-        				</div>';}
         			  ?>
             </div>
           </div>
@@ -384,27 +319,28 @@
     <button data-dismiss="modal" class="close" type="button">×</button>
     <h3>Pelanggan Baru</h3>
   </div>
-  <div class="modal-body">
-  <form action="../../../proses/transaksi.php" method="post" class="form-horizontal">
+  <div style="padding: 0px;" class="modal-body">
+  <form action="../../../proses/transaksi.php" id="addPenyewa" method="post" class="form-horizontal">
     <div class="control-group">
     <label class="control-label">Nama :</label>
     <div class="controls">
-      <input name="nama" type="text" class="span2" placeholder="Nama" required/>
+      <input id="nama" name="nama" type="text" class="ipt span2" placeholder="Nama" required/>
     </div>
     </div>
     <div class="control-group">
     <label class="control-label">Alamat :</label>
     <div class="controls">
-      <input name="alamat" type="text" class="span2" placeholder="Alamat" required/>
+      <input id="alamat" name="alamat" type="text" class="ipt span2" placeholder="Alamat" required/>
     </div>
     </div>
     <div class="control-group">
       <label class="control-label">No Telpon :</label>
       <div class="controls">
-        <input name="no_tlp" type="text"  class="span2" placeholder="ex: 0812...." required/>
+        <input id="no_tlp" name="no_tlp" type="text"  class="ipt span2" placeholder="ex: 0812...." required/>
       </div>
     </div>
     <div class="control-group">
+      
       <label class="control-label">Jenis Kelamin :</label>
       <div class="controls">
         <label>
@@ -418,19 +354,46 @@
     <div class="control-group">
       <label class="control-label">Email :</label>
       <div class="controls">
-        <input name="email" type="text"  class="span2" placeholder="ex: abc@gmail.com" required/>
+        <input name="email" type="text"  class="ipt span2" placeholder="ex: abc@gmail.com" required/>
       </div>
     </div>
     <div class="control-group">
-    <div class="controls">
-      <input type="submit" name="addPenyewaTransaksi" class="btn btn-success">
-      <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
-    </div>
+      <div class="controls">
+        <input id="submit-btn" style="display: none;" type="submit" name="addPenyewaTransaksi">
+        <a id="button-sub" onclick="cekPenyewa()" class="btn btn-success">Tambahkan</a>
+        <a id="btn-cnc" onclick="cancelSubmit()" class="btn btn-inverse">Cancel</a><br>
+        <img id="gif-cek-penyewa" src="../../../asset/images/loading.gif" width="18"> 
+        <small id="stat-cek-penyewa">Menganalisis Data Penyewa ...</small> 
+      </div>
     </div>
   </form>
-  </div>
+  <div id="detail">
+    <div onclick="showDetail()" class="widget-title" style="cursor:pointer;"> <span class="icon"><i id="icon-detail" class="icon-chevron-down"></i></span><h5>Detail Penyewa Lainnya</h5></div>
+    <div id="detail_red" class="control-group newpadd">
+      <!-- <div class="note"><a onclick="submite(kd_penyewa);" class="selected">Gunakan Ini</a>Purnima Iyer - Perempuan<br>Jakarta -  +66 983 157 976<br>guest@airbnb.com</div> -->
+    </div>
+  </div> 
+</div>  
 </div>
 <!-- //modal popup tambah unit-->
+
+<style type="text/css">
+  .selected{
+    font-size: 10px;
+    float: right;
+    border-radius: 2px;
+    color: white;
+    padding: 3px;
+    cursor: pointer;
+    margin-left: 5px;
+    background-color: blue;
+  }
+   .selected:hover{
+    color: white;
+    padding: 4px;
+    cursor: pointer;
+  } 
+</style>
 
 <!--Footer-part-->
 <div class="row-fluid">
