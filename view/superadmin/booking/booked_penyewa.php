@@ -40,7 +40,7 @@
 <?php
   $x = 0;
   $proses = new Penyewa($db);
-  $show = $proses->showPenyewa_cek($edit->penyewa,"");
+  $show = $proses->showPenyewa_cek($edit->penyewa,$edit->no_tlp,"");
   $callback = array();
   while($data = $show->fetch(PDO::FETCH_OBJ)){
    $x++;
@@ -91,7 +91,7 @@
                 </form>
                 <form id="p_lama" action="booked_transaksi.php" method="post" class="form-horizontal">
                   <div id="note-anak">
-                    <input type="text" id="kd_penyewa" class="search" placeholder="Cari Penyewa" style="margin:10px;width: 80%;" onkeyup="filter()" />
+                    <input type="text" class="search" placeholder="Cari Penyewa" style="margin:10px;width: 80%;" onkeyup="filter()" />
                     <div class="control-group newpadd" style="max-height: 290px;">
                       <div id="note-anak-isi">
                         <div class="note loading">

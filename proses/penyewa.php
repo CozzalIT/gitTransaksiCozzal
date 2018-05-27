@@ -67,25 +67,15 @@ elseif(isset($_POST['kd_redudansi'])){
 
 elseif(isset($_POST["cek_penyewa"])){
   $proses = new Penyewa($db);
-  $show = $proses->showPenyewa_cek($_POST["cek_penyewa"],$_POST["alamat"]);
+  $show = $proses->showPenyewa_cek($_POST["cek_penyewa"],$_POST["no_tlp"],$_POST["alamat"]);
   $callback = array();
   while($data = $show->fetch(PDO::FETCH_OBJ)){
-    $tlp = $data->no_tlp;
-    $tlp = str_replace(" ", "", $tlp);
-    if($tlp[0]=="+"){
-      $kd_tlp = $tlp[0].$tlp[1].$tlp[2];
-      if($kd_tlp="+62"){
-        $tlp = str_replace("+62", "0", $tlp);
-      }
-    }
-    if($tlp==$_POST["no_tlp"] || $data->no_tlp==$_POST["no_tlp"]){
-      $callback[] = array('kd_penyewa'=>$data->kd_penyewa ,
-                          'nama'=>$data->nama, 
-                          'jenis_kelamin'=>$data->jenis_kelamin,
-                          'alamat'=>$data->alamat,
-                          'email'=>$data->email,
-                          'no_tlp'=>$data->no_tlp);
-    }
+    $callback[] = array('kd_penyewa'=>$data->kd_penyewa,
+                        'nama'=>$data->nama, 
+                        'jenis_kelamin'=>$data->jenis_kelamin,
+                        'alamat'=>$data->alamat,
+                        'email'=>$data->email,
+                        'no_tlp'=>$data->no_tlp);
   }
   echo json_encode($callback);  
 }

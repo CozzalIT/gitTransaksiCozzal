@@ -38,13 +38,13 @@ elseif(isset($_POST["getList"])){
 
 elseif(isset($_POST['daftar_penyewa'])){
 	require("../class/penyewa.php");
+	$penyewa = new Penyewa($db);
 	$nama = $_POST["daftar_penyewa"];
 	$alamat = $_POST["alamat"];
-	$no_tlp = $_POST["no_tlp"];
+	$no_tlp = $penyewa->setPhoneNumber($_POST["no_tlp"]);
 	$jenis_kelamin = $_POST["jenis_kelamin"];
 	$email = $_POST["email"];
 	$tgl_gabung = date("Y-m-d");
-	$penyewa = new Penyewa($db);
 	$penyewa->addPenyewa($nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung); 
 	$callback = array('status'=>"oke");
 	echo json_encode($callback);

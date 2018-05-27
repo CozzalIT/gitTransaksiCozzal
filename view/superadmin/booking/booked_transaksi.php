@@ -55,6 +55,7 @@
                     <label class="control-label">Check In :</label>
                     <div class="controls">
                     <input type="date" class="span11" disabled value="<?php echo $edit->check_in; ?>"/>
+                    <input type="text" name="kd_booked" value="<?php echo $_POST["kd_booked"]; ?>">
                     </div>
                   </div>
                   <div class="control-group">

@@ -42,6 +42,11 @@ class Penyewa {
     }
   }
 
+  public function updatePhoneNumber($kd_penyewa, $no_tlp){
+    $sql = "UPDATE tb_penyewa SET no_tlp='$no_tlp' WHERE kd_penyewa='$kd_penyewa'";
+    $query = $this->db->query($sql);   
+  }
+
   public function solveRedudansi($kd_penyewa_baru, $kd_penyewa_lama){
     $sql = "UPDATE tb_transaksi SET kd_penyewa='$kd_penyewa_baru' 
     WHERE kd_penyewa='$kd_penyewa_lama'";
@@ -57,12 +62,29 @@ class Penyewa {
     $query = $this->db->query($sql);
   }
 
-  public function showPenyewa_cek($nama, $alamat){
-  	$sql = "SELECT * FROM tb_penyewa WHERE UCASE(nama) like UCASE('$nama')";
+  public function showPenyewa_cek($nama, $no_tlp, $alamat){
+  	$sql = "SELECT * FROM tb_penyewa WHERE (UCASE(nama) like UCASE('$nama')";
     if($alamat!="") $sql .= " AND UCASE(alamat) like UCASE('$alamat')";
+    $sql .= ") OR no_tlp = '$no_tlp'";
   	$query = $this->db->query($sql);
   	return $query;  	
   }
 
+  // ---------- NON DATABASE ---------------
+
+  public function setPhoneNumber($no_tlp){
+    $char_number = ["+","0","1","2","3","4","5","6","7","8","9"];
+    $tlp = $no_tlp;
+    $tlp = str_replace("-", "", $tlp);
+    if(in_array($tlp[0], $char_number))
+      $tlp = str_replace(" ", "", $tlp);
+    if($tlp[0]=="+"){
+      $kd_tlp = $tlp[0].$tlp[1].$tlp[2];
+      if($kd_tlp="+62"){
+        $tlp = str_replace("+62", "0", $tlp);
+      }
+    }
+    return $tlp;
+  }
 }
 ?>
