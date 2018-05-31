@@ -21,18 +21,22 @@ if(isset($_POST['addTU'])){
 		$kebutuhan = "umum";
 		$keterangan_mutasi = 3;
 		$status = 0;
+		$jatuh_tempo = null;
   }elseif($_POST['kebutuhan'] == 'u'){
 		$kebutuhan = "unit/".$kd_unit_real[0];
 		$keterangan_mutasi = '10/'.$kd_unit_real[0];
 		$status = 0;
+		$jatuh_tempo = null;
   }elseif($_POST['kebutuhan'] == 'btu'){
 		$kebutuhan = "umum";
 		$keterangan_mutasi = 3;
 		$status = 1;
+		$jatuh_tempo = $_POST['jatuh_tempo'];
   }elseif($_POST['kebutuhan'] == 'bu'){
 		$kebutuhan = "unit/".$kd_unit_real[0];
 		$keterangan_mutasi = '10/'.$kd_unit_real[0];
 		$status = 1;
+		$jatuh_tempo = $_POST['jatuh_tempo'];
   }
 
 	$kd_kas = $_POST['kd_kas'];
@@ -50,7 +54,7 @@ if(isset($_POST['addTU'])){
 	$data = $edit->fetch(PDO::FETCH_OBJ);
 
 	if($mutasi_dana < $data->saldo){
-		$add = $proses->addTransaksiUmum($kd_kas, $kebutuhan, $harga, $jumlah, $keterangan, $tanggal, $status);
+		$add = $proses->addTransaksiUmum($kd_kas, $kebutuhan, $harga, $jumlah, $keterangan, $tanggal, $status, $jatuh_tempo);
 	  if($add == "Success"){
 			if($status == 0){
 		    $add_mutasi = $proses2->addMutasiKas($kd_kas, $mutasi_dana, $jenis, $tanggal, $keterangan_mutasi);
