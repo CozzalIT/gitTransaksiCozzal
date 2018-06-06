@@ -56,6 +56,7 @@
                     var selectApt = document.getElementById("controlApt");
                     var selectUnit = document.getElementById("controlUnit");
                     var selectKas = document.getElementById("controlKas");
+                    var jatuhTempo = document.getElementById("controlJT");
                     var allForm = document.getElementById("allForm");
                     var kebutuhan = document.getElementById("kebutuhan");
                     var valKebutuhan = kebutuhan.options[kebutuhan.selectedIndex].value;
@@ -65,17 +66,23 @@
                       selectApt.classList.add("hide");
                       selectUnit.classList.add("hide");
                       if(valKebutuhan=="btu"){
+                        jatuhTempo.classList.remove("hide");
                         selectKas.classList.add("hide");
                       }else{
+                        jatuhTempo.classList.add("hide");
                         selectKas.classList.remove("hide");
+                        $('#inJT').removeAttr('required');
                       }
                     }else if(valKebutuhan=="u" || valKebutuhan=="bu"){
                       selectApt.classList.remove("hide");
                       selectUnit.classList.remove("hide");
                       if(valKebutuhan=="bu"){
+                        jatuhTempo.classList.remove("hide");
                         selectKas.classList.add("hide");
                       }else{
+                        jatuhTempo.classList.add("hide");
                         selectKas.classList.remove("hide");
+                        $('#inJT').removeAttr('required');
                       }
                     }
                   }
@@ -124,7 +131,13 @@
                   <div class="control-group">
                     <label class="control-label">Keterangan :</label>
                     <div class="controls">
-                      <input name="keterangan" type="Text"/>
+                      <input name="keterangan" type="Text" required/>
+                    </div>
+                  </div>
+                  <div id="controlJT" class="control-group">
+                    <label class="control-label">Jatuh Tempo :</label>
+                    <div class="controls">
+                      <input id="inJT" name="jatuh_tempo" type="date" required/>
                     </div>
                   </div>
                   <div id="controlKas" class="control-group">

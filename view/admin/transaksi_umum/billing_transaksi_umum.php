@@ -36,13 +36,14 @@
                   <th>Jumlah</th>
         				  <th>Total</th>
                   <th>Keterangan</th>
+                  <th>Jatuh Tempo</th>
         				  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
       			    <?php
         				  $Proses = new TransaksiUmum($db);
-        				  $show = $Proses->showTransaksiUmum();
+        				  $show = $Proses->showBillingTU();
         				  $i = 1;
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
                     if($data->status == 1){
@@ -65,6 +66,7 @@
               						<td>$data->jumlah</td>
               						<td>".number_format($data->harga*$data->jumlah, 0, ".", ".")." IDR</td>
                           <td>$data->keterangan</td>
+                          <td>$data->jatuh_tempo</td>
               						<td>
                             <div class='btn-group'>
                               <center>

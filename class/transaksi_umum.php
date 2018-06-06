@@ -13,6 +13,13 @@ class TransaksiUmum {
     return $query;
   }
 
+  public function showBillingTU(){
+    $sql = "SELECT * FROM tb_transaksi_umum
+    INNER JOIN tb_kas ON tb_kas.kd_kas = tb_transaksi_umum.kd_kas ORDER BY tb_transaksi_umum.jatuh_tempo ASC";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
   public function editTransaksiUmum($kd_transaksi_umum){
     $sql = "SELECT * FROM tb_transaksi_umum WHERE kd_transaksi_umum='$kd_transaksi_umum'";
     $query = $this->db->query($sql);
@@ -26,8 +33,8 @@ class TransaksiUmum {
   }
 
   //Proses Add
-  public function addTransaksiUmum($kd_kas, $kebutuhan, $harga, $jumlah, $keterangan, $tanggal, $status){
-    $sql = "INSERT INTO tb_transaksi_umum (kd_kas, kebutuhan, harga, jumlah, keterangan, tanggal, status) VALUES('$kd_kas', '$kebutuhan', '$harga', '$jumlah', '$keterangan', '$tanggal', '$status')";
+  public function addTransaksiUmum($kd_kas, $kebutuhan, $harga, $jumlah, $keterangan, $tanggal, $status, $jatuh_tempo){
+    $sql = "INSERT INTO tb_transaksi_umum (kd_kas, kebutuhan, harga, jumlah, keterangan, tanggal, status, jatuh_tempo) VALUES('$kd_kas', '$kebutuhan', '$harga', '$jumlah', '$keterangan', '$tanggal', '$status', '$jatuh_tempo')";
     $query = $this->db->query($sql);
     if(!$query){
       return "Failed";
