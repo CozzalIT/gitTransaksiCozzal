@@ -20,7 +20,7 @@ function Header()
     $this->Cell(50,10,'',0,1,'C');
     $this->Cell(70,5,'Gateway Apartemen, Tower Shappire A - Lantai G - A 10,',0,1,'C');
     $this->Cell(42,2,'Jl. Jend. A. Yani no. 669, Bandung.',0,1,'C');
-    $this->Cell(36,5,'022 7998544 / 081809824448',0,1,'C');
+    $this->Cell(36,5,'022 20546654 / 081809824448',0,1,'C');
     //$this->Cell(50,10,'Title',1,0,'C');
     // Line break
     $this->Ln(10);
