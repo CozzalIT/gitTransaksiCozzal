@@ -10,7 +10,7 @@ function set_detail_timeline(n){
 	$(".detail-timeline").remove();
 	$("#CI-head").hide(); $("#CO-head").hide();
 	$("#ST-head").hide(); $("#KT-head").hide();
-    $.post("../../../proses/cleaner.php", {detail_timeline : n},
+    $.post("../../../proses/cleaner.php", {detail_timeline : n, index : week_pos},
     function (data) {
     	response = JSON.parse(data);
     	if(response.CI!=""){
