@@ -69,7 +69,7 @@ function new_week(pos){
 	$("#cap-text").text("Timeline Unit perminggu ("+pos+")");
 	$(".statuses").remove();
 	$(".selected").removeClass("selected");
-	if(pos>1) $("#kotak-6").removeClass("today");
+	if(pos!=1) $("#kotak-6").removeClass("today");
 	else $("#kotak-6").addClass("today");
 	onloading = true;
 }
@@ -133,7 +133,7 @@ $(document).ready(function(){
 
 	//geser timeline ke kiri
 	$("#left-button").click(function(){
-		if(week_pos!=1 && !onloading){
+		if(week_pos!=0 && !onloading){
 			week_pos--; new_week(week_pos);
 			alerti(0,7*(week_pos-1));
 			set_selected_index(selected_index, week_pos);
