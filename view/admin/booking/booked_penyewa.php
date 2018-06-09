@@ -21,6 +21,7 @@
       {
         require("../../../../config/database.php");
         require("../../../class/booked.php");
+        require("../../../class/penyewa.php");
         $Proses = new Booked($db);
         $kd_booked = $_GET['kd_booked'];
         $show = $Proses->showDetail_booked($kd_booked);
@@ -36,10 +37,24 @@
               </div>
               <div class="widget-content nopadding">
                 <form id="p_baru" class="form-horizontal">
+                  <?php
+                    $x = 0;
+                    $proses = new Penyewa($db);
+                    $show = $proses->showPenyewa_cek($edit->penyewa,$edit->no_tlp,"");
+                    $callback = array();
+                    while($data = $show->fetch(PDO::FETCH_OBJ)){
+                     $x++;
+                    }
+                    if($x!=0){
+                      echo '<div class="alert alert-warning" style="margin:0px;" role="alert">
+                            Ditemukan beberapa kesamaan antara data dibawah dengan data penyewa lama
+                          </div>';
+                    }
+                  ?>
                   <div class="control-group">
                     <label class="control-label">Nama Lengkap:</label>
                     <div class="controls">
-                    <input id="nama" type="text" class="span11" value="<?php echo $edit->penyewa; ?>"disabled/>
+                    <input style="cursor: text;" title="Klik untuk cari" id="nama" type="text" class="span11" value="<?php echo $edit->penyewa; ?>"disabled/>
                     </div>
                   </div>
                   <div class="control-group">
@@ -69,38 +84,38 @@
                     <div class="controls">
                     <input id="email" type="text" class="span11" placeholder="Email" value="guest@airbnb.com" disabled/>
                     </div>
-                  </div>  
+                  </div>
                   <div class="controls" style="padding: 10px; text-align:right;">
                     <a class='btn btn-success' id="pilih-penyewa">Daftarkan</a>
-                  </div>                                                                 
+                  </div>
                 </form>
                 <form id="p_lama" action="booked_transaksi.php" method="post" class="form-horizontal">
                   <div id="note-anak">
-                    <input type="text" id="kd_penyewa" class="search" placeholder="Cari Penyewa" style="margin:10px;width: 80%;" onkeyup="filter()" />
+                    <input type="text" class="search" placeholder="Cari Penyewa" style="margin:10px;width: 80%;" onkeyup="filter()" />
                     <div class="control-group newpadd" style="max-height: 290px;">
                       <div id="note-anak-isi">
                         <div class="note loading">
-                          <img src="../../../asset/images/loading.gif" width="18"> <small>Loading...</small>                          
+                          <img src="../../../asset/images/loading.gif" width="18"> <small>Loading...</small>
                         </div>
                       </div>
                     </div>
                     <div class="controls" style="padding: 10px; text-align:right;">
                       <button name="next-booked" id="next" type="submit" class="btn btn-success" disabled="">Pilih Penyewa</button>
-                    </div>          
-                  </div>  
+                    </div>
+                  </div>
                   <div style="display: none;">
-                    <input type="text" name="kd_penyewa" id="kd_penyewa" value="0"/>  
+                    <input type="text" name="kd_penyewa" id="kd_penyewa" value="0"/>
                     <input name="kd_booked" type="text" value="<?php echo $_GET['kd_booked']; ?>"/>
                     <input type="text" name="jenis_kelamin" id="jenis_kelamin" value=""/>
-                  </div>                                 
+                  </div>
                 </form>
                 <div class="control-group" style="padding:10px;background-color:#ECECEC;margin: 0px;">
                   <center>
                     <input type="checkbox" checked="true" href="#popup-penyewa" data-toggle="" id="ck" class="span11"/> Penyewa adalah penyewa baru
                   </center>
-                </div>                 
+                </div>
               </div>
-            </div>           
+            </div>
 <!--Footer-part-->
 <div class="row-fluid">
   <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
@@ -126,7 +141,7 @@
 
   function filter() {
     var input, filter, ul, li, a, i, x=0;
-    input = $(".search").val(); 
+    input = $(".search").val();
     filter = input.toUpperCase();
     a = $(".list-penyewa");
     for (i = 0; i < a.length; i++) {
@@ -147,7 +162,7 @@
         $(".loading").hide();
         $("#note-anak-isi").append(response.isi);
         has_loaded = true;
-      }); 
+      });
   }
 
   function select(x){
@@ -166,11 +181,11 @@
       $("#icon-title").attr("class","icon-signin");
       if(!has_loaded){
         $(".loading").show();
-        request_penyewa("like");        
+        request_penyewa("like");
       }
     } else {
       $("#p_lama").hide();
-      $("#p_baru").show();      
+      $("#p_baru").show();
       $("#cap-title").text("Data Penyewa Baru");
       $("#icon-title").attr("class","icon-user");
     }
@@ -188,21 +203,21 @@
       $(this).text("Mendaftaran Penyewa...");
       $.post('../../../proses/booked.php', {
         daftar_penyewa : nama, alamat : alamat, email : email,
-        jenis_kelamin : jenis_kelamin, no_tlp : no_tlp 
+        jenis_kelamin : jenis_kelamin, no_tlp : no_tlp
       },
       function (data) {
-        $("#pilih-penyewa").text("Penyewa telah terdaftar, mohon tunggu ...");    
+        $("#pilih-penyewa").text("Penyewa telah terdaftar, mohon tunggu ...");
         $.post('../../../proses/booked.php', {getPenyewa : nama, no_tlp : no_tlp },
         function (data) {
           response = JSON.parse(data);
           $("#kd_penyewa").val(response.kd_penyewa);
           $("#next").removeAttr("disabled");
           $("#next").click();
-        }); 
-      }); 
+        });
+      });
     } else {
       alert("Lengkapi data terlebih dahulu");
-    }    
+    }
   });
 
 </script>

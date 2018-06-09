@@ -40,11 +40,11 @@
               <div class="widget-content nopadding">
                 <form action="../../../proses/transaksi.php" method="post" class="form-horizontal">
                   <div class="control-group" style="display: none;">
-                    <input name="check_in" id="check_in" type="date" value="<?php echo $edit->check_in; ?>"/>   
+                    <input name="check_in" id="check_in" type="date" value="<?php echo $edit->check_in; ?>"/>
                     <input name="check_out" id="check_out" type="date" value="<?php echo $edit->check_out; ?>"/>
-                    <input name="unit" type="text" value="<?php echo $edit->kd_unit; ?>"/> 
+                    <input name="unit" type="text" value="<?php echo $edit->kd_unit; ?>"/>
                     <input name="apartemen" type="text" value="<?php echo $edit->kd_apt; ?>"/>
-                    <input type="text" name="kd_penyewa" value="<?php echo $_POST["kd_penyewa"]; ?>">                                   
+                    <input type="text" name="kd_penyewa" value="<?php echo $_POST["kd_penyewa"]; ?>">
                     <input type="text" name="kd_booked" value="<?php echo $_POST["kd_booked"]; ?>">
                     <input type="text" name="booking_via" value="3"/>
                     <input type="text" name="harga_sewa_asli" id="harga_sewa_asli" value="0"/>
@@ -55,6 +55,7 @@
                     <label class="control-label">Check In :</label>
                     <div class="controls">
                     <input type="date" class="span11" disabled value="<?php echo $edit->check_in; ?>"/>
+                    <input type="text" name="kd_booked" value="<?php echo $_POST["kd_booked"]; ?>">
                     </div>
                   </div>
                   <div class="control-group">
@@ -68,7 +69,7 @@
                     <div class="controls">
                       <input type="text" class="span11" value="<?php echo $edit->no_unit; ?>" disabled/>
                     </div>
-                  </div>                  
+                  </div>
                   <div class="control-group">
                     <label class="control-label">Apartemen :</label>
                     <div class="controls">
@@ -82,8 +83,8 @@
                       <input name="harga_sewa" id='harga_sewa' min="0" required class="span11" id="harga_sewa" type="number" onChange="hasil();" value="0" />
                       <div class="loading">
                         <img src="../../../asset/images/loading.gif" width="18"> <small>Loading...</small>
-                      </div>  
-                    </div>                  
+                      </div>
+                    </div>
                   </div>
 
                   <div class="control-group" id="total_harga_owner-C">
@@ -99,8 +100,8 @@
                       <input name="harga_sewa_we" id='harga_sewa_we' min="0" required class="span11" id="harga_sewa_we" type="number" onChange="hasil();" value="0" />
                       <div class="loading">
                         <img src="../../../asset/images/loading.gif" width="18"> <small>Loading...</small>
-                      </div>  
-                    </div>                  
+                      </div>
+                    </div>
                   </div>
 
                   <div hidden class="control-group">
@@ -127,7 +128,7 @@
                       <input name="total" min="0" id="total" class="span11" type="number" required/>
                       <div class="loading">
                         <img src="../../../asset/images/loading.gif" width="18"> <small>Loading...</small>
-                      </div>                        
+                      </div>
                     </div>
                   </div>
                   <div class="control-group">
@@ -180,7 +181,7 @@
   <div id="note-induk">
     <div class="widget-title" id="note-bar" style="cursor:pointer;"> <span class="icon"><i class="icon-comment"></i></span>
       <h5 id="note-cap">Catatan</h5>
-    </div>    
+    </div>
     <div id="note-anak">
       <div class="control-group newpadd">
         <div id="note-anak-isi">
@@ -189,14 +190,14 @@
       </div>
       <div class="controls" style="padding: 10px; text-align:right;">
         <a class='btn' id="pilih-penyewa">Pilih penyewa</a>
-      </div>        
+      </div>
     </div>
-  </div>    
+  </div>
 </div>
 <script>
 function ConvertText() {
     var x = document.getElementById("catatan").value;
-    
+
 }
 </script>
 

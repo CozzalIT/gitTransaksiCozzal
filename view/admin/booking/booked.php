@@ -23,7 +23,7 @@
         <div class="refresh-blok" style="text-align: right;">
             <a style="text-align: right;" href="#" class="btn btn-light"><i class="icon-refresh"></i> <strong>Refresh</strong></a>
             <a id="p" href="#popup-task"  data-toggle="modal" style="text-decoration:none;cursor: pointer;"></a>
-        </div>        
+        </div>
         <div class="widget-box" style="overflow-x:auto;">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
             <h5>Data Masuk</h5>
@@ -59,8 +59,8 @@
                           <td>$data->check_in</td>
                           <td>$data->check_out</td>
                           <td>
-                            <a class='btn btn-success' href='booked_penyewa.php?kd_booked=$data->kd_booked'>Transaksi</a> 
-                            <a class='btn btn-danger hapus' href='../../../proses/booked.php?hapus=$data->kd_booked&unit=$data->kd_unit&ci=$data->check_in'>Hapus</a>                       
+                            <a class='btn btn-success' href='booked_penyewa.php?kd_booked=$data->kd_booked'>Transaksi</a>
+                            <a class='btn btn-danger hapus' href='../../../proses/booked.php?hapus=$data->kd_booked&unit=$data->kd_unit&ci=$data->check_in'>Hapus</a>
                           </td>
                         </tr>
                       ";
@@ -74,12 +74,12 @@
         </div>
       </div>
     </div>
-  </div> 
+  </div>
 </div>
 
 <!--Footer-part-->
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
+  <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
 </div>
 
 <!--end-Footer-part-->
@@ -93,16 +93,16 @@
     <div id="note-induk">
       <div class="widget-title" id="note-bar" style="cursor:pointer;"> <span class="icon"><i class="icon-list-ul"></i></span>
         <h5 id="note-cap">List Unit</h5>
-      </div>    
+      </div>
       <div id="note-anak">
         <div class="control-group newpadd" style="max-height: 200px;">
           <div id="note-anak-isi">
             <!-- Dynamic Element -->
           </div>
-        </div>  
-        <p style="margin: 5px"></p>     
+        </div>
+        <p style="margin: 5px"></p>
       </div>
-    </div>    
+    </div>
 </div>
 <!-- //modal popup tambah unit-->
 
@@ -121,8 +121,8 @@
     setStatus("Mensinkronkan unit ke-"+hit+" dari "+max+" unit ...");
     a = unit_arr[i];
     $.post("../../../ics/generate2.php", {
-      cek_by_id : a.kd_unit, 
-      kd_apt : a.kd_apt, 
+      cek_by_id : a.kd_unit,
+      kd_apt : a.kd_apt,
       url_bnb : a.url_bnb
     },
     function (data) {
@@ -134,8 +134,8 @@
         $("#"+i).attr("class","icon-ok");
         refresh(hit, max_i);
       }
-    });       
-  } 
+    });
+  }
 
   $(".btn-light").click(function(){
     $(this).hide();
@@ -153,7 +153,7 @@
       }
       $('#p').click();
       refresh(0, a.length-1);
-    }); 
+    });
 
   });
 </script>
