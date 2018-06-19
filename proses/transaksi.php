@@ -74,7 +74,7 @@ if(isset($_POST['addTransaksi']) || isset($_POST["Transaksi_booked"])){
   }
   $catatan = $_POST['catatan'];
   $deposit = $_POST['deposit'];
-  
+
   $proses_u = new Unit($db);
   $show_u = $proses_u->editUnit($kd_unit);
   $data_u = $show_u->fetch(PDO::FETCH_OBJ);
@@ -257,7 +257,7 @@ elseif(isset($_POST['updateTransaksi'])){
   $harga_sewa_we = $_POST['harga_sewa_we'];
   $harga_sewa_asli = $_POST['harga_sewa_asli'];
   $harga_sewa_gbg = $_POST['harga_sewa_gbg'];
- 
+
   $ekstra_charge = $_POST['ekstra_charge'];
   $kd_booking = $_POST['booking_via'];
   $kd_kas = $_POST['kas'];

@@ -203,6 +203,28 @@ class Transaksi {
       tb_penyewa.kd_penyewa, tb_penyewa.nama, tb_penyewa.alamat, tb_penyewa.no_tlp, tb_penyewa.email, tb_penyewa.jenis_kelamin,
       tb_apt.kd_apt, tb_apt.nama_apt,
       tb_kas.kd_kas, tb_kas.sumber_dana,
+      tb_unit.kd_unit, tb_unit.no_unit,
+      #tb_detail_unit.lantai,
+      tb_booking_via.kd_booking, tb_booking_via.booking_via
+        from tb_transaksi
+        INNER JOIN tb_penyewa ON tb_penyewa.kd_penyewa = tb_transaksi.kd_penyewa
+        INNER JOIN tb_apt ON tb_apt.kd_apt = tb_transaksi.kd_apt
+        INNER JOIN tb_kas ON tb_kas.kd_kas = tb_transaksi.kd_kas
+        INNER JOIN tb_booking_via ON tb_booking_via.kd_booking = tb_transaksi.kd_booking
+        INNER JOIN tb_unit ON tb_unit.kd_unit = tb_transaksi.kd_unit
+		    #INNER JOIN tb_detail_unit ON tb_detail_unit.kd_unit = tb_transaksi.kd_unit
+		WHERE kd_transaksi='$kd_transaksi'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
+  public function detailTransaksi($kd_transaksi){
+    $sql = "SELECT
+      tb_transaksi.kd_transaksi, tb_transaksi.kd_penyewa, tb_transaksi.kd_apt, tb_transaksi.kd_unit, tb_transaksi.tamu, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.harga_sewa, tb_transaksi.harga_sewa_weekend, tb_transaksi.harga_sewa_gbg, tb_transaksi.ekstra_charge, tb_transaksi.kd_booking, tb_transaksi.kd_kas, tb_transaksi.dp, tb_transaksi.total_tagihan, tb_transaksi.total_harga_owner, tb_transaksi.sisa_pelunasan, tb_transaksi.pembayaran, tb_transaksi.tgl_transaksi, tb_transaksi.diskon,
+      tb_transaksi.hari, tb_transaksi.hari_weekday, tb_transaksi.hari_weekend, tb_transaksi.harga_owner, tb_transaksi.harga_owner_weekend, tb_transaksi.catatan,  tb_transaksi.total_harga_owner,tb_transaksi.deposit,
+      tb_penyewa.kd_penyewa, tb_penyewa.nama, tb_penyewa.alamat, tb_penyewa.no_tlp, tb_penyewa.email, tb_penyewa.jenis_kelamin,
+      tb_apt.kd_apt, tb_apt.nama_apt,
+      tb_kas.kd_kas, tb_kas.sumber_dana,
       tb_unit.kd_unit, tb_unit.no_unit,tb_detail_unit.lantai,
       tb_booking_via.kd_booking, tb_booking_via.booking_via
         from tb_transaksi
@@ -211,7 +233,7 @@ class Transaksi {
         INNER JOIN tb_kas ON tb_kas.kd_kas = tb_transaksi.kd_kas
         INNER JOIN tb_booking_via ON tb_booking_via.kd_booking = tb_transaksi.kd_booking
         INNER JOIN tb_unit ON tb_unit.kd_unit = tb_transaksi.kd_unit
-		INNER JOIN tb_detail_unit ON tb_detail_unit.kd_unit = tb_transaksi.kd_unit
+		    INNER JOIN tb_detail_unit ON tb_detail_unit.kd_unit = tb_transaksi.kd_unit
 		WHERE kd_transaksi='$kd_transaksi'";
     $query = $this->db->query($sql);
     return $query;
