@@ -21,6 +21,7 @@
       {
         require("../../../../config/database.php");
         require("../../../class/booked.php");
+        require("../../../class/penyewa.php");
         $Proses = new Booked($db);
         $kd_booked = $_GET['kd_booked'];
         $show = $Proses->showDetail_booked($kd_booked);
@@ -34,12 +35,26 @@
             <div class="widget-box">
               <div class="widget-title"> <span class="icon"> <i id="icon-title" class="icon-user"></i> </span> <h5 id="cap-title">Data Penyewa Baru</h5>
               </div>
-              <div class="widget-content nopadding">
+              <div class="widget-content nopadding">              
                 <form id="p_baru" class="form-horizontal">
+<?php
+  $x = 0;
+  $proses = new Penyewa($db);
+  $show = $proses->showPenyewa_cek($edit->penyewa,$edit->no_tlp,"");
+  $callback = array();
+  while($data = $show->fetch(PDO::FETCH_OBJ)){
+   $x++;
+  }
+  if($x!=0){
+    echo '<div class="alert alert-warning" style="margin:0px;" role="alert">
+          Ditemukan beberapa kesamaan antara data dibawah dengan data penyewa lama
+        </div>';
+  }
+?>  
                   <div class="control-group">
                     <label class="control-label">Nama Lengkap:</label>
                     <div class="controls">
-                    <input id="nama" type="text" class="span11" value="<?php echo $edit->penyewa; ?>"disabled/>
+                    <input style="cursor: text;" title="Klik untuk cari" id="nama" type="text" class="span11" value="<?php echo $edit->penyewa; ?>"disabled/>
                     </div>
                   </div>
                   <div class="control-group">
@@ -76,7 +91,7 @@
                 </form>
                 <form id="p_lama" action="booked_transaksi.php" method="post" class="form-horizontal">
                   <div id="note-anak">
-                    <input type="text" id="kd_penyewa" class="search" placeholder="Cari Penyewa" style="margin:10px;width: 80%;" onkeyup="filter()" />
+                    <input type="text" class="search" placeholder="Cari Penyewa" style="margin:10px;width: 80%;" onkeyup="filter()" />
                     <div class="control-group newpadd" style="max-height: 290px;">
                       <div id="note-anak-isi">
                         <div class="note loading">

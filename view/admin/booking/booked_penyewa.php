@@ -35,22 +35,22 @@
             <div class="widget-box">
               <div class="widget-title"> <span class="icon"> <i id="icon-title" class="icon-user"></i> </span> <h5 id="cap-title">Data Penyewa Baru</h5>
               </div>
-              <div class="widget-content nopadding">
+              <div class="widget-content nopadding">              
                 <form id="p_baru" class="form-horizontal">
-                  <?php
-                    $x = 0;
-                    $proses = new Penyewa($db);
-                    $show = $proses->showPenyewa_cek($edit->penyewa,$edit->no_tlp,"");
-                    $callback = array();
-                    while($data = $show->fetch(PDO::FETCH_OBJ)){
-                     $x++;
-                    }
-                    if($x!=0){
-                      echo '<div class="alert alert-warning" style="margin:0px;" role="alert">
-                            Ditemukan beberapa kesamaan antara data dibawah dengan data penyewa lama
-                          </div>';
-                    }
-                  ?>
+<?php
+  $x = 0;
+  $proses = new Penyewa($db);
+  $show = $proses->showPenyewa_cek($edit->penyewa,$edit->no_tlp,"");
+  $callback = array();
+  while($data = $show->fetch(PDO::FETCH_OBJ)){
+   $x++;
+  }
+  if($x!=0){
+    echo '<div class="alert alert-warning" style="margin:0px;" role="alert">
+          Ditemukan beberapa kesamaan antara data dibawah dengan data penyewa lama
+        </div>';
+  }
+?>  
                   <div class="control-group">
                     <label class="control-label">Nama Lengkap:</label>
                     <div class="controls">

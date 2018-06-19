@@ -39,7 +39,7 @@ function getcount($tgl, $jenis, $Proses){
   return $data->jumlah;
 }
 
-function new_detail($Proses, $tgl, $jenis){
+function new_detail($Proses, $tgl, $jenis, $index){
   $ret = "";
   if ($jenis!='stay'){
     $show = $Proses->showUnit_cek($tgl, $jenis, "");
@@ -51,7 +51,11 @@ function new_detail($Proses, $tgl, $jenis){
     $ret .= '<strong>'.$data->no_unit.' ( '.$data->nama.' - '.$data->no_tlp.' )</strong><br>'.$data->nama_apt.' - '.$data->alamat_apt;
     if($jenis=="check_out"){
       $JCO = formated_jam_co($data->jam_check_out);      
-      $ret .= '<br> Jam check out : <a href="#popup-jam" onclick="show_J('."'".$JCO.'/'.$data->kd_unit."'".')" data-toggle="modal" style="cursor:pointer;">'.$JCO.'</a>';
+      if($index!=0){
+        $ret .= '<br> Jam check out : <a href="#popup-jam" onclick="show_J('."'".$JCO.'/'.$data->kd_unit."'".')" data-toggle="modal" style="cursor:pointer;">'.$JCO.'</a>';
+      } else {
+        $ret .= '<br> Jam check out : <a style="cursor: not-allowed;">'.$JCO.'</a>';
+      }
     }
     $ret .= '</div>';
   }
@@ -71,11 +75,12 @@ if(isset($_POST['show_tanggal'])){
 
 elseif(isset($_POST['detail_timeline'])){
   $tgl = $_POST['detail_timeline']; 
+  $index = $_POST['index'];
   $Proses = new Cleaner($db); 
   $CI = ""; $CO = ""; $ST = "";
-  $CI .= new_detail($Proses, $tgl, "check_in"); 
-  $CO .= new_detail($Proses, $tgl, "check_out");
-  $ST .= new_detail($Proses, $tgl, "stay");
+  $CI .= new_detail($Proses, $tgl, "check_in", $index); 
+  $CO .= new_detail($Proses, $tgl, "check_out", $index);
+  $ST .= new_detail($Proses, $tgl, "stay", $index);
   $callback = array('CI'=>$CI, 'CO'=>$CO, 'ST'=>$ST);
   echo json_encode($callback);
 }
