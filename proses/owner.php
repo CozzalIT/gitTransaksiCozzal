@@ -48,6 +48,22 @@ elseif(isset($_POST['addOwner'])){
   	else echo 'error';
 }
 
+//Tambah Penawaran
+elseif(isset($_POST['addPenawaran'])){
+	$judul= $_POST['judul'];
+	$pesan= $_POST['pesan'];
+	echo $judul.'<br>'.$pesan;
+	die;
+
+    $proses = new Owner($db);
+    $add = $proses->addOwner($nama, $alamat, $no_tlp, $kd_bank, $no_rek, $tgl_gabung, $email, $jenis_kelamin);
+
+    if($add == "Success"){
+      header('Location:../view/'.$view.'/owner/owner.php');
+    }
+  	else echo 'error';
+}
+
 //Delete Owner
 elseif(isset($_GET['delete_owner']) && ($view=="superadmin" || $view=="manager")){
   $proses = new Owner($db);

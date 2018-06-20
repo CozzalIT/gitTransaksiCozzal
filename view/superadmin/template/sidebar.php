@@ -19,6 +19,7 @@
     </li>
     <li <?php if($thisPage == "Kas") echo "class='active'"; ?>><a href="../kas/kas.php"><i class="icon icon-credit-card"></i> <span>Kas Cozzal</span></a> </li>
     <li <?php if($thisPage == "Owner Payment") echo "class='active'"; ?>><a href="../owner/owner_payment.php"><i class="icon icon-inbox"></i> <span>Owner Payment</span></a> </li>
+    <li <?php if($thisPage == "Penawaran Owner") echo "class='active'"; ?>><a href="../owner/penawaran.php"><i class="icon icon-check"></i> <span>Penawaran Owner</span></a> </li>
     <li <?php if($thisPage == "Account Management") echo "class='active'"; ?>><a href="../account/account_management.php"><i class="icon icon-sitemap"></i> <span>Account Management</span></a> </li>
     <li class="submenu <?php if($thisPage == "Booking Request") echo " active"; ?>"> <a href="#"><i class="icon icon-file"></i> <span>Booking List</span></a>
       <ul>
