@@ -27,6 +27,7 @@
             <h5 style="color:#359b20;">Confirmed</h5>
           </div>
           <div class="widget-content nopadding">
+
 			      <table class="table table-bordered data-table">
               <thead>
                 <tr>
@@ -37,7 +38,7 @@
                   <th>Check In</th>
         		      <th>Check Out</th>
                   <th>Pendapatan</th>
-                  <th>Action</th>
+                  <th id='sort'>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -144,6 +145,13 @@
     </div>
   </div>
 </div>
+<script>
+  function sortAction(){
+    var sort = document.getElementById('sort');
+    sort.click();
+  }
+  window.onload = sortAction;
+</script>
 
 <!--Footer-part-->
 <div class="row-fluid">
