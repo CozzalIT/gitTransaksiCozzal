@@ -149,6 +149,7 @@
   function sortAction(){
     var sort = document.getElementById('sort');
     sort.click();
+    sort.click();
   }
   window.onload = sortAction;
 </script>
