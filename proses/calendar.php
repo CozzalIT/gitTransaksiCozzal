@@ -145,6 +145,46 @@ elseif(isset($_POST['updateModHarga'])){
   }
 }
 
+// proses add URL baru ( selain URL sistem/cozzal )
+elseif(isset($_POST['addURL'])){
+  $kd_unit = $_POST['kd_unit'];
+  $title = $_POST['nama_url'];
+  $jenis = "1"; // 1 menandakan bahwa url tersebut adalah url non sistem
+  $url = $_POST['url'];
+  $group_update = $_POST['group_update'];
+  $proses = new Ics_unit($db);
+  $proses->buildURL($kd_unit, $title, $jenis, $url, $group_update);
+  header('Location:../view/'.$view.'/unit/calendar.php?calendar_unit='.$kd_unit);
+}
+
+elseif(isset($_POST['updateURL'])){
+  $kd_url = $_POST['kd_url'];
+  $kd_unit = $_POST['kd_unit'];
+  $title = $_POST['nama_url'];
+  $jenis = "1"; // 1 menandakan bahwa url tersebut adalah url non sistem
+  $url = $_POST['url'];
+  $group_update = $_POST['group_update'];
+  $proses = new Ics_unit($db);
+  $proses->updateURL($kd_url, $title, $jenis, $url, $group_update);
+  header('Location:../view/'.$view.'/unit/calendar.php?calendar_unit='.$kd_unit);    
+}
+
+elseif(isset($_GET['deleteURL'])){
+  $kd_url = $_GET['deleteURL'];
+  $kd_unit = $_GET['kd_unit'];
+  $proses = new Calendar($db);
+  $proses->deleteURL($kd_url);
+  header('Location:../view/'.$view.'/unit/calendar.php?calendar_unit='.$kd_unit);      
+}
+
+elseif(isset($_POST['showKd_url'])){
+  $kd_url = $_POST['showKd_url'];
+  $proses = new Calendar($db);
+  $show = $proses->editURL($kd_url);
+  $data = $show->fetch(PDO::FETCH_OBJ);
+  echo json_encode($data);  
+}
+
 else{
   header('Location:../view/'.$view.'/home/home.php');
 }

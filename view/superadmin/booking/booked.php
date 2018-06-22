@@ -18,7 +18,7 @@
   <div class="container-fluid">
     <div class="row-fluid">
       <div class="span12">
-        <h3>Booked by Airbnb</h3>
+        <h3>Booked by Other</h3>
         <hr>
         <div class="refresh-blok" style="text-align: right;">
             <a style="text-align: right;" href="#" class="btn btn-light"><i class="icon-refresh"></i> <strong>Refresh</strong></a>
@@ -39,16 +39,21 @@
                   <th>Unit</th>
                   <th>Check In</th>
                   <th>Check Out</th>
+                  <th>Booked By</th>
 				          <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 <?php
                   $Proses = new Booking($db);
-        				  $show = $Proses->showBooked_airbnb();
+        				  $show = $Proses->showBooked_byURL();
                   $i = 1;
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-                    if($data->status=='1'){
+                    if($data->status!=''){
+                      if($data->title!="")
+                        $title = $data->title;
+                      else
+                        $title = 'Unlisted';
                       echo "
                         <tr class=gradeC'>
                           <td>$i</td>
@@ -58,6 +63,7 @@
                           <td>$data->no_unit</td>
                           <td>$data->check_in</td>
                           <td>$data->check_out</td>
+                          <td>$title</td>
                           <td>
                             <a class='btn btn-success' href='booked_penyewa.php?kd_booked=$data->kd_booked'>Transaksi</a>
                             <a class='btn btn-danger hapus' href='../../../proses/booked.php?hapus=$data->kd_booked&unit=$data->kd_unit&ci=$data->check_in'>Hapus</a>
@@ -120,10 +126,9 @@
     hit = i+1; max = max_i+1;
     setStatus("Mensinkronkan unit ke-"+hit+" dari "+max+" unit ...");
     a = unit_arr[i];
-    $.post("../../../ics/generate2.php", {
-      cek_by_id : a.kd_unit,
-      kd_apt : a.kd_apt,
-      url_bnb : a.url_bnb
+    $.post("../../../proses/ics.php", {
+      generateAll : a.kd_unit,
+      kd_apt : a.kd_apt
     },
     function (data) {
       $("#"+i).attr("class","icon-ok");
@@ -141,15 +146,15 @@
     $(this).hide();
     setStatus("Mengambil data unit ...");
     $("#p").show();
-    $.post("../../../proses/booked.php", {get_property : '1'},
+    $.post("../../../proses/booked.php", {get_ListUnit : '1'},
     function (data) {
       response = JSON.parse(data);
       var a = response.prop.split(" ^ ");
       for(i=0;i<a.length;i++){
         b = a[i].split(" * ");
-        c = {kd_unit: b[0], kd_apt: b[1], url_bnb: b[2]};
+        c = {kd_unit: b[0], kd_apt: b[1]};
         unit_arr[i] = c;
-        $("#note-anak-isi").append('<div class="note"><span class="icon"><i id="'+i+'" class="icon-time"></i></span>  '+b[3]+' - '+b[4]+'</div>');
+        $("#note-anak-isi").append('<div class="note"><span class="icon"><i id="'+i+'" class="icon-time"></i></span>  '+b[2]+' - '+b[3]+'</div>');
       }
       $('#p').click();
       refresh(0, a.length-1);

@@ -3,6 +3,8 @@
 require("../../config/database.php");
 require("../class/ics_unit.php");
 
+$unit = new Ics_unit($db);
+
 function getformatingdate($date){
 	$tahun = $date[0].$date[1].$date[2].$date[3];
 	$bulan = $date[4].$date[5];
@@ -14,8 +16,8 @@ function getrealdate($date){
 	return strtotime(getformatingdate($date));
 }
 
-function getlocalics($url, $kd_unit){	
-	$local_file = "../../listics/cache/".$kd_unit.".ics";
+function getlocalics($url, $kd_url){	
+	$local_file = "../../listics/cache/".$kd_url.".ics";
 	$remote_file  = $url; // url nya
 	$ch = curl_init();
 	$fp = fopen($local_file,"w"); // mungkin pake yg "w" aja
@@ -27,19 +29,17 @@ function getlocalics($url, $kd_unit){
 	curl_exec($ch);
 	curl_close($ch);
 	fclose($fp);
-	return "../../listics/cache/".$kd_unit.".ics";
+	return $local_file;
 }
 
-if(isset($_POST['cek_by_id'])){
-	$kd_unit = $_POST['cek_by_id'];
-	$kd_apt = $_POST['kd_apt'];
-	$url_bnb = $_POST['url_bnb'];
+function loadIcs($kd_unit, $kd_apt, $kd_url, $url, $unit, $ICS){
+
 	date_default_timezone_set('Asia/Jakarta');
 	$sekarang = date('Y-m-d', strtotime('-90 Days'));
+
 	$current_trx = array();
 	$current_booked = array();
 
-	$unit = new Ics_unit($db);
 	$show2 = $unit->showRecent_trx($kd_unit, $sekarang);
 	while($data2 = $show2->fetch(PDO::FETCH_OBJ)){
 		$current_trx[] = $data2->check_in; 
@@ -51,10 +51,10 @@ if(isset($_POST['cek_by_id'])){
 		$current_booked[] = $data2->check_in;
 	}
 	
-	require("../class/ics.php");
 	$newEvent = array();
-	//$ICS = new ICS($url_bnb);
-	$ICS = new ICS(getlocalics($url_bnb, $kd_unit));
+
+	$ICS->change_file(getlocalics($url, $kd_url));
+
 	$icsEvents = $ICS->cal_to_array();
 	for($i=0; $i<count($icsEvents); $i++){
 		$tmp_arr = $icsEvents[$i];
@@ -69,8 +69,7 @@ if(isset($_POST['cek_by_id'])){
 				$no_tlp = $tmp_arr['PHONE'];
 				$check_in = getformatingdate($tmp_arr['DTSTART;VALUE=DATE']); 
 				$check_out = getformatingdate($tmp_arr['DTEND;VALUE=DATE']); 
-				$unit->createBooked($kd_unit, $kd_apt, $penyewa, $no_tlp, $check_in, $check_out);
-				//echo $kd_unit."><".$kd_apt."><".$penyewa."><".$no_tlp."><".$check_in."><".$check_out."<br>";
+				$unit->createBooked($kd_unit, $kd_apt, $penyewa, $no_tlp, $check_in, $check_out, $kd_url);
 			}
 		}
 	}
@@ -80,8 +79,51 @@ if(isset($_POST['cek_by_id'])){
 		}
 	}
 
-    $unit->buildIcs($kd_unit);
+	$ICS = null;
+}
+
+function loadICS_once($kd_unit, $kd_apt, $kd_url, $url, $unit){
+	include '../class/ics.php';
+	$ICS = new ICS("");
+	loadICS($kd_unit, $kd_apt, $kd_url, $url, $unit, $ICS);
+}
+
+function loadICS_often($kd_unit, $kd_apt, $unit, $show){
+	$ICS = new ICS("");
+	while ($data = $show->fetch(PDO::FETCH_OBJ)) {
+		loadICS($kd_unit, $kd_apt, $data->kd_url, $data->url, $unit, $ICS);
+	}
+}
+
+// refresh/update url tertentu
+if(isset($_POST['generateSome'])){ // asalnnya cek_by_id
+	$kd_unit = $_POST['generateSome'];
+	$kd_apt = $_POST['kd_apt'];
+	$kd_url = $_POST['kd_url'];
+
+	$show = $unit->urlByKd_url($kd_url);
+	$data = $show->fetch(PDO::FETCH_OBJ);
+	loadICS_once($kd_unit, $kd_apt, $kd_url, $data->url, $unit);
 	$callback = array('status'=>'done');
 	echo json_encode($callback);
+}
+
+elseif(isset($_POST['generateAll'])){
+	$kd_unit = $_POST['generateAll'];
+	$kd_apt = $_POST['kd_apt'];
+	$unit->buildIcs($kd_unit);
+	$show = $unit->showURL($kd_unit, "1");
+	loadICS_often($kd_unit, $kd_apt, $unit, $show);
+
+	$callback = array('status'=>'done');
+	echo json_encode($callback);	
+}
+
+elseif(isset($_POST['generateSys'])) {
+	$kd_unit = $_POST['generateSys'];
+	$unit->buildIcs($kd_unit);
+
+	$callback = array('status'=>'done');
+	echo json_encode($callback);		
 }
 ?>

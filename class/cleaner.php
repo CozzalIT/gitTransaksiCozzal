@@ -6,6 +6,7 @@ class Cleaner {
     $this->db = $database;
   }
 
+  //menampilkan unit kotor yang sudh check_out dan belum di bersihkan
   public function showUnit1($sekarang){
     $sql = "SELECT tb_unit.kd_unit, tb_unit.no_unit, tb_apt.nama_apt, tb_apt.alamat_apt,
     tb_unit_kotor.check_out, tb_unit_kotor.jam_check_out FROM tb_unit
@@ -17,24 +18,26 @@ class Cleaner {
     return $query;
   }
 
+  //menampilkan unit yang akan check_in dan check_out pada hari yang sama
   public function showUnit2($sekarang){
     $sql = "SELECT tb_unit.kd_unit, tb_unit.no_unit, tb_apt.nama_apt, tb_apt.alamat_apt,
     tb_unit_kotor.jam_check_out FROM tb_unit
     INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt
     INNER JOIN tb_unit_kotor ON tb_unit_kotor.kd_unit = tb_unit.kd_unit
-    WHERE tb_unit_kotor.check_out='$sekarang' AND tb_unit_kotor.status IS NULL 
-    AND tb_unit_kotor.kd_unit IN (SELECT kd_unit FROM tb_unit_kotor WHERE check_in='$sekarang')";
+    WHERE tb_unit_kotor.check_out='$sekarang'  AND tb_unit_kotor.kd_unit 
+    IN (SELECT kd_unit FROM tb_unit_kotor WHERE check_in='$sekarang')";
     $query = $this->db->query($sql);
     return $query;
   }
 
+  //menampilkan unit yang akan check_in dan punya riwayat kotor
   public function showUnit3($sekarang){
     $sql = "SELECT tb_unit.kd_unit, tb_unit.no_unit, tb_apt.nama_apt, tb_apt.alamat_apt,
     tb_unit_kotor.jam_check_out FROM tb_unit
     INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt
     INNER JOIN tb_unit_kotor ON tb_unit_kotor.kd_unit = tb_unit.kd_unit
-    WHERE tb_unit_kotor.check_in='$sekarang' AND tb_unit_kotor.status IS NULL
-    and tb_unit_kotor.kd_unit in (SELECT kd_unit from tb_unit_kotor where check_out<'$sekarang')";
+    WHERE tb_unit_kotor.check_in='$sekarang' AND tb_unit_kotor.kd_unit 
+    IN (SELECT kd_unit from tb_unit_kotor where check_out<'$sekarang' AND status IS NULL)";
     $query = $this->db->query($sql);
     return $query;
   }

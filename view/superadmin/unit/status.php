@@ -38,11 +38,12 @@
                   <th>Status</th>
                   <th>Kebersihan</th>
                   <th>Action</th>
+                  <!-- <th>Order</th> -->
                 </tr>
               </thead>
               <tbody>
                 <?php
-                function printtable($i, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $kd_unit){
+                function printtable($i, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $kd_unit, $order){
                       echo "
                         <tr>
                           <td id='$kd_unit-nourut' class='hide'>$i</td>
@@ -55,9 +56,10 @@
                             <center>
                                $button
                             </center>
-                          </td>
-                        </tr>
-                      ";                  
+                          </td>"
+                          // ."<td>$order</td>" 
+                          ."</tr>
+                      ";  // order digunakan ketika menelusuri masalah untuk memudahkan klasifikasi unitkotor
                 }
 
               function get_value_config($parameter){
@@ -120,7 +122,7 @@
                       $nama_apt = "<td id='$data->kd_unit-nameapt'>$data->nama_apt</td>";
                       $alamat_apt = "<td class='hiderespons'>$data->alamat_apt</td>";
                       $listed_unit[] = $data->kd_unit;
-                      printtable($i, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $data->kd_unit);
+                      printtable($i, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $data->kd_unit,'1');
                     }
                   };
 
@@ -145,7 +147,7 @@
                       $nama_apt = "<td id='$data->kd_unit-nameapt'>$data->nama_apt</td>";
                       $alamat_apt = "<td class='hiderespons'>$data->alamat_apt</td>";
                       $listed_unit[] = $data->kd_unit;
-                      printtable($i, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $data->kd_unit);
+                      printtable($i, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $data->kd_unit,'2');
                       }
                     };
 
@@ -166,7 +168,7 @@
                       $nama_apt = "<td id='$data->kd_unit-nameapt'>$data->nama_apt</td>";
                       $alamat_apt = "<td class='hiderespons'>$data->alamat_apt</td>";
                       $listed_unit[] = $data->kd_unit;
-                      printtable($i, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $data->kd_unit);
+                      printtable($i, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $data->kd_unit,'3');
                       }
                     };
                   $Proses = new Cleaner($db);
@@ -180,7 +182,7 @@
                       $status = "<td id='$data->kd_unit-stat-bersih'>Bersih</td>";
                       $button = "<a class='btn btn-Basic popup' data-toggle='modal' id='$data->kd_unit"."-none' href='#popup-task' >Tidak Ada</a>";
                       $listed_unit[] = $data->kd_unit;
-                      printtable(6, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $data->kd_unit);
+                      printtable(6, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $data->kd_unit,'N');
                     }
                     };
                 ?>

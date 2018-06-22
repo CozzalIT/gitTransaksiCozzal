@@ -57,6 +57,10 @@ class ICS {
     $this->file_nama = $name_file;
   }
 
+  public function __destruct(){
+    $this->file_nama = '';
+  }
+
   public function change_file($new_file){
     $this->file_nama = $new_file;
   }

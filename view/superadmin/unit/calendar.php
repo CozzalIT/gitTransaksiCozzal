@@ -1,6 +1,7 @@
 <?php
   require("../../../class/calendar.php");
   require("../../../../config/database.php");
+  require("../../../class/ics_unit.php");
 
   $thisPage = "Unit";
 
@@ -10,6 +11,7 @@
 <?php
   include "../template/header.php";
   include "../template/sidebar.php";
+  $ics_unit = new Ics_unit($db);
 
   if (isset($_GET['calendar_unit'])){
     $arrayunit = array();
@@ -20,18 +22,16 @@
       if($data->kd_unit==$kd_unit){
         $no_unit = $data->no_unit;
         $nama_apt = $data->nama_apt;
-        $cal_bnb = $data->url_bnb;
-        $cal_cozzal = $data->url_cozzal;
         $kd_apt = $data->kd_apt;
-        if($cal_cozzal==""){
-          $cal_cozzal = "<a href='../../../proses/unit.php?newics=$kd_unit' class='btn btn-small'>Buat Link</a>";
-        }
-        if($cal_bnb==""){
-          $cal_bnb = "Belum Tersedia";
-        }
       } 
       $arrayunit[] = $data->kd_unit;
       $arrayunit[] = $data->no_unit." - ".$data->nama_apt;
+    }
+
+    $cal_cozzal = "<a href='../../../proses/unit.php?newics=$kd_unit' class='btn btn-small'>Buat Link</a>";
+    $cal = $ics_unit->showURL($kd_unit, "0");
+    while($data = $cal->fetch(PDO::FETCH_OBJ)){
+      $cal_cozzal = $data->url;
     }
   }
 ?>
@@ -270,248 +270,7 @@
   <?php include 'calendar_option.php'; ?>
 </div>
 
-<div id="popup-blok" class="modal hide">
-  <div class="modal-header">
-    <button data-dismiss="modal" class="close" type="button">×</button>
-    <h3>Blok Tanggal</h3>
-  </div>
-  <form action="../../../proses/calendar.php" method="post" class="form-horizontal">
-    <div class="modal-body">
-  	  <label class="control-label">Awal :</label>
-    	<div class="controls">
-    		 <input name="awal" type="date" class="span2" required/>
-    	</div>
-      <label class="control-label">Akhir :</label>
-      <div class="controls">
-        <input name="akhir" type="date" class="span2" required/>
-      </div>
-      <label class="control-label">Catatan :</label>
-      <div class="controls">
-        <input name="catatan" type="text" class="span2" required/>
-        <input name="kd_unit" type="text" class="span2 hide" value="<?php echo $kd_unit; ?>" required/>
-      </div>
-      <div class="control-group">
-        <div class="controls">
-          <input type="submit" name="blokCalendar" class="btn btn-success">
-          <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
-        </div>
-      </div>
-    </div>
-  </form>
-</div>
-
-<div id="popup-maintenance" class="modal hide">
-  <div class="modal-header">
-    <button data-dismiss="modal" class="close" type="button">×</button>
-    <h3>Maintenance</h3>
-  </div>
-  <div class="modal-body">
-  	<form action="../../../proses/calendar.php" method="post" class="form-horizontal">
-  	  <div class="control-group">
-  		  <label class="control-label">Awal : </label>
-    		<div class="controls">
-    		  <input name="awal" type="date" class="span2" required/>
-    		</div>
-        <label class="control-label">Akhir :</label>
-        <div class="controls">
-          <input name="akhir" type="date" class="span2" required/>
-        </div>
-        <label class="control-label">Catatan :</label>
-        <div class="controls">
-          <input name="catatan" type="text" class="span2" required/>
-          <input name="kd_unit" type="text" class="span2 hide" value="<?php echo $kd_unit; ?>" required/>
-        </div>
-  	  </div>
-  	  <div class="control-group">
-    		<div class="controls">
-    		  <input type="submit" name="addMaintenance" class="btn btn-success">
-    		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
-    		</div>
-  	  </div>
-  	</form>
-  </div>
-</div>
-
-<div id="popup-mod-harga" class="modal hide">
-  <div class="modal-header">
-    <button data-dismiss="modal" class="close" type="button">×</button>
-    <h3>Edit Harga</h3>
-  </div>
-  <div class="modal-body">
-  	<form action="../../../proses/calendar.php" method="post" class="form-horizontal">
-  	  <div class="control-group">
-  		  <label class="control-label">Unit : </label>
-    		<div class="controls">
-    		  <input name="unit" type="text" class="span2" value="<?php echo $no_unit.' ('.$nama_apt.')'; ?>" disabled/>
-    		</div>
-        <label class="control-label">Awal : </label>
-    		<div class="controls">
-    		  <input name="awal" type="date" class="span2" required/>
-    		</div>
-        <label class="control-label">Akhir : </label>
-    		<div class="controls">
-    		  <input name="akhir" type="date" class="span2" required/>
-    		</div>
-        <label class="control-label">Catatan : </label>
-    		<div class="controls">
-    		  <input name="note" type="text" class="span2" required/>
-    		</div>
-        <label class="control-label">Edit Harga :</label>
-        <div class="controls">
-          <input type="radio" name="jenis" value="hargaWeekend" onclick="(this.checked ? hargaWeekend() : '')" required> Harga Weekend<br>
-          <input type="radio" name="jenis" value="hargaBaru" onclick="(this.checked ? hargaBaru() : '')" required> Harga Baru
-        </div>
-        <label id="label_harga_sewa" class="control-label hide">Harga Sewa :</label>
-        <div class="controls">
-          <input name="harga_sewa" id="harga_sewa" type="number" class="span2 hide" value="0" required/>
-        </div>
-        <label id="label_harga_owner" class="control-label  hide">Harga Owner:</label>
-        <div class="controls">
-          <input name="harga_owner" id="harga_owner" type="number" class="span2 hide" value="0" required/>
-        </div>
-  	  </div>
-      <input name="kd_unit" type="text" class="span2 hide" value="<?php echo $kd_unit; ?>" required/>
-  	  <div class="control-group">
-    		<div class="controls">
-    		  <input type="submit" name="addModHarga" value="Submit" class="btn btn-success">
-    		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
-    		</div>
-  	  </div>
-  	</form>
-  </div>
-</div>
-
-<div id="popup-editEvent" class="hapus modal hide <?php if(isset($_POST['editBlok'])){ echo 'show'; }?>">
-  <div class="modal-header">
-    <form action="" method="post">
-      <button id="close" name="close" data-dismiss="modal" class="close" type="submit">×</button>
-    </form>
-    <?php
-      if(isset($_POST['close'])){
-        unset($_COOKIE['editBlok']);
-      }
-    ?>
-    <script type="text/javascript">
-      var element = document.getElementById("close");
-      var popup = document.querySelectorAll(".hapus");
-      element.onclick = function(){
-        popup[0].classList.remove("show");
-      }
-      function hapusBlok(id, modHarga){
-        $("#hapusBlok").attr("href","../../../proses/calendar.php?delete_event="+id+"&status_mod="+modHarga);
-      }
-    </script>
-    <h3>Edit Event</h3>
-  </div>
-  <div class="modal-body">
-    <?php
-      if(!isset($_POST['editBlok'])){
-        echo '
-        <form name="editEvent" action="" method="post" class="form-horizontal">
-          <div class="control-group">
-            <div class="control-group">
-              <label class="control-label hide">ID :</label>
-              <div class="controls">
-                <input name="id" type="text" class="span2 hide"/>
-              </div>
-              <label id="lbl_jenis" class="control-label">Jenis :</label>
-              <div class="controls">
-                <input name="jenis" type="text" class="span2" disabled/>
-              </div>
-              <label class="control-label">Tanggal Awal :</label>
-              <div class="controls">
-                <input name="awal" type="text" class="span2" disabled/>
-              </div>
-              <label class="control-label">Tanggal Akhir :</label>
-              <div class="controls">
-                <input name="akhir" type="text" class="span2" disabled/>
-              </div>
-              <label id="lbl_sewa" class="control-label">Harga Sewa :</label>
-              <div id="sewa" class="controls">
-                <input name="sewa" type="text" value="0" class="span2 hide" />
-                <input name="sewa_clone" type="text" value="0" class="span2" disabled/>
-              </div>
-              <label id="lbl_owner" class="control-label">Harga Owner :</label>
-              <div id="owner" class="controls">
-                <input name="owner" type="text" value="0" class="span2 hide" />
-                <input name="owner_clone" type="text" value="0" class="span2" disabled/>
-              </div>
-              <label class="control-label">Catatan :</label>
-              <div class="controls">
-                <input name="catatan" type="text" class="span2" disabled/>
-              </div>
-            </div>
-            <div class="control-group">
-              <div class="controls">
-                <input type="submit" id="editBlok" name="editBlok" class="btn btn-primary" value="Edit" />
-                <a class="btn btn-danger" id="hapusBlok">Hapus</a>
-              </div>
-            </div>
-          </div>
-        </form>
-        ';
-      }elseif(isset($_POST['editBlok'])){
-        $calendar = new Calendar($db);
-        if($_POST['sewa'] == 0 && $_POST['owner'] == 0){
-          $show = $calendar->editModCalendar($_POST['id']);
-          $data = $show->fetch(PDO::FETCH_OBJ);
-          $kode = $data->kd_mod_calendar;
-          $modHarga = false;
-        }elseif($_POST['sewa'] != 0 && $_POST['owner'] != 0){
-          $show = $calendar->editModHarga($_POST['id']);
-          $data = $show->fetch(PDO::FETCH_OBJ);
-          $kode = $data->kd_mod_harga;
-          $modHarga = true;
-        }
-        echo '
-        <form action="../../../proses/calendar.php" method="post" class="form-horizontal">
-          <div class="control-group">
-            <div class="control-group">
-              <label class="control-label hide">ID :</label>
-              <div class="controls">
-                <input name="id" type="text" class="span2 hide" value="'.$kode.'" required/>
-              </div>
-              <label class="control-label">Tanggal Awal :</label>
-              <div class="controls">
-                <input name="awal" type="date" class="span2" value="'.$data->start_date.'" />
-              </div>
-              <label class="control-label">Tanggal Akhir :</label>
-              <div class="controls">
-                <input name="akhir" type="date" class="span2" value="'.$data->end_date.'" />
-              </div>
-        ';
-        if($modHarga == true){
-          echo '
-              <label class="control-label">Harga Sewa :</label>
-              <div class="controls">
-                <input name="sewa" type="number" class="span2" value="'.$data->harga_sewa.'" />
-              </div>
-              <label class="control-label">Harga Owner :</label>
-              <div class="controls">
-                <input name="owner" type="number" class="span2" value="'.$data->harga_owner.'" />
-              </div>
-          ';
-        }
-        echo '
-              <label class="control-label">Catatan :</label>
-              <div class="controls">
-                <input name="catatan" type="text" class="span2" value="'.$data->note.'" />
-              </div>
-            </div>
-            <div class="control-group">
-              <div class="controls">
-                '.($modHarga == true ? '<button type="submit" name="updateModHarga" class="btn btn-success">Update</button>' : '<button type="submit" name="updateModCal" class="btn btn-success">Update</button>').'
-              </div>
-            </div>
-          </div>
-        </form>
-        ';
-      }
-    ?>
-
-
-  </div>
-</div>
+<?php include 'popup.php'; ?>
 
 <!--Footer-part-->
 <div class="row-fluid">

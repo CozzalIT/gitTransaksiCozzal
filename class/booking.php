@@ -24,11 +24,13 @@ class Booking {
     return $query;
   }
 
-  public function showBooked_airbnb(){
+  public function showBooked_byURL(){
     $sql = "SELECT tb_booked.kd_booked, tb_booked.penyewa, tb_booked.check_in, tb_booked.no_tlp,
-    tb_booked.check_out, tb_booked.status, tb_unit.no_unit, tb_unit.kd_unit, tb_apt.nama_apt FROM tb_booked
+    tb_booked.check_out, tb_booked.status, tb_unit.no_unit, tb_unit.kd_unit, tb_apt.nama_apt, 
+    tb_url_unit.title FROM tb_booked
+    INNER JOIN tb_unit ON tb_unit.kd_unit = tb_booked.kd_unit
     INNER JOIN tb_apt ON tb_apt.kd_apt = tb_booked.kd_apt
-    INNER JOIN tb_unit ON tb_unit.kd_unit = tb_booked.kd_unit";
+    LEFT JOIN tb_url_unit ON tb_booked.kd_url = tb_url_unit.kd_url";
     $query = $this->db->query($sql);
     return $query;
   }  

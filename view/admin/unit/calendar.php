@@ -12,19 +12,43 @@
   include "../template/sidebar.php";
 
   if (isset($_GET['calendar_unit'])){
+    $arrayunit = array();
     $calendar = new Calendar($db);
-    $show = $calendar->showNoUnit($_GET['calendar_unit']);
-    $data = $show->fetch(PDO::FETCH_OBJ);
     $kd_unit = $_GET['calendar_unit'];
-    $no_unit = $data->no_unit;
-    $nama_apt = $data->nama_apt;
+    $show = $calendar->showNoUnit();
+    while($data = $show->fetch(PDO::FETCH_OBJ)){
+      if($data->kd_unit==$kd_unit){
+        $no_unit = $data->no_unit;
+        $nama_apt = $data->nama_apt;
+        $kd_apt = $data->kd_apt;
+      } 
+      $arrayunit[] = $data->kd_unit;
+      $arrayunit[] = $data->no_unit." - ".$data->nama_apt;
+    }
+
+    $cal_cozzal = "<a href='../../../proses/unit.php?newics=$kd_unit' class='btn btn-small'>Buat Link</a>";
+    $cal = $calendar->showURL($kd_unit, "0");
+    while($data = $cal->fetch(PDO::FETCH_OBJ)){
+      $cal_cozzal = $data->url;
+    }
   }
 ?>
+
 <div id="content">
   <div id="content-header">
   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="unit.php" title="Go to Data Unit" class="tip-bottom">Data Unit</a> <a href="#" class="current">Kalender Unit <?php echo $no_unit; ?></a> </div>
-
-    <h1>Calendar Unit <?php echo $no_unit.' ('.$nama_apt.')'; ?></h1>
+    <h4 onclick="triger()" style="margin-left: 20px;"><?php echo "<div id='drop-sel' style='width: 50%;height: 20px;'>".$no_unit.' '.$nama_apt."</div>"; ?></h4>
+    <div id="apartement-dropdown" class="hide-dropdown" style="left: 20px;">
+      <input type="text" placeholder="Search.." id="keyword" onkeyup="filter()"/> <br>
+      <?php
+        if(count($arrayunit)>0){
+          for($i=0;$i<count($arrayunit);$i+=2){
+            echo '<a id="sel-'.$arrayunit[$i].'" class="content-dropdown" href="calendar.php?calendar_unit='.$arrayunit[$i].'">';
+            echo $arrayunit[$i+1]."</a>";
+          }
+        }
+      ?>
+    </div>
     <?php
       if((isset($_POST['editCalendar']) && !isset($_POST['batal'])) || isset($_POST['editBlok']) || isset($_POST['close'])){
         echo '
@@ -61,6 +85,15 @@
       <div class="span12">
         <script>
           function popupEdit(id, title, awal, akhir){
+            var lbl_sewa = document.getElementById('lbl_sewa');
+            var lbl_owner = document.getElementById('lbl_owner');
+            var sewa = document.getElementById('sewa');
+            var owner = document.getElementById('owner');
+            lbl_sewa.classList.add('hide');
+            lbl_owner.classList.add('hide');
+            sewa.classList.add('hide');
+            owner.classList.add('hide');
+
             $('#popup-editEvent').modal('show');
             arrayNote = id.split("+");
             document.editEvent.id.value = arrayNote[0];
@@ -68,21 +101,55 @@
             document.editEvent.awal.value = awal;
             document.editEvent.akhir.value = akhir;
             document.editEvent.catatan.value = arrayNote[1];
-            hapusBlok(arrayNote[0]);
+            document.editEvent.sewa.value = 0;
+            document.editEvent.sewa_clone.value = 0;
+            document.editEvent.owner.value = 0;
+            document.editEvent.owner_clone.value = 0;
+            hapusBlok(arrayNote[0], 'false');
+          }
+          function editModHarga(id, title, awal, akhir){
+            var lbl_sewa = document.getElementById('lbl_sewa');
+            var lbl_owner = document.getElementById('lbl_owner');
+            var sewa = document.getElementById('sewa');
+            var owner = document.getElementById('owner');
+            lbl_sewa.classList.remove('hide');
+            lbl_owner.classList.remove('hide');
+            sewa.classList.remove('hide');
+            owner.classList.remove('hide');
+
+            $('#popup-editEvent').modal('show');
+            arrayNote = id.split("+");
+            document.editEvent.id.value = arrayNote[0];
+            document.editEvent.jenis.value = title;
+            document.editEvent.awal.value = awal;
+            document.editEvent.akhir.value = akhir;
+            document.editEvent.catatan.value = arrayNote[1];
+            document.editEvent.sewa.value = arrayNote[2];
+            document.editEvent.sewa_clone.value = arrayNote[2];
+            document.editEvent.owner.value = arrayNote[3];
+            document.editEvent.owner_clone.value = arrayNote[3];
+            hapusBlok(arrayNote[0], 'true');
           }
           $(document).ready(function() {
             $('#calendar').fullCalendar({
-
                 <?php
                   if(isset($_POST['editCalendar']) || isset($_POST['editBlok']) || isset($_POST['close'])){
                     echo "
                       eventClick: function(event, element) {
-                        if(event.title != 'Confirm' && event.title != 'Booked') {
+                        var cekTitle = event.title.split(' ');
+                        if(event.title != 'Confirm' && event.title != 'Booked' && cekTitle[1] != 'IDR') {
                           id = event.id;
                           title = event.title;
                           awal = event.start.format('DD MMM YYYY');
                           akhir = event.end.format('DD MMM YYYY');
                           popupEdit(id, title, awal, akhir);
+                          $('#calendar').fullCalendar('updateEvent', event);
+                        }else if(cekTitle[1] == 'IDR'){
+                          id = event.id;
+                          title = 'Mod Harga';
+                          awal = event.start.format('DD MMM YYYY');
+                          akhir = event.end.format('DD MMM YYYY');
+                          editModHarga(id, title, awal, akhir);
                           $('#calendar').fullCalendar('updateEvent', event);
                         }
                       },
@@ -125,6 +192,18 @@
                         },
                         ";
                       }
+                    }
+                    $show = $calendar->showModHarga($_GET['calendar_unit']);
+            		    while($data = $show->fetch(PDO::FETCH_OBJ)){
+                      echo "
+                      {
+                        id: '$data->kd_mod_harga+$data->note+$data->harga_sewa+$data->harga_owner',
+                        title: '".number_format($data->harga_sewa, 0, ".", ".")." IDR',
+                        start: '".$data->start_date."T12:00:00',
+                        end: '".$data->end_date."T13:00:00',
+                        color: '#f48342'
+                      },
+                      ";
                     }
                     $show = $calendar->showModCalendar($_GET['calendar_unit']);
             		    while($data = $show->fetch(PDO::FETCH_OBJ)){
@@ -186,207 +265,36 @@
       </div>
     </div>
   </div>
+  <?php include 'calendar_option.php'; ?>
 </div>
 
-<div id="popup-blok" class="modal hide">
-  <div class="modal-header">
-    <button data-dismiss="modal" class="close" type="button">×</button>
-    <h3>Blok Tanggal</h3>
-  </div>
-  <form action="../../../proses/calendar.php" method="post" class="form-horizontal">
-    <div class="modal-body">
-  	  <label class="control-label">Awal :</label>
-    	<div class="controls">
-    		 <input name="awal" type="date" class="span2" required/>
-    	</div>
-      <label class="control-label">Akhir :</label>
-      <div class="controls">
-        <input name="akhir" type="date" class="span2" required/>
-      </div>
-      <label class="control-label">Catatan :</label>
-      <div class="controls">
-        <input name="catatan" type="text" class="span2" required/>
-        <input name="kd_unit" type="text" class="span2 hide" value="<?php echo $kd_unit; ?>" required/>
-      </div>
-      <div class="control-group">
-        <div class="controls">
-          <input type="submit" name="blokCalendar" class="btn btn-success">
-          <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
-        </div>
-      </div>
-    </div>
-  </form>
-</div>
-
-<div id="popup-maintenance" class="modal hide">
-  <div class="modal-header">
-    <button data-dismiss="modal" class="close" type="button">×</button>
-    <h3>Maintenance</h3>
-  </div>
-  <div class="modal-body">
-  	<form action="../../../proses/calendar.php" method="post" class="form-horizontal">
-  	  <div class="control-group">
-  		  <label class="control-label">Awal : </label>
-    		<div class="controls">
-    		  <input name="awal" type="date" class="span2" required/>
-    		</div>
-        <label class="control-label">Akhir :</label>
-        <div class="controls">
-          <input name="akhir" type="date" class="span2" required/>
-        </div>
-        <label class="control-label">Catatan :</label>
-        <div class="controls">
-          <input name="catatan" type="text" class="span2" required/>
-          <input name="kd_unit" type="text" class="span2 hide" value="<?php echo $kd_unit; ?>" required/>
-        </div>
-  	  </div>
-  	  <div class="control-group">
-    		<div class="controls">
-    		  <input type="submit" name="addMaintenance" class="btn btn-success">
-    		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
-    		</div>
-  	  </div>
-  	</form>
-  </div>
-</div>
-
-<div id="popup-mod-harga" class="modal hide">
-  <div class="modal-header">
-    <button data-dismiss="modal" class="close" type="button">×</button>
-    <h3>Edit Harga</h3>
-  </div>
-  <div class="modal-body">
-  	<form action="../../../proses/calendar.php" method="post" class="form-horizontal">
-  	  <div class="control-group">
-  		  <label class="control-label">Unit : </label>
-    		<div class="controls">
-    		  <input name="unit" type="text" class="span2" value="<?php echo $no_unit.' ('.$nama_apt.')'; ?>" disabled/>
-    		</div>
-        <label class="control-label">Tanggal :</label>
-        <div class="controls">
-          <input name="tanggal" type="date" class="span2" required/>
-        </div>
-        <label class="control-label">Perubahan Harga :</label>
-        <div class="controls">
-          <input name="mod_harga" type="number" class="span2" required/>
-          <input name="kd_unit" type="text" class="span2 hide" value="<?php echo $kd_unit; ?>" required/>
-        </div>
-  	  </div>
-  	  <div class="control-group">
-    		<div class="controls">
-    		  <input type="submit" name="addMaintenance" value="submit" class="btn btn-success">
-    		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
-    		</div>
-  	  </div>
-  	</form>
-  </div>
-</div>
-
-<div id="popup-editEvent" class="hapus modal hide <?php if(isset($_POST['editBlok'])){ echo 'show'; }?>">
-  <div class="modal-header">
-    <form action="" method="post">
-      <button id="close" name="close" data-dismiss="modal" class="close" type="submit">×</button>
-    </form>
-    <?php
-      if(isset($_POST['close'])){
-        unset($_COOKIE['editBlok']);
-      }
-    ?>
-    <script type="text/javascript">
-      var  element = document.getElementById("close");
-      var popup = document.querySelectorAll(".hapus");
-      element.onclick = function(){
-        popup[0].classList.remove("show");
-      }
-
-      function hapusBlok(id){
-        $("#hapusBlok").attr("href","../../../proses/calendar.php?delete_event="+id);
-      }
-    </script>
-    <h3>Edit Event</h3>
-  </div>
-  <div class="modal-body">
-    <?php
-      if(!isset($_POST['editBlok'])){
-        echo '
-        <form name="editEvent" action="" method="post" class="form-horizontal">
-          <div class="control-group">
-            <div class="control-group">
-              <label class="control-label hide">ID :</label>
-              <div class="controls">
-                <input name="id" type="text" class="span2 hide"/>
-              </div>
-              <label class="control-label">Jenis :</label>
-              <div class="controls">
-                <input name="jenis" type="text" class="span2" disabled/>
-              </div>
-              <label class="control-label">Tanggal Awal :</label>
-              <div class="controls">
-                <input name="awal" type="text" class="span2" disabled/>
-              </div>
-              <label class="control-label">Tanggal Akhir :</label>
-              <div class="controls">
-                <input name="akhir" type="text" class="span2" disabled/>
-              </div>
-              <label class="control-label">Catatan :</label>
-              <div class="controls">
-                <input name="catatan" type="text" class="span2" disabled/>
-              </div>
-            </div>
-            <div class="control-group">
-              <div class="controls">
-                <input type="submit" name="editBlok" class="btn btn-primary" value="Edit" />
-                <a class="btn btn-danger" id="hapusBlok">Hapus</a>
-              </div>
-            </div>
-          </div>
-        </form>
-        ';
-      }elseif(isset($_POST['editBlok'])){
-        $calendar = new Calendar($db);
-        $show = $calendar->editModCalendar($_POST['id']);
-        $data = $show->fetch(PDO::FETCH_OBJ);
-        echo '
-        <form action="../../../proses/calendar.php" method="post" class="form-horizontal">
-          <div class="control-group">
-            <div class="control-group">
-              <label class="control-label hide">ID :</label>
-              <div class="controls">
-                <input name="id" type="text" class="span2 hide" value="'.$data->kd_mod_calendar.'" required/>
-              </div>
-              <label class="control-label">Tanggal Awal :</label>
-              <div class="controls">
-                <input name="awal" type="date" class="span2" value="'.$data->start_date.'" />
-              </div>
-              <label class="control-label">Tanggal Akhir :</label>
-              <div class="controls">
-                <input name="akhir" type="date" class="span2" value="'.$data->end_date.'" />
-              </div>
-              <label class="control-label">Catatan :</label>
-              <div class="controls">
-                <input name="catatan" type="text" class="span2" value="'.$data->note.'" />
-              </div>
-            </div>
-            <div class="control-group">
-              <div class="controls">
-                <button type="submit" name="updateModCal" class="btn btn-success">Update</button>
-              </div>
-            </div>
-          </div>
-        </form>
-        ';
-      }
-    ?>
-
-
-  </div>
-</div>
+<?php include 'popup.php'; ?>
 
 <!--Footer-part-->
 <div class="row-fluid">
   <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
 </div>
 <!--end-Footer-part-->
+<script>
+  var harga_sewa = document.getElementById("harga_sewa");
+  var harga_owner = document.getElementById("harga_owner");
+  var label_harga_sewa = document.getElementById("label_harga_sewa");
+  var label_harga_owner = document.getElementById("label_harga_owner");
+
+  function hargaBaru(){
+    label_harga_sewa.classList.remove("hide");
+    label_harga_owner.classList.remove("hide");
+    harga_sewa.classList.remove("hide");
+    harga_owner.classList.remove("hide");
+  }
+
+  function hargaWeekend(){
+    label_harga_sewa.classList.add("hide");
+    label_harga_owner.classList.add("hide");
+    harga_sewa.classList.add("hide");
+    harga_owner.classList.add("hide");
+  }
+</script>
 <script src="../../../asset/js/select2.min.js"></script>
 <script src="../../../asset/js/jquery.dataTables.min.js"></script>
 <script src="../../../asset/js/matrix.js"></script>
