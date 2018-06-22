@@ -1,6 +1,7 @@
 <?php
 require("../../config/database.php");
 require("../class/owner.php");
+require("../class/unit.php");
 require("../class/kas.php");
 require("../class/transaksi_umum.php");
 require("../class/transaksi.php");
@@ -50,18 +51,23 @@ elseif(isset($_POST['addOwner'])){
 
 //Tambah Penawaran
 elseif(isset($_POST['addPenawaran'])){
-	$judul= $_POST['judul'];
-	$pesan= $_POST['pesan'];
-	echo $judul.'<br>'.$pesan;
-	die;
+	$kd_owner = $_POST['owner'];
+	$kd_unit = $_POST['unit'];
+	$judul = $_POST['judul'];
+	$pesan = $_POST['pesan'];
+	$h_owner_wd = $_POST['h_owner_wd'];
+	$h_owner_we = $_POST['h_owner_we'];
+	$h_owner_mg = $_POST['h_owner_mg'];
+	$h_owner_bln = $_POST['h_owner_bln'];
+	$status = 0;
 
-    $proses = new Owner($db);
-    $add = $proses->addOwner($nama, $alamat, $no_tlp, $kd_bank, $no_rek, $tgl_gabung, $email, $jenis_kelamin);
+  $proses = new Owner($db);
+  $add = $proses->addPennawaranOwner($kd_owner, $kd_unit, $judul, $pesan, $h_owner_wd, $h_owner_we, $h_owner_mg, $h_owner_bln, $status, $tgl_penawaran);
 
-    if($add == "Success"){
-      header('Location:../view/'.$view.'/owner/owner.php');
-    }
-  	else echo 'error';
+  if($add == "Success"){
+    header('Location:../view/'.$view.'/owner/penawaran.php');
+  }
+	else echo 'error';
 }
 
 //Delete Owner
@@ -69,6 +75,13 @@ elseif(isset($_GET['delete_owner']) && ($view=="superadmin" || $view=="manager")
   $proses = new Owner($db);
 	$del = $proses->deleteOwner($_GET['delete_owner']);
 	header("Location:../view/".$view."/owner/owner.php");
+}
+
+//Delete Penawaran
+elseif(isset($_GET['deletePenawaran']) && ($view=="superadmin" || $view=="manager")){
+  $proses = new Owner($db);
+	$del = $proses->deletePenawaran($_GET['deletePenawaran']);
+	header("Location:../view/".$view."/owner/penawaran.php");
 }
 
 //Owner Payment
@@ -255,6 +268,28 @@ elseif(isset($_GET['deletePayment'])){
 	$proses = new Owner($db);
 	$del = $proses->deleteOwnerPayment($_GET['deletePayment']);
 	header("Location:../view/".$view."/owner/owner_payment.php");
+}
+
+//Penawaran
+elseif (isset($_GET['kd_penawaran'])){
+	$kd_penawaran = $_GET['kd_penawaran'];
+	$status = $_GET['statusPenawaran'];
+	$kd_owner = $_GET['kd_owner'];
+	$kd_unit = $_GET['kd_unit'];
+	$h_owner_wd = $_GET['wd'];
+	$h_owner_we = $_GET['we'];
+	$h_owner_mg = $_GET['mg'];
+	$h_owner_bln = $_GET['bln'];
+
+	$proses_o = new Owner($db);
+	$update_o = $proses_o->updateStatusPenawaran($kd_penawaran, $status);
+	if ($status == 1) {
+		$proses_u = new Unit($db);
+		$update_u = $proses_u->updateHargaOwner($kd_unit, $kd_owner, $h_owner_wd, $h_owner_we, $h_owner_mg, $h_owner_bln);
+	}
+	if(($update_u == "Success") && ($update_o == "Success")){
+		header("Location:../view/".$view."/home/home.php");
+	}
 }
 
 else header('Location:../view/'.$view.'/home/home.php');

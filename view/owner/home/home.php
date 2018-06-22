@@ -38,6 +38,144 @@
 <!--End-Action boxes-->
 
     <div class="row-fluid">
+      <?php
+        $proses_u = new Unit($db);
+        $proses_o = new Owner($db);
+        $i = 0;
+        $show = $proses_u->showUnitbyOwner($_SESSION['pemilik']);
+        while($data = $show->fetch(PDO::FETCH_OBJ)){
+          $unit[$i] = $data->kd_unit;
+          $i++;
+        }
+        $jumlahUnit = count($unit);
+
+        $j = 0;
+        for ($i=0; $i<$jumlahUnit; $i++) {
+          $show_o = $proses_o->showPenawaranByUnit($unit[$i]);
+          while($data_o = $show_o->fetch(PDO::FETCH_OBJ)){
+            if($data_o->status == 0){
+              $penawaran[$i][$j] = $data_o->kd_penawaran;
+              $judulPenawaran[$i][$j] = $data_o->judul;
+              $pesanPenawaran[$i][$j] = $data_o->pesan;
+              $kd_unit[$i][$j] = $data_o->kd_unit;
+              $no_unit[$i][$j] = $data_o->no_unit;
+              $wd[$i][$j] = $data_o->h_owner_wd;
+              $we[$i][$j] = $data_o->h_owner_we;
+              $mg[$i][$j] = $data_o->h_owner_mg;
+              $bln[$i][$j] = $data_o->h_owner_bln;
+              $j++;
+            }
+          }
+        }
+        $totalPenawaran = $j;
+        /*
+        for ($i=0; $i<$jumlahUnit; $i++) {
+          if ($penawaran[$i] != null){
+            $jumlahPenawaranUnit[$i] = count($penawaran[$i]);
+          }else {
+            $jumlahPenawaranUnit[$i] = 0;
+          }
+          $totalPenawaran += $jumlahPenawaranUnit[$i];
+        }
+        */
+        $unit = 0;
+        for ($i=0; $i<$totalPenawaran ; $i++) {
+          echo'
+            <div class="span3">
+              <div class="widget-box">
+                <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+                  <h5>'.$judulPenawaran[$unit][$i].' ('.$no_unit[$unit][$i].')</h5>
+                </div>
+                <div class="widget-content nopadding">
+                  <form action="#" method="get" class="form-mod">
+                    <div class="control-group">
+                      <div class="controls">
+                        <textarea style="height:200px;" disabled>'.$pesanPenawaran[$unit][$i].'</textarea>
+                      </div>
+                    </div>
+                    ';
+                    if ($wd[$unit][$i] != 0){
+                      echo'
+                      <div class="control-group">
+                        <div class="controls">
+                          <label>Weekday '.number_format($wd[$unit][$i], 0, ".", ".").' IDR</label>
+                        </div>
+                      </div>
+                      ';
+                    }
+                    if ($we[$unit][$i] != 0){
+                      echo'
+                      <div class="control-group">
+                        <div class="controls">
+                          <label>Weekend '.number_format($we[$unit][$i], 0, ".", ".").' IDR</label>
+                        </div>
+                      </div>
+                      ';
+                    }
+                    if ($mg[$unit][$i] != 0){
+                      echo'
+                      <div class="control-group">
+                        <div class="controls">
+                          <label>Mingguan '.number_format($mg[$unit][$i], 0, ".", ".").' IDR</label>
+                        </div>
+                      </div>
+                      ';
+                    }
+                    if ($bln[$unit][$i] != 0){
+                      echo'
+                      <div class="control-group">
+                        <div class="controls">
+                          <label>Bulanan '.number_format($bln[$unit][$i], 0, ".", ".").' IDR</label>
+                        </div>
+                      </div>
+                      ';
+                    }
+                    echo'
+                    <div class="form-actions">
+                      <a class="btn btn-success" href="../../../proses/owner.php?statusPenawaran=1&kd_penawaran='.$penawaran[$unit][$i].
+                        '&wd='.$wd[$unit][$i].'&we='.$we[$unit][$i].
+                        '&mg='.$mg[$unit][$i].'&bln='.$bln[$unit][$i].
+                        '&kd_unit='.$kd_unit[$unit][$i].'&kd_owner='.$_SESSION['pemilik'].'">Terima</a>
+                      <a class="btn btn-danger" href="../../../proses/owner.php?statusPenawaran=2&kd_penawaran='.$penawaran[$unit][$i].'">Tolak</a>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          ';
+          $unit++;
+        }
+
+        if(($totalPenawaran < 4) && ($totalPenawaran != 0)){
+          $sisa = 4 - $totalPenawaran;
+          for ($i=0; $i<$sisa ; $i++) {
+            echo'
+              <div class="span3">
+                <div class="widget-box">
+                  <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+                    <h5>Penawaran</h5>
+                  </div>
+                  <div class="widget-content nopadding">
+                    <form action="#" method="get" class="form-mod">
+                      <div class="control-group">
+                        <div class="controls">
+                          <textarea style="height:200px;" disabled> </textarea>
+                        </div>
+                      </div>
+                      <div class="form-actions">
+                        <a class="btn btn-success" href="#">Terima</a>
+                        <a class="btn btn-danger" href="#">Tolak</a>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            ';
+          }
+        }
+      ?>
+
+
       <div class="">
       <div class="widget-box">
         <div class="widget-title bg_lg"><span class="icon"><i class="icon-signal"></i></span>

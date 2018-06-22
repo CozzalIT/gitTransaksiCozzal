@@ -13,11 +13,11 @@ function get_value_config($parameter){
   }
   fclose($myfile);
   return "Undefined";
-}  
+}
 
+// -- Select unit by apartemen --
 if(isset($_POST['apartement'])){
 require("../class/unit.php");
-// Ambil data ID Provinsi yang dikirim via ajax post
 $kd_apt = $_POST['apartement'];
 $nil = $_POST['par'];
 
@@ -41,6 +41,33 @@ $callback = array('data_unit'=>$html, 'nilai'=>$nil, 'mod_harga'=>$mod_harga); /
 
 echo json_encode($callback); // konversi varibael $callback menjadi JSON
 }
+// -- Select unit by apartemen -- END
+
+// -- Select unit by owner --
+if(isset($_POST['owner'])){
+require("../class/unit.php");
+$kd_owner = $_POST['owner'];
+//$nil = $_POST['par'];
+
+// Set defaultnya dengan tag option Pilih
+$html = "<option value=''>-- Pilih Unit --</option>";
+//$mod_harga="0";
+$Proses = new Unit($db);
+$show = $Proses->showUnitbyOwner($kd_owner);
+while($data = $show->fetch(PDO::FETCH_OBJ)){
+	$html .= "<option name='kd_unit' value='$data->kd_unit'>$data->no_unit</option>"; // Tambahkan tag option ke variabel $html
+}
+
+//$show = $Proses->showHarga_unit_mod($kd_apt);
+//while($data = $show->fetch(PDO::FETCH_OBJ)){
+//	$mod_harga .= "  ".$data->kd_unit." ".$data->start_date." ".$data->end_date." ".$data->harga_sewa;
+//}
+
+$callback = array('data_unit'=>$html/*, 'nilai'=>$nil, 'mod_harga'=>$mod_harga */); // Masukan variabel html tadi ke dalam array $callback dengan index array : data_kota
+
+echo json_encode($callback); // konversi varibael $callback menjadi JSON
+}
+// -- Select unit by owner -- END
 
 //cek ketersediaan unit pada tanggal tertentu
 elseif(isset($_POST['id1'])){
@@ -51,7 +78,7 @@ elseif(isset($_POST['id1'])){
 	$hasil = "Ada"; //tidak ada, maintenance, admin_block, owner_block
 	$Proses = new Transaksi($db);
 	$show = $Proses->showTransaksi_cek($CI,$CO,$kd_unit);
-	if($show) $hasil="Unit yang dipilih telah terisi"; 
+	if($show) $hasil="Unit yang dipilih telah terisi";
 	else{
 		$show = $Proses->is_blocked($CI,$CO,$kd_unit,'1');
 		if($show) $hasil = "Unit yang dipilih sedang dalam maintenance";
@@ -86,10 +113,10 @@ elseif(isset($_POST['status'])){
 	require("../class/cleaner.php");
 	$kd_unit = $_POST['status'];
     date_default_timezone_set('Asia/Jakarta');
-    $sekarang = date('Y-m-d'); 
+    $sekarang = date('Y-m-d');
     require("../class/catatan.php");
-	$proses2 = new Catatan($db); 
-    $jam12 = strtotime(get_value_config('jam_check_out')); 
+	$proses2 = new Catatan($db);
+    $jam12 = strtotime(get_value_config('jam_check_out'));
     $jam_now = strtotime(date('H:i'));
 	$Proses = new Cleaner($db); $lihat = "Tidak Ada";
 	$status = "Kosong"; $catatan = 0;
@@ -116,12 +143,12 @@ elseif(isset($_POST['status'])){
 			$lihat = "Ignore";
 		}
 		//$migrate = $proses2->catatanToTask($kd_unit);
-		$delete = $Proses->deleteUnit_kotor($kd_unit, $sekarang);		
+		$delete = $Proses->deleteUnit_kotor($kd_unit, $sekarang);
 	}
 	$show = $proses2->showCatatanUnit($kd_unit);
 	while($data = $show->fetch(PDO::FETCH_OBJ)){
-		$catatan++; 
-	}	
+		$catatan++;
+	}
 	$callback = array('stat'=>$status, 'catatan'=>$catatan, 'lihat'=>$lihat);
 	echo json_encode($callback);
 }

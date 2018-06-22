@@ -117,6 +117,50 @@ class Unit {
     }
   }
 
+  public function updateHargaOwner($kd_unit, $kd_owner, $h_owner_wd, $h_owner_we, $h_owner_mg, $h_owner_bln){
+    if($h_owner_wd != 0){
+      (($h_owner_we != 0) || ($h_owner_mg != 0) || ($h_owner_bln != 0) ? $wd = " h_owner_wd='$h_owner_wd', " : $wd = " h_owner_wd='$h_owner_wd' ");
+    }
+    if($h_owner_we != 0){
+      (($h_owner_mg != 0) || ($h_owner_bln != 0) ? $we = " h_owner_we='$h_owner_we', " : $we = " h_owner_we='$h_owner_we' ");
+    }
+    if($h_owner_mg != 0){
+      ($h_owner_bln != 0 ? $mg = " h_owner_mg='$h_owner_mg', " : $mg = " h_owner_mg='$h_owner_mg' ");
+    }
+    if($h_owner_bln != 0){
+      $bln = " h_owner_wd='$h_owner_bln' ";
+    }
+    $sql = "update tb_unit SET ".$wd.$we.$mg.$bln."WHERE kd_unit='$kd_unit' AND kd_owner='$kd_owner'";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
+  }
+
+  public function updateHargaSewa($kd_unit, $kd_owner, $h_sewa_wd, $h_sewa_we, $h_sewa_mg, $h_sewa_bln){
+    if($h_sewa_wd != 0){
+      (($h_sewa_we != 0) || ($h_sewa_mg != 0) || ($h_sewa_bln != 0) ? $wd = " h_sewa_wd='$h_sewa_wd', " : $wd = " h_sewa_wd='$h_sewa_wd' ");
+    }
+    if($h_sewa_we != 0){
+      (($h_sewa_mg != 0) || ($h_sewa_bln != 0) ? $we = " h_sewa_we='$h_sewa_we', " : $we = " h_sewa_we='$h_sewa_we' ");
+    }
+    if($h_sewa_mg != 0){
+      ($h_sewa_bln != 0 ? $mg = " h_sewa_mg='$h_sewa_mg', " : $mg = " h_sewa_mg='$h_sewa_mg' ");
+    }
+    if($h_sewa_bln != 0){
+      $bln = " h_sewa_wd='$h_sewa_bln' ";
+    }
+    $sql = "update tb_unit SET ".$wd.$we.$mg.$bln."WHERE kd_unit='$kd_unit' AND kd_owner='$kd_owner'";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
+  }
+
   //Proses Update informasi dasar unit
   public function updateInfo_Unit($kd_unit ,$kd_apt, $no_unit, $kd_owner){
     $sql = "update tb_unit SET kd_apt='$kd_apt', no_unit='$no_unit'";

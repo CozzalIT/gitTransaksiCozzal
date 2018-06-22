@@ -1,4 +1,6 @@
 <?php
+  require("../../../class/apartemen.php");
+  require("../../../class/unit.php");
   require("../../../class/owner.php");
   require("../../../../config/database.php");
 
@@ -20,7 +22,7 @@
     <hr>
     <div class="row-fluid">
       <div class="span12">
-        <div class="widget-box" style="overflow-x:auto;">
+        <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
             <h5>Data Owner</h5>
           </div>
@@ -29,38 +31,78 @@
               <thead>
                 <tr>
                   <th>No</th>
-                  <th>Nama</th>
-        				  <th>Alamat</th>
-        				  <th>No Telepon</th>
-                  <th>E-mail</th>
-      				  <th>Action</th>
-      				</tr>
+                  <th>Owner</th>
+        				  <th>Unit</th>
+        				  <th>Judul</th>
+                  <th>Pesan</th>
+                  <th>Perubahan Harga</th>
+                  <th>Status</th>
+        				  <th>Action</th>
+        				</tr>
               </thead>
               <tbody>
                 <?php
-                /*
                   $Proses = new Owner($db);
         				  $i = 1;
-        				  $show = $Proses->showOwner();
+        				  $show = $Proses->showPenawaranOwner();
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
                     if ($data->kd_owner != 0){
+                      if ($data->status == 0){
+                        $status = "<div style='color:blue;'>Waiting</div>";
+                      }elseif ($data->status == 1) {
+                        $status = "<div style='color:green;'>Accepted</div>";
+                      }else {
+                        $status = "<div style='color:red;'>Rejected</div>";
+                      }
+                      if ($data->h_owner_wd != 0){
+                        $wd = "- Weekday = ".number_format($data->h_owner_wd, 0, ".", ".")." IDR";
+                      }else {
+                        $wd = null;
+                      }
+                      if ($data->h_owner_we != 0){
+                        $we = "<br>- Weekend = ".number_format($data->h_owner_we, 0, ".", ".")." IDR";
+                      }else {
+                        $we = null;
+                      }
+                      if ($data->h_owner_mg != 0){
+                        $mg = "<br>- Mingguan = ".number_format($data->h_owner_mg, 0, ".", ".")." IDR";
+                      }else {
+                        $mg = null;
+                      }
+                      if ($data->h_owner_bln != 0){
+                        $bln = "<br>- Bulanan = ".number_format($data->h_owner_bln, 0, ".", ".")." IDR";
+                      }else {
+                        $bln = null;
+                      }
+                      $popupPackage = '"'.$data->kd_unit."/".$data->kd_owner."/".$wd."/".$we."/".$mg."/".$bln.'"';
                       echo "
             					  <tr class='gradeC'>
-            						  <td></td>
-            					    <td></td>
-              						<td></td>
-              						<td></td>
-              						<td></td>
-              						<td>
-              						  <a class='btn btn-success' href='#'>Detail</a>
-              						  <a class='btn btn-primary' href='#'>Edit</a>
-              						  <a class='btn btn-danger hapus' href='#'>Hapus</a>
-              						</td>
+            						  <td>$i</td>
+            					    <td>$data->nama</td>
+              						<td>$data->no_unit</td>
+              						<td>$data->judul</td>
+                          <td>".substr($data->pesan,0,20)."...<a href='#' style='font-size:90%;'>Read More</a></td>
+                          <td>$wd $we $mg $bln</td>
+              						<td><strong>$status</strong></td>
+                          <td>
+                            <div class='btn-group' style='margin-left: 20px;'>
+                              <button data-toggle='dropdown' class='btn btn-success dropdown-toggle'>Action <span class='caret'></span></button>
+                              <ul class='dropdown-menu'>
+                                <li><a id='detail' name='detail' href='../../../proses/owner.php?deletePenawaran=$data->kd_penawaran''>Hapus</a></li>
+                                ";
+                                if($data->status == 1){
+                                  echo "
+                                    <li><a id='detail' name='detail' href='#' onClick='updateSewa($popupPackage)'>Update harga sewa</a></li>
+                                  ";
+                                }
+                                echo"
+                              </ul>
+                            </div>
+                          </td>
             					  </tr>";
                       $i++;
                     }
         				  };
-                */
         				?>
               </tbody>
             </table>
@@ -79,7 +121,30 @@
   </div>
   <div class="modal-body">
 	<form action="../../../proses/owner.php" method="post" class="form-horizontal">
-	  <div class="control-group">
+    <div class="control-group">
+      <label class="control-label">Owner :</label>
+      <div class="controls">
+        <select id="owner" name="owner" class="span3">
+          <option name="" value="">-- Pilih Owner --</option>
+          <?php
+            $Proses = new Owner($db);
+            $show = $Proses->showOwner();
+            while($data = $show->fetch(PDO::FETCH_OBJ)){
+              echo "<option name='kd_owner' value='$data->kd_owner'>$data->nama</option>";
+            }
+          ?>
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">Unit :</label>
+      <div class="controls">
+        <select name="unit" id="unit" class="span3">
+          <option value="">-- Pilih Unit --</option>
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
   		<label class="control-label">Judul :</label>
   		<div class="controls">
   		  <input name="judul" type="text" class="span3" placeholder="Judul" required/>
@@ -121,7 +186,7 @@
 	  </div>
 	  <div class="control-group">
   		<div class="controls">
-  		  <input type="submit" name="addPenawaran" class="btn btn-success">
+  		  <input type="submit" name="addPenawaran" value="Send" class="btn btn-success">
   		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
   		</div>
 	  </div>
@@ -169,6 +234,86 @@
     }
   }
 </script>
+<!-- //Modal Popup Tambah Penawaran -->
+
+<!-- Modal Popup Update Harga Sewa -->
+<script>
+  function updateSewa(x){
+    $("#popup-sewa").removeClass("hide");
+    //0: kd_unit 1:kd_owner 2:wd 3:we 4:mg 5:bln
+    var splitPackage = x.split("/");
+    $("#kd_unit").val(splitPackage[0]);
+    $("#kd_owner").val(splitPackage[1]);
+    if (splitPackage[2] == "") {
+      $("#groupWd").addClass("hide");
+    }
+    if (splitPackage[3] == "") {
+      $("#groupWe").addClass("hide");
+    }
+    if (splitPackage[4] == "") {
+      $("#groupMg").addClass("hide");
+    }
+    if (splitPackage[5] == "") {
+      $("#groupBln").addClass("hide");
+    }
+  }
+  $(document).ready(function(){
+    $("#close").click(function(){
+      $(".modal").addClass("hide");
+    });
+  });
+</script>
+<div id="popup-sewa" class="modal hide">
+  <div class="modal-header">
+    <button data-dismiss="modal" id="close" class="close" >×</button>
+    <h3>Update Harga Sewa</h3>
+  </div>
+  <div class="modal-body">
+	<form action="../../../proses/unit.php" method="post" class="form-horizontal">
+    <div class="control-group hide">
+  		<label class="control-label">Kode Unit :</label>
+  		<div class="controls">
+  		  <input name="kd_unit" id="kd_unit" type="text" class="span3" value=""/>
+  		</div>
+	  </div>
+    <div class="control-group hide">
+  		<label class="control-label">Kode Owner :</label>
+  		<div class="controls">
+  		  <input name="kd_owner" id="kd_owner" type="text" class="span3" value=""/>
+  		</div>
+	  </div>
+    <div class="control-group" id="groupWd">
+  		<label class="control-label">Harga Weekday :</label>
+  		<div class="controls">
+  		  <input name="h_sewa_wd" type="number" class="span3" value="0"/>
+  		</div>
+	  </div>
+    <div class="control-group" id="groupWe">
+  		<label class="control-label">Harga Weekend :</label>
+  		<div class="controls">
+  		  <input name="h_sewa_we" type="number" class="span3" value="0"/>
+  		</div>
+	  </div>
+    <div class="control-group" id="groupMg">
+  		<label class="control-label">Harga Mingguan :</label>
+  		<div class="controls">
+  		  <input name="h_sewa_mg" type="number" class="span3" value="0"/>
+  		</div>
+	  </div>
+    <div class="control-group" id="groupBln">
+  		<label class="control-label">Harga Bulanan :</label>
+  		<div class="controls">
+  		  <input name="h_sewa_bln" type="number" class="span3" value="0"/>
+  		</div>
+	  </div>
+	  <div class="control-group">
+  		<div class="controls">
+  		  <input type="submit" name="updateSewa" value="Update" class="btn btn-success">
+  		</div>
+	  </div>
+	</form>
+  </div>
+</div>
 <!-- //Modal Popup Tambah Penawaran -->
 
 <!--Footer-part-->

@@ -115,9 +115,25 @@ elseif(isset($_POST['updateHargaUnit']) || isset($_POST['updateHargaUnitbyOwner'
   }
   $ekstra_charge= $_POST['ekstra_charge'];
   $proses = new Unit($db);
-  $add = $proses->updateHarga_Unit($kd_unit , $h_owner_wd, $h_owner_we, $h_owner_mg, $h_owner_bln, $h_sewa_wd, $h_sewa_we, $h_sewa_mg, $h_sewa_bln, $ekstra_charge);
-  if($add == "Success"){
+  $update = $proses->updateHarga_Unit($kd_unit , $h_owner_wd, $h_owner_we, $h_owner_mg, $h_owner_bln, $h_sewa_wd, $h_sewa_we, $h_sewa_mg, $h_sewa_bln, $ekstra_charge);
+  if($update == "Success"){
     header('Location:../view/'.$view.'/unit/detail_unit.php?detail_unit='.$kd_unit);
+  }else echo 'error';
+}
+
+//update harga sewa
+elseif (isset($_POST['updateSewa'])) {
+  $kd_unit = $_POST['kd_unit'];
+  $kd_owner = $_POST['kd_owner'];
+  $h_sewa_wd = $_POST['h_sewa_wd'];
+  $h_sewa_we = $_POST['h_sewa_we'];
+	$h_sewa_mg = $_POST['h_sewa_mg'];
+	$h_sewa_bln = $_POST['h_sewa_bln'];
+
+  $proses = new Unit($db);
+  $update = $proses->updateHargaSewa($kd_unit, $kd_owner, $h_sewa_wd, $h_sewa_we, $h_sewa_mg, $h_sewa_bln);
+  if($update == "Success"){
+    header('Location:../view/'.$view.'/owner/penawaran.php');
   }else echo 'error';
 }
 

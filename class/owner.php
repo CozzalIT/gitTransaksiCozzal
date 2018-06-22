@@ -29,10 +29,36 @@ class Owner {
     }
   }
 
+  public function addPennawaranOwner($kd_owner, $kd_unit, $judul, $pesan, $h_owner_wd, $h_owner_we, $h_owner_mg, $h_owner_bln, $status, $tgl_penawaran){
+    $sql = "INSERT INTO tb_penawaran_owner (kd_owner, kd_unit, judul, pesan, h_owner_wd, h_owner_we, h_owner_mg, h_owner_bln, status, tgl_penawaran)
+    VALUES('$kd_owner', '$kd_unit', '$judul', '$pesan', '$h_owner_wd', '$h_owner_we', '$h_owner_mg', '$h_owner_bln', '$status', '$tgl_penawaran')";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
+  }
+
   //Proses Show
   public function showOwner(){
     $sql = "SELECT * from tb_owner
     INNER JOIN tb_bank ON tb_bank.kd_bank = tb_owner.kd_bank";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
+  public function showPenawaranOwner(){
+    $sql = "SELECT tb_penawaran_owner.*, tb_owner.kd_owner, tb_owner.nama, tb_unit.kd_unit, tb_unit.no_unit from tb_penawaran_owner
+      INNER JOIN tb_owner ON tb_owner.kd_owner = tb_penawaran_owner.kd_owner
+      INNER JOIN tb_unit ON tb_unit.kd_unit = tb_penawaran_owner.kd_unit";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
+  public function showPenawaranByUnit($kd_unit){
+    $sql = "SELECT tb_penawaran_owner.*, tb_unit.kd_unit, tb_unit.no_unit from tb_penawaran_owner
+      INNER JOIN tb_unit ON tb_unit.kd_unit = tb_penawaran_owner.kd_unit WHERE tb_penawaran_owner.kd_unit='$kd_unit'";
     $query = $this->db->query($sql);
     return $query;
   }
@@ -95,7 +121,17 @@ class Owner {
   //Proses Update
   public function updateOwner($kd_owner ,$nama, $alamat, $no_tlp, $kd_bank, $no_rek, $email, $jenis_kelamin){
     $sql = "update tb_owner SET nama='$nama', alamat='$alamat', no_tlp='$no_tlp', kd_bank='$kd_bank', no_rek='$no_rek',
-    email='$email', jenis_kelamin='$jenis_kelamin' WHERE kd_owner='$kd_owner'";
+      email='$email', jenis_kelamin='$jenis_kelamin' WHERE kd_owner='$kd_owner'";
+    $query = $this->db->query($sql);
+    if(!$query){
+      return "Failed";
+    }else{
+      return "Success";
+    }
+  }
+
+  public function updateStatusPenawaran($kd_penawaran, $status){
+    $sql = "update tb_penawaran_owner SET status='$status' WHERE kd_penawaran='$kd_penawaran'";
     $query = $this->db->query($sql);
     if(!$query){
       return "Failed";
@@ -117,6 +153,11 @@ class Owner {
   //Proses Delete
   public function deleteOwner($kd_owner){
     $sql = "DELETE FROM tb_owner WHERE kd_owner='$kd_owner'";
+    $query = $this->db->query($sql);
+  }
+
+  public function deletePenawaran($kd_penawaran){
+    $sql = "DELETE FROM tb_penawaran_owner WHERE kd_penawaran='$kd_penawaran'";
     $query = $this->db->query($sql);
   }
 
