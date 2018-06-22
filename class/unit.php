@@ -258,5 +258,30 @@ class Unit {
     $query = $this->db->query($sql);
     return $query;
   }
+
+// class yang digunakan hanya pada evaluasi_unit_kotor :
+
+  public function showTransaksi_byDate($minggu_lalu){
+    $sql = "SELECT kd_unit, check_in, check_out FROM tb_transaksi WHERE check_out>='$minggu_lalu'
+    status!='2' AND status!='3'";
+    $query = $this->db->query($sql);
+    return $query;    
+  }
+
+  public function is_UnitKotor_exists($kd_unit, $check_in, $check_out) {
+    $result = $this->db->prepare("SELECT kd_unit FROM tb_unit_kotor WHERE kd_unit= ? AND check_in= ? AND check_out= ?");
+    $result->bindParam(1, $kd_unit);
+    $result->bindParam(2, $check_in);
+    $result->bindParam(3, $check_out);
+    $result->execute();
+    $rows = $result->fetch();
+    return $rows;
+  }
+
+  public function addUnit_kotor($kd_unit, $check_in, $check_out){
+    $sql = "INSERT INTO tb_unit_kotor(kd_unit, check_in, check_out) VALUES ('$kd_unit','$check_in','$check_out')";
+    $query = $this->db->query($sql);
+  }
+
 }
 ?>

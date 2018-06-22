@@ -266,7 +266,7 @@ elseif(isset($_POST['addMaintenance'])){
   }
 }
 
-elseif(isset($_GET['newics'])){
+elseif(isset($_GET['newics']) && $view!=""){
   $kd_unit = $_GET['newics'];
   include '../class/ics_unit.php';
   $ics = new Ics_unit($db);
