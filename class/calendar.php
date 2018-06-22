@@ -8,8 +8,8 @@
 
     //Show
     public function showNoUnit(){
-      $sql = "SELECT tb_unit.kd_unit, tb_unit.no_unit, tb_unit.kd_apt, tb_unit.url_bnb,
-      tb_unit.url_cozzal, tb_apt.kd_apt, tb_apt.nama_apt FROM tb_unit
+      $sql = "SELECT tb_unit.kd_unit, tb_unit.no_unit, tb_unit.kd_apt, 
+      tb_apt.kd_apt, tb_apt.nama_apt FROM tb_unit
       INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt ORDER BY tb_apt.nama_apt ASC";
       $query = $this->db->query($sql);
       return $query;
@@ -69,6 +69,12 @@
       return $query;
     }
 
+    public function editURL($kd_url){
+      $sql = "SELECT title, url, group_update FROM tb_url_unit where kd_url='$kd_url'";
+      $query = $this->db->query($sql);
+      return $query;      
+    }
+
     //Delete
     public function deleteModCalendar($kd_mod_calendar){
       $sql = "DELETE FROM tb_mod_calendar WHERE kd_mod_calendar='$kd_mod_calendar'";
@@ -80,6 +86,11 @@
       $sql = "DELETE FROM tb_mod_harga WHERE kd_mod_harga='$kd_mod_harga'";
       $query = $this->db->query($sql);
       return $query;
+    }
+
+    public function deleteURL($kd_url){
+      $sql = "DELETE FROM tb_url_unit WHERE kd_url='$kd_url'";
+      $this->db->query($sql);     
     }
 
     //Proses Update

@@ -60,13 +60,13 @@ elseif(isset($_POST["getPenyewa"])){
 	echo json_encode($callback);	
 }
 
-elseif(isset($_POST['get_property'])){
+elseif(isset($_POST['get_ListUnit'])){
 	require("../class/ics_unit.php");
 	$Proses = new Ics_unit($db);
 	$show = $Proses->showUnit2();
 	$unit = array();
 	while ($data = $show->fetch(PDO::FETCH_OBJ)) {
-		$unit[] = $data->kd_unit." * ".$data->kd_apt." * ".$data->url_bnb." * ".$data->no_unit." * ".$data->nama_apt;
+		$unit[] = $data->kd_unit." * ".$data->kd_apt." * ".$data->no_unit." * ".$data->nama_apt;
 	}
 	$callback = array('prop'=>implode(" ^ ",$unit));
 	echo json_encode($callback);
