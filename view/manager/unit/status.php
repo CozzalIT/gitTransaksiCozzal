@@ -38,11 +38,12 @@
                   <th>Status</th>
                   <th>Kebersihan</th>
                   <th>Action</th>
+                  <!-- <th>Order</th> -->
                 </tr>
               </thead>
               <tbody>
                 <?php
-                function printtable($i, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $kd_unit){
+                function printtable($i, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $kd_unit, $order){
                       echo "
                         <tr>
                           <td id='$kd_unit-nourut' class='hide'>$i</td>
@@ -55,9 +56,10 @@
                             <center>
                                $button
                             </center>
-                          </td>
-                        </tr>
-                      ";                  
+                          </td>"
+                          // ."<td>$order</td>"
+                          ."</tr>
+                      ";  // order digunakan ketika menelusuri masalah untuk memudahkan klasifikasi unitkotor
                 }
 
               function get_value_config($parameter){
@@ -72,7 +74,7 @@
                   }
                   fclose($myfile);
                   return "Undefined";
-                }  
+                }
 
                 function formated_injury_bersih($injury_bersih){
                     $x = $injury_bersih/3600;
@@ -80,17 +82,17 @@
                     $jam = $x_arr[0];
                     $menit = ($injury_bersih-($jam*3600))/60;
                     if(strlen($jam)==1) $jam = "0".$jam;
-                    if($menit<10) $menit = "0".$menit; 
+                    if($menit<10) $menit = "0".$menit;
                     return $jam.":".$menit;
                 }
 
                 function jam_co($data_jam){
                   if($data_jam==""){
                     $data_jam = get_value_config("jam_check_out");
-                  } 
+                  }
                   return strtotime($data_jam);
                 }
-                
+
                 //-------------------------------------------------
 
                   date_default_timezone_set('Asia/Jakarta');
@@ -105,7 +107,7 @@
                   $Proses = new Cleaner($db);
                   $show1 = $Proses->showUnit1($sekarang);
                   while($data = $show1->fetch(PDO::FETCH_OBJ)){
-                    if ($data->kd_unit != 0 && !in_array($data->kd_unit, $listed_unit)){ 
+                    if ($data->kd_unit != 0 && !in_array($data->kd_unit, $listed_unit)){
                       if($data->check_out!=$sekarang || ($data->check_out==$sekarang && $jam_now>=jam_co($data->jam_check_out))){
                           $status = "<td class='kotor 1' id='$data->kd_unit-stat-bersih'>Kotor</td>";
                           $tersedia = '<td>Kosong</td>'; $i = 4;
@@ -120,14 +122,14 @@
                       $nama_apt = "<td id='$data->kd_unit-nameapt'>$data->nama_apt</td>";
                       $alamat_apt = "<td class='hiderespons'>$data->alamat_apt</td>";
                       $listed_unit[] = $data->kd_unit;
-                      printtable($i, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $data->kd_unit);
+                      printtable($i, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $data->kd_unit,'1');
                     }
                   };
 
                     $Proses = new Cleaner($db);
                     $show2 = $Proses->showUnit2($sekarang);
                     while($data = $show2->fetch(PDO::FETCH_OBJ)){
-                      if ($data->kd_unit != 0 && !in_array($data->kd_unit, $listed_unit)){ 
+                      if ($data->kd_unit != 0 && !in_array($data->kd_unit, $listed_unit)){
                         if($jam_now<jam_co($data->jam_check_out)){ $i=1;
                           $status = "<td class='kotor 2' id='$data->kd_unit-stat-prepare'>Bersih</td>";
                           $button = "<a class='btn btn-warning popup' data-toggle='modal' id='$data->kd_unit"."-prepare' href='#popup-task' >Persiapkan</a>";
@@ -139,20 +141,20 @@
                         } else { $i=0;
                           $status = "<td class='kotor' id='$data->kd_unit-stat-bersih'>Kotor</td>";
                           $button = "<a class='btn btn-success popup' data-toggle='modal' id='$data->kd_unit"."-bersih' href='#popup-task' >Bersihkan</a>";
-                          $tersedia = "<td>Check In</td>";                         
-                        }                       
+                          $tersedia = "<td>Check In</td>";
+                        }
                       $no_unit = "<td id='$data->kd_unit-nounit'>$data->no_unit</td>";
                       $nama_apt = "<td id='$data->kd_unit-nameapt'>$data->nama_apt</td>";
                       $alamat_apt = "<td class='hiderespons'>$data->alamat_apt</td>";
                       $listed_unit[] = $data->kd_unit;
-                      printtable($i, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $data->kd_unit);
+                      printtable($i, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $data->kd_unit,'2');
                       }
                     };
 
                     $Proses = new Cleaner($db);
                     $show3 = $Proses->showUnit3($sekarang);
                     while($data = $show3->fetch(PDO::FETCH_OBJ)){
-                      if ($data->kd_unit != 0 && !in_array($data->kd_unit, $listed_unit)){ 
+                      if ($data->kd_unit != 0 && !in_array($data->kd_unit, $listed_unit)){
                         if($jam_now<strtotime('12:00')+$injury_bersih){ $i=0;
                           $status = "<td class='kotor 3' id='$data->kd_unit-stat-bersih'>Kotor</td>";
                           $button = "<a class='btn btn-success popup' data-toggle='modal' id='$data->kd_unit"."-bersih' href='#popup-task' >Bersihkan</a>";
@@ -166,13 +168,13 @@
                       $nama_apt = "<td id='$data->kd_unit-nameapt'>$data->nama_apt</td>";
                       $alamat_apt = "<td class='hiderespons'>$data->alamat_apt</td>";
                       $listed_unit[] = $data->kd_unit;
-                      printtable($i, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $data->kd_unit);
+                      printtable($i, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $data->kd_unit,'3');
                       }
                     };
                   $Proses = new Cleaner($db);
                   $show4 = $Proses->showUnit_normal($sekarang);
                   while($data = $show4->fetch(PDO::FETCH_OBJ)){
-                    if ($data->kd_unit != 0 && !in_array($data->kd_unit, $listed_unit)){ 
+                    if ($data->kd_unit != 0 && !in_array($data->kd_unit, $listed_unit)){
                       $no_unit = "<td id='$data->kd_unit-nounit'>$data->no_unit</td>";
                       $nama_apt = "<td id='$data->kd_unit-nameapt'>$data->nama_apt</td>";
                       $alamat_apt = "<td class='hiderespons'>$data->alamat_apt</td>";
@@ -180,7 +182,7 @@
                       $status = "<td id='$data->kd_unit-stat-bersih'>Bersih</td>";
                       $button = "<a class='btn btn-Basic popup' data-toggle='modal' id='$data->kd_unit"."-none' href='#popup-task' >Tidak Ada</a>";
                       $listed_unit[] = $data->kd_unit;
-                      printtable(6, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $data->kd_unit);
+                      printtable(6, $no_unit, $nama_apt, $alamat_apt, $tersedia, $status, $button, $data->kd_unit,'N');
                     }
                     };
                 ?>
@@ -213,7 +215,7 @@
     <div id="task-induk">
       <div class="widget-title" id="task-bar" style="cursor:pointer;"> <span class="icon"><i class="icon-check"></i></span>
         <h5 id="task-cap">Task Tersisa</h5>
-      </div>    
+      </div>
       <div id="task-anak">
         <div class="control-group newpadd">
           <div id="task-anak-isi">
@@ -222,7 +224,7 @@
         </div>
         <div id="btn-bersihkan" class="controls">
           <input type="submit" id="submit" name="bersih_task" class="btn btn-success" value="Selesaikan"/>
-        </div>        
+        </div>
       </div>
     </div>
 
@@ -230,29 +232,29 @@
     <div id="stat-induk">
       <div class="widget-title" id="stat-bar" style="cursor:pointer;"> <span class="icon"><i class="icon-leaf"></i></span>
         <h5>Status Unit</h5>
-      </div>    
+      </div>
       <div id="stat-anak">
         <div class="control-group newpadd statpadd">
           <div id="stat-anak-isi">
             <div class="controls my" id="check-stat"><input class="ck" id='has_look' type="checkbox">Unit sudah dilihat</div>
-            <div class="controls my" id="stat-option" style="padding-bottom: 10px;margin-top:10px;border-top-style: solid;border-top-color: #f1f1f1;">                
-              <input type="radio" id="Y-stat" name="ready" class="ck" value="Y"/> Unit siap digunakan <br>                              
-              <input type="radio" id="N-stat" name="ready" class="ck" value="N" checked/> Unit belum siap digunakan                               
+            <div class="controls my" id="stat-option" style="padding-bottom: 10px;margin-top:10px;border-top-style: solid;border-top-color: #f1f1f1;">
+              <input type="radio" id="Y-stat" name="ready" class="ck" value="Y"/> Unit siap digunakan <br>
+              <input type="radio" id="N-stat" name="ready" class="ck" value="N" checked/> Unit belum siap digunakan
             </div>
           </div>
         </div>
         <div class="controls">
           <a class='btn btn-danger' id="kosong-stat">Kosongkan Unit</a>
           <a class='btn btn-success' id="update-stat">Perbarui Status</a>
-        </div>        
+        </div>
       </div>
-    </div>    
+    </div>
 
     <!--Note Part-->
     <div id="note-induk">
       <div class="widget-title" id="note-bar" style="cursor:pointer;"> <span class="icon"><i class="icon-comment"></i></span>
         <h5 id="note-cap">Catatan</h5>
-      </div>    
+      </div>
       <div id="note-anak">
         <div class="control-group newpadd">
           <div id="note-anak-isi">
@@ -266,9 +268,9 @@
         </div>
         <div class="controls">
           <a class='btn' id="tambah-note">Tambah Catatan</a>
-        </div>        
+        </div>
       </div>
-    </div>    
+    </div>
   </form>
 </div>
 <!-- //modal popup tambah unit-->
@@ -291,7 +293,7 @@
       <div class="controls">
         <input name="injury_bersih" type="text" class="span2 houronly" value="<?php echo formated_injury_bersih($injury_bersih); ?>" placeholder="hh:mm"/>
       </div>
-    </div>    
+    </div>
     <div class="control-group">
       <div class="controls">
         <input type="submit" name="setTime" class="btn btn-success" value="Perbarui"/>
