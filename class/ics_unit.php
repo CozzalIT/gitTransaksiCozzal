@@ -70,6 +70,14 @@ class Ics_unit {
     return $query;
   }
 
+  public function showURLbyGroup($group_update){
+    $sql = "SELECT tb_url_unit.kd_url, tb_url_unit.title, tb_url_unit.url, 
+    tb_unit.kd_apt, tb_unit.kd_unit FROM tb_url_unit INNER JOIN tb_unit ON 
+    tb_unit.kd_unit = tb_url_unit.kd_unit WHERE tb_url_unit.group_update = '$group_update'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
   // mendapatkan url dari kd_url
   public function urlByKd_url($kd_url){
     $sql = "SELECT url FROM tb_url_unit WHERE kd_url='$kd_url'";
@@ -112,25 +120,28 @@ class Ics_unit {
     include 'ics.php';
     $day_before = strtotime('-90 Days');
     $minimum_date = date('Y-m-d',$day_before);    
-    $ics = new ICS("../../listics/".$kd_unit.".ics");
+    $unit = explode("/", $kd_unit);
+    $ics = new ICS("");
 
-    $ics->create_ical();
-    $show = $this->showUnit_byId($kd_unit, $minimum_date);
-    while($data = $show->fetch(PDO::FETCH_OBJ)){
-      $this->insert_event(
-        $ics, $data->nama_apt."-".$data->alamat_apt, 'Booked by cozzal', $data->check_in, 
-        $data->check_out, $data->nama, 'transaksi.cozzal.com'
-      );
-    }  
-    $show = $this->showunitMod_byId($kd_unit, $minimum_date);
-    while($data = $show->fetch(PDO::FETCH_OBJ)){
-      $this->insert_event(
-        $ics, 'Not Avaliable', 'Blocked by cozzal', $data->start_date, 
-        $data->end_date, $data->note, 'transaksi.cozzal.com'
-      );
-    }        
-    $ics->to_string();     
-
+    for($i=0;$i<count($unit);$i++){
+      $ics->change_file("../../listics/".$unit[$i].".ics");
+      $ics->create_ical();
+      $show = $this->showUnit_byId($unit[$i], $minimum_date);
+      while($data = $show->fetch(PDO::FETCH_OBJ)){
+        $this->insert_event(
+          $ics, $data->nama_apt."-".$data->alamat_apt, 'Booked by cozzal', $data->check_in, 
+          $data->check_out, $data->nama, 'transaksi.cozzal.com'
+        );
+      }  
+      $show = $this->showunitMod_byId($unit[$i], $minimum_date);
+      while($data = $show->fetch(PDO::FETCH_OBJ)){
+        $this->insert_event(
+          $ics, 'Not Avaliable', 'Blocked by cozzal', $data->start_date, 
+          $data->end_date, $data->note, 'transaksi.cozzal.com'
+        );
+      }        
+      $ics->to_string(); 
+    }
   }
 
   // menampilkan transaksi berdasarkan minimum date (untuk buildIcs)

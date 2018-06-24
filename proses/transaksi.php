@@ -128,10 +128,10 @@ if(isset($_POST['addTransaksi']) || isset($_POST["Transaksi_booked"])){
       $saldo = $dp + $data1->saldo;
       $update_kas = $proses2->updateKas($kd_kas, $saldo, $tanggal);
     }
-    require("../class/ics_unit.php");
-    $ics = new Ics_unit($db);
-    $ics->buildIcs($kd_unit);
-    header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php');
+    // require("../class/ics_unit.php");
+    // $ics = new Ics_unit($db);
+    // $ics->buildIcs($kd_unit);
+    header('Location:../croneTask/update_sys_cal.php?id='.$kd_unit.'&ics_update='.$view);
   }else{
     echo 'Tambah Transaksi Gagal !';
 	}
@@ -351,14 +351,11 @@ elseif(isset($_POST['updateTransaksi'])){
   $unit = $proses->updateUnit_kotor($kd_transaksi ,$kd_unit, $check_in, $check_out);
   $add = $proses->updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $harga_sewa_we, $harga_sewa_gbg, $diskon, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total_tagihan, $total_harga_owner,$sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday, $h_owner_wd, $h_owner_we,$catatan,$deposit);
   if($add == "Success"){
-  require("../class/ics_unit.php");
-  $ics = new Ics_unit($db);
-  if($kd_unit!=$unit){
-    $ics->buildIcs($kd_unit.'/'.$unit);
-  } else {
-    $ics->buildIcs($kd_unit);
-  }
-    header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php');
+  //require("../class/ics_unit.php");
+  //$ics = new Ics_unit($db);
+  if($kd_unit!=$unit)
+    $kd_unit .= '/'.$unit;
+  header('Location:../croneTask/update_sys_cal.php?id='.$kd_unit.'&ics_update='.$view);
   }else{
     echo 'error';
   };
@@ -412,10 +409,10 @@ elseif (isset($_GET['addCancel']) && $view!="owner" && $view!="cleaner"){
   $add = $proses->addCancel($kd_transaksi);
   if($add == "Success"){
     $delete = $proses->deleteUnit_kotor($kd_transaksi);
-    require("../class/ics_unit.php");
-    $ics = new Ics_unit($db);
-    $ics->buildIcs($kd_unit);
-    header('Location:../view/'.$view.'/transaksi/cancel_transaksi.php');
+    //require("../class/ics_unit.php");
+    //$ics = new Ics_unit($db);
+    //$ics->buildIcs($kd_unit);
+    header('Location:../croneTask/update_sys_cal.php?id='.$kd_unit.'&ics_update='.$view);
   }
 }
 

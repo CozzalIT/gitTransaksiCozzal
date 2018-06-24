@@ -177,7 +177,7 @@
 				kd_url : id_url
 			},
 			function (data) {
-				alert(data);
+				//alert(data);
 				$("#"+id_url).attr("class","iconM icon-ok");				
 				window.location = "calendar.php?calendar_unit="+kd_unit;
 			});				
@@ -185,11 +185,11 @@
 
 		function refreshSys(){
 			$("#sys_icon").attr("class","iconM icon-repeat");
-			$.post("../../../proses/ics.php", {
+			$.post("../../../croneTask/update_sys_cal.php", {
 				generateSys : kd_unit, 
 			},
 			function (data) {
-				alert(data);
+				//alert(data);
 				$("#sys_icon").attr("class","iconM icon-ok");				
 				window.location = "calendar.php?calendar_unit="+kd_unit;
 			});				
@@ -202,7 +202,7 @@
 				kd_apt : kd_apt,
 			},
 			function (data) {
-				alert(data);
+				//alert(data);
 				$("#sys_icon2").attr("class","iconM icon-ok");				
 				window.location = "calendar.php?calendar_unit="+kd_unit;
 			});				

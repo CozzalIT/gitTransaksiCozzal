@@ -10,8 +10,8 @@
        		if($cal_cozzal[0]!="<"){
        			echo '
 		     	<a class="btn btn-small" onclick="tambahURL()" href="#popup-URL" data-toggle="modal" style="margin: 5px;" ><i class="iconM icon-plus"></i>Tambah URL</a>        			
-		       	<a class="btn btn-small" href="#" style="margin: 5px;" ><i class="iconM icon-refresh"></i>Refresh URL cozzal</a> 
-		       	<a class="btn btn-small" href="#" style="margin: 5px;" ><i class="iconM icon-repeat"></i>Refresh semua URL</a> 
+		       	<a class="btn btn-small" onclick="refreshSys()" style="margin: 5px;" ><i  id="sys_icon" class="iconM icon-refresh"></i>Refresh URL cozzal</a> 
+		       	<a class="btn btn-small" onclick="refreshAll()" style="margin: 5px;" ><i id="sys_icon2" class="iconM icon-repeat"></i>Refresh semua URL</a> 
        			';
        		}
        	?>
@@ -26,7 +26,7 @@
 
      <?php
      	$count = 0;
-	    $cal = $calendar->showURL($kd_unit, "1"); // tampilkan URL non sistem
+	    $cal = $ics_unit->showURL($kd_unit, "1"); // tampilkan URL non sistem
 	    while($data = $cal->fetch(PDO::FETCH_OBJ)){
 	      echo '
 		     <div class="widget-content nopadding">
@@ -34,7 +34,7 @@
 		       	<label class="control-label">URL '.$data->title.' :</label>
 		       	<div class="url-link">'.$data->url.'</div>
 		       	<a class="btn btn-small" href="#popup-URL" data-toggle="modal" onclick="editURL('.$data->kd_url.')" style="margin: 5px;" ><i class="iconM icon-edit"></i>Edit URL</a> 
-		       	<a class="btn btn-small" style="margin: 5px;" ><i class="iconM icon-refresh"></i>Refresh URL</a> 
+		       	<a class="btn btn-small" onclick="refreshURL('.$data->kd_url.')" style="margin: 5px;" ><i id="'.$data->kd_url.'" class="iconM icon-refresh"></i>Refresh URL</a> 
 		       	<a class="btn btn-small" onclick="hapusURL('.$data->kd_url.')" style="margin: 5px;" ><i class="iconM icon-remove"></i>Hapus URL</a> 
 		       </div>       
 		     </div>
@@ -169,19 +169,44 @@
 		    }
 		}
 
-		function refresh(id_url, url_bnb){
-			$(".icon-repeat").attr("class","iconM icon-refresh");
-			$.post("../../../ics/refreshURLbyId.php", {
-				cek_by_id : kd_unit, 
-				kd_apt : kd_apt, 
-				url : url_bnb,
+		function refreshURL(id_url){
+			$("#"+id_url).attr("class","iconM icon-repeat");
+			$.post("../../../proses/ics.php", {
+				generateSome : kd_unit, 
+				kd_apt : kd_apt,
 				kd_url : id_url
 			},
 			function (data) {
-				$(".icon-refresh").attr("class","iconM icon-ok");				
+				//alert(data);
+				$("#"+id_url).attr("class","iconM icon-ok");				
 				window.location = "calendar.php?calendar_unit="+kd_unit;
 			});				
 		} 
+
+		function refreshSys(){
+			$("#sys_icon").attr("class","iconM icon-repeat");
+			$.post("../../../croneTask/update_sys_cal.php", {
+				generateSys : kd_unit, 
+			},
+			function (data) {
+				//alert(data);
+				$("#sys_icon").attr("class","iconM icon-ok");				
+				window.location = "calendar.php?calendar_unit="+kd_unit;
+			});				
+		} 
+
+		function refreshAll(){
+			$("#sys_icon2").attr("class","iconM icon-refresh");
+			$.post("../../../proses/ics.php", {
+				generateAll : kd_unit, 
+				kd_apt : kd_apt,
+			},
+			function (data) {
+				//alert(data);
+				$("#sys_icon2").attr("class","iconM icon-ok");				
+				window.location = "calendar.php?calendar_unit="+kd_unit;
+			});				
+		} 		
 
 		function hapusURL(x){
 			window.location = "../../../proses/calendar.php?deleteURL="+x+"&kd_unit="+kd_unit;
