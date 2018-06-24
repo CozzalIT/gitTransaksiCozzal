@@ -263,7 +263,7 @@ class Unit {
 
   public function showTransaksi_byDate($minggu_lalu){
     $sql = "SELECT kd_unit, check_in, check_out FROM tb_transaksi WHERE check_out>='$minggu_lalu'
-    status!='2' AND status!='3'";
+    AND status!='2' AND status!='3'";
     $query = $this->db->query($sql);
     return $query;    
   }
