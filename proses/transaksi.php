@@ -2,6 +2,8 @@
 require("../../config/database.php");
 require("../class/transaksi.php");
 require("../class/unit.php");
+require("../class/owner.php");
+require("../class/fcm.php");
 require("../class/kas.php");
 require("../class/penyewa.php");
 
@@ -80,6 +82,7 @@ if(isset($_POST['addTransaksi']) || isset($_POST["Transaksi_booked"])){
   $data_u = $show_u->fetch(PDO::FETCH_OBJ);
   $h_owner_wd = $data_u->h_owner_wd;
   $h_owner_we = $data_u->h_owner_we;
+  $kd_owner = $data_u->kd_owner;
   //$h_owner_mg = $data_u->h_owner_mg;
   //$h_owner_bln = $data_u->h_owner_bln;
 
@@ -106,6 +109,8 @@ if(isset($_POST['addTransaksi']) || isset($_POST["Transaksi_booked"])){
 
   $proses = new Transaksi($db);
   $proses2 = new Kas($db);
+  $proses_o = new Owner($db);
+  $proses_f = new fcm($db);
 
   $add_transaksi = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $check_in, $check_out, $jumlah_weekend, $jumlah_weekday, $hari, $harga_sewa, $harga_sewa_we, $harga_sewa_gbg, $tgl_transaksi, $diskon, $ekstra_charge, $kd_kas, $tamu, $kd_booking, $dp, $total, $total_harga_owner, $sisa_pelunasan, 1, $h_owner_wd, $h_owner_we,$catatan, $deposit);
 
@@ -116,6 +121,18 @@ if(isset($_POST['addTransaksi']) || isset($_POST["Transaksi_booked"])){
   }
 
   if($add_transaksi == "Success"){
+    $show_o = $proses_o->editOwner($kd_owner);
+    $data_o = $show_o->fetch(PDO::FETCH_OBJ);
+    $username = $data_o->username;
+
+    $show_f = $proses_f->showToken($username);
+    $data_f = $show_f->fetch(PDO::FETCH_OBJ);
+    $token = $data_f->token;
+
+    //Notif
+    $registration_ids = array("$token");
+    $pushNotif = $proses_f->send_notification($registration_ids,'Selamat! Anda mendapat reservasi baru.');
+    //Notif END
 
     $show = $proses->showMaxTransaksi();
     $data = $show->fetch(PDO::FETCH_OBJ);
@@ -132,6 +149,7 @@ if(isset($_POST['addTransaksi']) || isset($_POST["Transaksi_booked"])){
     // $ics = new Ics_unit($db);
     // $ics->buildIcs($kd_unit);
     header('Location:../croneTask/update_sys_cal.php?id='.$kd_unit.'&ics_update='.$view);
+
   }else{
     echo 'Tambah Transaksi Gagal !';
 	}
