@@ -48,7 +48,7 @@
            );
 
            $headers = array(
-             'Authorization:key = AIzaSyDfckQkrj7GdgV4X75Zhe0eyjoTqPXsjyk',
+             'Authorization:key = API KEY',
              'Content-Type: application/json'
            );
 
