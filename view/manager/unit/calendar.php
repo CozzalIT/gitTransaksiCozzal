@@ -1,6 +1,7 @@
 <?php
   require("../../../class/calendar.php");
   require("../../../../config/database.php");
+  require("../../../class/ics_unit.php");
 
   $thisPage = "Unit";
 
@@ -10,6 +11,7 @@
 <?php
   include "../template/header.php";
   include "../template/sidebar.php";
+  $ics_unit = new Ics_unit($db);
 
   if (isset($_GET['calendar_unit'])){
     $arrayunit = array();
@@ -27,7 +29,7 @@
     }
 
     $cal_cozzal = "<a href='../../../proses/unit.php?newics=$kd_unit' class='btn btn-small'>Buat Link</a>";
-    $cal = $calendar->showURL($kd_unit, "0");
+    $cal = $ics_unit->showURL($kd_unit, "0");
     while($data = $cal->fetch(PDO::FETCH_OBJ)){
       $cal_cozzal = $data->url;
     }

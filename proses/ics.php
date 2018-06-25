@@ -89,6 +89,7 @@ function loadICS_once($kd_unit, $kd_apt, $kd_url, $url, $unit){
 }
 
 function loadICS_often($kd_unit, $kd_apt, $unit, $show){
+	include '../class/ics.php';
 	$ICS = new ICS("");
 	while ($data = $show->fetch(PDO::FETCH_OBJ)) {
 		loadICS($kd_unit, $kd_apt, $data->kd_url, $data->url, $unit, $ICS);
@@ -111,7 +112,7 @@ if(isset($_POST['generateSome'])){ // asalnnya cek_by_id
 elseif(isset($_POST['generateAll'])){
 	$kd_unit = $_POST['generateAll'];
 	$kd_apt = $_POST['kd_apt'];
-	$unit->buildIcs($kd_unit);
+	//$unit->buildIcs($kd_unit);
 	$show = $unit->showURL($kd_unit, "1");
 	loadICS_often($kd_unit, $kd_apt, $unit, $show);
 
@@ -119,6 +120,7 @@ elseif(isset($_POST['generateAll'])){
 	echo json_encode($callback);	
 }
 
+// sementara ttak berfungsi
 elseif(isset($_POST['generateSys'])) {
 	$kd_unit = $_POST['generateSys'];
 	$unit->buildIcs($kd_unit);

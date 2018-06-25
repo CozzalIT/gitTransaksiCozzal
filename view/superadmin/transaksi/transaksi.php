@@ -188,13 +188,13 @@
               <div class="control-group" id="harga_sewa-C">
       				  <label class="control-label">Harga Sewa Weekday:</label>
       				  <div class="controls">
-      				    <input name="harga_sewa" min="0"  id="harga_sewa" type="number" onChange="biaya(this.form)" />
+      				    <input name="harga_sewa" min="0"  id="harga_sewa" type="number" onChange="hasil(this.form)" />
                 </div>
       			  </div>
               <div class="control-group" id="harga_sewa_we-C">
                 <label class="control-label">Harga Sewa Weekend:</label>
                 <div class="controls">
-                  <input name="harga_sewa_we" min="0"  id="harga_sewa_we" type="number" onChange="biaya(this.form)" />
+                  <input name="harga_sewa_we" min="0"  id="harga_sewa_we" type="number" onChange="hasil(this.form)" />
                 </div>
               </div>
 			  <div class="control-group" id="harga_sewa_gbg-C">

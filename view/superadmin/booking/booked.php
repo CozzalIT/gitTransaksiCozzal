@@ -49,7 +49,7 @@
         				  $show = $Proses->showBooked_byURL();
                   $i = 1;
         				  while($data = $show->fetch(PDO::FETCH_OBJ)){
-                    if($data->status!=''){
+                    if($data->status=='1'){
                       if($data->title!="")
                         $title = $data->title;
                       else
