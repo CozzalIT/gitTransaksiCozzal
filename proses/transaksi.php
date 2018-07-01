@@ -130,7 +130,7 @@ if(isset($_POST['addTransaksi']) || isset($_POST["Transaksi_booked"])){
     $token = $data_f->token;
 
     //Notif
-    $registration_ids = array("$token");
+    $registration_ids = array($token);
     $pushNotif = $proses_f->send_notification($registration_ids,'Selamat! Anda mendapat reservasi baru.');
     //Notif END
 
