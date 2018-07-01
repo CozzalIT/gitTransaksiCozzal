@@ -17,6 +17,20 @@ class Penyewa {
     }
   }
 
+  //Proses Add
+  public function addPenyewa2($nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung){
+    $sql = "INSERT INTO tb_penyewa (nama, alamat, no_tlp, jenis_kelamin, email, tgl_gabung) VALUES('$nama', '$alamat', '$no_tlp', '$jenis_kelamin', '$email', '$tgl_gabung')";
+    $query = $this->db->query($sql);
+    $sql = "SELECT * FROM tb_penyewa WHERE kd_penyewa IN (SELECT MAX(kd_penyewa) FROM tb_penyewa)";
+    $query = $this->db->query($sql);
+    $data = $query->fetch(PDO::FETCH_OBJ);
+    if($data->nama==$nama && $data->alamat==$alamat && $data->jenis_kelamin==$jenis_kelamin){
+      return $data->kd_penyewa;
+    } else {
+      return "Failed";
+    }
+  }
+
   //Proses Show
   public function showPenyewa(){
     $sql = "SELECT * FROM tb_penyewa ORDER BY nama ASC";

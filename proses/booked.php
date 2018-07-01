@@ -45,10 +45,10 @@ elseif(isset($_POST['daftar_penyewa'])){
 	$jenis_kelamin = $_POST["jenis_kelamin"];
 	$email = $_POST["email"];
 	$tgl_gabung = date("Y-m-d");
-	$penyewa->addPenyewa($nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung); 
+	$data = $penyewa->addPenyewa2($nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung); 
 
-	if($penyewa=="Success"){
-		$callback = array('status'=>"oke");
+	if($penyewa!="Failed"){
+		$callback = array('status'=>$data);
 	} else {
 		$callback = array('status'=>"gagal");
 	}

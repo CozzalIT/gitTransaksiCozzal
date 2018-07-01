@@ -73,19 +73,20 @@
         jenis_kelamin : jenis_kelamin, no_tlp : no_tlp
       },
       function (data) {
-        $("#pilih-penyewa").text("Penyewa telah terdaftar, mohon tunggu ...");
-        var res = JSON.parse(data);
-        if (res.status=="oke"){
-          $.post('../../../proses/booked.php', {getPenyewa : nama, no_tlp : no_tlp },
-          function (data) {
-            response = JSON.parse(data);
-            $("#kd_penyewa").val(response.kd_penyewa);
-            $("#next").removeAttr("disabled");
-            $("#next").click();
-          });
-        } else {
-            swal("Data Penyewa Gagal Didaftarkan", "Silahkan coba ulangi lagi", "success");
-        }
+          response = JSON.parse(data);
+          if(response.status!="gagal"){
+            $("#pilih-penyewa").text("Penyewa berhasil didaftarkan");
+            setTimeout(function(){
+              $("#kd_penyewa").val(response.status);
+              $("#next").removeAttr("disabled");
+              $("#next").click();           
+            }, 1000);            
+          } else {
+            var a = '<div class="alert alert-danger" style="margin:0px;" role="alert">';
+            a += 'Pendaftar gagal terdaftar. Sistem sedang sibuk, silahkan coba beberapa saat.';
+            a += '</div>';
+            $("#alert_element").text(s);
+          }
       });
     } else {
       alert("Lengkapi data terlebih dahulu");
