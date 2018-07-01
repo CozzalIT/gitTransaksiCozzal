@@ -6,13 +6,13 @@
 	$unit = new Ics_unit($db);
 
 	function getCount(){
-		$isi = fread(fopen("count_ics_update.ini","r"),filesize("count_ics_update.ini"));
-		fclose(fopen("count_ics_update.ini","r"));
+		$isi = fread(fopen("../../inifiles/count_ics_update.ini","r"),filesize("../../inifiles/count_ics_update.ini"));
+		fclose(fopen("../../inifiles/count_ics_update.ini","r"));
 		return $isi;
 	}
 
 	function setValue($value){
-	  $tmp = fopen("count_ics_update.ini", "w");		
+	  $tmp = fopen("../../inifiles/count_ics_update.ini", "w");		
 	  fwrite($tmp,$value);
 	  fclose($tmp);
 	}

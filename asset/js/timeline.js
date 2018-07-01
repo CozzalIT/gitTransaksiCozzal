@@ -5,6 +5,17 @@ var onloading = false;
 var arr_bulan = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Okt","Nov","Des"];
 var selected_index; //(26) format : m/n dimana m adalah kotak ke berapa dan n adalah timeline ke berapa
 
+function resetViewTanggal(){
+	$("#tanggal-0").text("...");
+	$("#tanggal-1").text("...");
+	$("#tanggal-2").text("...");
+	$("#tanggal-3").text("...");
+	$("#tanggal-4").text("...");
+	$("#tanggal-5").text("...");
+	$("#tanggal-6").text("...");
+	$(".bulan").text("...");
+}
+
 function set_detail_timeline(n){
 	$("#selected-day").text('Memuat...');
 	$(".detail-timeline").remove();
@@ -120,10 +131,16 @@ function show_J(y){
 
 //on document has loaded succssesfully
 $(document).ready(function(){ 
-	alerti(0,0);
+	$("#selected-day").text("Update Timeline ...");
+    $.post("../../../croneTask/evaluasi_unit_kotor.php", {update_timeline :""},
+    function (data) {
+    	$("#selected-day").text("Hari ini");
+    	alerti(0,0);
+    });	
 	
 	//geser timeline ke kanan
 	$("#rigth-button").click(function(){
+		resetViewTanggal();
 		if(week_pos<4 && !onloading){
 			week_pos++; new_week(week_pos);
 			alerti(0,7*(week_pos-1));
@@ -133,6 +150,7 @@ $(document).ready(function(){
 
 	//geser timeline ke kiri
 	$("#left-button").click(function(){
+		resetViewTanggal();
 		if(week_pos!=0 && !onloading){
 			week_pos--; new_week(week_pos);
 			alerti(0,7*(week_pos-1));

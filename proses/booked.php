@@ -46,7 +46,12 @@ elseif(isset($_POST['daftar_penyewa'])){
 	$email = $_POST["email"];
 	$tgl_gabung = date("Y-m-d");
 	$penyewa->addPenyewa($nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung); 
-	$callback = array('status'=>"oke");
+
+	if($penyewa=="Success"){
+		$callback = array('status'=>"oke");
+	} else {
+		$callback = array('status'=>"gagal");
+	}
 	echo json_encode($callback);
 }
 

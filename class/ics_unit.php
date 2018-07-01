@@ -32,7 +32,8 @@ class Ics_unit {
   //menampilkan transaksi (check_in) yang terjadi dalam 3 bulan terakhir ($sekarang = $sekarang - 90 hari)
   public function showRecent_trx($kd_unit, $sekarang){
     $sql = "SELECT check_in FROM tb_transaksi WHERE kd_unit='$kd_unit' 
-    AND (check_in>='$sekarang' OR check_out>='$sekarang')";
+    AND (check_in>='$sekarang' OR check_out>='$sekarang') AND status!='2' 
+    AND status!='3'";
     $query = $this->db->query($sql);
     return $query;
   }
