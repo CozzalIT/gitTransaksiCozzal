@@ -4,7 +4,7 @@ require("../class/task.php");
 session_start();
 $view = $_SESSION['hak_akses'];
 date_default_timezone_set('Asia/Jakarta');
-$sekarang = date('Y-m-d');  
+$sekarang = date('Y-m-d');
 
 //Tambah task
 if(isset($_POST['addTask'])){
@@ -26,13 +26,13 @@ if(isset($_POST['addTask'])){
   $add = $proses->addTask($task, $unit, $sifat, $tgl_task);
 
 
-//sementara di offkan  
+//sementara di offkan
 /*  if($sifat!="Sekali"){ //untuk yang sifatnya rutin
 
     $kd_unit_base = "0";
     //$kd_unit_base diisi dengan unit yang sedang aktif task nya
     while($data = $add->fetch(PDO::FETCH_OBJ)){$kd_unit_base .= "/".$data->kd_unit;}
-    
+
     //jika tidak ada yang aktif maka tambahka dari unit yang sudah check_out
     if($kd_unit_base=="0"){
       $show_kotor = $proses->showUnit_kotor($sekarang);
@@ -47,7 +47,7 @@ if(isset($_POST['addTask'])){
     }
 
   }
-*/  
+*/
   header('Location:../view/'.$view.'/unit/task.php');
 }
 
@@ -145,10 +145,10 @@ elseif(isset($_POST['update_sekali'])){
   }
   $Proses->deleteTask_sekali($sekarang);
   $callback = array('status'=>"done");
-  echo json_encode($callback);  
+  echo json_encode($callback);
 }
 
-// edit task with popup 
+// edit task with popup
 elseif(isset($_POST['id'])){
   $kd_task = $_POST['id'];
   $Proses = new Task($db);
@@ -159,7 +159,7 @@ elseif(isset($_POST['id'])){
   $sifat = $data->sifat;
   $tgl_task = $data->tgl_task;
   $callback = array('task'=>$task, 'unit'=>$unit, 'sifat'=>$sifat, 'tgl_task'=>$tgl_task);
-  echo json_encode($callback);  
+  echo json_encode($callback);
 }
 
 //update task unit pada status kotor saat memuat data
@@ -179,9 +179,9 @@ elseif(isset($_POST['updateTask_unit'])){
   $show2 = $Proses2->showCatatanUnit($kd_unit);
   while($data2 = $show2->fetch(PDO::FETCH_OBJ)){
     $i++;
-  } 
+  }
   $callback = array('done'=>$CO,'catatan'=>$i,'r'=>$update);
-  echo json_encode($callback);  
+  echo json_encode($callback);
 }
 
 elseif(isset($_POST['ajx_id'])){
@@ -199,7 +199,7 @@ elseif(isset($_POST['ajx_id'])){
     $html .= $data->catatan.'</div>';
   }
   if($jumlah==0) $html = '<div id="empty-note" class="note">Tidak tersedia catatan pada unit ini.</div>';
- 
+
   $Proses = new Task($db); $jumlah2=0; $html2=""; $all_task="0";
   $show = $Proses->showTask_byunit($kd_unit);
   while($data = $show->fetch(PDO::FETCH_OBJ)){
@@ -210,7 +210,7 @@ elseif(isset($_POST['ajx_id'])){
   if($jumlah2==0){
     $html2 = '<div id="empty-task" class="note">Task belum tersedia.';
     $html2.= 'Silahkan isi terlebih dahulu pada menu <a style="color:#169595;" href="task.php">Task Cleaner</a></div>';
-  } 
+  }
   $callback = array('konten'=>$html, 'jumlah'=>$jumlah, 'konten2'=>$html2, 'jumlah2'=>$jumlah2, 'task'=>$all_task);
   echo json_encode($callback);
 }
