@@ -25,7 +25,7 @@ class Ics_unit {
     SELECT '$kd_unit' AS unit, '$check_in' AS CI, '$check_out' AS CO, CONCAT('Booked By ',title) 
     AS note, '3' AS JN FROM tb_url_unit WHERE kd_url = '$kd_url'";
     $this->db->query($sql);
-    $sql = "INSERT INTO tb_unit_kotor VALUES('$kd_unit', '$check_in', '$check_out', null)";
+    $sql = "INSERT INTO tb_unit_kotor VALUES('$kd_unit', '$check_in', '$check_out', null, null)";
     $this->db->query($sql);
   }
 

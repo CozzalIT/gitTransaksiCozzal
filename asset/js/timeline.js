@@ -140,8 +140,8 @@ $(document).ready(function(){
 	
 	//geser timeline ke kanan
 	$("#rigth-button").click(function(){
-		resetViewTanggal();
 		if(week_pos<4 && !onloading){
+			resetViewTanggal();
 			week_pos++; new_week(week_pos);
 			alerti(0,7*(week_pos-1));
 			set_selected_index(selected_index, week_pos);
@@ -150,8 +150,8 @@ $(document).ready(function(){
 
 	//geser timeline ke kiri
 	$("#left-button").click(function(){
-		resetViewTanggal();
 		if(week_pos!=0 && !onloading){
+			resetViewTanggal();
 			week_pos--; new_week(week_pos);
 			alerti(0,7*(week_pos-1));
 			set_selected_index(selected_index, week_pos);

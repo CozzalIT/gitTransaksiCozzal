@@ -18,26 +18,27 @@ function getrealdate($date){
 
 function getlocalics($url, $kd_url){	
 
-	// $local_file = "../../listics/cache/".$kd_url.".ics";
-	// $remote_file  = $url; // url nya
-	// $ch = curl_init();
-	// $fp = fopen($local_file,"w"); // mungkin pake yg "w" aja
-	// $ch = curl_init($remote_file);
-	// curl_setopt($ch, CURLOPT_TIMEOUT, 50);
-	// curl_setopt($ch, CURLOPT_FILE, $fp);
-	// curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-	// curl_setopt($ch, CURLOPT_ENCODING, "");
-	// curl_exec($ch);
-	// curl_close($ch);
-	// fclose($fp);
+	$local_file = "../../listics/cache/".$kd_url.".ics";
+	$remote_file  = $url; // url nya
+	$ch = curl_init();
+	$fp = fopen($local_file,"w"); // mungkin pake yg "w" aja
+	$ch = curl_init($remote_file);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 50);
+	curl_setopt($ch, CURLOPT_FILE, $fp);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+	curl_setopt($ch, CURLOPT_ENCODING, "");
+	curl_exec($ch);
+	curl_close($ch);
+	fclose($fp);
+	return "../../listics/cache/".$kd_url.".ics";
 
-	$file = $url;
-	$newfile = "../../listics/cache/".$kd_url.".ics";
-	if ( copy($file, $newfile) ) {
-	 	return $local_file;   
-	}else{
-	    return "false";
-	}
+	// $file = $url;
+	// $newfile = "../../listics/cache/".$kd_url.".ics";
+	// if ( copy($file, $newfile) ) {
+	//  	return $local_file;   
+	// }else{
+	//     return "false";
+	// }
 }
 
 function loadIcs($kd_unit, $kd_apt, $kd_url, $url, $unit, $ICS){
