@@ -1,10 +1,10 @@
 <?php
 require("../../config/database.php");
 require("../class/task.php");
-session_start();
+// session_start();
 $view = $_SESSION['hak_akses'];
-date_default_timezone_set('Asia/Jakarta');
-$sekarang = date('Y-m-d');  
+// date_default_timezone_set('Asia/Jakarta');
+$sekarang = date('Y-m-d');
 
 //Tambah task
 if(isset($_POST['addTask'])){
@@ -25,14 +25,16 @@ if(isset($_POST['addTask'])){
   $proses = new Task($db);
   $add = $proses->addTask($task, $unit, $sifat, $tgl_task);
 
+  // Log System
+  $logs->addLog('ADD','tb_task','Tambah data task',json_encode([$task, $unit, $sifat, $tgl_task]),null);
 
-//sementara di offkan  
+//sementara di offkan
 /*  if($sifat!="Sekali"){ //untuk yang sifatnya rutin
 
     $kd_unit_base = "0";
     //$kd_unit_base diisi dengan unit yang sedang aktif task nya
     while($data = $add->fetch(PDO::FETCH_OBJ)){$kd_unit_base .= "/".$data->kd_unit;}
-    
+
     //jika tidak ada yang aktif maka tambahka dari unit yang sudah check_out
     if($kd_unit_base=="0"){
       $show_kotor = $proses->showUnit_kotor($sekarang);
@@ -47,7 +49,7 @@ if(isset($_POST['addTask'])){
     }
 
   }
-*/  
+*/
   header('Location:../view/'.$view.'/unit/task.php');
 }
 
@@ -58,6 +60,8 @@ elseif(isset($_POST['updateTask'])){
   $sifat = $_POST['sifat'];
   $proses = new Task($db);
   $add = $proses->updateTask($kd_task ,$task, $unit, $sifat);
+  // Log System
+  $logs->addLog('Update','tb_task','Update data task',json_encode([$kd_task ,$task, $unit, $sifat]),null);
   if($add == "Success"){
     header('Location:../view/'.$view.'/unit/task.php');
   }
@@ -68,6 +72,8 @@ elseif(isset($_GET['delete_task'])){
   $kd_task = $_GET['delete_task'];
   $proses = new Task($db);
   $add = $proses->deleteTask($kd_task);
+  // Log System
+  $logs->addLog('Delete','tb_task','Delete data task',json_encode([$kd_task]),null);
   if($add == "Success"){
     header('Location:../view/'.$view.'/unit/task.php');
   }
@@ -85,6 +91,8 @@ elseif(isset($_GET['kosongkan_unit'])){
   $jam .= ":00";
   $proses = new Cleaner($db);
   $proses->kosongkan_unit($kd_unit, $sekarang, $jam);
+  // Log System
+  $logs->addLog('Update','tb_unit_kotor','Mengosongkan unit',json_encode([$kd_unit, $sekarang, $jam]),null);
   header('Location:../view/'.$view.'/unit/status.php');
 }
 
@@ -94,6 +102,8 @@ elseif(isset($_GET['set_ready'])){
   require("../class/cleaner.php");
   $proses = new Cleaner($db);
   $proses->updateUnit_ready($kd_unit, $ready);
+  // Log System
+  $logs->addLog('Update','tb_unit','Mengubah unit menjadi status ready',json_encode([$kd_unit, $ready]),null);
   header('Location:../view/'.$view.'/unit/status.php');
 }
 
@@ -106,6 +116,8 @@ elseif(isset($_POST['bersih_task'])){
   for($i=1; $i<count($task); $i++){
     if(isset($_POST[$task[$i]."-ck"])){
         $del = $proses->deleteTask_unit($kd_unit,$task[$i]);
+        // Log System
+        $logs->addLog('Delete','tb_task_unit','Delete data task unit',json_encode([$kd_unit,$task[$i]]),null);
         $hit_del++;
     }
   }
@@ -114,6 +126,9 @@ elseif(isset($_POST['bersih_task'])){
     $Proses2 = new Cleaner($db);
     $Proses2->updateLihat_ready($kd_unit, $sekarang);
     $Proses2->deleteUnit_kotor($kd_unit, $sekarang);
+    // Log System
+    $logs->addLog('Update','tb_unit','Update data unit',json_encode([$kd_unit,$sekarang]),null);
+    $logs->addLog('Delete','tb_task_unit','Delete data task unit',json_encode([$kd_unit,$sekarang]),null);
   }
   header('Location:../view/'.$view.'/unit/status.php');
 }
@@ -142,13 +157,18 @@ elseif(isset($_POST['update_sekali'])){
         }
     }
     $Proses->addTask_unit_sekali($data->kd_task,$where);
+    // Log System
+    $logs->addLog('Add','tb_task_unit','Tambah data task unit',json_encode([$data->kd_task,$where]),null);
+
   }
   $Proses->deleteTask_sekali($sekarang);
+  // Log System
+  $logs->addLog('Delete','tb_task_unit','Delete data task unit',json_encode([$sekarang]),null);
   $callback = array('status'=>"done");
-  echo json_encode($callback);  
+  echo json_encode($callback);
 }
 
-// edit task with popup 
+// edit task with popup
 elseif(isset($_POST['id'])){
   $kd_task = $_POST['id'];
   $Proses = new Task($db);
@@ -159,7 +179,7 @@ elseif(isset($_POST['id'])){
   $sifat = $data->sifat;
   $tgl_task = $data->tgl_task;
   $callback = array('task'=>$task, 'unit'=>$unit, 'sifat'=>$sifat, 'tgl_task'=>$tgl_task);
-  echo json_encode($callback);  
+  echo json_encode($callback);
 }
 
 //update task unit pada status kotor saat memuat data
@@ -173,15 +193,18 @@ elseif(isset($_POST['updateTask_unit'])){
 //  $is_updated = $Proses->isTask_updated($kd_unit, $CO);
 //  if($is_updated==false){
     $update = $Proses->updateTask_Unit($kd_unit, $CO);
+    // Log System
+    $logs->addLog('Update','tb_task_unit','Update data task unit',json_encode([$kd_unit,$CO]),null);
+
 //  }
   require("../class/catatan.php"); $i=0;
   $Proses2 = new Catatan($db);
   $show2 = $Proses2->showCatatanUnit($kd_unit);
   while($data2 = $show2->fetch(PDO::FETCH_OBJ)){
     $i++;
-  } 
+  }
   $callback = array('done'=>$CO,'catatan'=>$i,'r'=>$update);
-  echo json_encode($callback);  
+  echo json_encode($callback);
 }
 
 elseif(isset($_POST['ajx_id'])){
@@ -199,7 +222,7 @@ elseif(isset($_POST['ajx_id'])){
     $html .= $data->catatan.'</div>';
   }
   if($jumlah==0) $html = '<div id="empty-note" class="note">Tidak tersedia catatan pada unit ini.</div>';
- 
+
   $Proses = new Task($db); $jumlah2=0; $html2=""; $all_task="0";
   $show = $Proses->showTask_byunit($kd_unit);
   while($data = $show->fetch(PDO::FETCH_OBJ)){
@@ -210,7 +233,7 @@ elseif(isset($_POST['ajx_id'])){
   if($jumlah2==0){
     $html2 = '<div id="empty-task" class="note">Task belum tersedia.';
     $html2.= 'Silahkan isi terlebih dahulu pada menu <a style="color:#169595;" href="task.php">Task Cleaner</a></div>';
-  } 
+  }
   $callback = array('konten'=>$html, 'jumlah'=>$jumlah, 'konten2'=>$html2, 'jumlah2'=>$jumlah2, 'task'=>$all_task);
   echo json_encode($callback);
 }

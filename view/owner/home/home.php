@@ -81,7 +81,7 @@
         $unit = 0;
         for ($i=0; $i<$totalPenawaran ; $i++) {
           echo'
-            <div class="span3">
+            <div class="span12">
               <div class="widget-box">
                 <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
                   <h5>'.$judulPenawaran[$unit][$i].' ('.$no_unit[$unit][$i].')</h5>
@@ -90,7 +90,7 @@
                   <form action="#" method="get" class="form-mod">
                     <div class="control-group">
                       <div class="controls">
-                        <textarea style="height:200px;" disabled>'.$pesanPenawaran[$unit][$i].'</textarea>
+                        <p>'.$pesanPenawaran[$unit][$i].'</p>
                       </div>
                     </div>
                     ';
@@ -144,34 +144,6 @@
             </div>
           ';
           $unit++;
-        }
-
-        if(($totalPenawaran < 4) && ($totalPenawaran != 0)){
-          $sisa = 4 - $totalPenawaran;
-          for ($i=0; $i<$sisa ; $i++) {
-            echo'
-              <div class="span3">
-                <div class="widget-box">
-                  <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-                    <h5>Penawaran</h5>
-                  </div>
-                  <div class="widget-content nopadding">
-                    <form action="#" method="get" class="form-mod">
-                      <div class="control-group">
-                        <div class="controls">
-                          <textarea style="height:200px;" disabled> </textarea>
-                        </div>
-                      </div>
-                      <div class="form-actions">
-                        <a class="btn btn-success" href="#">Terima</a>
-                        <a class="btn btn-danger" href="#">Tolak</a>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            ';
-          }
         }
       ?>
 

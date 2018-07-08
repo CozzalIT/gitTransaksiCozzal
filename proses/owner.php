@@ -6,8 +6,8 @@ require("../class/kas.php");
 require("../class/transaksi_umum.php");
 require("../class/transaksi.php");
 
-session_start();
-date_default_timezone_set('Asia/Jakarta');
+// session_start();
+// date_default_timezone_set('Asia/Jakarta');
 $view = $_SESSION['hak_akses'];
 
 //Update Owner
@@ -23,6 +23,9 @@ if(isset($_POST['updateOwner'])){
 
   $proses = new Owner($db);
   $add = $proses->updateOwner($kd_owner ,$nama, $alamat, $no_tlp, $kd_bank, $no_rek, $email, $jenis_kelamin);
+
+  // Log System
+  $logs->addLog('Update','tb_owner','Update data owner ',json_encode([$kd_owner ,$nama, $alamat, $no_tlp, $kd_bank, $no_rek, $email, $jenis_kelamin]),null);
 
   if($add == "Success"){
 	  header('Location:../view/'.$view.'/owner/owner.php');
@@ -42,6 +45,9 @@ elseif(isset($_POST['addOwner'])){
 
     $proses = new Owner($db);
     $add = $proses->addOwner($nama, $alamat, $no_tlp, $kd_bank, $no_rek, $tgl_gabung, $email, $jenis_kelamin);
+
+	  // Log System
+	  $logs->addLog('Add','tb_owner','Tambah data owner ',json_encode([$nama, $alamat, $no_tlp, $kd_bank, $no_rek, $tgl_gabung, $email, $jenis_kelamin]),null);
 
     if($add == "Success"){
       header('Location:../view/'.$view.'/owner/owner.php');
@@ -64,6 +70,9 @@ elseif(isset($_POST['addPenawaran'])){
   $proses = new Owner($db);
   $add = $proses->addPennawaranOwner($kd_owner, $kd_unit, $judul, $pesan, $h_owner_wd, $h_owner_we, $h_owner_mg, $h_owner_bln, $status, $tgl_penawaran);
 
+	// Log System
+	$logs->addLog('Add','tb_owner','Tambah data penawaran ',json_encode([$nama, $alamat, $no_tlp, $kd_bank, $no_rek, $tgl_gabung, $email, $jenis_kelamin]),null);
+
   if($add == "Success"){
     header('Location:../view/'.$view.'/owner/penawaran.php');
   }
@@ -74,6 +83,10 @@ elseif(isset($_POST['addPenawaran'])){
 elseif(isset($_GET['delete_owner']) && ($view=="superadmin" || $view=="manager")){
   $proses = new Owner($db);
 	$del = $proses->deleteOwner($_GET['delete_owner']);
+
+	// Log System
+	$logs->addLog('Delete','tb_owner','Hapus data owner ',json_encode([$_GET['delete_owner']]),null);
+
 	header("Location:../view/".$view."/owner/owner.php");
 }
 
@@ -124,27 +137,41 @@ elseif(isset($_POST['ownerPayment'])){
 	$saldo_b = $data_k->saldo - $earnings;
 	$update_k = $proses_k->updateKas($kd_kas, $saldo_b, $tanggal);
 
+  // Log System
+  $logs->addLog('Update','tb_kas','Update data kas dari owner ',json_encode([$kd_kas, $saldo_b, $tanggal]),null);
+
 	if($update_k == 'Success'){
 		$update_mk = $proses_k->addMutasiKas($kd_kas, $earnings, $jenis, $tanggal, $keterangan);
+		// Log System
+		$logs->addLog('ADD','tb_mutasi_kas','Tambah data mutasi kas dari owner ',json_encode([$kd_kas, $earnings, $jenis, $tanggal, $keterangan]),null);
 	}
 	if(!empty($_POST['transaksi'])){
 		foreach($_POST['transaksi'] as $kd_transaksi){
 			$update_t = $proses_t->updateStatusTransaksi($kd_transaksi, $status);
+			// Log System
+			$logs->addLog('Update','tb_transaksi','Update data transaksi dari owner ',json_encode([$kd_transaksi, $status]),null);
 		}
 	}
 	if(!empty($_POST['transaksiUmum'])){
 		foreach($_POST['transaksiUmum'] as $kd_transaksi_umum){
 			$show_tu = $proses_tu->editTransaksiUmum($kd_transaksi_umum);
+			// Log System
+			$logs->addLog('Update','tb_transaksi_umum','Update data transaksi umum dari owner ',json_encode([$kd_transaksi_umum]),null);
+
 			$data_tu = $show_tu->fetch(PDO::FETCH_OBJ);
 			$show_mk = $proses_k->showMutasiByTanggal($data_tu->tanggal);
 			while($data_mk = $show_mk->fetch(PDO::FETCH_OBJ)){
 				$keterangan = explode('/',$data_mk->keterangan);
 				$keterangan_baru = '9/'.$keterangan[1];
 				$update_mk = $proses_k->updateMutasi($data_mk->kd_mutasi_kas, $keterangan_baru);
+				// Log System
+				$logs->addLog('Update','tb_mutasi_kas','Update data mutasi kas dari owner ',json_encode([$data_mk->kd_mutasi_kas, $keterangan_baru]),null);
 			}
 		}
 	}
 	$add_owner_payment = $proses_o->addOwnerPayment($kd_owner_payment, $kd_owner, $tanggal, $jumlah_transaksi, $earnings, 1);
+	// Log System
+	$logs->addLog('Add','tb_owner_payment','Tambah data pembayaran dari owner ',json_encode([$kd_owner_payment, $kd_owner, $tanggal, $jumlah_transaksi, $earnings, 1]),null);
 	header("Location:../view/".$view."/owner/owner_payment.php");
 }
 
@@ -181,6 +208,8 @@ elseif(isset($_POST['kirimKwitansi'])){
 
 	$kd_owner_payment = $kd_op_t."x".$kd_op_tu;
 	$add_owner_payment = $proses_o->addOwnerPayment($kd_owner_payment, $kd_owner, $tanggal, $jumlah_transaksi, $earnings, 2);
+	// Log System
+	$logs->addLog('Add','tb_owner_payment','Kirim kwitansi pembayaran ke owner ',json_encode([$kd_owner_payment, $kd_owner, $tanggal, $jumlah_transaksi, $earnings, 2]),null);
 	header("Location:../view/".$view."/owner/owner_payment.php");
 }
 
@@ -190,6 +219,8 @@ elseif(isset($_POST['rejectKwitansi'])){
 	$status = 3;
 	$proses_o = new Owner($db);
 	$update_o = $proses_o->modStatusOwnerPayment($kd_owner_payment, $status);
+	// Log System
+	$logs->addLog('Update','tb_owner_payment','Reject kwitansi pembayaran ke owner ',json_encode([$kd_owner_payment, $status]),null);
 	if($update_o == "Success"){
 		header("Location:../view/".$view."/kwitansi/list_kwitansi.php");
 	}
@@ -201,6 +232,8 @@ elseif(isset($_POST['confirmKwitansi'])){
 	$status = 4;
 	$proses_o = new Owner($db);
 	$update_o = $proses_o->modStatusOwnerPayment($kd_owner_payment, $status);
+	// Log System
+	$logs->addLog('Update','tb_owner_payment','Confirmation kwitansi pembayaran ke owner ',json_encode([$kd_owner_payment, $status]),null);
 	if($update_o == "Success"){
 		header("Location:../view/".$view."/kwitansi/list_kwitansi.php");
 	}
@@ -232,6 +265,8 @@ elseif(isset($_POST['paymentConfirmKwitansi'])){
 	$proses_o = new Owner($db);
 
 	$show_op = $proses_o->editOwnerPayment($kd_owner_payment);
+	// // Log System
+	// $logs->addLog('Update','tb_owner_payment','Update payment owner ',json_encode([$kd_owner_payment]),null);
 	$edit_op = $show_op->fetch(PDO::FETCH_OBJ);
 	$earnings = $edit_op->nominal;
 
@@ -239,34 +274,48 @@ elseif(isset($_POST['paymentConfirmKwitansi'])){
 	$data_k = $show_k->fetch(PDO::FETCH_OBJ);
 	$saldo_b = $data_k->saldo - $earnings;
 	$update_k = $proses_k->updateKas($kd_kas, $saldo_b, $tanggal);
+	// Log System
+	$logs->addLog('Update','tb_kas','Update data kas ',json_encode([$kd_kas, $saldo_b, $tanggal]),null);
 
 	if($update_k == 'Success'){
 		$update_mk = $proses_k->addMutasiKas($kd_kas, $earnings, $jenis, $tanggal, $keterangan);
+		// Log System
+		$logs->addLog('ADD','tb_mutasi_kas','Tambah data mutasi kas ',json_encode([$kd_kas, $earnings, $jenis, $tanggal, $keterangan]),null);
 	}
 	if(!empty($transaksi)){
 		foreach($transaksi as $kd_transaksi){
 			$update_t = $proses_t->updateStatusTransaksi($kd_transaksi, $status_transaksi);
+			// Log System
+			$logs->addLog('Update','tb_transaksi','Update data status transaksi ',json_encode([$kd_transaksi, $status_transaksi]),null);
 		}
 	}
 	if(!empty($transaksi_umum)){
 		foreach($transaksi_umum as $kd_transaksi_umum){
 			$show_tu = $proses_tu->editTransaksiUmum($kd_transaksi_umum);
+			// Log System
+			$logs->addLog('Update','tb_transaksi_umum','Update data transaksi umum dari owner ',json_encode([$kd_transaksi_umum]),null);
 			$data_tu = $show_tu->fetch(PDO::FETCH_OBJ);
 			$show_mk = $proses_k->showMutasiByTanggal($data_tu->tanggal);
 			while($data_mk = $show_mk->fetch(PDO::FETCH_OBJ)){
 				$keterangan = explode('/',$data_mk->keterangan);
 				$keterangan_baru = '9/'.$keterangan[1];
 				$update_mk = $proses_k->updateMutasi($data_mk->kd_mutasi_kas, $keterangan_baru);
+				// Log System
+				$logs->addLog('Update','tb_mutasi_kas','Update data mutasi kas dari owner ',json_encode([$data_mk->kd_mutasi_kas, $keterangan_baru]),null);
 			}
 		}
 	}
 	$mod_owner_payment = $proses_o->modStatusOwnerPayment($kd_owner_payment, $status_op);
+	// Log System
+	$logs->addLog('Update','tb_owner_payment','Update kwitansi pembayaran ke owner ',json_encode([$kd_owner_payment, $status_op]),null);
 	header("Location:../view/".$view."/owner/owner_payment.php");
 }
 
 elseif(isset($_GET['deletePayment'])){
 	$proses = new Owner($db);
 	$del = $proses->deleteOwnerPayment($_GET['deletePayment']);
+	// Log System
+	$logs->addLog('Delete','tb_owner_payment','Delete pembayaran ke owner ',json_encode([$_GET['deletePayment']]),null);
 	header("Location:../view/".$view."/owner/owner_payment.php");
 }
 

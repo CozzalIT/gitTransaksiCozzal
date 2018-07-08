@@ -44,10 +44,14 @@ $proses = new Auto($db);
 $show = $proses->showField();
 while($data = $show->fetch(PDO::FETCH_OBJ)){
   $update = $proses->updateField($data->kd_transaksi, $data->kd_bank);
+  // Log System
+  $logs->addLog('Update','tb_transaksi','Update data kas ditable transaksi',json_encode([$data->kd_transaksi, $data->kd_bank]),null);
 }
 $show1 = $proses->showField1();
 while($data1 = $show1->fetch(PDO::FETCH_OBJ)){
   $update1 = $proses->updateField1($data1->kd_confirm_transaksi, $data1->kd_bank);
+  // Log System
+  $logs->addLog('Update','tb_confirm_transaksi','Update data kas ditable confirmasi transaksi',json_encode([$data1->kd_transaksi, $data1->kd_bank]),null);
 }
 if($update == 'Failed'){
   echo 'update field di Transaksi Gagal<br>';

@@ -1,7 +1,7 @@
 <?php
 require("../../config/database.php");
 require("../class/cleaner.php");
-session_start();
+// session_start();
 $view = $_SESSION['hak_akses'];
 
 
@@ -11,14 +11,14 @@ function set_value_config($parameter, $value){
   $myfile = fopen("../../inifiles/config.ini","r");
   while (!feof($myfile)) {
     $string = fgets($myfile);
-    $arr = explode('=', $string); 
+    $arr = explode('=', $string);
     $arr_val[$arr[0]]=$arr[1];
   }
   $isi2 = str_replace($parameter."=".$arr_val[$parameter], $parameter."=".$value."\n", $isi);
   $tmp = fopen("../../inifiles/config.ini", "w") or die("Unable to open file!");
   fwrite($tmp,$isi2);
   fclose($tmp);
-} 
+}
 
 function formated_jam_co($jam){
   if($jam!=""){
@@ -50,7 +50,7 @@ function new_detail($Proses, $tgl, $jenis, $index){
     $ret .= '<div class="detail-timeline" style="padding:10px;">';
     $ret .= '<strong>'.$data->no_unit.' ( '.$data->nama.' - '.$data->no_tlp.' )</strong><br>'.$data->nama_apt.' - '.$data->alamat_apt;
     if($jenis=="check_out"){
-      $JCO = formated_jam_co($data->jam_check_out);      
+      $JCO = formated_jam_co($data->jam_check_out);
       if($index!=0){
         $ret .= '<br> Jam check out : <a href="#popup-jam" onclick="show_J('."'".$JCO.'/'.$data->kd_unit."'".')" data-toggle="modal" style="cursor:pointer;">'.$JCO.'</a>';
       } else {
@@ -65,8 +65,8 @@ function new_detail($Proses, $tgl, $jenis, $index){
 if(isset($_POST['show_tanggal'])){
   $tgl = $_POST['show_tanggal'];
   $kotak = $_POST['kotak'];
-  $Proses = new Cleaner($db); 
-  $jumlah_ci = getcount($tgl, "check_in", $Proses); 
+  $Proses = new Cleaner($db);
+  $jumlah_ci = getcount($tgl, "check_in", $Proses);
   $jumlah_co = getcount($tgl, "check_out", $Proses);
   $jumlah_stay = getcount($tgl, "stay", $Proses);
   $callback = array('CI'=>$jumlah_ci, 'CO'=>$jumlah_co, 'ST'=>$jumlah_stay);
@@ -74,11 +74,11 @@ if(isset($_POST['show_tanggal'])){
 }
 
 elseif(isset($_POST['detail_timeline'])){
-  $tgl = $_POST['detail_timeline']; 
+  $tgl = $_POST['detail_timeline'];
   $index = $_POST['index'];
-  $Proses = new Cleaner($db); 
+  $Proses = new Cleaner($db);
   $CI = ""; $CO = ""; $ST = "";
-  $CI .= new_detail($Proses, $tgl, "check_in", $index); 
+  $CI .= new_detail($Proses, $tgl, "check_in", $index);
   $CO .= new_detail($Proses, $tgl, "check_out", $index);
   $ST .= new_detail($Proses, $tgl, "stay", $index);
   $callback = array('CI'=>$CI, 'CO'=>$CO, 'ST'=>$ST);
@@ -92,7 +92,7 @@ elseif(isset($_POST['setTime'])){
   $injury_mod = ($injury[0]*3600)+($injury[1]*60);
   set_value_config("jam_check_out", $jam_check_out.":00");
   set_value_config("extra_time_bersihkan", $injury_mod);
-  header('Location:../view/'.$view.'/unit/status.php');  
+  header('Location:../view/'.$view.'/unit/status.php');
 }
 
 elseif(isset($_POST['setCO'])){
@@ -105,9 +105,9 @@ elseif(isset($_POST['setCO'])){
     $jam_sekarang = $jam;
   }
   $arr_data = explode('/', $data);
-  $Proses = new Cleaner($db); 
+  $Proses = new Cleaner($db);
   $Proses->kosongkan_unit($arr_data[1], $arr_data[0], $jam_sekarang); //set jam check out
-  header('Location:../view/'.$view.'/unit/timeline.php');  
+  header('Location:../view/'.$view.'/unit/timeline.php');
 }
 
 else header('Location:../view/'.$view.'/home/home.php');
