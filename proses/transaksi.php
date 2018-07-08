@@ -7,8 +7,8 @@ require("../class/fcm.php");
 require("../class/kas.php");
 require("../class/penyewa.php");
 
-date_default_timezone_set('Asia/Jakarta');
-session_start();
+// date_default_timezone_set('Asia/Jakarta');
+// session_start();
 $view = $_SESSION['hak_akses'];
 
 function getDisCount($harga_sewa, $harga_sewa_we, $harga_sewa_asli, $wd, $we, $total){
@@ -138,8 +138,13 @@ if(isset($_POST['addTransaksi']) || isset($_POST["Transaksi_booked"])){
     $data = $show->fetch(PDO::FETCH_OBJ);
     $keterangan_mutasi = "6/".$data->kd_transaksi;
 
+    // Log System
+    $logs->addLog('ADD','tb_transaksi','Tambah transaksi baru dengan kd_transaksi '.$data->kd_transaksi,json_encode(['kd_transaksi'=>$data->kd_transaksi,'data'=>[$kd_penyewa, $kd_apt, $kd_unit, $check_in, $check_out, $jumlah_weekend, $jumlah_weekday, $hari, $harga_sewa, $harga_sewa_we, $harga_sewa_gbg, $tgl_transaksi, $diskon, $ekstra_charge, $kd_kas, $tamu, $kd_booking, $dp, $total, $total_harga_owner, $sisa_pelunasan, 1, $h_owner_wd, $h_owner_we,$catatan, $deposit]]),null);
     if($dp <> 0){
       $add_mutasi = $proses2->addMutasiKas($kd_kas, $dp, 1, $tanggal, $keterangan_mutasi);
+
+      // Log System
+      $logs->addLog('ADD','tb_mutasi_kas','Tambah mutasi kas',json_encode([$kd_kas, $dp, 1, $tanggal, $keterangan_mutasi]),null);
       $show1 = $proses2->editSaldo($kd_kas);
       $data1 = $show1->fetch(PDO::FETCH_OBJ);
       $saldo = $dp + $data1->saldo;
@@ -166,6 +171,8 @@ elseif(isset($_POST['moveTransaksi'])){
   $tgl_gabung = date('Y-m-d');
   $proses2 = new Penyewa($db);
   $add2 = $proses2->addPenyewa($nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung);
+  // Log System
+  $logs->addLog('ADD','tb_penyewa','Tambah data penyewa',json_encode([$nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung]),null);
 //baru namabah trx
   $proses = new Transaksi($db);
   $show = $proses->showPenyewaTransaksi();
@@ -197,8 +204,12 @@ elseif(isset($_POST['moveTransaksi'])){
      $diskon = $harga_sewa_asli*$hari-$total;
   }
   $add = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total,$total_harga_owner, $sisa_pelunasan, $hari, $tgl_transaksi, $diskon);
+  // Log System
+  $logs->addLog('ADD','tb_transaksi','Tambah data transaksi',json_encode([$kd_penyewa, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total,$total_harga_owner, $sisa_pelunasan, $hari, $tgl_transaksi, $diskon]),null);
   if($add == "Success"){
     $delete = $proses->deleteReservasi($kd_reservasi);
+    // Log System
+    $logs->addLog('Delete','tb_reservasi','Hapus data reservasi',json_encode([$kd_reservasi]),null);
     $add2 = $proses->addUnit_kotor($kd_unit, $check_in, $check_out);
     header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php');
   }else{
@@ -228,6 +239,9 @@ elseif(isset($_POST['addPembayaran'])){
     header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php?pembayaran='.$kd_transaksi.'&warning=0');
   }else{
     $add = $proses->addPembayaran($kd_transaksi, $pembayaran_baru, $sisa_pelunasan);
+    // Log System
+    $logs->addLog('ADDPAYMENT','tb_transaksi','Tambah data pembayaran',json_encode([$kd_transaksi, $pembayaran_baru, $sisa_pelunasan]),null);
+
     if($add == "Success"){
       $show_saldo = $proses_kas->editSaldo($kd_kas);
       $edit_saldo = $show_saldo->fetch(PDO::FETCH_OBJ);
@@ -253,6 +267,8 @@ elseif(isset($_POST['addPenyewaTransaksi'])){
   $proses = new Penyewa($db);
   $add = $proses->addPenyewa($nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung);
 
+  // Log System
+  $logs->addLog('ADD','tb_penyewa','Tambah data penyewa',json_encode([$nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung]),null);
   $proses = new Transaksi($db);
   $show = $proses->showPenyewaTransaksi();
   $data = $show->fetch(PDO::FETCH_OBJ);
@@ -368,6 +384,8 @@ elseif(isset($_POST['updateTransaksi'])){
 
   $unit = $proses->updateUnit_kotor($kd_transaksi ,$kd_unit, $check_in, $check_out);
   $add = $proses->updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $harga_sewa_we, $harga_sewa_gbg, $diskon, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total_tagihan, $total_harga_owner,$sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday, $h_owner_wd, $h_owner_we,$catatan,$deposit);
+  // Log System
+  $logs->addLog('Update','tb_transaksi','Update data transaksi',json_encode([$kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $harga_sewa_we, $harga_sewa_gbg, $diskon, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total_tagihan, $total_harga_owner,$sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday, $h_owner_wd, $h_owner_we,$catatan,$deposit]),null);
   if($add == "Success"){
   //require("../class/ics_unit.php");
   //$ics = new Ics_unit($db);
@@ -383,6 +401,8 @@ elseif(isset($_POST['updateTransaksi'])){
 elseif(isset($_GET['delete_transaksi']) && ($view=="superadmin" || $view=="manager")){
   $proses = new Transaksi($db);
   $del = $proses->deleteTransaksi($_GET['delete_transaksi']);
+  // Log System
+  $logs->addLog('Delete','tb_transaksi','Hapus data transaksi',json_encode([$_GET['delete_transaksi']]),null);
   header("location:../view/".$view."/transaksi/cancel_transaksi.php");
 }
 
@@ -390,6 +410,8 @@ elseif(isset($_GET['delete_transaksi']) && ($view=="superadmin" || $view=="manag
 elseif(isset($_GET['delete_confirm_transaksi']) && ($view=="superadmin" || $view=="manager")){
   $proses = new Transaksi($db);
   $del = $proses->deleteConfirmTransaksi($_GET['delete_confirm_transaksi']);
+  // Log System
+  $logs->addLog('DeleteConfirmation','tb_transaksi','Hapus data konfirmasi transaksi',json_encode([$_GET['delete_confirm_transaksi']]),null);
   header("location:../view/superadmin/transaksi/cancel_transaksi.php");
 }
 
@@ -404,6 +426,8 @@ elseif (isset($_GET['addConfirm']) && $view!="owner" && $view!="cleaner"){
     header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php?belum_lunas');
   }else{
     $add = $proses->addConfirm($kd_transaksi);
+    // Log System
+    $logs->addLog('ADDConfirmation','tb_transaksi','Tambah data konfirmasi transaksi',json_encode([$kd_transaksi]),null);
     if($add == "Success"){
       header('Location:../view/'.$view.'/transaksi/confirm_transaksi.php');
     }
@@ -414,6 +438,8 @@ elseif (isset($_GET['backTransaksi']) && $view!="owner" && $view!="cleaner"){
   $kd_transaksi = $_GET['backTransaksi'];
   $proses = new Transaksi($db);
   $add = $proses->backTransaksi($kd_confirm_transaksi);
+  // Log System
+  // $logs->addLog('Update','tb_transaksi','Update data konfirmasi transaksi',json_encode([$kd_transaksi]),null);
   if($add == "Success"){
     header('Location:../view/'.$view.'/transaksi/confirm_transaksi.php');
   }
@@ -425,8 +451,9 @@ elseif (isset($_GET['addCancel']) && $view!="owner" && $view!="cleaner"){
   $kd_unit = $_GET['unitCancel'];
   $proses = new Transaksi($db);
   $add = $proses->addCancel($kd_transaksi);
-  if($add == "Success"){
-    $delete = $proses->deleteUnit_kotor($kd_transaksi);
+  // Log System
+  $logs->addLog('CancelTransaction','tb_transaksi','Pembatalan transaksi',json_encode([$kd_transaksi]),null);
+  if($add == "Success"){    $delete = $proses->deleteUnit_kotor($kd_transaksi);
     //require("../class/ics_unit.php");
     //$ics = new Ics_unit($db);
     //$ics->buildIcs($kd_unit);
@@ -454,6 +481,8 @@ elseif (isset($_POST['setlementDp']) && $view!="owner" && $view!="cleaner"){
     header('Location:../view/'.$view.'/transaksi/cancel_transaksi.php?error=dpKurang');
   }elseif($setlement == 0){
     $update = $proses_t->setlementDp($kd_transaksi, $setlement, $status);
+    // Log System
+    $logs->addLog('Update','tb_transaksi','update setlement_Dp',json_encode([$kd_transaksi, $setlement, $status]),null);
     header('Location:../view/'.$view.'/transaksi/cancel_transaksi.php');
   }elseif($data_dp->dp >= $setlement){
     $tanggal = date('Y-m-d H:i:s');
@@ -462,7 +491,8 @@ elseif (isset($_POST['setlementDp']) && $view!="owner" && $view!="cleaner"){
 
     $update = $proses_t->setlementDp($kd_transaksi, $setlement, $status);
     if($update == "Success"){
-
+      // Log System
+      $logs->addLog('Update','tb_transaksi','update setlement_Dp',json_encode([$kd_transaksi, $setlement, $status]),null);
       $update_k = $proses_k->updateKas($kd_kas, $saldo, $tanggal);
       $add_m = $proses_k->addMutasiKas($kd_kas, $setlement, 2, $tanggal, $keterangan);
       header('Location:../view/'.$view.'/transaksi/cancel_transaksi.php');

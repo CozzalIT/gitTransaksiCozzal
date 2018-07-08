@@ -28,6 +28,10 @@ elseif(isset($_POST['addNote'])){
 	$catatan = $_POST['Note'];
 	$Proses = new Catatan($db);
 	$add = $Proses->addCatatan($kd_unit, $catatan);
+
+	  // Log System
+	  $logs->addLog('ADD','tb_catatan','Tambah catatan',json_encode([$kd_unit, $catatan]),null);
+
 	if($add=="Success"){
 		$showLast = $Proses->showLastnote($kd_unit);
 		$data = $showLast->fetch(PDO::FETCH_OBJ);
@@ -42,6 +46,10 @@ elseif(isset($_POST['hapus_catatan'])){
 	$kd_catatan = $_POST['hapus_catatan'];
 	$Proses = new Catatan($db);
 	$del = $Proses->deleteCatatan($kd_catatan);
+
+	  // Log System
+	  $logs->addLog('Delete','tb_catatan','Hapus catatan',json_encode([$kd_catatan]),null);
+
 	$callback = array('res'=>$kd_catatan);
 	echo json_encode($callback);
 }

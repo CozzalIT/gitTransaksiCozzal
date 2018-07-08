@@ -1,7 +1,7 @@
 <?php
 require("../../config/database.php");
 require("../class/apartemen.php");
-session_start();
+// session_start();
 $view = $_SESSION['hak_akses'];
 
 //Update Apartemen
@@ -13,6 +13,8 @@ if(isset($_POST['updateApartemen'])){
   $proses = new Apartemen($db);
   $update = $proses->updateApartemen($kd_apt, $nama_apt, $alamat_apt);
 
+  // Log System
+  $logs->addLog('Update','tb_apt','Update apartemen',json_encode([$kd_apt, $nama_apt, $alamat_apt]),null);
   if($update == "Success"){
     header('Location:../view/'.$view.'/apartemen/apartemen.php');
   }else{
@@ -27,7 +29,8 @@ elseif(isset($_POST['addApartemen'])){
 
   $proses = new Apartemen($db);
   $add = $proses->addApartemen($nama_apt, $alamat_apt);
-
+  // Log System
+  $logs->addLog('ADD','tb_apt','Tambah apartemen',json_encode([$nama_apt, $alamat_apt]),null);
   if($add == "Success"){
     header('Location:../view/'.$view.'/apartemen/apartemen.php');
       }
@@ -37,6 +40,8 @@ elseif(isset($_POST['addApartemen'])){
 elseif(isset($_GET['delete_apt'])&&($view=="superadmin" || $view=="manager")){
   $proses = new Apartemen($db);
   $del = $proses->deleteApartemen($_GET['delete_apt']);
+  // Log System
+  $logs->addLog('Delete','tb_apt','Delete apartemen',json_encode([$_GET['delete_apt']]),null);
   header("location:../view/".$view."/apartemen/apartemen.php");
 }
 

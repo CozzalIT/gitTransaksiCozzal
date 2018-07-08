@@ -1,8 +1,8 @@
 <?php
 require("../../config/database.php");
 require("../class/booked.php");
-session_start();
-$view = $_SESSION['hak_akses'];	
+// session_start();
+$view = $_SESSION['hak_akses'];
 
 //tampilkan harga
 if(isset($_POST['cek_harga'])){
@@ -45,13 +45,16 @@ elseif(isset($_POST['daftar_penyewa'])){
 	$jenis_kelamin = $_POST["jenis_kelamin"];
 	$email = $_POST["email"];
 	$tgl_gabung = date("Y-m-d");
-	$data = $penyewa->addPenyewa2($nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung); 
+	$data = $penyewa->addPenyewa2($nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung);
 
 	if($penyewa!="Failed"){
 		$callback = array('status'=>$data);
 	} else {
 		$callback = array('status'=>"gagal");
 	}
+	// Log System
+	$logs->addLog('ADD','tb_penyewa','Tambah penyewa',json_encode([$nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung]),null);
+	$callback = array('status'=>"oke");
 	echo json_encode($callback);
 }
 
@@ -59,10 +62,10 @@ elseif(isset($_POST["getPenyewa"])){
 	$nama = $_POST["getPenyewa"];
 	$no_tlp = $_POST["no_tlp"];
 	$Proses = new Booked($db);
-	$show1 = $Proses->getKd_penyewa($nama, $no_tlp);	
+	$show1 = $Proses->getKd_penyewa($nama, $no_tlp);
 	$data = $show1->fetch(PDO::FETCH_OBJ);
 	$callback = array('kd_penyewa'=>$data->penyewa);
-	echo json_encode($callback);	
+	echo json_encode($callback);
 }
 
 elseif(isset($_POST['get_ListUnit'])){
