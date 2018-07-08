@@ -40,15 +40,15 @@
                   <th>Check In</th>
                   <th>Check Out</th>
                   <th>Booked By</th>
-				          <th>Action</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 <?php
                   $Proses = new Booking($db);
-        				  $show = $Proses->showBooked_byURL();
+                  $show = $Proses->showBooked_byURL();
                   $i = 1;
-        				  while($data = $show->fetch(PDO::FETCH_OBJ)){
+                  while($data = $show->fetch(PDO::FETCH_OBJ)){
                     if($data->status=='1'){
                       if($data->title!="")
                         $title = $data->title;
@@ -72,8 +72,8 @@
                       ";
                       $i++;
                     }
-        				  }
-        				?>
+                  }
+                ?>
               </tbody>
             </table>
           </div>

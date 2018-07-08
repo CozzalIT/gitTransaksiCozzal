@@ -17,19 +17,27 @@ function getrealdate($date){
 }
 
 function getlocalics($url, $kd_url){	
-	$local_file = "../../listics/cache/".$kd_url.".ics";
-	$remote_file  = $url; // url nya
-	$ch = curl_init();
-	$fp = fopen($local_file,"w"); // mungkin pake yg "w" aja
-	$ch = curl_init($remote_file);
-	curl_setopt($ch, CURLOPT_TIMEOUT, 50);
-	curl_setopt($ch, CURLOPT_FILE, $fp);
-	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-	curl_setopt($ch, CURLOPT_ENCODING, "");
-	curl_exec($ch);
-	curl_close($ch);
-	fclose($fp);
-	return $local_file;
+
+	// $local_file = "../../listics/cache/".$kd_url.".ics";
+	// $remote_file  = $url; // url nya
+	// $ch = curl_init();
+	// $fp = fopen($local_file,"w"); // mungkin pake yg "w" aja
+	// $ch = curl_init($remote_file);
+	// curl_setopt($ch, CURLOPT_TIMEOUT, 50);
+	// curl_setopt($ch, CURLOPT_FILE, $fp);
+	// curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+	// curl_setopt($ch, CURLOPT_ENCODING, "");
+	// curl_exec($ch);
+	// curl_close($ch);
+	// fclose($fp);
+
+	$file = $url;
+	$newfile = "../../listics/cache/".$kd_url.".ics";
+	if ( copy($file, $newfile) ) {
+	 	return $local_file;   
+	}else{
+	    return "false";
+	}
 }
 
 function loadIcs($kd_unit, $kd_apt, $kd_url, $url, $unit, $ICS){
@@ -48,12 +56,16 @@ function loadIcs($kd_unit, $kd_apt, $kd_url, $url, $unit, $ICS){
 	$show2 = $unit->showRecent_booked($kd_unit, $sekarang);
 	while($data2 = $show2->fetch(PDO::FETCH_OBJ)){
 		$current_trx[] = $data2->check_in; 
-		$current_booked[] = $data2->check_in;
+		if($data2->status=="1"){
+			$current_booked[] = $data2->check_in;
+		}
 	}
 	
 	$newEvent = array();
 
-	$ICS->change_file(getlocalics($url, $kd_url));
+	$local_file = getlocalics($url, $kd_url);
+
+	$ICS->change_file($local_file);
 
 	$icsEvents = $ICS->cal_to_array();
 	for($i=0; $i<count($icsEvents); $i++){

@@ -21,7 +21,7 @@ class Ics_unit {
     $sql = "INSERT into tb_booked VALUES (null, '$kd_unit', '$kd_apt', '$penyewa', '$no_tlp', 
     '$check_in','$check_out', '1', '$kd_url')";
     $this->db->query($sql);
-    $sql = "INSERT INTO tb_mod_calendar(kd_unit, check_in, check_out, note, jenis)
+    $sql = "INSERT INTO tb_mod_calendar(kd_unit, start_date, end_date, note, jenis)
     SELECT '$kd_unit' AS unit, '$check_in' AS CI, '$check_out' AS CO, CONCAT('Booked By ',title) 
     AS note, '3' AS JN FROM tb_url_unit WHERE kd_url = '$kd_url'";
     $this->db->query($sql);
@@ -38,9 +38,9 @@ class Ics_unit {
     return $query;
   }
 
-  //menampilkan booked list (check_in) pada 3 bulan terakhir
+  //menampilkan seluruh booked list (check_in) pada 3 bulan terakhir
   public function showRecent_booked($kd_unit, $sekarang){
-    $sql = "SELECT check_in FROM tb_booked WHERE kd_unit='$kd_unit' 
+    $sql = "SELECT check_in, status FROM tb_booked WHERE kd_unit='$kd_unit' 
     AND (check_in>='$sekarang' OR check_out>='$sekarang')";
     $query = $this->db->query($sql);
     return $query;
@@ -58,8 +58,7 @@ class Ics_unit {
   public function showUnit2(){
     $sql = "SELECT tb_unit.kd_unit, tb_unit.kd_apt, 
     tb_unit.no_unit, tb_apt.nama_apt FROM tb_unit
-    INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt 
-    WHERE tb_unit.url_bnb is not null OR tb_unit.url_bnb!=''";
+    INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt";
     $query = $this->db->query($sql);
     return $query;    
   } 
