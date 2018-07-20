@@ -29,7 +29,7 @@
       }
       ?>
       <div class="span12">
-        <div class="widget-box" style="overflow-x:auto;">
+        <div class="widget-box" style="">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
             <h5>Partner Account</h5>
           </div>
@@ -60,6 +60,13 @@
                           </td>
               						<td>
                             <center>
+                              <div class='btn-group' style='margin-left: 20px;'>
+                                <button data-toggle='dropdown' class='btn btn-success dropdown-toggle'>Action <span class='caret'></span></button>
+                                <ul class='dropdown-menu'>
+                                  <li><a id='detail' name='detail' href='#'>Tambah Unit</a></li>
+                                  <li><a id='detail' name='detail' href='../../../proses/account.php?delete_partner=".$data->username."'>Hapus Akun</a></li>
+                                </ul>
+                              </div>
                             </center>
               						</td>
             					  </tr>";

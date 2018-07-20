@@ -38,6 +38,17 @@ class Account{
       }
   }
 
+  //menghapus unit partner
+   public function deleteUnitPartner($username){
+       $sql = "DELETE FROM tb_unit_partner where username = '$username'";
+       $query = $this->db->query($sql);
+       if(!$query){
+         return "Failed";
+       }else{
+         return "Success";
+       }
+   }
+
 //ganti username
   public function updateUsername($username_old, $username_new){
     $sql = "UPDATE tb_user SET username='$username_new' where username='$username_old'";

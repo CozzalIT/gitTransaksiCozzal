@@ -93,6 +93,19 @@ elseif(isset($_GET['delete_akun']) && $view=='superadmin'){
   }
 }
 
+// delete partner
+elseif(isset($_GET['delete_partner']) && $view=='superadmin'){
+  $username = $_GET['delete_partner'];
+  $proses = new Account($db);
+  $delete = $proses->deleteAkun($username);
+  $deleteUnitPartner = $proses->deleteUnitPartner($username);
+  // Log System
+  ////$logs->addLog('Delete','tb_user','Hapus akun user',json_encode(['username'=>$username]),null);
+  if(($delete == "Success") && ($deleteUnitPartner == "Success")){
+    header('Location:../view/'.$view.'/account/account_management.php');
+  }
+}
+
 // me non-aktifkan / aktifkan user by table
 elseif((isset($_GET['non_aktif']) || isset($_GET['aktif'])) && $view=='superadmin'){
   $proses = new Account($db);
