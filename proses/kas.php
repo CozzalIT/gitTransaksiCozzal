@@ -16,7 +16,7 @@ if(isset($_POST['addKas'])){
   $add = $proses->addKas($sumber_dana, $saldo, $tanggal);
 
   // Log System
-  $logs->addLog('Add','tb_kas','Tambah data kas',json_encode([$sumber_dana, $saldo, $tanggal]),null);
+  //$logs->addLog('Add','tb_kas','Tambah data kas',json_encode([$sumber_dana, $saldo, $tanggal]),null);
 
   if($add == "Success"){
     $show = $proses->showLastKas();
@@ -29,7 +29,7 @@ if(isset($_POST['addKas'])){
     $add_mutasi = $proses->addMutasiKas($kd_kas, $mutasi_dana, $jenis, $tanggal, $keterangan);
 
     // Log System
-    $logs->addLog('Add','tb_mutasi_kas','Tambah data mutasi kas',json_encode([$kd_kas, $mutasi_dana, $jenis, $tanggal, $keterangan]),null);
+    //$logs->addLog('Add','tb_mutasi_kas','Tambah data mutasi kas',json_encode([$kd_kas, $mutasi_dana, $jenis, $tanggal, $keterangan]),null);
 
     if($add_mutasi == "Success"){
 	     header('Location:../view/'.$view.'/kas/kas.php');
@@ -56,18 +56,18 @@ elseif(isset($_POST['mutasiDana'])){
 
   $update_sumber = $proses->updateKas($kas_sumber, $saldo_sumber, $tanggal);
   // Log System
-  $logs->addLog('Update','tb_kas','Update data kas sumber',json_encode([$kas_sumber, $saldo_sumber, $tanggal]),null);
+  //$logs->addLog('Update','tb_kas','Update data kas sumber',json_encode([$kas_sumber, $saldo_sumber, $tanggal]),null);
   $update_tujuan = $proses->updateKas($kas_tujuan, $saldo_tujuan, $tanggal);
   // Log System
-  $logs->addLog('Update','tb_kas','Update data kas tujuan',json_encode([$kas_tujuan, $saldo_tujuan, $tanggal]),null);
+  //$logs->addLog('Update','tb_kas','Update data kas tujuan',json_encode([$kas_tujuan, $saldo_tujuan, $tanggal]),null);
 
   if($update_sumber == "Success" && $update_tujuan == "Success"){
     $add_mutasi_sumber = $proses->addMutasiKas($kas_sumber, $jumlah_mutasi, $jenis_sumber, $tanggal, $keterangan);
     // Log System
-    $logs->addLog('Add','tb_mutasi_kas','Tambah data mutasi kas sumber',json_encode([$kas_sumber, $jumlah_mutasi, $jenis_sumber, $tanggal, $keterangan]),null);
+    //$logs->addLog('Add','tb_mutasi_kas','Tambah data mutasi kas sumber',json_encode([$kas_sumber, $jumlah_mutasi, $jenis_sumber, $tanggal, $keterangan]),null);
     $add_mutasi_tujuan = $proses->addMutasiKas($kas_tujuan, $jumlah_mutasi, $jenis_tujuan, $tanggal, $keterangan);
     // Log System
-    $logs->addLog('Add','tb_mutasi_kas','Tambah data mutasi kas tujuan',json_encode([$kas_tujuan, $jumlah_mutasi, $jenis_tujuan, $tanggal, $keterangan]),null);
+    //$logs->addLog('Add','tb_mutasi_kas','Tambah data mutasi kas tujuan',json_encode([$kas_tujuan, $jumlah_mutasi, $jenis_tujuan, $tanggal, $keterangan]),null);
 
 
     header('Location:../view/'.$view.'/kas/kas.php');
@@ -86,12 +86,12 @@ elseif(isset($_POST['addSaldo'])){
 
   $update_kas = $proses->updateKas($kd_kas, $saldo_baru, $tanggal);
   // Log System
-  $logs->addLog('Update','tb_kas','Update data kas',json_encode([$kd_kas, $saldo_baru, $tanggal]),null);
+  //$logs->addLog('Update','tb_kas','Update data kas',json_encode([$kd_kas, $saldo_baru, $tanggal]),null);
 
   if($update_kas == "Success"){
     $add_mutasi = $proses->addMutasiKas($kd_kas, $jumlah_dana, 1, $tanggal, 2);
     // Log System
-    $logs->addLog('Update','tb_mutasi_kas','Update data mutasi kas',json_encode([$kd_kas, $jumlah_dana, 1, $tanggal, 2]),null);
+    //$logs->addLog('Update','tb_mutasi_kas','Update data mutasi kas',json_encode([$kd_kas, $jumlah_dana, 1, $tanggal, 2]),null);
 
     if($add_mutasi == "Success"){
       header('location:../view/'.$view.'/kas/kas.php');

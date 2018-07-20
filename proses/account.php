@@ -1,8 +1,9 @@
 <?php
 require("../../config/database.php");
 require("../class/account.php");
-// session_start();
+session_start();
 $view = $_SESSION['hak_akses'];
+
 if($view=='owner') $kd_owner = $_SESSION['pemilik'];
 
 // Update profile(info basic) owner
@@ -14,7 +15,7 @@ if(isset($_POST['updateinfo']) && $view=='owner'){
   $jenis_kelamin = $_POST['jenis_kelamin'];
   $proses = new Account($db);
   // Log System
-  $logs->addLog('Update','tb_user','Update profile',json_encode(['kd_owner'=>$kd_owner,'nama'=>$nama, 'alamat'=>$alamat, 'no_tlp'=>$no_tlp, 'email'=>$email, 'jenis_kelamin'=>$jenis_kelamin]),null);
+  ////$logs->addLog('Update','tb_user','Update profile',json_encode(['kd_owner'=>$kd_owner,'nama'=>$nama, 'alamat'=>$alamat, 'no_tlp'=>$no_tlp, 'email'=>$email, 'jenis_kelamin'=>$jenis_kelamin]),null);
   $add = $proses->updateProfile_owner($kd_owner ,$nama, $alamat, $no_tlp, $email, $jenis_kelamin,'','');
   if($add == "Success"){
     header('Location:../view/'.$view.'/profile/profile.php');
@@ -27,7 +28,7 @@ elseif(isset($_POST['updateother']) && $view=='owner'){
   $no_rek = $_POST['no_rek'];
   $proses = new Account($db);
   // Log System
-  $logs->addLog('Update','tb_user','Update profile',json_encode(['kd_owner'=>$kd_owner,'kd_bank'=>$kd_bank,'no_rek'=>$no_rek]),null);
+  ////$logs->addLog('Update','tb_user','Update profile',json_encode(['kd_owner'=>$kd_owner,'kd_bank'=>$kd_bank,'no_rek'=>$no_rek]),null);
   $add = $proses->updateProfile_owner($kd_owner,'', '', '', '', '', $kd_bank, $no_rek);
   if($add == "Success"){
     header('Location:../view/'.$view.'/profile/profile.php');
@@ -51,7 +52,7 @@ elseif(isset($_POST['updateuser'])){
         $add = $proses->updateUsername($username_old, $username_new);
         if($add == "Success"){
           // Log System
-          $logs->addLog('Update','tb_user','Update update',json_encode(['username'=>$username]),null);
+          ////$logs->addLog('Update','tb_user','Update update',json_encode(['username'=>$username]),null);
           if($view=='owner') {
           $create = $proses->addRelasi($username_new, $_SESSION['pemilik']);}
           $_SESSION['username'] = $username_new;
@@ -73,7 +74,7 @@ elseif(isset($_POST['updatepass'])){
   if($show2==true){
     $proses = new Account($db);
     // Log System
-    $logs->addLog('Update','tb_user','Update password',json_encode(['username'=>$username]),null);
+    ////$logs->addLog('Update','tb_user','Update password',json_encode(['username'=>$username]),null);
     $add = $proses->updatePassword($password, $username);
     if($add=="Success") mkdir('succespass');
   } else mkdir('gagalpass1');
@@ -86,7 +87,7 @@ elseif(isset($_GET['delete_akun']) && $view=='superadmin'){
   $proses = new Account($db);
   $add = $proses->deleteAkun($username);
   // Log System
-  $logs->addLog('Delete','tb_user','Hapus akun user',json_encode(['username'=>$username]),null);
+  ////$logs->addLog('Delete','tb_user','Hapus akun user',json_encode(['username'=>$username]),null);
   if($add == "Success"){
     header('Location:../view/'.$view.'/account/account_management.php');
   }
@@ -103,7 +104,7 @@ elseif((isset($_GET['non_aktif']) || isset($_GET['aktif'])) && $view=='superadmi
     $username = $_GET['aktif'];
   }
   // Log System
-  $logs->addLog('Change status','tb_user','Ubah status user menjadi '.$status,json_encode(['username'=>$username,'status'=>$status]),null);
+  ////$logs->addLog('Change status','tb_user','Ubah status user menjadi '.$status,json_encode(['username'=>$username,'status'=>$status]),null);
   $add = $proses->set_status_akun($username, $status);
   if($add == "Success"){
     header('Location:../view/'.$view.'/account/account_management.php');
@@ -116,7 +117,7 @@ elseif(isset($_GET['delete_rel']) && $view=='superadmin'){
   $proses = new Account($db);
   $add = $proses->deleteRelasi($username);
   // Log System
-  $logs->addLog('Delete','tb_owner','Hapus relasi akun ke owner',json_encode(['username'=>$username]),null);
+  //$logs->addLog('Delete','tb_owner','Hapus relasi akun ke owner',json_encode(['username'=>$username]),null);
   $add2 = $proses->set_status_akun($username, '3');
   header('Location:../view/'.$view.'/account/account_management.php');
 }
@@ -128,7 +129,7 @@ elseif(isset($_POST['addRelasi']) && $view=='superadmin'){
   $status = $_POST['status'];
   $proses = new Account($db);
   // Log System
-  $logs->addLog('ADD','tb_user,tb_owner','Menambahkan relasi akun ke owner',json_encode(['username'=>$username,'kd_owner'=>$kd_owner]),null);
+  //$logs->addLog('ADD','tb_user,tb_owner','Menambahkan relasi akun ke owner',json_encode(['username'=>$username,'kd_owner'=>$kd_owner]),null);
   $add = $proses->addRelasi($username, $kd_owner);
   $add2 = $proses->set_status_akun($username, $status);
   header('Location:../view/'.$view.'/account/account_management.php');
@@ -136,21 +137,30 @@ elseif(isset($_POST['addRelasi']) && $view=='superadmin'){
 
 // Tambah Akun
 elseif(isset($_POST['addAccount']) && $view=='superadmin'){
+  $proses = new Account($db);
+
   $username = $_POST['username'];
   $password = $_POST['password'];
-  $proses = new Account($db);
+  $kd_apt = $_POST['apartemen'];
+  $kd_unit = explode("+",$_POST['unit']);
+  $kd_unit[0];
+  $hak_akses = $_POST['hak_akses'];
+
+  if ($hak_akses == 'partner') {
+    $addUnitPartner = $proses->addUnitPartner($username, $kd_unit[0]);
+  }
+
   $is_exists = $proses->is_username_exists($username);
   if($is_exists!=true){
-      $hak_akses = $_POST['hak_akses'];
       $status_isi = $hak_akses=='owner' && $_POST['kd_owner']!='null';
       if($status_isi) $status = '1';
       else $status = '3';
       $add = $proses->addAccount($username, $password, $hak_akses, $status);
       if($add == "Success"){
         // Log System
-        $logs->addLog('ADD','tb_user','Menambahkan akun baru',json_encode(['username'=>$username,'status'=>$status,'hak_akses'=>$hak_akses]),null);
+        ////$logs->addLog('ADD','tb_user','Menambahkan akun baru',json_encode(['username'=>$username,'status'=>$status,'hak_akses'=>$hak_akses]),null);
         if($status_isi){
-          $logs->addLog('ADD','tb_user,tb_owner','Menambahkan relasi akun ke owner',json_encode(['username'=>$username,'kd_owner'=>$_POST['kd_owner']]),null);
+          ////$logs->addLog('ADD','tb_user,tb_owner','Menambahkan relasi akun ke owner',json_encode(['username'=>$username,'kd_owner'=>$_POST['kd_owner']]),null);
           $add2 = $proses-> addRelasi($username, $_POST['kd_owner']);
           if($add2 == "Success"){
             header('Location:../view/'.$view.'/account/account_management.php');

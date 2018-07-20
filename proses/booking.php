@@ -13,7 +13,7 @@ if(isset($_POST['addBooking_via'])){
   $add = $proses->addBooking_via($kd_booking, $booking_via);
 
   // Log System
-  $logs->addLog('ADD','tb_booking_via','Add booking',json_encode([$kd_booking, $booking_via]),null);
+  //$logs->addLog('ADD','tb_booking_via','Add booking',json_encode([$kd_booking, $booking_via]),null);
 
   if($add == "Success"){
     header('Location:../view/'.$view.'/booking/booking_via.php');
@@ -29,7 +29,7 @@ elseif(isset($_POST['updateBooking'])){
   $update = $proses->updateBooking($kd_booking, $booking_via);
 
   // Log System
-  $logs->addLog('Update','tb_booking_via','Update booking',json_encode([$kd_booking, $booking_via]),null);
+  //$logs->addLog('Update','tb_booking_via','Update booking',json_encode([$kd_booking, $booking_via]),null);
 
   if($update == "Success"){
     header('Location:../view/'.$view.'/booking/booking_via.php');
@@ -44,7 +44,7 @@ elseif(isset($_GET['delete_booking']) && ($view=="superadmin" || $view=="manager
   $del = $proses->deleteBooking_via($_GET['delete_booking']);
 
   // Log System
-  $logs->addLog('Delete','tb_booking_view','Delete booking',json_encode([$_GET['delete_booking']]),null);
+  //$logs->addLog('Delete','tb_booking_view','Delete booking',json_encode([$_GET['delete_booking']]),null);
 
   header("location:../view/".$view."/booking/booking_via.php");
 }
@@ -54,7 +54,7 @@ elseif(isset($_GET['delete_booking_rq']) && ($view=="superadmin" || $view=="mana
   $proses = new Booking($db);
   $del = $proses->deleteReservasi($_GET['delete_booking_rq']);
   // Log System
-  $logs->addLog('Delete','tb_reservasi','Delete reservasi',json_encode([$_GET['delete_booking_rq']]),null);
+  //$logs->addLog('Delete','tb_reservasi','Delete reservasi',json_encode([$_GET['delete_booking_rq']]),null);
 
   header("location:../view/".$view."/booking/booking_request.php");
 }

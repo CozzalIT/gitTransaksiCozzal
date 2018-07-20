@@ -26,7 +26,7 @@ if(isset($_POST['addTask'])){
   $add = $proses->addTask($task, $unit, $sifat, $tgl_task);
 
   // Log System
-  $logs->addLog('ADD','tb_task','Tambah data task',json_encode([$task, $unit, $sifat, $tgl_task]),null);
+  //$logs->addLog('ADD','tb_task','Tambah data task',json_encode([$task, $unit, $sifat, $tgl_task]),null);
 
 //sementara di offkan
 /*  if($sifat!="Sekali"){ //untuk yang sifatnya rutin
@@ -61,7 +61,7 @@ elseif(isset($_POST['updateTask'])){
   $proses = new Task($db);
   $add = $proses->updateTask($kd_task ,$task, $unit, $sifat);
   // Log System
-  $logs->addLog('Update','tb_task','Update data task',json_encode([$kd_task ,$task, $unit, $sifat]),null);
+  //$logs->addLog('Update','tb_task','Update data task',json_encode([$kd_task ,$task, $unit, $sifat]),null);
   if($add == "Success"){
     header('Location:../view/'.$view.'/unit/task.php');
   }
@@ -73,7 +73,7 @@ elseif(isset($_GET['delete_task'])){
   $proses = new Task($db);
   $add = $proses->deleteTask($kd_task);
   // Log System
-  $logs->addLog('Delete','tb_task','Delete data task',json_encode([$kd_task]),null);
+  //$logs->addLog('Delete','tb_task','Delete data task',json_encode([$kd_task]),null);
   if($add == "Success"){
     header('Location:../view/'.$view.'/unit/task.php');
   }
@@ -92,7 +92,7 @@ elseif(isset($_GET['kosongkan_unit'])){
   $proses = new Cleaner($db);
   $proses->kosongkan_unit($kd_unit, $sekarang, $jam);
   // Log System
-  $logs->addLog('Update','tb_unit_kotor','Mengosongkan unit',json_encode([$kd_unit, $sekarang, $jam]),null);
+  //$logs->addLog('Update','tb_unit_kotor','Mengosongkan unit',json_encode([$kd_unit, $sekarang, $jam]),null);
   header('Location:../view/'.$view.'/unit/status.php');
 }
 
@@ -103,7 +103,7 @@ elseif(isset($_GET['set_ready'])){
   $proses = new Cleaner($db);
   $proses->updateUnit_ready($kd_unit, $ready);
   // Log System
-  $logs->addLog('Update','tb_unit','Mengubah unit menjadi status ready',json_encode([$kd_unit, $ready]),null);
+  //$logs->addLog('Update','tb_unit','Mengubah unit menjadi status ready',json_encode([$kd_unit, $ready]),null);
   header('Location:../view/'.$view.'/unit/status.php');
 }
 
@@ -117,7 +117,7 @@ elseif(isset($_POST['bersih_task'])){
     if(isset($_POST[$task[$i]."-ck"])){
         $del = $proses->deleteTask_unit($kd_unit,$task[$i]);
         // Log System
-        $logs->addLog('Delete','tb_task_unit','Delete data task unit',json_encode([$kd_unit,$task[$i]]),null);
+        //$logs->addLog('Delete','tb_task_unit','Delete data task unit',json_encode([$kd_unit,$task[$i]]),null);
         $hit_del++;
     }
   }
@@ -127,8 +127,8 @@ elseif(isset($_POST['bersih_task'])){
     $Proses2->updateLihat_ready($kd_unit, $sekarang);
     $Proses2->deleteUnit_kotor($kd_unit, $sekarang);
     // Log System
-    $logs->addLog('Update','tb_unit','Update data unit',json_encode([$kd_unit,$sekarang]),null);
-    $logs->addLog('Delete','tb_task_unit','Delete data task unit',json_encode([$kd_unit,$sekarang]),null);
+    //$logs->addLog('Update','tb_unit','Update data unit',json_encode([$kd_unit,$sekarang]),null);
+    //$logs->addLog('Delete','tb_task_unit','Delete data task unit',json_encode([$kd_unit,$sekarang]),null);
   }
   header('Location:../view/'.$view.'/unit/status.php');
 }
@@ -158,12 +158,12 @@ elseif(isset($_POST['update_sekali'])){
     }
     $Proses->addTask_unit_sekali($data->kd_task,$where);
     // Log System
-    $logs->addLog('Add','tb_task_unit','Tambah data task unit',json_encode([$data->kd_task,$where]),null);
+    //$logs->addLog('Add','tb_task_unit','Tambah data task unit',json_encode([$data->kd_task,$where]),null);
 
   }
   $Proses->deleteTask_sekali($sekarang);
   // Log System
-  $logs->addLog('Delete','tb_task_unit','Delete data task unit',json_encode([$sekarang]),null);
+  //$logs->addLog('Delete','tb_task_unit','Delete data task unit',json_encode([$sekarang]),null);
   $callback = array('status'=>"done");
   echo json_encode($callback);
 }
@@ -194,7 +194,7 @@ elseif(isset($_POST['updateTask_unit'])){
 //  if($is_updated==false){
     $update = $Proses->updateTask_Unit($kd_unit, $CO);
     // Log System
-    $logs->addLog('Update','tb_task_unit','Update data task unit',json_encode([$kd_unit,$CO]),null);
+    //$logs->addLog('Update','tb_task_unit','Update data task unit',json_encode([$kd_unit,$CO]),null);
 
 //  }
   require("../class/catatan.php"); $i=0;

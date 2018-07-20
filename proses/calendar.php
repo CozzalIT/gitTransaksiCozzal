@@ -24,7 +24,7 @@ if(isset($_POST['blokCalendar'])){
   $ics->buildIcs($kd_unit);
 
   // Log System
-  $logs->addLog('ADD','tb_mod_calendar','Tambah mod calender',json_encode([$kd_unit, $start_date, $end_date, $note, $jenis]),null);
+  //$logs->addLog('ADD','tb_mod_calendar','Tambah mod calender',json_encode([$kd_unit, $start_date, $end_date, $note, $jenis]),null);
 
   if($add == "Success"){
 	  header('Location:../view/'.$view.'/unit/calendar.php?calendar_unit='.$kd_unit);
@@ -44,7 +44,7 @@ elseif(isset($_POST['addMaintenance']) && ($view == 'admin' || $view == 'superad
   $add = $proses->addModCalendar($kd_unit, $start_date, $end_date, $note, $jenis);
 
   // Log System
-  $logs->addLog('ADD','tb_mod_calendar','Tambah mod calender',json_encode([$kd_unit, $start_date, $end_date, $note, $jenis]),null);
+  //$logs->addLog('ADD','tb_mod_calendar','Tambah mod calender',json_encode([$kd_unit, $start_date, $end_date, $note, $jenis]),null);
 
   $ics = new Ics_unit($db);
   $ics->buildIcs($kd_unit);
@@ -78,7 +78,7 @@ elseif(isset($_POST['addModHarga'])){
   }
 
   // Log System
-  $logs->addLog('ADD','tb_mod_harga','Tambah mod harga',json_encode([$kd_unit, $start_date, $end_date, $harga_sewa, $harga_owner, $note]),null);
+  //$logs->addLog('ADD','tb_mod_harga','Tambah mod harga',json_encode([$kd_unit, $start_date, $end_date, $harga_sewa, $harga_owner, $note]),null);
 
   if($add == "Success"){
     header('Location:../view/'.$view.'/unit/calendar.php?calendar_unit='.$kd_unit);
@@ -103,7 +103,7 @@ elseif(isset($_GET['delete_event'])){
   }
 
   // Log System
-  $logs->addLog('Delete','tb_mod_calender','Hapus mod calender',json_encode([$_GET['delete_event']]),null);
+  //$logs->addLog('Delete','tb_mod_calender','Hapus mod calender',json_encode([$_GET['delete_event']]),null);
 
 
   $data = $show->fetch(PDO::FETCH_OBJ);
@@ -126,7 +126,7 @@ elseif(isset($_POST['updateModCal'])){
 	$update = $proses->updateModCal($kd_mod_calendar, $awal, $akhir, $catatan);
 
   // Log System
-  $logs->addLog('Update','tb_mod_calender','Update mod calendar',json_encode([$kd_mod_calendar, $awal, $akhir, $catatan]),null);
+  //$logs->addLog('Update','tb_mod_calender','Update mod calendar',json_encode([$kd_mod_calendar, $awal, $akhir, $catatan]),null);
 
   $ics = new Ics_unit($db);
   $ics->buildIcs($kd_unit);
@@ -155,7 +155,7 @@ elseif(isset($_POST['updateModHarga'])){
 	$update = $proses->updateModHarga($kd_mod_harga, $awal, $akhir, $sewa, $owner, $catatan);
 
   // Log System
-  $logs->addLog('Update','tb_mod_harga','Update mod harga',json_encode([$kd_mod_harga, $awal, $akhir, $sewa, $owner, $catatan]),null);
+  //$logs->addLog('Update','tb_mod_harga','Update mod harga',json_encode([$kd_mod_harga, $awal, $akhir, $sewa, $owner, $catatan]),null);
 
   if($update == "Success"){
     header('Location:../view/'.$view.'/unit/calendar.php?calendar_unit='.$kd_unit);
