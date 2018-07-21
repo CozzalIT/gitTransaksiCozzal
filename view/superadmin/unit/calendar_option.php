@@ -202,9 +202,14 @@
 				kd_apt : kd_apt,
 			},
 			function (data) {
-				//alert(data);
-				$("#sys_icon2").attr("class","iconM icon-ok");				
-				window.location = "calendar.php?calendar_unit="+kd_unit;
+				$.post("../../../croneTask/update_sys_cal.php", {
+					generateSys : kd_unit, 
+				},
+				function (data) {
+					//alert(data);
+					$("#sys_icon2").attr("class","iconM icon-ok");				
+					window.location = "calendar.php?calendar_unit="+kd_unit;
+				});	
 			});				
 		} 		
 
