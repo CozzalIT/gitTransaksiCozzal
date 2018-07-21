@@ -17,6 +17,16 @@ class Account{
       }
   }
 
+  public function addUnitPartner($username, $kd_unit){
+      $sql = "INSERT INTO tb_unit_partner VALUES('$username', '$kd_unit')";
+      $query = $this->db->query($sql);
+      if(!$query){
+        return "Failed";
+      }else{
+        return "Success";
+      }
+  }
+
  //menghapus username
   public function deleteAkun($username){
       $sql = "DELETE FROM tb_user where username = '$username'";
@@ -25,8 +35,19 @@ class Account{
         return "Failed";
       }else{
         return "Success";
-      }  
-  } 
+      }
+  }
+
+  //menghapus unit partner
+   public function deleteUnitPartner($username){
+       $sql = "DELETE FROM tb_unit_partner where username = '$username'";
+       $query = $this->db->query($sql);
+       if(!$query){
+         return "Failed";
+       }else{
+         return "Success";
+       }
+   }
 
 //ganti username
   public function updateUsername($username_old, $username_new){
@@ -36,7 +57,7 @@ class Account{
       return "Failed";
     }else{
       return "Success";
-    }     
+    }
   }
 
 //ganti password
@@ -47,7 +68,7 @@ class Account{
       return "Failed";
     }else{
       return "Success";
-    }     
+    }
   }
 
 //meng set status user
@@ -58,7 +79,7 @@ class Account{
       return "Failed";
     }else{
       return "Success";
-    }     
+    }
   }
 
 //menambah relasi baru
@@ -69,7 +90,7 @@ class Account{
         return "Failed";
       }else{
         return "Success";
-      }  
+      }
   }
 
 //menghapus relasi antara user dan owner
@@ -80,7 +101,7 @@ class Account{
         return "Failed";
       }else{
         return "Success";
-      }  
+      }
   }
 
 //menampilkan semua owner yang belum terelasi
@@ -100,6 +121,17 @@ class Account{
   // menampilkan semua akun dengan status tidak terelasi
   public function showAccount_status3(){
     $sql = "SELECT username, hak_akses, status FROM tb_user WHERE status='3'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
+  // menampilkan unit partner
+  public function showUnitPartner($username){
+    $sql = "SELECT tb_unit_partner.*, tb_unit.kd_unit, tb_unit.no_unit, tb_unit.kd_apt, tb_apt.kd_apt, tb_apt.nama_apt
+      FROM tb_unit_partner
+        INNER JOIN tb_unit ON tb_unit.kd_unit = tb_unit_partner.kd_unit
+        INNER JOIN tb_apt ON tb_apt.kd_apt = tb_unit.kd_apt
+      WHERE username='$username'";
     $query = $this->db->query($sql);
     return $query;
   }

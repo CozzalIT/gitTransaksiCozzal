@@ -13,7 +13,7 @@ if(isset($_POST['addDp_via'])){
   $add = $proses->addDp_via($kd_bank, $nama_bank);
 
     // Log System
-    $logs->addLog('ADD','tb_dp_via','Tambah data DP via',json_encode([$kd_bank, $nama_bank]),null);
+    //$logs->addLog('ADD','tb_dp_via','Tambah data DP via',json_encode([$kd_bank, $nama_bank]),null);
 
   if($add == "Success"){
     header('Location:../view/'.$view.'/dp/dp_via.php');
@@ -30,7 +30,7 @@ elseif(isset($_POST['updateBank'])){
   $update = $proses->updateBank($kd_bank, $nama_bank);
 
     // Log System
-    $logs->addLog('Update','tb_dp_via','Update data DP via',json_encode([$kd_bank, $nama_bank]),null);
+    //$logs->addLog('Update','tb_dp_via','Update data DP via',json_encode([$kd_bank, $nama_bank]),null);
 
   if($update == "Success"){
     header('Location:../view/'.$view.'/dp/dp_via.php');
@@ -44,7 +44,7 @@ elseif(isset($_GET['delete_dp']) && ($view=="superadmin" || $view=="manager")){
   $proses = new dpVia($db);
   $del = $proses->deleteDp_via($_GET['delete_dp']);
   // Log System
-  $logs->addLog('Delete','tb_dp_via','Delete data DP via',json_encode([$_GET['delete_dp']]),null);
+  //$logs->addLog('Delete','tb_dp_via','Delete data DP via',json_encode([$_GET['delete_dp']]),null);
 
   header("location:../view/".$view."/dp/dp_via.php");
 }

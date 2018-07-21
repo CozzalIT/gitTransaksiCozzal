@@ -16,7 +16,7 @@ if(isset($_POST['addPenyewa'])){
   $proses = new Penyewa($db);
   $add = $proses->addPenyewa($nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung);
   // Log System
-  $logs->addLog('ADD','tb_penyewa','Tambah data penyewa',json_encode([$nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung]),null);
+  //$logs->addLog('ADD','tb_penyewa','Tambah data penyewa',json_encode([$nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung]),null);
   if($add == "Success"){
 	  header('Location:../view/'.$view.'/penyewa/penyewa.php');
   }
@@ -35,7 +35,7 @@ elseif(isset($_POST['updatePenyewa'])){
   $proses = new Penyewa($db);
 	$update = $proses->updatePenyewa($kd_penyewa, $nama, $alamat, $no_tlp, $jenis_kelamin, $email);
   // Log System
-  $logs->addLog('Update','tb_penyewa','Update data penyewa',json_encode([$kd_penyewa, $nama, $alamat, $no_tlp, $jenis_kelamin, $email]),null);
+  //$logs->addLog('Update','tb_penyewa','Update data penyewa',json_encode([$kd_penyewa, $nama, $alamat, $no_tlp, $jenis_kelamin, $email]),null);
   if($update == "Success"){
   	header('Location:../view/'.$view.'/penyewa/penyewa.php');
   } else {
@@ -48,7 +48,7 @@ elseif(isset($_GET['delete_penyewa']) && ($view=="superadmin" || $view=="manager
   $proses = new Penyewa($db);
   $del = $proses->deletePenyewa($_GET['delete_penyewa']);
   // Log System
-  $logs->addLog('Delete','tb_penyewa','Delete data penyewa',json_encode([$_GET['delete_penyewa']]),null);
+  //$logs->addLog('Delete','tb_penyewa','Delete data penyewa',json_encode([$_GET['delete_penyewa']]),null);
   header("location:../view/".$view."/penyewa/penyewa.php");
 }
 

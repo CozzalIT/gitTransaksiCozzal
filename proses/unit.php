@@ -35,7 +35,7 @@ if(isset($_POST['add_detail_unit'])){
   $type = $_POST['type'];
   $proses = new Unit($db);
   $add = $proses->addDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok, $type, 'None', 'Y');
-  $logs->addLog('ADD','tb_detail_unit','Tambah data unit',json_encode([$kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok, $type, 'None', 'Y']),null);
+  //$logs->addLog('ADD','tb_detail_unit','Tambah data unit',json_encode([$kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok, $type, 'None', 'Y']),null);
   if($add == "Success"){
     header('Location:../view/'.$view.'/unit/detail_unit.php?detail_unit='.$kd_unit);
   }
@@ -71,7 +71,7 @@ elseif(isset($_GET['delete_gambar'])){
   }
 
   $del = $proses->updateGambar_unit($_GET['kd_unit'], $img);
-  $logs->addLog('Update','tb_detail_unit','Update detail gambar unit',json_encode([$_GET['kd_unit'], $img]),null);
+  //$logs->addLog('Update','tb_detail_unit','Update detail gambar unit',json_encode([$_GET['kd_unit'], $img]),null);
 
   if($del == "Success"){
     unlink('../asset/img/unit/'.$_GET['kd_unit'].'/'.$_GET['delete_gambar']);
@@ -92,12 +92,12 @@ elseif(isset($_POST['updateInfoUnit']) || isset($_POST['updateInfoUnitbyOwner'])
   $kd_apt= $_POST['apartemen'];
   $proses = new Unit($db);
   $add = $proses->updateInfo_Unit($kd_unit ,$kd_apt, $no_unit, $kd_owner);
-  $logs->addLog('Update','tb_detail_unit','Update detail unit info',json_encode([$kd_unit ,$kd_apt, $no_unit, $kd_owner]),null);
+  //$logs->addLog('Update','tb_detail_unit','Update detail unit info',json_encode([$kd_unit ,$kd_apt, $no_unit, $kd_owner]),null);
   if($owner!=$kd_owner){
     $add = $proses->updateJumlah_unit_owner($kd_owner);
     $add = $proses->updateKurangi_jumlah_unit_owner($owner);
-    $logs->addLog('Update','tb_detail_unit','Update detail unit jumlah unit owner',json_encode([$kd_owner]),null);
-    $logs->addLog('Update','tb_detail_unit','Update detail unit kurangi jumlah unit owner',json_encode([$owner]),null);
+    //$logs->addLog('Update','tb_detail_unit','Update detail unit jumlah unit owner',json_encode([$kd_owner]),null);
+    //$logs->addLog('Update','tb_detail_unit','Update detail unit kurangi jumlah unit owner',json_encode([$owner]),null);
   }
   if($add == "Success"){
     header('Location:../view/'.$view.'/unit/detail_unit.php?detail_unit='.$kd_unit);
@@ -121,7 +121,7 @@ elseif(isset($_POST['updateHargaUnit']) || isset($_POST['updateHargaUnitbyOwner'
   $ekstra_charge= $_POST['ekstra_charge'];
   $proses = new Unit($db);
   $add = $proses->updateHarga_Unit($kd_unit , $h_owner_wd, $h_owner_we, $h_owner_mg, $h_owner_bln, $h_sewa_wd, $h_sewa_we, $h_sewa_mg, $h_sewa_bln, $ekstra_charge);
-  $logs->addLog('Update','tb_detail_unit','Update detail harga unit',json_encode([$kd_unit , $h_owner_wd, $h_owner_we, $h_owner_mg, $h_owner_bln, $h_sewa_wd, $h_sewa_we, $h_sewa_mg, $h_sewa_bln, $ekstra_charge]),null);
+  //$logs->addLog('Update','tb_detail_unit','Update detail harga unit',json_encode([$kd_unit , $h_owner_wd, $h_owner_we, $h_owner_mg, $h_owner_bln, $h_sewa_wd, $h_sewa_we, $h_sewa_mg, $h_sewa_bln, $ekstra_charge]),null);
   if($add == "Success"){
     header('Location:../view/'.$view.'/unit/detail_unit.php?detail_unit='.$kd_unit);
   }else echo 'error';
@@ -160,7 +160,7 @@ elseif(isset($_POST['update_detail_unit'])){
 
   $proses = new Unit($db);
   $add = $proses->updateDetail_Unit($kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok, $type);
-  $logs->addLog('Update','tb_detail_unit','Update detail unit',json_encode([$kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok, $type]),null);
+  //$logs->addLog('Update','tb_detail_unit','Update detail unit',json_encode([$kd_unit, $lantai, $jml_kmr, $jml_bed, $jml_ac, $water_heater, $dapur, $wifi, $tv, $amenities, $merokok, $type]),null);
   if($add == "Success"){
     header("Location:../view/".$view."/unit/detail_unit.php?detail_unit=".$kd_unit);
   }else echo 'error';
@@ -200,7 +200,7 @@ elseif (isset($_POST['upload_gambar'])){
       }
     }
     $add = $proses->updateGambar_unit($kd_unit, $img);
-    $logs->addLog('Update','tb_detail_unit','Update detail unit upload image ',json_encode([$kd_unit,$img]),null);
+    //$logs->addLog('Update','tb_detail_unit','Update detail unit upload image ',json_encode([$kd_unit,$img]),null);
     if($add == "Success"){
       header("Location:../view/".$view."/unit/detail_unit.php?detail_unit=".$kd_unit);
     }
@@ -213,11 +213,11 @@ elseif(isset($_GET['delete_unit']) || isset($_GET['kurangi_ju']) && ($view=="sup
   $proses = new Unit($db);
   $del2 = $proses->deleteDetail_Unit($_GET['delete_unit']);
   $del = $proses->deleteUnit($_GET['delete_unit']);
-    $logs->addLog('Delete','tb_detail_unit','Delete detail unit ',json_encode([$_GET['delete_unit']]),null);
-    $logs->addLog('Delete','tb_unit','Delete unit ',json_encode([$_GET['delete_unit']]),null);
+    //$logs->addLog('Delete','tb_detail_unit','Delete detail unit ',json_encode([$_GET['delete_unit']]),null);
+    //$logs->addLog('Delete','tb_unit','Delete unit ',json_encode([$_GET['delete_unit']]),null);
   if($del=='Success'){
     $del = $proses->updateKurangi_jumlah_unit_owner($_GET['kurangi_ju']);
-    $logs->addLog('Update','tb_detail_unit','Update detail unit kurangi jumlah unit owner',json_encode([$_GET['kurangi_ju']]),null);
+    //$logs->addLog('Update','tb_detail_unit','Update detail unit kurangi jumlah unit owner',json_encode([$_GET['kurangi_ju']]),null);
     delete_files("../asset/img/unit/".$_GET['delete_unit']);
     header("location:../view/".$view."/unit/unit.php");
   }
@@ -230,7 +230,7 @@ elseif(isset($_GET['unit_kotor']) && $view=="cleaner" ){
   $kd_unit = $_GET['unit_kotor'];
   $sekarang = $sekarang = date('Y-m-d');
   $del = $proses->deleteUnit_kotor($kd_unit, $sekarang);
-  $logs->addLog('Delete','tb_unit_kotor','Delete unit kotor',json_encode([$kd_unit,$sekarang]),null);
+  //$logs->addLog('Delete','tb_unit_kotor','Delete unit kotor',json_encode([$kd_unit,$sekarang]),null);
   header("location:../view/".$view."/unit/unit.php");
 }
 
@@ -251,11 +251,11 @@ elseif(isset($_POST['addUnit']) && $view!="owner"){
 
   $proses = new Unit($db);
   $add = $proses->addUnit($kd_apt,$kd_owner, $no_unit, $h_sewa_wd, $h_sewa_we, $h_sewa_mg, $h_sewa_bln, $h_owner_wd, $h_owner_we, $h_owner_mg, $h_owner_bln, $ekstra_charge);
-  $logs->addLog('ADD','tb_unit','ADD data unit ',json_encode([$kd_apt,$kd_owner, $no_unit, $h_sewa_wd, $h_sewa_we, $h_sewa_mg, $h_sewa_bln, $h_owner_wd, $h_owner_we, $h_owner_mg, $h_owner_bln, $ekstra_charge]),null);
+  //$logs->addLog('ADD','tb_unit','ADD data unit ',json_encode([$kd_apt,$kd_owner, $no_unit, $h_sewa_wd, $h_sewa_we, $h_sewa_mg, $h_sewa_bln, $h_owner_wd, $h_owner_we, $h_owner_mg, $h_owner_bln, $ekstra_charge]),null);
 
   if(($add == "Success") || ($add2 == "Success")){
     $add2 = $proses->updateJumlah_unit_owner($kd_owner);
-    $logs->addLog('Update','tb_detail_unit','Update detail jumlah unit owner',json_encode([$kd_owner]),null);
+    //$logs->addLog('Update','tb_detail_unit','Update detail jumlah unit owner',json_encode([$kd_owner]),null);
     header('Location:../view/'.$view.'/unit/unit.php');
   }else{
     echo 'error';
@@ -271,7 +271,7 @@ elseif(isset($_POST['addMaintenance'])){
 
   $proses = new Unit($db);
   $add = $proses->addMaintenance($kd_unit, $awal, $akhir, $catatan);
-  $logs->addLog('ADD','tb_maintenance','ADD data maintenance',json_encode([$kd_unit, $awal, $akhir, $catatan]),null);
+  //$logs->addLog('ADD','tb_maintenance','ADD data maintenance',json_encode([$kd_unit, $awal, $akhir, $catatan]),null);
 
   if(($add == "Success")){
     header('Location:../view/'.$view.'/unit/unit.php');
@@ -285,7 +285,7 @@ elseif(isset($_GET['newics']) && $view!=""){
   include '../class/ics_unit.php';
   $ics = new Ics_unit($db);
   $ics->createIcs($kd_unit);
-  $logs->addLog('Create ICS Unit','ics file','Buat file ics baru',json_encode([$kd_unit]),null);
+  //$logs->addLog('Create ICS Unit','ics file','Buat file ics baru',json_encode([$kd_unit]),null);
   header('Location:../view/'.$view.'/unit/calendar.php?calendar_unit='.$kd_unit);
 }
 
@@ -295,7 +295,7 @@ elseif(isset($_POST['updateURL'])){
   include '../class/ics_unit.php';
   $ics = new Ics_unit($db);
   $ics->setURL($kd_unit, $url, 'url_bnb');
-  $logs->addLog('Set ICS Unit','ics file','update file ics',json_encode([$kd_unit, $url, 'url_bnb']),null);
+  //$logs->addLog('Set ICS Unit','ics file','update file ics',json_encode([$kd_unit, $url, 'url_bnb']),null);
   header('Location:../view/'.$view.'/unit/calendar.php?calendar_unit='.$kd_unit);
 }
 

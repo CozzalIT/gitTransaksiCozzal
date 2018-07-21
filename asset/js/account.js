@@ -1,4 +1,6 @@
 $('#ow').hide();
+$('#groupApt').hide();
+$('#groupUnit').hide();
 var has_click = false;
 
 
@@ -21,12 +23,31 @@ $("#hak_akses").change(function(){
 			error: function (xhr, ajaxOptions, thrownError) { // Ketika ada error
 				alert(thrownError); // Munculkan alert error
 			}
-		});		
+		});
+		$('#groupApt').hide();
+		$('#groupUnit').hide();
+		$('#groupApt').removeAttr('required');
+		$('#groupUnit').removeAttr('required');
 		$('#kd_owner').attr({'required': 'required'});
 	}
+
+	//jika hak akses partner
+	else if ($("#hak_akses").val()=="partner") {
+		$('#groupApt').show();
+		$('#groupUnit').show();
+		$('#ow').hide();
+		$('#groupApt').attr({'required': 'required'});
+		$('#groupUnit').attr({'required': 'required'});
+		$('#kd_owner').removeAttr('required');
+	}
+
 	else{
 		$('#ow').hide();
+		$('#groupApt').hide();
+		$('#groupUnit').hide();
 		$('#kd_owner').removeAttr('required');
+		$('#groupApt').removeAttr('required');
+		$('#groupUnit').removeAttr('required');
 	}
 });
 
@@ -48,7 +69,7 @@ $(".relasi").click(function(){
 			error: function (xhr, ajaxOptions, thrownError) { // Ketika ada error
 				alert(thrownError); // Munculkan alert error
 			}
-		});		
+		});
 		has_click = true;
 		var a = $(this).attr('id');
 		$('#username2').val(a);
