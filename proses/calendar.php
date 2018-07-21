@@ -3,7 +3,7 @@ require("../../config/database.php");
 require("../class/calendar.php");
 require("../class/unit.php");
 require("../class/ics_unit.php");
-// session_start();
+session_start();
 $view = $_SESSION['hak_akses'];
 
 if(isset($_POST['blokCalendar'])){
@@ -12,7 +12,9 @@ if(isset($_POST['blokCalendar'])){
   $end_date = $_POST['akhir'];
   $note = $_POST['catatan'];
 
-  if($view == 'superadmin' || $view == 'admin'){
+  if($view == 'partner'){
+    $jenis = 4;
+  }elseif($view == 'superadmin' || $view == 'admin'){
     $jenis = 3;
   }elseif($view == 'owner'){
     $jenis = 2;
@@ -27,7 +29,11 @@ if(isset($_POST['blokCalendar'])){
   //$logs->addLog('ADD','tb_mod_calendar','Tambah mod calender',json_encode([$kd_unit, $start_date, $end_date, $note, $jenis]),null);
 
   if($add == "Success"){
-	  header('Location:../view/'.$view.'/unit/calendar.php?calendar_unit='.$kd_unit);
+    if ($jenis == 4) {
+      header('Location:../view/'.$view.'/kalender/kalender.php');
+    }else{
+      header('Location:../view/'.$view.'/unit/calendar.php?calendar_unit='.$kd_unit);
+    }
   }else{
     echo 'error';
   }

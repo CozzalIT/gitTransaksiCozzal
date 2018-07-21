@@ -23,7 +23,7 @@
         $no_unit = $data->no_unit;
         $nama_apt = $data->nama_apt;
         $kd_apt = $data->kd_apt;
-      } 
+      }
       $arrayunit[] = $data->kd_unit;
       $arrayunit[] = $data->no_unit." - ".$data->nama_apt;
     }
@@ -235,6 +235,16 @@
                         {
                           id: '$data->kd_mod_calendar+$data->note',
                           title: 'Block by Admin',
+                          start: '".$data->start_date."T12:00:00',
+                          end: '".$data->end_date."T13:00:00',
+                          color: '#da4f49',
+                        },
+                        ";
+                      }elseif($data->jenis == 4){
+                        echo "
+                        {
+                          id: '$data->kd_mod_calendar+$data->note',
+                          title: 'Block by Partner',
                           start: '".$data->start_date."T12:00:00',
                           end: '".$data->end_date."T13:00:00',
                           color: '#da4f49',
