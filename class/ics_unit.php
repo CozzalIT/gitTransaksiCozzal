@@ -110,7 +110,7 @@ class Ics_unit {
 
   // membuat atau mengupdate ics untuk url cozzal
   public function createIcs($kd_unit){
-    $this->buildIcs($kd_unit);
+    //$this->buildIcs($kd_unit);
     //$this->setURL($kd_unit, 'transaksi.cozzal.com/ics/shared_ics.php?request='.$kd_unit, 'url_cozzal');
     return $this->buildURL($kd_unit, "Cozzal Sys", "0", 'transaksi.cozzal.com/ics/shared_ics.php?request='.$kd_unit, "0");
   }  

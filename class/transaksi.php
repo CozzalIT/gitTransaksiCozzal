@@ -308,7 +308,7 @@ public function jumlah_duplikasi_transaksi($kd_unit, $check_in, $check_out){
 
   public function deleteBooked_list($kd_booked, $check_in, $kd_unit){
     $sql = "DELETE FROM tb_mod_calendar WHERE start_date='$check_in' AND kd_unit='$kd_unit'";
-    $sql2 = "DELETE FROM tb_booked WHERE kd_booked='$kd_booked'";
+    $sql2 = "UPDATE tb_booked SET status='2' WHERE kd_booked='$kd_booked'";
     $this->db->query($sql);
     $this->db->query($sql2);
   }

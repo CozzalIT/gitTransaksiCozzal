@@ -8,7 +8,7 @@ require("../class/kas.php");
 require("../class/penyewa.php");
 
 // date_default_timezone_set('Asia/Jakarta');
-// session_start();
+ session_start();
 $view = $_SESSION['hak_akses'];
 
 function getDisCount($harga_sewa, $harga_sewa_we, $harga_sewa_asli, $wd, $we, $total){
@@ -153,7 +153,9 @@ if(isset($_POST['addTransaksi']) || isset($_POST["Transaksi_booked"])){
     // require("../class/ics_unit.php");
     // $ics = new Ics_unit($db);
     // $ics->buildIcs($kd_unit);
-    header('Location:../croneTask/update_sys_cal.php?id='.$kd_unit.'&ics_update='.$view);
+
+    //direct untuk build ics
+    header('Location:../croneTask/update_sys_cal.php?id='.$kd_unit.'&ics_update='.$view.'&page=transaksi/laporan_transaksi%php');
 
   }else{
     echo 'Tambah Transaksi Gagal !';
@@ -382,7 +384,10 @@ elseif(isset($_POST['updateTransaksi'])){
     }
   }
 
+
+  // $unit adalah kode unit lama
   $unit = $proses->updateUnit_kotor($kd_transaksi ,$kd_unit, $check_in, $check_out);
+  //die("unit lama = ".$kd_unit." dan unit baru = ".$unit);
   $add = $proses->updateTransaksi($kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $harga_sewa_we, $harga_sewa_gbg, $diskon, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total_tagihan, $total_harga_owner,$sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday, $h_owner_wd, $h_owner_we,$catatan,$deposit);
   // Log System
   //$logs->addLog('Update','tb_transaksi','Update data transaksi',json_encode([$kd_transaksi, $kd_apt, $kd_unit, $tamu, $check_in, $check_out, $harga_sewa, $harga_sewa_we, $harga_sewa_gbg, $diskon, $ekstra_charge, $kd_booking, $kd_kas, $dp, $total_tagihan, $total_harga_owner,$sisa_pelunasan, $hari, $jumlah_weekend, $jumlah_weekday, $h_owner_wd, $h_owner_we,$catatan,$deposit]),null);
@@ -390,8 +395,10 @@ elseif(isset($_POST['updateTransaksi'])){
   //require("../class/ics_unit.php");
   //$ics = new Ics_unit($db);
   if($kd_unit!=$unit)
-    $kd_unit .= '/'.$unit;
-  header('Location:../croneTask/update_sys_cal.php?id='.$kd_unit.'&ics_update='.$view);
+    $kd_unit .= 'x'.$unit;
+    //direct untuk build ics
+    header('Location:../croneTask/update_sys_cal.php?id='.$kd_unit.'&ics_update='.$view.'&page=transaksi/laporan_transaksi%php');
+
   }else{
     echo 'error';
   };
@@ -412,7 +419,7 @@ elseif(isset($_GET['delete_confirm_transaksi']) && ($view=="superadmin" || $view
   $del = $proses->deleteConfirmTransaksi($_GET['delete_confirm_transaksi']);
   // Log System
   //$logs->addLog('DeleteConfirmation','tb_transaksi','Hapus data konfirmasi transaksi',json_encode([$_GET['delete_confirm_transaksi']]),null);
-  header("location:../view/superadmin/transaksi/cancel_transaksi.php");
+  header("location:../view/".$view."/transaksi/cancel_transaksi.php");
 }
 
 //Tambah Confirm Transaksi
@@ -457,7 +464,7 @@ elseif (isset($_GET['addCancel']) && $view!="owner" && $view!="cleaner"){
     //require("../class/ics_unit.php");
     //$ics = new Ics_unit($db);
     //$ics->buildIcs($kd_unit);
-    header('Location:../croneTask/update_sys_cal.php?id='.$kd_unit.'&ics_update='.$view);
+  header('Location:../croneTask/update_sys_cal.php?id='.$kd_unit.'&ics_update='.$view.'&page=transaksi/cancel_transaksi%php');
   }
 }
 

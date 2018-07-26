@@ -60,12 +60,16 @@
 		$show2 = $unit->showRecent_booked($kd_unit, $sekarang);
 		while($data2 = $show2->fetch(PDO::FETCH_OBJ)){
 			$current_trx[] = $data2->check_in; 
-			$current_booked[] = $data2->check_in;
+			if($data2->status=="1"){
+				$current_booked[] = $data2->check_in;
+			}
 		}
 		
 		$newEvent = array();
 
-		$ICS->change_file(getlocalics($url, $kd_url));
+		$local_file = getlocalics($url, $kd_url);
+
+		$ICS->change_file($local_file);
 
 		$icsEvents = $ICS->cal_to_array();
 		for($i=0; $i<count($icsEvents); $i++){
