@@ -1,8 +1,9 @@
 <?php
   require("../../../class/calendar.php");
+  require("../../../class/account.php");
   require("../../../../config/database.php");
 
-  $thisPage = "Kalender";
+  $thisPage = "Unit";
 
   include "../template/head.php";
 ?>
@@ -14,7 +15,32 @@
 <div id="content">
   <div id="content-header">
   <div id="breadcrumb"> <a href="../home/home.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="unit.php" title="Go to Data Unit" class="tip-bottom">Data Unit</a> <a href="#" class="current">Kalender Unit</a> </div>
-    <h1>Calendar Unit </h1>
+    <?php
+      $usernamePartner = $_SESSION['username'];
+      $account = new Account($db);
+      $show_a = $account->showUnitPartner($username);
+      $data_a = $show_a->fetch(PDO::FETCH_OBJ);
+
+
+      if (isset($data_a->kd_unit)){
+        $arrayunit = array();
+        $calendar = new Calendar($db);
+        $kd_unit = $data_a->kd_unit;
+        $show = $calendar->showNoUnit();
+        while($data = $show->fetch(PDO::FETCH_OBJ)){
+          if($data->kd_unit==$kd_unit){
+            $no_unit = $data->no_unit;
+            $nama_apt = $data->nama_apt;
+            $kd_apt = $data->kd_apt;
+
+          } else {
+            $arrayunit[] = $data->kd_unit;
+            $arrayunit[] = $data->no_unit." - ".$data->nama_apt;
+          }
+        }
+      }
+    ?>
+    <h1>Calendar Unit <?php echo $no_unit.' ('.$nama_apt.')'; ?></h1>
     <a href="unit.php" class="btn btn-primary btn-add"><i class="icon-chevron-left"></i> Kembali</a>
     <a href="#popup-blok" data-toggle="modal" class="btn btn-danger btn-add"><i class="icon-minus-sign"></i> Blok Tanggal</a>
   </div>
@@ -38,6 +64,80 @@
               businessHours: true, // display business hours
               editable: true,
               events: [
+                <?php
+                  if (isset($data_a->kd_unit)){
+                    $show = $calendar->showCalendar($data_a->kd_unit);
+                    while($data = $show->fetch(PDO::FETCH_OBJ)){
+                      if($data->status == '1'){
+                        echo "
+                        {
+                          title: 'Booked',
+                          start: '$data->check_in',
+                          end: '$data->check_out',
+                        },
+                        ";
+                      }
+                    }
+                    $show = $calendar->showCalendar($data_a->kd_unit);
+                    while($data = $show->fetch(PDO::FETCH_OBJ)){
+                      if($data->status == '42' or $data->status == '41'){
+                        echo "
+                        {
+                          title: 'Confirm',
+                          start: '$data->check_in',
+                          end: '$data->check_out',
+                          color: '#359b20'
+                        },
+                        ";
+                      }
+                    }
+                    $show = $calendar->showModCalendar($data_a->kd_unit);
+                    while($data = $show->fetch(PDO::FETCH_OBJ)){
+                      if($data->jenis == 1 ){
+                        echo "
+                        {
+                          id: '$data->kd_mod_calendar+$data->note',
+                          title: 'Maintenance',
+                          start: '".$data->start_date."T12:00:00',
+                          end: '".$data->end_date."T13:00:00',
+                          color: '#faa732',
+                          textColor: '#000000'
+                        },
+                        ";
+                      }elseif($data->jenis == 2){
+                        echo "
+                        {
+                          id: '$data->kd_mod_calendar+$data->note',
+                          title: 'Block by Owner',
+                          start: '".$data->start_date."T12:00:00',
+                          end: '".$data->end_date."T13:00:00',
+                          color: '#da4f49',
+                        },
+                        ";
+                      }elseif($data->jenis == 3){
+                        echo "
+                        {
+                          id: '$data->kd_mod_calendar+$data->note',
+                          title: 'Block by Admin',
+                          start: '".$data->start_date."T12:00:00',
+                          end: '".$data->end_date."T13:00:00',
+                          color: '#da4f49',
+                        },
+                        ";
+                      }elseif($data->jenis == 4){
+                        echo "
+                        {
+                          id: '$data->kd_mod_calendar+$data->note',
+                          title: 'Block by Partner',
+                          start: '".$data->start_date."T12:00:00',
+                          end: '".$data->end_date."T13:00:00',
+                          color: '#da4f49',
+                        },
+                        ";
+                      }
+                    }
+                  }
+                ?>
                 // red areas where no events can be dropped
                 {
                   start: '2017-12-24',
@@ -70,7 +170,7 @@
     <h3>Blok Tanggal</h3>
   </div>
   <div class="modal-body">
-  	<form action="" method="post" class="form-horizontal">
+  	<form action="../../../proses/calendar.php" method="post" class="form-horizontal">
   	  <div class="control-group">
   		  <label class="control-label">Awal :</label>
     		<div class="controls">
