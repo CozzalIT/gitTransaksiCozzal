@@ -4,7 +4,7 @@
 
   if(isset($_POST["kd_owner"]) && isset($_POST["payment"])){
     $Proses = new Owner($db);
-    $show = $Proses->showOwnerPayment("3");
+    $show = $Proses->showOwnerPayment($_POST["kd_owner"]);
     $response = array();
     $paid = array();
     $wait = array();
@@ -30,7 +30,7 @@
                         "tanggal" => $data->tgl_pembayaran,
                         "jumlah_transaksi" => $data->jumlah_transaksi,
                         "nominal" => $data->nominal,
-                        "status" => "WAIT"
+                        "status" => "ON PROGRESS"
                        );
       }
     }
@@ -40,11 +40,11 @@
         $response[] = $wait[$i];
       }
     } elseif ($_POST["payment"]=="history") {
-      for($i=0;$i<count($paid);$i++){
-        $response[] = $paid[$i];
-      }
       for($i=0;$i<count($confirm);$i++){
         $response[] = $confirm[$i];
+      }
+      for($i=0;$i<count($paid);$i++){
+        $response[] = $paid[$i];
       }
     }
     

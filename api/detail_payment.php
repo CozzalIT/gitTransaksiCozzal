@@ -16,6 +16,7 @@
         $proses_u = new Unit($db);
 
         $response = array();
+        $i=1;
 
         foreach($transaksi as $kd_transaksi) {
             if($kd_transaksi <> 'dummy'){
@@ -31,14 +32,16 @@
                     $weekday = $data_t->hari_weekday*$data_t->harga_owner;
                     $nominal = $weekday+$weekend;
                 }
+                
                 $response[] = array(
-                                "no": $i,
-                                "jenis": "Transakai : COZ-".strtoupper(dechex($kd_transaksi)),
-                                "apartemen": $data_t->nama_apt,
-                                "unit": $data_t->no_unit,
-                                "tanggal": $data_t->check_in." / ".$data_t->check_out,
-                                "nominal": number_format($nominal, 0, ".", ".")." IDR"
+                                "no"=> $i,
+                                "jenis"=> "Transaksi : COZ-".strtoupper(dechex($kd_transaksi)),
+                                "apartemen"=> $data_t->nama_apt,
+                                "unit"=> $data_t->no_unit,
+                                "tanggal"=> $data_t->check_in." / ".$data_t->check_out,
+                                "nominal"=> number_format($nominal, 0, ".", ".")." IDR"
                             );
+                $i++;
             }
         }
 
@@ -57,15 +60,16 @@
                 $data_u = $show_u->fetch(PDO::FETCH_OBJ);
 
                 $response[] = array(
-                                "no": $i,
-                                "jenis": "T-Umum (".$data_tu->keterangan.")",
-                                "apartemen": $data_u->nama_apt,
-                                "unit": $data_u->no_unit,
-                                "tanggal": $data_tu->tanggal,
-                                "nominal": number_format($data_tu->harga*$data_tu->jumlah*(-1), 0, ".", ".")." IDR"
+                                "no"=> $i,
+                                "jenis"=> "T-Umum (".$data_tu->keterangan.")",
+                                "apartemen"=> $data_u->nama_apt,
+                                "unit"=> $data_u->no_unit,
+                                "tanggal"=> $data_tu->tanggal,
+                                "nominal"=> number_format($data_tu->harga*$data_tu->jumlah*(-1), 0, ".", ".")." IDR"
                             );
 
             }
+            $i++;
         }
 
         echo json_encode($response); 
