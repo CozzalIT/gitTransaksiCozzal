@@ -144,6 +144,13 @@ class Ics_unit {
     }
   }
 
+  public function deleteTrash_booked($batas_waktu){
+    $sql = "DELETE FROM tb_booked WHERE check_out<'$batas_waktu' AND status!='1'";
+    $query = $this->db->query($sql);  
+  }
+
+  // ------- Private Function --------------
+
   // menampilkan transaksi berdasarkan minimum date (untuk buildIcs)
   private function showUnit_byId($kd_unit, $minimum_date){
     $sql = "SELECT tb_transaksi.check_in, tb_transaksi.check_out, tb_apt.nama_apt,

@@ -56,11 +56,9 @@ function loadIcs($kd_unit, $kd_apt, $kd_url, $url, $unit, $ICS){
 
 	$show2 = $unit->showRecent_booked($kd_unit, $sekarang);
 	while($data2 = $show2->fetch(PDO::FETCH_OBJ)){
-		if($data2->status!="2"){
-			$current_trx[] = $data2->check_in; 
-			if($data2->status=="1"){
-				$current_booked[] = $data2->check_in;
-			}
+		$current_trx[] = $data2->check_in; 
+		if($data2->status=="1"){
+			$current_booked[] = $data2->check_in;
 		}
 	}
 	

@@ -24,6 +24,23 @@
             <a style="text-align: right;" href="#" class="btn btn-light"><i class="icon-refresh"></i> <strong>Refresh</strong></a>
             <a id="p" href="#popup-task"  data-toggle="modal" style="text-decoration:none;cursor: pointer;"></a>
         </div>
+
+    <?php
+      if (file_exists('../../../proses/has_blocked') || file_exists('../../../proses/trx_terisi')){
+        if(file_exists('../../../proses/has_blocked')){
+          $pesan = "Tanggal tersebut telah diblok";
+          rmdir('../../../proses/has_blocked');
+        } else {
+          $pesan = "Tanggal telah terisi transaksi lain";
+          rmdir('../../../proses/trx_terisi');
+        }
+
+        echo"   <div class='alert alert-danger' role='alert'>
+        <strong>Gagal Transaksi. </strong>$pesan</div>";
+      }
+    ?>
+
+
         <div class="widget-box" style="overflow-x:auto;">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
             <h5>Data Masuk</h5>
@@ -54,6 +71,7 @@
                         $title = $data->title;
                       else
                         $title = 'Unlisted';
+                      $warna_button= 'btn-success';
                       echo "
                         <tr class=gradeC'>
                           <td>$i</td>
@@ -65,7 +83,7 @@
                           <td>$data->check_out</td>
                           <td>$title</td>
                           <td>
-                            <a class='btn btn-success' href='booked_penyewa.php?kd_booked=$data->kd_booked'>Transaksi</a>
+                            <a class='btn $warna_button' href='booked_penyewa.php?kd_booked=$data->kd_booked'>Transaksi</a>
                             <a class='btn btn-danger hapus' href='../../../proses/booked.php?hapus=$data->kd_booked&unit=$data->kd_unit&ci=$data->check_in'>Hapus</a>
                           </td>
                         </tr>

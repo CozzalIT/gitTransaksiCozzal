@@ -183,6 +183,17 @@ class Transaksi {
     return $rows;
   }
 
+  public function is_blocked_all($CI,$CO,$kd_unit){
+    $result = $this->db->prepare("SELECT kd_mod_calendar from tb_mod_calendar
+    where ((start_date<='$CI' and end_date>='$CO')
+    or (start_date>='$CI' and start_date<'$CO')
+    or (end_date>'$CI' and end_date<='$CO'))
+    and kd_unit ='$kd_unit'");
+    $result->execute();
+    $rows = $result->fetch();
+    return $rows;
+  }
+
   public function showDpTransaksi($kd_transaksi){
     $sql = "SELECT dp from tb_transaksi WHERE kd_transaksi='$kd_transaksi'";
     $query = $this->db->query($sql);
