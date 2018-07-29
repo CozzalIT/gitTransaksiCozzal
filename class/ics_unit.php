@@ -23,7 +23,7 @@ class Ics_unit {
     $this->db->query($sql);
     $sql = "INSERT INTO tb_mod_calendar(kd_unit, start_date, end_date, note, jenis)
     SELECT '$kd_unit' AS unit, '$check_in' AS CI, '$check_out' AS CO, CONCAT('Booked By ',title) 
-    AS note, '3' AS JN FROM tb_url_unit WHERE kd_url = '$kd_url'";
+    AS note, '5' AS JN FROM tb_url_unit WHERE kd_url = '$kd_url'";
     $this->db->query($sql);
     $sql = "INSERT INTO tb_unit_kotor VALUES('$kd_unit', '$check_in', '$check_out', null, null)";
     $this->db->query($sql);
@@ -166,7 +166,8 @@ class Ics_unit {
   // menampilkan bloking tanggal berdasarkan minimum date (untuk buildIcs)
   private function showunitMod_byId($kd_unit, $minimum_date){
     $sql = "SELECT kd_unit, start_date, end_date, note FROM tb_mod_calendar 
-    WHERE kd_unit='$kd_unit' AND (start_date>='$minimum_date' OR end_date>='$minimum_date')"; // 3 adalah kode booking airbnb dan 1 adalah status di transaksi 
+    WHERE kd_unit='$kd_unit' AND (start_date>='$minimum_date' OR end_date>='$minimum_date')
+    AND jenis!='5'"; // 3 adalah kode booking airbnb dan 1 adalah status di transaksi 
     $query = $this->db->query($sql);
     return $query;
   }

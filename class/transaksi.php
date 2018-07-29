@@ -185,10 +185,10 @@ class Transaksi {
 
   public function is_blocked_all($CI,$CO,$kd_unit){
     $result = $this->db->prepare("SELECT kd_mod_calendar from tb_mod_calendar
-    where ((start_date<='$CI' and end_date>='$CO')
-    or (start_date>='$CI' and start_date<'$CO')
-    or (end_date>'$CI' and end_date<='$CO'))
-    and kd_unit ='$kd_unit'");
+    where ((start_date<='$CI' AND end_date>='$CO')
+    OR (start_date>='$CI' AND start_date<'$CO')
+    OR (end_date>'$CI' AND end_date<='$CO'))
+    AND kd_unit ='$kd_unit' AND jenis!='5'");
     $result->execute();
     $rows = $result->fetch();
     return $rows;

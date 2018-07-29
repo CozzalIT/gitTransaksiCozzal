@@ -127,7 +127,17 @@
                           color: '#da4f49',
                         },
                         ";
-                      }
+                      } elseif($data->jenis == 5){
+                          echo "
+                          {
+                            id: '$data->kd_mod_calendar+$data->note',
+                            title: 'Kalender Lain',
+                            start: '".$data->start_date."T12:00:00',
+                            end: '".$data->end_date."T13:00:00',
+                            color: '#da4f49',
+                          },
+                          ";
+                        }
                     }
                   }
                 ?>

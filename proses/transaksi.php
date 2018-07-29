@@ -398,7 +398,6 @@ elseif(isset($_POST['updateTransaksi'])){
     $kd_unit .= 'x'.$unit;
     //direct untuk build ics
     header('Location:../croneTask/update_sys_cal.php?id='.$kd_unit.'&ics_update='.$view.'&page=transaksi/laporan_transaksi%php');
-
   }else{
     echo 'error';
   };

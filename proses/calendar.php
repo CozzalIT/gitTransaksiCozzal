@@ -22,17 +22,15 @@ if(isset($_POST['blokCalendar'])){
 
   $proses = new Calendar($db);
   $add = $proses->addModCalendar($kd_unit, $start_date, $end_date, $note, $jenis);
-  $ics = new Ics_unit($db);
-  $ics->buildIcs($kd_unit);
 
   // Log System
   //$logs->addLog('ADD','tb_mod_calendar','Tambah mod calender',json_encode([$kd_unit, $start_date, $end_date, $note, $jenis]),null);
 
   if($add == "Success"){
     if ($jenis == 4) {
-      header('Location:../view/'.$view.'/kalender/kalender.php');
+      header('Location:../croneTask/update_sys_cal.php?id='.$kd_unit.'&ics_update='.$view.'&page=kalender/kalender%php');
     }else{
-      header('Location:../view/'.$view.'/unit/calendar.php?calendar_unit='.$kd_unit);
+      header('Location:../croneTask/update_sys_cal.php?id='.$kd_unit.'&ics_update='.$view.'&page=unit/calendar%php?calendar_unit='.$kd_unit);
     }
   }else{
     echo 'error';
@@ -52,11 +50,8 @@ elseif(isset($_POST['addMaintenance']) && ($view == 'admin' || $view == 'superad
   // Log System
   //$logs->addLog('ADD','tb_mod_calendar','Tambah mod calender',json_encode([$kd_unit, $start_date, $end_date, $note, $jenis]),null);
 
-  $ics = new Ics_unit($db);
-  $ics->buildIcs($kd_unit);
-
   if($add == "Success"){
-    header('Location:../view/'.$view.'/unit/calendar.php?calendar_unit='.$kd_unit);
+      header('Location:../croneTask/update_sys_cal.php?id='.$kd_unit.'&ics_update='.$view.'&page=unit/calendar%php?calendar_unit='.$kd_unit);
   }else{
     echo 'error';
   }
@@ -104,8 +99,6 @@ elseif(isset($_GET['delete_event'])){
   }elseif($_GET['status_mod'] == 'false'){
     $show = $proses->editModCalendar($_GET['delete_event']);
     $del = $proses->deleteModCalendar($_GET['delete_event']);
-    $ics = new Ics_unit($db);
-    $ics->buildIcs($kd_unit);
   }
 
   // Log System
@@ -114,7 +107,7 @@ elseif(isset($_GET['delete_event'])){
 
   $data = $show->fetch(PDO::FETCH_OBJ);
   $kd_unit = $data->kd_unit;
-  header("location:../view/".$view."/unit/calendar.php?calendar_unit=".$kd_unit);
+  header('Location:../croneTask/update_sys_cal.php?id='.$kd_unit.'&ics_update='.$view.'&page=unit/calendar%php?calendar_unit='.$kd_unit);
 }
 
 //Update Event
@@ -134,12 +127,9 @@ elseif(isset($_POST['updateModCal'])){
   // Log System
   //$logs->addLog('Update','tb_mod_calender','Update mod calendar',json_encode([$kd_mod_calendar, $awal, $akhir, $catatan]),null);
 
-  $ics = new Ics_unit($db);
-  $ics->buildIcs($kd_unit);
-
 
   if($update == "Success"){
-    header('Location:../view/'.$view.'/unit/calendar.php?calendar_unit='.$kd_unit);
+    header('Location:../croneTask/update_sys_cal.php?id='.$kd_unit.'&ics_update='.$view.'&page=unit/calendar%php?calendar_unit='.$kd_unit);
   }else{
     echo 'error';
   }
