@@ -1,7 +1,7 @@
 <?php
   session_start();
   require 'class/login/login.php';
-  require '../config/database.php';
+  //require '../config/database.php';
 
   if (isset ($_POST['login'])){
     $username = $_POST['username'];
