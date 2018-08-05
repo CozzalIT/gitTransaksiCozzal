@@ -20,12 +20,27 @@
       if (isset($_GET['kd_booked']))
       {
         require("../../../../config/database.php");
+        require("../../../class/transaksi.php");
+
         require("../../../class/booked.php");
         require("../../../class/penyewa.php");
         $Proses = new Booked($db);
         $kd_booked = $_GET['kd_booked'];
         $show = $Proses->showDetail_booked($kd_booked);
         $edit = $show->fetch(PDO::FETCH_OBJ);
+
+        $Proses2 = new Transaksi($db);
+        $is_exist = $Proses2->showTransaksi_cek($edit->check_in,$edit->check_out,$edit->kd_unit);   
+        if($is_exist){
+          mkdir('../../../proses/trx_terisi');
+          header('Location:../booking/booked.php');
+        } else {
+          $is_blocked = $Proses2->is_blocked_all($edit->check_in,$edit->check_out,$edit->kd_unit);
+          if($is_blocked){
+            mkdir('../../../proses/has_blocked');
+            header('Location:../booking/booked.php');            
+          }
+        }  
       }
 ?>
 
@@ -93,12 +108,12 @@
                 </form>
                 <form id="p_lama" action="booked_transaksi.php" method="post" class="form-horizontal">
                   <div id="note-anak">
-                    <input type="text" class="search" placeholder="Cari Penyewa" style="margin:10px;width: 80%;" onkeyup="filter()" />
+                    <input type="text" class="search" placeholder="Masukkan nama yang dicari" style="margin:10px;width: 80%;" onkeyup="filter()" onkeydown="stop_filter()" />
                     <div class="control-group newpadd" style="max-height: 290px;">
                       <div id="note-anak-isi">
-                        <div class="note loading">
-                          <img src="../../../asset/images/loading.gif" width="18"> <small>Loading...</small>
-                        </div>
+                      </div>
+                      <div class="note loading">
+                        <img src="../../../asset/images/loading.gif" width="18"> <small>Loading...</small>
                       </div>
                     </div>
                     <div class="controls" style="padding: 10px; text-align:right;">

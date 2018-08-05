@@ -1,34 +1,47 @@
   var a = document.getElementById('nama').value;
-  var has_loaded = false;
+  
+  var timer;  
+  
   $("#p_lama").hide();
+  $(".loading").hide();
 
   function setkelamin(jenis){
       $("#jenis_kelamin").val(jenis);
   }
 
   function filter() {
-    var input, filter, ul, li, a, i, x=0;
+    clearTimeout(timer);
+    // cancel selected item
+    $("#kd_penyewa").val("");
+    $("#next").attr("disabled",'disabled');
+
+    var input;
     input = $(".search").val();
-    filter = input.toUpperCase();
-    a = $(".list-penyewa");
-    for (i = 0; i < a.length; i++) {
-      //alert(a[i].innerHTML);
-        if (a[i].innerHTML.toUpperCase().indexOf(filter)>=0) {
-            a[i].style.display = ""; x++;
-        } else {
-           a[i].style.display = "none";
-        }
-       }
-      return x;
+    // removing all the child 
+    var list_base = document.getElementById("note-anak-isi");
+    while(list_base.firstChild){
+      list_base.removeChild(list_base.firstChild);
+    }    
+
+    if(input!=""){
+      timer = setTimeout(request_penyewa,700);
+    } 
   }
 
-  function request_penyewa(jenis){
-      $.post('../../../proses/booked.php', {getList : a, jenis : jenis},
+  function stop_filter(){
+    clearTimeout(timer);
+  }
+
+  function request_penyewa(){
+      var input;
+      input = $(".search").val();
+
+      $(".loading").show();
+      $.post('../../../proses/booked.php', {getList : input},
       function (data) {
       response = JSON.parse(data);
         $(".loading").hide();
         $("#note-anak-isi").append(response.isi);
-        has_loaded = true;
       });
   }
 
@@ -46,10 +59,6 @@
       $("#p_baru").hide();
       $("#cap-title").text("Pilih Penyewa");
       $("#icon-title").attr("class","icon-signin");
-      if(!has_loaded){
-        $(".loading").show();
-        request_penyewa("like");
-      }
     } else {
       $("#p_lama").hide();
       $("#p_baru").show();

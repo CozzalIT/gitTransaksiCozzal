@@ -6,14 +6,14 @@
 	$mingguLalu = date('Y-m-d', strtotime("-1 week"));
 	$Proses = new Unit($db);
 	$show = $Proses->showTransaksi_byDate($mingguLalu);
-	echo $mingguLalu."<br>";
+// 	echo $mingguLalu."<br>";
 	while($data = $show->fetch(PDO::FETCH_OBJ)){
 		$exists = $Proses->is_UnitKotor_exists($data->kd_unit, $data->check_in, $data->check_out);
 		if(!$exists){
-			// $Proses->addUnit_kotor($data->kd_unit, $data->check_in, $data->check_out);
-			echo $data->kd_unit."<<".$data->check_in."<<".$data->check_out."<br>"
+			$Proses->addUnit_kotor($data->kd_unit, $data->check_in, $data->check_out);
+// 			echo $data->kd_unit."<<".$data->check_in."<<".$data->check_out."<br>";
 		} else {
-			echo $data->kd_unit.">>".$data->check_in.">>".$data->check_out."<br>"
+// 			echo $data->kd_unit.">>".$data->check_in.">>".$data->check_out."<br>";
 		}
 	}
 

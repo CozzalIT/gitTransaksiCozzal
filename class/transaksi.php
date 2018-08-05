@@ -183,6 +183,17 @@ class Transaksi {
     return $rows;
   }
 
+  public function is_blocked_all($CI,$CO,$kd_unit){
+    $result = $this->db->prepare("SELECT kd_mod_calendar from tb_mod_calendar
+    where ((start_date<='$CI' AND end_date>='$CO')
+    OR (start_date>='$CI' AND start_date<'$CO')
+    OR (end_date>'$CI' AND end_date<='$CO'))
+    AND kd_unit ='$kd_unit' AND jenis!='5'");
+    $result->execute();
+    $rows = $result->fetch();
+    return $rows;
+  }
+
   public function showDpTransaksi($kd_transaksi){
     $sql = "SELECT dp from tb_transaksi WHERE kd_transaksi='$kd_transaksi'";
     $query = $this->db->query($sql);
@@ -308,7 +319,7 @@ public function jumlah_duplikasi_transaksi($kd_unit, $check_in, $check_out){
 
   public function deleteBooked_list($kd_booked, $check_in, $kd_unit){
     $sql = "DELETE FROM tb_mod_calendar WHERE start_date='$check_in' AND kd_unit='$kd_unit'";
-    $sql2 = "DELETE FROM tb_booked WHERE kd_booked='$kd_booked'";
+    $sql2 = "UPDATE tb_booked SET status='2' WHERE kd_booked='$kd_booked'";
     $this->db->query($sql);
     $this->db->query($sql2);
   }

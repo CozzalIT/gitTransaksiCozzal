@@ -5,7 +5,7 @@
 		require("../../config/database.php");
 		require("../class/ics_unit.php");
 		if(isset($_GET['id'])){
-			$kd_unit = $_GET['id'];
+			$kd_unit = str_replace("x", "/",$_GET['id']);
 		} else {
 			$kd_unit = $_POST['generateSys'];
 		}
@@ -17,7 +17,8 @@
 
 		if(isset($_GET['ics_update'])){
 			$view = $_GET['ics_update'];
-			header('Location:../view/'.$view.'/transaksi/laporan_transaksi.php');
+			$page = str_replace("%", ".", $_GET['page']);
+			header("Location:../view/".$view.'/'.$page);
 		}
 	} 
 ?>

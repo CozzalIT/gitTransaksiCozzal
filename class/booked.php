@@ -31,8 +31,9 @@ class Booked {
     return $query;
   }
 
-  public function getListPenyewa($jumlah_kata, $arr_nama, $jenis){ // jenis = like / not like
-    $sql = "SELECT kd_penyewa, nama, alamat, no_tlp FROM tb_penyewa ORDER BY nama ASC";
+  public function getListPenyewa($keyword){ 
+    $sql = "SELECT kd_penyewa, nama, alamat, no_tlp FROM tb_penyewa 
+    WHERE nama like '%$keyword%' ORDER BY nama ASC";
     $query = $this->db->query($sql);
     return $query;
   }

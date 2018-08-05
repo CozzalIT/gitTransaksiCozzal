@@ -286,7 +286,8 @@ elseif(isset($_GET['newics']) && $view!=""){
   $ics = new Ics_unit($db);
   $ics->createIcs($kd_unit);
   //$logs->addLog('Create ICS Unit','ics file','Buat file ics baru',json_encode([$kd_unit]),null);
-  header('Location:../view/'.$view.'/unit/calendar.php?calendar_unit='.$kd_unit);
+  //header('Location:../view/'.$view.'/unit/calendar.php?calendar_unit='.$kd_unit);
+  header('Location:../croneTask/update_sys_cal.php?id='.$kd_unit.'&ics_update='.$view.'&page=unit/calendar%php?calendar_unit='.$kd_unit);
 }
 
 elseif(isset($_POST['updateURL'])){

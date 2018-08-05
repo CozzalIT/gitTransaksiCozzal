@@ -49,10 +49,17 @@ function loadIcs($kd_unit, $kd_apt, $kd_url, $url, $unit, $ICS){
 	$current_trx = array();
 	$current_booked = array();
 
+<<<<<<< HEAD
 	$show2 = $unit->showRecent_trx($kd_unit, $sekarang);
 	while($data2 = $show2->fetch(PDO::FETCH_OBJ)){
 		$current_trx[] = $data2->check_in;
 	}
+=======
+	// $show2 = $unit->showRecent_trx($kd_unit, $sekarang);
+	// while($data2 = $show2->fetch(PDO::FETCH_OBJ)){
+	// 	$current_trx[] = $data2->check_in; 
+	// }
+>>>>>>> 9562b16e6ad3809f774406769402b1f2359e5816
 
 	$show2 = $unit->showRecent_booked($kd_unit, $sekarang);
 	while($data2 = $show2->fetch(PDO::FETCH_OBJ)){

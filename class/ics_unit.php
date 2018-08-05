@@ -23,7 +23,7 @@ class Ics_unit {
     $this->db->query($sql);
     $sql = "INSERT INTO tb_mod_calendar(kd_unit, start_date, end_date, note, jenis)
     SELECT '$kd_unit' AS unit, '$check_in' AS CI, '$check_out' AS CO, CONCAT('Booked By ',title) 
-    AS note, '3' AS JN FROM tb_url_unit WHERE kd_url = '$kd_url'";
+    AS note, '5' AS JN FROM tb_url_unit WHERE kd_url = '$kd_url'";
     $this->db->query($sql);
     $sql = "INSERT INTO tb_unit_kotor VALUES('$kd_unit', '$check_in', '$check_out', null, null)";
     $this->db->query($sql);
@@ -110,7 +110,7 @@ class Ics_unit {
 
   // membuat atau mengupdate ics untuk url cozzal
   public function createIcs($kd_unit){
-    $this->buildIcs($kd_unit);
+    //$this->buildIcs($kd_unit);
     //$this->setURL($kd_unit, 'transaksi.cozzal.com/ics/shared_ics.php?request='.$kd_unit, 'url_cozzal');
     return $this->buildURL($kd_unit, "Cozzal Sys", "0", 'transaksi.cozzal.com/ics/shared_ics.php?request='.$kd_unit, "0");
   }  
@@ -144,6 +144,13 @@ class Ics_unit {
     }
   }
 
+  public function deleteTrash_booked($batas_waktu){
+    $sql = "DELETE FROM tb_booked WHERE check_out<'$batas_waktu' AND status!='1'";
+    $query = $this->db->query($sql);  
+  }
+
+  // ------- Private Function --------------
+
   // menampilkan transaksi berdasarkan minimum date (untuk buildIcs)
   private function showUnit_byId($kd_unit, $minimum_date){
     $sql = "SELECT tb_transaksi.check_in, tb_transaksi.check_out, tb_apt.nama_apt,
@@ -159,7 +166,8 @@ class Ics_unit {
   // menampilkan bloking tanggal berdasarkan minimum date (untuk buildIcs)
   private function showunitMod_byId($kd_unit, $minimum_date){
     $sql = "SELECT kd_unit, start_date, end_date, note FROM tb_mod_calendar 
-    WHERE kd_unit='$kd_unit' AND (start_date>='$minimum_date' OR end_date>='$minimum_date')"; // 3 adalah kode booking airbnb dan 1 adalah status di transaksi 
+    WHERE kd_unit='$kd_unit' AND (start_date>='$minimum_date' OR end_date>='$minimum_date')
+    AND jenis!='5'"; // 3 adalah kode booking airbnb dan 1 adalah status di transaksi 
     $query = $this->db->query($sql);
     return $query;
   }

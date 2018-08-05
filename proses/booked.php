@@ -1,7 +1,7 @@
 <?php
 require("../../config/database.php");
 require("../class/booked.php");
-// session_start();
+ session_start();
 $view = $_SESSION['hak_akses'];
 
 //tampilkan harga
@@ -18,13 +18,10 @@ if(isset($_POST['cek_harga'])){
 }
 
 elseif(isset($_POST["getList"])){
-	$nama = $_POST["getList"];
-	$jenis = $_POST["jenis"];
-	$arr_nama = explode(" ", $nama);
-	$jumlah_kata = count($arr_nama);
+	$keyword = $_POST["getList"];
 	$html ="";
 	$Proses = new Booked($db);
-	$show1 = $Proses->getListPenyewa($jumlah_kata, $arr_nama, $jenis);
+	$show1 = $Proses->getListPenyewa($keyword);
 	while($data = $show1->fetch(PDO::FETCH_OBJ)){
 		$html .= '<div id="'.$data->kd_penyewa.'" onclick="select(this);" style="cursor:pointer;" class="note list-penyewa">';
 		$html .= '<strong>'.$data->nama.'</strong><br>'.$data->alamat.'<div style="text-align:right;float:right;">'.$data->no_tlp.'</div></div>';
