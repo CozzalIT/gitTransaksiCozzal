@@ -163,6 +163,14 @@
                 center: 'title',
                 right: 'month,agendaWeek,agendaDay,listMonth'
               },
+              // EVENT ONCLICK DAY CALENDAR
+              // navLinks: true,
+              // navLinkDayClick: function(date, jsEvent) {
+              //   alert('Clicked ' + date.format());
+              // },
+              // dayClick: function(date, jsEvent, view) {
+              //   alert('Clicked on: ' + date.format());
+              // },
               defaultDate: '<?php echo date('Y-m-d')?>',
               navLinks: true, // can click day/week names to navigate views
               businessHours: true, // display business hours
