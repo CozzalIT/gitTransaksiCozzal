@@ -16,7 +16,7 @@ function getrealdate($date){
 	return strtotime(getformatingdate($date));
 }
 
-function getlocalics($url, $kd_url){	
+function getlocalics($url, $kd_url){
 
 	$local_file = "../../listics/cache/".$kd_url.".ics";
 	$remote_file  = $url; // url nya
@@ -35,7 +35,7 @@ function getlocalics($url, $kd_url){
 	// $file = $url;
 	// $newfile = "../../listics/cache/".$kd_url.".ics";
 	// if ( copy($file, $newfile) ) {
-	//  	return $local_file;   
+	//  	return $local_file;
 	// }else{
 	//     return "false";
 	// }
@@ -49,19 +49,26 @@ function loadIcs($kd_unit, $kd_apt, $kd_url, $url, $unit, $ICS){
 	$current_trx = array();
 	$current_booked = array();
 
+<<<<<<< HEAD
+	$show2 = $unit->showRecent_trx($kd_unit, $sekarang);
+	while($data2 = $show2->fetch(PDO::FETCH_OBJ)){
+		$current_trx[] = $data2->check_in;
+	}
+=======
 	// $show2 = $unit->showRecent_trx($kd_unit, $sekarang);
 	// while($data2 = $show2->fetch(PDO::FETCH_OBJ)){
 	// 	$current_trx[] = $data2->check_in; 
 	// }
+>>>>>>> 9562b16e6ad3809f774406769402b1f2359e5816
 
 	$show2 = $unit->showRecent_booked($kd_unit, $sekarang);
 	while($data2 = $show2->fetch(PDO::FETCH_OBJ)){
-		$current_trx[] = $data2->check_in; 
+		$current_trx[] = $data2->check_in;
 		if($data2->status=="1"){
 			$current_booked[] = $data2->check_in;
 		}
 	}
-	
+
 	$newEvent = array();
 
 	$local_file = getlocalics($url, $kd_url);
@@ -74,14 +81,14 @@ function loadIcs($kd_unit, $kd_apt, $kd_url, $url, $unit, $ICS){
 		$newEvent[] = getformatingdate($tmp_arr['DTSTART;VALUE=DATE']);
 		$check_in = getrealdate($tmp_arr['DTSTART;VALUE=DATE']);
 		$check_out = getrealdate($tmp_arr['DTEND;VALUE=DATE']);
-		if(!in_array(getformatingdate($tmp_arr['DTSTART;VALUE=DATE']), $current_trx) 
+		if(!in_array(getformatingdate($tmp_arr['DTSTART;VALUE=DATE']), $current_trx)
 			&& ($check_in>=strtotime($sekarang) || $check_out>=strtotime($sekarang))){
 			$penyewa_id = explode(' ', $tmp_arr['SUMMARY']);
 			$penyewa = str_replace(" ".$penyewa_id[count($penyewa_id)-1], "", $tmp_arr['SUMMARY']);
 			if(isset($tmp_arr['PHONE'])){
 				$no_tlp = $tmp_arr['PHONE'];
-				$check_in = getformatingdate($tmp_arr['DTSTART;VALUE=DATE']); 
-				$check_out = getformatingdate($tmp_arr['DTEND;VALUE=DATE']); 
+				$check_in = getformatingdate($tmp_arr['DTSTART;VALUE=DATE']);
+				$check_out = getformatingdate($tmp_arr['DTEND;VALUE=DATE']);
 				$unit->createBooked($kd_unit, $kd_apt, $penyewa, $no_tlp, $check_in, $check_out, $kd_url);
 			}
 		}
@@ -130,7 +137,7 @@ elseif(isset($_POST['generateAll'])){
 	loadICS_often($kd_unit, $kd_apt, $unit, $show);
 
 	$callback = array('status'=>'done');
-	echo json_encode($callback);	
+	echo json_encode($callback);
 }
 
 // sementara ttak berfungsi
@@ -139,6 +146,6 @@ elseif(isset($_POST['generateSys'])) {
 	$unit->buildIcs($kd_unit);
 
 	$callback = array('status'=>'done');
-	echo json_encode($callback);		
+	echo json_encode($callback);
 }
 ?>
