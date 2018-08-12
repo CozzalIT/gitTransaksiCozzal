@@ -51,7 +51,6 @@ elseif(isset($_POST['daftar_penyewa'])){
 	}
 	// Log System
 	////$logs->addLog('ADD','tb_penyewa','Tambah penyewa',json_encode([$nama, $alamat, $no_tlp, $jenis_kelamin, $email, $tgl_gabung]),null);
-	$callback = array('status'=>"oke");
 	echo json_encode($callback);
 }
 

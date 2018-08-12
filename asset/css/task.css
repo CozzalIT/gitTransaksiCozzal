@@ -18,9 +18,6 @@
   cursor: pointer;
 }
 .text-box{
-  margin-top: 2px;
-  padding:2px;
-  width:70%;
   border: 1px solid #ccc;  
 }
 #unit-option, .sel-text-box, .items-opt:hover{
@@ -44,6 +41,7 @@
   color:#040504;
   float:none;
   width: 90%;
+  overflow: hidden;
 }
 #searchh:focus{
   box-shadow: none;

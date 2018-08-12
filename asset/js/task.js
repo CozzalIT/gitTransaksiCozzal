@@ -72,11 +72,11 @@ $(".exclusions").popover();
 	}
 
 	$("#searchh").focus(function(){
-    	$(".text-box").attr("class","text-box sel-text-box");
+    	$(".text-box").addClass("sel-text-box");
 	});
 
 	$("#searchh").blur(function(){
-    	$(".text-box").attr("class","text-box");
+    	$(".text-box").removeClass("sel-text-box");
 	});
 
 	$("#searchh").keyup(function(){

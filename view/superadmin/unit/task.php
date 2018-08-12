@@ -138,7 +138,8 @@
         <div class="my" style="padding-top: 0px;" id="check-stat"><input class="ck" id='has_look' type="checkbox"><p style="float: right;" id="cap-s">Exclusion Unit :</p></div>
       </label>
       <div class="controls">
-        <div class="text-box">
+
+        <div class="text-box span2">
           <div id="selected-items">
             <!--
             <div id="sel-11" class="items">12BD <a  class="mineClose">×</a></div>
@@ -153,7 +154,8 @@
             <a id="opt-3" class="items-opt"> Unit 3 </a>
             -->
           </div>
-        </div>      
+        </div>   
+
       </div>
     </div>        
     <div class="control-group">
