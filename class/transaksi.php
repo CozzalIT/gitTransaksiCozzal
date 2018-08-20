@@ -166,7 +166,7 @@ class Transaksi {
    $result = $this->db->prepare("SELECT * from tb_transaksi where ((check_in<='$CI' and check_out>='$CO')
     or (check_in>='$CI' and check_in<'$CO')
     or (check_out>'$CI' and check_out<='$CO'))
-    and (kd_unit ='$kd_unit') and (status!='2' OR status!='3')");
+    and (kd_unit ='$kd_unit') and (status!='2' and status!='3')");
     $result->execute();
     $rows = $result->fetch();
     return $rows;
