@@ -44,7 +44,7 @@
 		return $local_file;
 	}
 
-	function loadIcs($kd_unit, $kd_apt, $kd_url, $url, $unit, $ICS){
+	function loadIcs($kd_unit, $kd_apt, $kd_url, $url, $unit, $ICS, $no_unit){
 
 		date_default_timezone_set('Asia/Jakarta');
 		$sekarang = date('Y-m-d', strtotime('-90 Days'));
@@ -71,27 +71,48 @@
 
 		$ICS->change_file($local_file);
 
+		$path = "../../inifiles/logICS_sys/".$no_unit.".ini";
+
+
 		$icsEvents = $ICS->cal_to_array();
 		for($i=0; $i<count($icsEvents); $i++){
 			$tmp_arr = $icsEvents[$i];
+
+			$penyewa_id = explode(' ', $tmp_arr['SUMMARY']);
+			$penyewa = str_replace(" ".$penyewa_id[count($penyewa_id)-1], "", $tmp_arr['SUMMARY']);
+
 			$newEvent[] = getformatingdate($tmp_arr['DTSTART;VALUE=DATE']);
 			$check_in = getrealdate($tmp_arr['DTSTART;VALUE=DATE']);
 			$check_out = getrealdate($tmp_arr['DTEND;VALUE=DATE']);
 			if(!in_array(getformatingdate($tmp_arr['DTSTART;VALUE=DATE']), $current_trx) 
-				&& ($check_in>=strtotime($sekarang) || $check_out>=strtotime($sekarang))){
-				$penyewa_id = explode(' ', $tmp_arr['SUMMARY']);
-				$penyewa = str_replace(" ".$penyewa_id[count($penyewa_id)-1], "", $tmp_arr['SUMMARY']);
+				&& ($check_in>=strtotime($sekarang) || $check_out>=strtotime($sekarang))){			
 				if(isset($tmp_arr['PHONE'])){
+					$unit->LogIcs(
+						$path,date("Y-m-d h:i:sa")." Berhasil ".
+						$penyewa." ".$check_in." - ".$check_out.
+						"Sesuai Kriteria Pengecekan"
+					);	
+
 					$no_tlp = $tmp_arr['PHONE'];
 					$check_in = getformatingdate($tmp_arr['DTSTART;VALUE=DATE']); 
 					$check_out = getformatingdate($tmp_arr['DTEND;VALUE=DATE']); 
 					$unit->createBooked($kd_unit, $kd_apt, $penyewa, $no_tlp, $check_in, $check_out, $kd_url);
 				}
+			} else {
+				$unit->LogIcs(
+					$path,date("Y-m-d h:i:sa")." Gagal ".
+					$penyewa." ".$check_in." - ".$check_out.
+					"Sudah Ada di Booked List"
+				);
 			}
 		}
 		for($i=0; $i<count($current_booked); $i++){
 			if(!in_array($current_booked[$i],$newEvent)){
 				$unit->cancelBooked($kd_unit, $current_booked[$i]);
+				$unit->LogIcs(
+					$path,date("Y-m-d h:i:sa")." Pembatalan pada tanggal ".
+					$current_booked[$i]
+				);				
 			}
 		}
 
@@ -105,7 +126,7 @@
 	$ICS = new ICS("");
 	$show = $unit->showURLbyGroup($i);
 	while ($data = $show->fetch(PDO::FETCH_OBJ)) {
-		loadICS($data->kd_unit, $data->kd_apt, $data->kd_url, $data->url, $unit, $ICS);
+		loadICS($data->kd_unit, $data->kd_apt, $data->kd_url, $data->url, $unit, $ICS, $data->no_unit);
 	}
 
 	$i++;
@@ -113,5 +134,4 @@
 		$i = 1;
 	}
 	setValue($i);
-
 ?>

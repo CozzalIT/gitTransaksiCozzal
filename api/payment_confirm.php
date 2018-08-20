@@ -15,21 +15,21 @@
         $paid[] = array("kd_payment" => $data->kd_owner_payment,
                         "tanggal" => $data->tgl_pembayaran,
                         "jumlah_transaksi" => $data->jumlah_transaksi,
-                        "nominal" => $data->nominal,
+                        "nominal" => number_format($data->nominal, 0, ".", ".")." IDR",
                         "status" => "PAID"
                        );
       } elseif ($data->status=="2"){
         $wait[] = array("kd_payment" => $data->kd_owner_payment,
                         "tanggal" => $data->tgl_pembayaran,
                         "jumlah_transaksi" => $data->jumlah_transaksi,
-                        "nominal" => $data->nominal,
+                        "nominal" => number_format($data->nominal, 0, ".", ".")." IDR",
                         "status" => "WAIT"
                        );
       } elseif ($data->status=="4"){
         $confirm[] = array("kd_payment" => $data->kd_owner_payment,
                         "tanggal" => $data->tgl_pembayaran,
                         "jumlah_transaksi" => $data->jumlah_transaksi,
-                        "nominal" => $data->nominal,
+                        "nominal" => number_format($data->nominal, 0, ".", ".")." IDR",
                         "status" => "ON PROGRESS"
                        );
       }

@@ -6,6 +6,17 @@ class Ics_unit {
     $this->db = $database;
   }
 
+  //Membuat Log
+  public function LogIcs($file,$conten){
+    echo "bisa";
+    if(!file_exists($file)){
+      $myfile = fopen($file, "w");
+      fwrite($myfile, "Head Logging File \n");
+      fclose($myfile);
+    }
+    file_put_contents($file,$conten."\n",FILE_APPEND);
+  }
+
   //cancle booking pada list booked (blok dari ics lain)
   public function cancelBooked($kd_unit, $check_in){
     $sql = "DELETE FROM tb_booked WHERE kd_unit='$kd_unit' AND check_in='$check_in'";
@@ -72,8 +83,9 @@ class Ics_unit {
 
   public function showURLbyGroup($group_update){
     $sql = "SELECT tb_url_unit.kd_url, tb_url_unit.title, tb_url_unit.url, 
-    tb_unit.kd_apt, tb_unit.kd_unit FROM tb_url_unit INNER JOIN tb_unit ON 
-    tb_unit.kd_unit = tb_url_unit.kd_unit WHERE tb_url_unit.group_update = '$group_update'";
+    tb_unit.kd_apt, tb_unit.kd_unit, tb_unit.no_unit 
+    FROM tb_url_unit INNER JOIN tb_unit ON tb_unit.kd_unit=tb_url_unit.kd_unit 
+    WHERE tb_url_unit.group_update = '$group_update'";
     $query = $this->db->query($sql);
     return $query;
   }

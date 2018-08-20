@@ -27,10 +27,10 @@
             "kd_penawaran" => $data_o->kd_penawaran,
             "judul_penawaran" => $data_o->judul,
             "pesan_penawaran" => $data_o->pesan,
-            "harga_wd" => $data_o->h_owner_wd,
-            "harga_we" => $data_o->h_owner_we,
-            "harga_mg" => $data_o->h_owner_mg,
-            "harga_bln" => $data_o->h_owner_bln
+            "harga_wd" => number_format($data_o->h_owner_wd, 0, ".", ".")." IDR",
+            "harga_we" => number_format($data_o->h_owner_we, 0, ".", ".")." IDR",
+            "harga_mg" => number_format($data_o->h_owner_mg, 0, ".", ".")." IDR",
+            "harga_bln" => number_format($data_o->h_owner_bln, 0, ".", ".")." IDR"
           );
         }
       }

@@ -172,60 +172,6 @@
   </div>
 </div>
 
-<!--modal popup tambah penyyewa baru-->
-<div id="popup-penyewa-baru" class="modal hide">
-  <div class="modal-header">
-    <button data-dismiss="modal" class="close" type="button">×</button>
-    <h3>Pelanggan Baru</h3>
-  </div>
-  <div class="modal-body">
-  <form action="../../../proses/transaksi.php" method="post" class="form-horizontal">
-    <div class="control-group">
-    <label class="control-label">Nama :</label>
-    <div class="controls">
-      <input name="nama" type="text" class="span2" placeholder="Nama" required/>
-    </div>
-    </div>
-    <div class="control-group">
-    <label class="control-label">Alamat :</label>
-    <div class="controls">
-      <input name="alamat" type="text" class="span2" placeholder="Alamat" required/>
-    </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label">No Telpon :</label>
-      <div class="controls">
-        <input name="no_tlp" type="text"  class="span2" placeholder="ex: 0812...." required/>
-      </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label">Jenis Kelamin :</label>
-      <div class="controls">
-        <label>
-          <input type="radio" name="jenis_kelamin" value="Laki-laki" checked/> Laki-laki
-        </label>
-        <label>
-          <input type="radio" name="jenis_kelamin" value="Perempuan" /> Perempuan
-        </label>
-      </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label">Email :</label>
-      <div class="controls">
-        <input name="email" type="text"  class="span2" placeholder="ex: abc@gmail.com" required/>
-      </div>
-    </div>
-    <div class="control-group">
-    <div class="controls">
-      <input type="submit" name="addPenyewaTransaksi" class="btn btn-success">
-      <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
-    </div>
-    </div>
-  </form>
-  </div>
-</div>
-<!-- //modal popup tambah unit-->
-
 <!--Footer-part-->
 <div class="row-fluid">
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>

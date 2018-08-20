@@ -28,7 +28,7 @@
                         "no_unit" => $data1->no_unit,
                         "check_in" => $check_in,
                         "check_out" => $check_out,
-                        "pendapatan" => $pendapatan,
+                        "pendapatan" => number_format($pendapatan, 0, ".", ".")." IDR",
                         "status" => $status
                        );
         }
