@@ -3,7 +3,7 @@ require("../../config/database.php");
 require("../class/transaksi_umum.php");
 require("../class/kas.php");
 
-// session_start();
+session_start();
 // date_default_timezone_set('Asia/Jakarta');
 $view = $_SESSION['hak_akses'];
 

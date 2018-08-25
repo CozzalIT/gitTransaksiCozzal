@@ -84,4 +84,32 @@
         echo json_encode(array("data" => $response, "next_page" => ($count==$length ? true:false)));
     }
 
+    elseif(isPost("info")=="edit_transaksi_umum" && isPost("key")=="dasf7813"){
+
+    	$id = isPost("id");
+    	$Proses = new TransaksiUmum($db);
+        $show = $Proses->editTransaksiUmum($id);
+        $edit = $show->fetch(PDO::FETCH_OBJ);
+        
+        $kebutuhan = "Umum";
+        if($edit->kebutuhan !== "umum"){
+        	$arr = explode("/", $edit->kebutuhan);
+        	$kebutuhan = $arr[1];
+        }
+
+        $response = array(
+        	"kd_kas" => $edit->kd_kas,
+        	"kd_transaksi_umum" => $edit->kd_transaksi_umum,
+        	"kebutuhan" => $kebutuhan,
+        	"harga" => $edit->harga,
+        	"jumlah" => $edit->jumlah,
+        	"total_umum_lama" => $edit->harga*$edit->jumlah,
+        	"total_umum_baru" => $edit->harga*$edit->jumlah,
+        	"keterangan" => $edit->keterangan
+        );
+
+        echo json_encode($response);
+
+    }
+
  ?>
