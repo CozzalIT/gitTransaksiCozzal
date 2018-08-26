@@ -37,6 +37,7 @@
 
             $count++;
             $response[] = array(
+                "id" => $data->kd_transaksi_umum,
             	"sumber_dana" => $data->sumber_dana,
             	"kebutuhan" => ($kebutuhan == 'umum' ? 'Umum' : 'Unit '.$data_unit->no_unit),
             	"harga" => number_format($data->harga, 0, ".", ".")." IDR",
@@ -72,6 +73,7 @@
 
             $count++;
             $response[] = array(
+                "id" => $data->kd_transaksi_umum,
             	"kebutuhan" => ($kebutuhan == 'umum' ? 'Umum' : 'Unit '.$data_unit->no_unit),
             	"harga" => number_format($data->harga, 0, ".", ".")." IDR",
             	"jumlah" => $data->jumlah,
