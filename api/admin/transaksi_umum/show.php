@@ -18,9 +18,9 @@
     if(isPost("info")=="laporan_transaksi_umum" && isPost("key")=="41ggy12k"){
 
     	$Proses = new TransaksiUmum($db);
-    	$start_rec = isPost("start_rec");
-    	$length = isPost("length");
-        $show = $Proses->showTransaksiUmum_pag($start_rec,$length);
+    	// $start_rec = isPost("start_rec");
+    	// $length = isPost("length");
+        $show = $Proses->showTransaksiUmum_pag();
         $response = array();
         $count = 0;
         while($data = $show->fetch(PDO::FETCH_OBJ)){
@@ -46,15 +46,15 @@
             );
         }
 
-        echo json_encode(array("data" => $response, "next_page" => ($count==$length ? true:false)));
+        echo json_encode($response);
     }
 
     elseif(isPost("info")=="laporan_billing" && isPost("key")=="6vgby12k"){
 
     	$Proses = new TransaksiUmum($db);
-    	$start_rec = isPost("start_rec");
-    	$length = isPost("length");
-        $show = $Proses->showBillingTU_pag($start_rec,$length);
+    	// $start_rec = isPost("start_rec");
+    	// $length = isPost("length");
+        $show = $Proses->showBillingTU_pag();
         $response = array();
         $count = 0;
         while($data = $show->fetch(PDO::FETCH_OBJ)){
@@ -81,7 +81,7 @@
             );
         }
 
-        echo json_encode(array("data" => $response, "next_page" => ($count==$length ? true:false)));
+        echo json_encode($response);
     }
 
     elseif(isPost("info")=="edit_transaksi_umum" && isPost("key")=="dasf7813"){

@@ -13,22 +13,20 @@ class TransaksiUmum {
     return $query;
   }
 
-  public function showTransaksiUmum_pag($start_rec, $length){
+  public function showTransaksiUmum_pag(){
     $sql = "SELECT * FROM tb_transaksi_umum
     INNER JOIN tb_kas ON tb_kas.kd_kas = tb_transaksi_umum.kd_kas
     WHERE tb_transaksi_umum.status = 0 
-    ORDER BY tb_transaksi_umum.kd_transaksi_umum DESC 
-    LIMIT $start_rec,$length";
+    ORDER BY tb_transaksi_umum.kd_transaksi_umum DESC";
     $query = $this->db->query($sql);
     return $query;
   }
 
-  public function showBillingTU_pag($start_rec, $length){
+  public function showBillingTU_pag(){
     $sql = "SELECT * FROM tb_transaksi_umum
     INNER JOIN tb_kas ON tb_kas.kd_kas = tb_transaksi_umum.kd_kas
     WHERE tb_transaksi_umum.status = 1 
-    ORDER BY tb_transaksi_umum.kd_transaksi_umum ASC 
-    LIMIT $start_rec,$length";
+    ORDER BY tb_transaksi_umum.kd_transaksi_umum ASC";
     $query = $this->db->query($sql);
     return $query;
   }
