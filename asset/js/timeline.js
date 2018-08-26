@@ -21,6 +21,7 @@ function set_detail_timeline(n){
 	$(".detail-timeline").remove();
 	$("#CI-head").hide(); $("#CO-head").hide();
 	$("#ST-head").hide(); $("#KT-head").hide();
+	$("#TS-head").hide(); 
     $.post("../../../proses/cleaner.php", {detail_timeline : n, index : week_pos},
     function (data) {
     	response = JSON.parse(data);
@@ -36,7 +37,11 @@ function set_detail_timeline(n){
     		$("#ST-head").show();
     		$("#ST-detail").append(response.ST);
     	}
-    	if(response.CI=="" && response.CO=="" && response.ST==""){
+     	if(response.TS!=""){
+    		$("#TS-head").show();
+    		$("#TS-detail").append(response.TS);
+    	}   	
+    	if(response.CI=="" && response.CO=="" && response.ST=="" && response.TS==""){
     		$("#KT-head").show();
     	}
 		n = n.split("-"); 
@@ -46,17 +51,6 @@ function set_detail_timeline(n){
     });		   
 }
 
-function tes(){
-	var duh = "naha nya";
-	duh = duh.split(" ");
-	if($(".selected").text()){
-		var a = $(".selected").attr('id');
-		alert(duh[0]);
-	} else {
-		var a = $(".today").attr('id');
-		alert(duh[1]);		
-	}
-}
 
 function get_selected_date(id){
 	var a = id[6]; var bulan=0;
@@ -100,7 +94,8 @@ function alerti(ex, st){
    		if (response.CI!=0) $("#box-white-"+i).append('<div class="statuses stat-ci">Check In ('+response.CI+')</div>'); 
    		if (response.CO!=0) $("#box-white-"+i).append('<div class="statuses stat-co">Check Out ('+response.CO+')</div>');
    		if (response.ST!=0) $("#box-white-"+i).append('<div class="statuses stat-stay">Stay ('+response.ST+')</div>');
-   		if (response.ST==0 && response.CO==0 && response.CI==0) 
+   		if (response.TS!=0) $("#box-white-"+i).append('<div class="statuses stat-task">Task Once ('+response.TS+')</div>');
+   		if (response.ST==0 && response.CO==0 && response.CI==0 && response.TS==0) 
    			$("#box-white-"+i).append('<div class="statuses stat-kosong">Kosong</div>');
    		if(ex<6){
    			alerti(ex=ex+1,st);

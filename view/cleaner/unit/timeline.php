@@ -20,9 +20,9 @@
   <div class="container-fluid">
     <div id="bingkai">
       <div id="head-bingkai">
-        <button type="button" style="float:left;padding-top:3px;" id="left-button" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button>
-        <h5><div style="float:left;" id="cap-timeline"><center id="cap-text">Timeline unit perminggu (1)</center></div></h5>
-        <button style="padding-top:3px;" id="rigth-button" type="button" class="fc-next-button fc-button fc-state-default fc-corner-right"><span class="fc-icon fc-icon-right-single-arrow"></span></button>
+        <button type="button" style="float:left;padding-top:5px;height: 25px;" id="left-button" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button>
+        <div style="float:left;" id="cap-timeline"><center id="cap-text">Timeline unit perminggu (1)</center></div>
+        <button style="padding-top:5px;height: 25px;" id="rigth-button" type="button" class="fc-next-button fc-button fc-state-default fc-corner-right"><span class="fc-icon fc-icon-right-single-arrow"></span></button>
       </div>
       <?php
       $hari = array('Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu');
@@ -67,6 +67,15 @@
           <h5 style="color:#5c5656;">Stay</h5>
         </div>
         <div class="widget-content" id="ST-detail" style="padding:0px;">
+<!--Dynamic Element-->
+        </div>
+      </div> 
+
+      <div class="widget-box" id="TS-head" style="overflow-x:auto;margin-top:5px;">
+        <div class="widget-title"> <span class="icon"><i class="icon-check"></i></span>
+          <h5 style="color:#5c5656;">Task Once</h5>
+        </div>
+        <div class="widget-content" id="TS-detail" style="padding:0px;">
 <!--Dynamic Element-->
         </div>
       </div> 

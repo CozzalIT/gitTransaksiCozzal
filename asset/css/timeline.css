@@ -6,7 +6,8 @@
 	width: 100%;
 }
 #cap-timeline{
-	padding: 1px 34%;
+	width: 92%;
+	padding: 1px;
 	font-size: 12px;
     color: #333;
     text-shadow: 0 1px 1px rgba(255,255,255,.75);
@@ -21,20 +22,20 @@
 .kotak{
 	float: left;
 	width: 14%;
-	height: 50%;
+	height: 75%;
 	background-color: white;
 	cursor: pointer;
 }
 
 .today{
-	background-color: #F8D4D4;
+	background-color: #E2EEF9;
 }
 .white{
-	min-height: 89px;
+	min-height: 115px;
 }
 
 .selected{
-	background-color: #E6E6E6;
+	background-color: #F9E8FC;
 }
 
 .statuses{
@@ -52,8 +53,13 @@
 	background-repeat: repeat-x;	
 }
 
+#cap-text{
+	color: #8e8e8f;
+	font-weight: bold;
+}
+
 .bulan{
-	background-color: #0e0d0d;
+	background-color: #4e3d47;
 	color: white;
 }
 .bulan{
@@ -61,13 +67,17 @@
 }
 
 .stat-co{
-	background-color: red;
+	background-color: #e15050;
 }
 .stat-ci{
-	background-color: green;
+	background-color: #36a836;
 }
 .stat-stay{
-	background-color: gray;
+	background-color: #9c9b9b;
+}
+.stat-task{
+	background-color: #319498;
+	margin-top: 3px;
 }
 .stat-kosong{
 	background-color: white;
@@ -76,4 +86,12 @@
 #selected-day, #cap-timeline ,.kotak, .detail-timeline, .keterangan-timeline{
 	border: 1px solid;
 	border-color: rgba(0,0,0,.1) rgba(0,0,0,.1) rgba(0,0,0,.25);
+}
+
+/*Responsive Part*/
+
+@media screen and (max-width: 680px) {
+       .kotak{
+       	width: 30%;
+       }
 }

@@ -142,5 +142,25 @@ class Cleaner {
     $query = $this->db->query($sql);
   }
 
+  public function countTask($tgl){
+    $sql = "SELECT COUNT(kd_task) AS jumlah FROM tb_task 
+    WHERE tgl_task = '$tgl'";
+    $query = $this->db->query($sql);   
+    return $query;
+  }
+
+  public function showTask_onceByDate($date){
+    $sql = "SELECT task, unit FROM tb_task WHERE tgl_task='$date'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
+  public function showUnitbyId($kd_unit){
+    $sql = "SELECT tb_unit.no_unit, tb_apt.nama_apt FROM tb_unit INNER JOIN tb_apt
+    ON tb_unit.kd_apt = tb_apt.kd_apt WHERE tb_unit.kd_unit = '$kd_unit'";
+    $query = $this->db->query($sql);
+    return $query;    
+  }
+
 }
 ?>

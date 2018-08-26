@@ -30,11 +30,13 @@ function formated_jam_co($jam){
 }
 
 function getcount($tgl, $jenis, $Proses){
-  if ($jenis!='stay'){
-    $show = $Proses->showUnit_cek($tgl, $jenis, "count");
-  } else {
+  if ($jenis=='stay'){
     $show = $Proses->showUnit_stay($tgl, "count");
-  }
+  } elseif($jenis=='task'){
+    $show = $Proses->countTask($tgl);
+  } else {
+    $show = $Proses->showUnit_cek($tgl, $jenis, "count");
+  }  
   $data = $show->fetch(PDO::FETCH_OBJ);
   return $data->jumlah;
 }
@@ -62,6 +64,40 @@ function new_detail($Proses, $tgl, $jenis, $index){
  return $ret;
 }
 
+function getListUnit($Proses, $id, $delimiter){
+  $ret = "";
+  $kd_units = explode($delimiter, $id);
+  foreach ($kd_units as $kd_unit) {
+    if($kd_unit!=""){
+      $show = $Proses->showUnitbyId($kd_unit);
+      $data = $show->fetch(PDO::FETCH_OBJ);
+      $ret .= ", ".$data->no_unit." - ".$data->nama_apt;
+    }
+  }
+  return $ret;
+}
+
+function detailTask($tgl, $index, $proses){
+  $ret = "";
+
+  $show = $proses->showTask_onceByDate($tgl);
+
+  while($data = $show->fetch(PDO::FETCH_OBJ)){
+    $ret .= '<div class="detail-timeline" style="padding:10px;">';
+    $ret .= '<strong>'.$data->task.'</strong><br>';
+
+    if($data->unit=="Semua")
+      $ret .= "Semua Unit";
+    elseif($data->unit[0] == "!"){
+      $ret .= "Semua Unit Kecuali : ".getListUnit($proses, $data->unit, "!");
+    } else {
+      $ret .= "Beberapa Unit : ".getListUnit($proses, $data->unit, "&");
+    }
+    $ret .= '</div>';
+  }
+ return $ret;  
+}
+
 if(isset($_POST['show_tanggal'])){
   $tgl = $_POST['show_tanggal'];
   $kotak = $_POST['kotak'];
@@ -69,7 +105,9 @@ if(isset($_POST['show_tanggal'])){
   $jumlah_ci = getcount($tgl, "check_in", $Proses);
   $jumlah_co = getcount($tgl, "check_out", $Proses);
   $jumlah_stay = getcount($tgl, "stay", $Proses);
-  $callback = array('CI'=>$jumlah_ci, 'CO'=>$jumlah_co, 'ST'=>$jumlah_stay);
+  $jumlah_task = getcount($tgl, "task", $Proses);
+  $callback = array('CI'=>$jumlah_ci, 'CO'=>$jumlah_co, 
+                    'ST'=>$jumlah_stay, 'TS'=>$jumlah_task);
   echo json_encode($callback);
 }
 
@@ -77,11 +115,12 @@ elseif(isset($_POST['detail_timeline'])){
   $tgl = $_POST['detail_timeline'];
   $index = $_POST['index'];
   $Proses = new Cleaner($db);
-  $CI = ""; $CO = ""; $ST = "";
+  $CI = ""; $CO = ""; $ST = ""; $TS = "";
   $CI .= new_detail($Proses, $tgl, "check_in", $index);
   $CO .= new_detail($Proses, $tgl, "check_out", $index);
   $ST .= new_detail($Proses, $tgl, "stay", $index);
-  $callback = array('CI'=>$CI, 'CO'=>$CO, 'ST'=>$ST);
+  $TS .=  detailTask($tgl, $index, $Proses);
+  $callback = array('CI'=>$CI, 'CO'=>$CO, 'ST'=>$ST, 'TS' => $TS);
   echo json_encode($callback);
 }
 
