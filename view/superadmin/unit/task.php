@@ -41,7 +41,10 @@
                 <?php
                   $Proses = new Task($db);
                   $show = $Proses->showTask_semua();
+                  $tt = 10;
                   while($data = $show->fetch(PDO::FETCH_OBJ)){
+                    $tt--;
+                    if($tt==0) break;
                       echo "
                         <tr class=gradeC'>
                           <td>$data->task</td>";

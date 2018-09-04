@@ -70,6 +70,7 @@ function hasil(form)
 	form.total.value=Number(form.harga_sewa_gbg.value)+ Number(form.ekstra_charge.value);
 
 	form.total_bayar.value = Number(form.total.value)+Number(form.deposit.value);
+	alert(Number(form.total.value)+Number(form.deposit.value));
 
 }
 
@@ -106,6 +107,7 @@ function proses_mod_harga(form, a){
     		weeks = getdetailweek(sdt, selisih).split("&&");
     		wd_G -= Number(weeks[0]); we_G -= Number(weeks[1]);
     		special_price += Number(selisih) * Number(harga_mod[i].harga_sewa);
+    		break;
     	}
     }
 }
@@ -132,10 +134,10 @@ function harga_bulanan(a, hari){
 
 	var x1 = Math.floor(hari/28);
 	$("#deposit").val("2000000");$("#deposit-C").show();
-	//proses_mod_harga(form, a[0]); // proses moddig harga
+
 	$("#harga_sewa_gbg").val(a[4]*x1);$("#total_sewa_gbg-C").hide();
 	$("#total_harga_owner").val(a[6]*x1);$("#total_harga_owner-C").show();
-	$("#total_bayar").val($("#total").val()+$("#deposit").val());$("#total_bayar-C").show();
+	$("#total_bayar-C").show();
 	$("#tamu").val("5");$("#tamu-C").hide();
 	$("#ekstra_charge").val("0");$("#ekstra_charge-C").hide();
 	$("#harga_sewa_we").val("0"); $("#harga_sewa_we-C").hide();
