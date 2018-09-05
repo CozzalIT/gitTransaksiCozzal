@@ -16,6 +16,24 @@ $('.hapus').click(function(){
 
 })
 
+$('.abort').click(function(){
+
+	swal({
+		title:'KONFIRMASI',
+		text :'Apakah anda yakin mangabaikan data ',
+		icon : 'warning',
+		buttons: true,
+		dangerMode: true,
+	})
+	.then((willDelete) => {
+		if(willDelete){
+			window.location = this.href;
+		}
+	});
+	return false;
+
+})
+
 $('.cancel').click(function(){
 
 	swal({

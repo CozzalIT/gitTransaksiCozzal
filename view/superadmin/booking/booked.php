@@ -84,7 +84,11 @@
                           <td>$title</td>
                           <td>
                             <a class='btn $warna_button' href='booked_penyewa.php?kd_booked=$data->kd_booked'>Transaksi</a>
-                            <a class='btn btn-danger hapus' href='../../../proses/booked.php?hapus=$data->kd_booked&unit=$data->kd_unit&ci=$data->check_in'>Hapus</a>
+                            <a class='btn btn-warning abort' href='../../../proses/booked.php?hapus=$data->kd_booked&unit=$data->kd_unit&ci=$data->check_in' style='color:#6c4e07'>Abaikan</a>                            
+                            <a class='btn btn-danger hapus' href='../../../proses/booked.php?deleteRoot=$data->kd_booked&unit=$data->kd_unit&ci=$data->check_in'>Hapus</a>
+
+
+
                           </td>
                         </tr>
                       ";

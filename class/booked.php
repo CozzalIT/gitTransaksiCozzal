@@ -15,6 +15,15 @@ class Booked {
     $query = $this->db->query($sql);    
   }
 
+  public function delete_booked_root($kd_booked, $kd_unit, $check_in){
+    $sql = "DELETE FROM tb_booked WHERE kd_booked='$kd_booked'";
+    $query = $this->db->query($sql);    
+    $sql = "DELETE FROM tb_mod_calendar WHERE kd_unit='$kd_unit' AND start_date='$check_in'";
+    $query = $this->db->query($sql);
+    $sql = "DELETE FROM tb_unit_kotor WHERE kd_unit='$kd_unit' AND check_in='$check_in'";
+    $query = $this->db->query($sql);    
+  }
+
   //show detail booked
   public function showDetail_booked($kd_booked){
     $sql = "SELECT tb_booked.kd_unit, tb_booked.kd_apt, tb_booked.penyewa, tb_booked.check_in, tb_booked.check_out, tb_booked.status, 

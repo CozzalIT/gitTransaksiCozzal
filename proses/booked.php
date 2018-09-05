@@ -85,6 +85,15 @@ elseif(isset($_GET["hapus"]) && $view!="owner" && $view!="cleaner"){
 	header("location:../view/".$view."/booking/booked.php");
 }
 
+elseif(isset($_GET["deleteRoot"]) && $view!="owner" && $view!="cleaner"){
+	$kd_booked = $_GET["deleteRoot"];
+	$kd_unit = $_GET["unit"];
+	$check_in = $_GET["ci"];
+	$Proses = new Booked($db);
+	$Proses->delete_booked_root($kd_booked, $kd_unit, $check_in);
+	header("location:../view/".$view."/booking/booked.php");
+}
+
 else {
 	header("location:../view/".$view."/home/home.php");
 }
