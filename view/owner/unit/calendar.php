@@ -43,10 +43,37 @@
     -->
     <hr>
     <div class="row-fluid">
+          <div class="alert alert-info" role="alert">
+            Klik event untuk mengedit atau menghapus
+          </div>
       <div class="span12">
         <script>
           $(document).ready(function() {
+            function editPopUp(id, note, start, end){
+              var b = new Date(end);
+              var c = new Date();
+              c.setHours(7); c.setMinutes(0); c.setSeconds(0); c.setMilliseconds(0);
+              if(b>=c){
+                $("#awal").val(start);
+                $("#akhir").val(end);
+                $("#catatan").val(note);
+                $("#id").val(id);
+                $("#hapusBlok").attr("href","../../../proses/calendar.php?delete_event="+id+"&status_mod=false");
+                $('#popup-edit-blok').modal('show');
+              } else alert("Tanggal sudah tidak bisa dirubah");
+            }
+
             $('#calendar').fullCalendar({
+              eventClick: function(event, element) {
+                if(event.note !== undefined){
+                  var id = event.id;
+                  var note = event.note;
+                  var start = event.start.format("YYYY-MM-DD");
+                  var end = event.end.format("YYYY-MM-DD");
+                  editPopUp(id, note, start, end);
+                }
+                
+              }, 
               header: {
                 left: 'prev,next today',
                 center: 'title',
@@ -100,7 +127,8 @@
                       }elseif($data->jenis == 2){
                         echo "
                         {
-                          id: '$data->kd_mod_calendar+$data->note',
+                          id: '$data->kd_mod_calendar',
+                          note: '$data->note',
                           title: 'Block by Owner',
                           start: '".$data->start_date."T12:00:00',
                           end: '".$data->end_date."T13:00:00',
@@ -177,11 +205,11 @@
   	  <div class="control-group">
   		  <label class="control-label">Awal :</label>
     		<div class="controls">
-    		  <input name="awal" type="date" class="span2" required/>
+    		  <input id="awal1" name="awal" type="date" class="span2" required/>
     		</div>
         <label class="control-label">Akhir :</label>
         <div class="controls">
-          <input name="akhir" type="date" class="span2" required/>
+          <input id="akhir1" name="akhir" type="date" class="span2" required/>
         </div>
         <label class="control-label">Catatan :</label>
         <div class="controls">
@@ -191,11 +219,46 @@
   	  </div>
   	  <div class="control-group">
     		<div class="controls">
-    		  <input type="submit" name="blokCalendar" class="btn btn-success">
+    		  <input type="submit" id="blokCalendar" name="blokCalendar" class="btn btn-success hide">
+          <a class="btn btn-success" onclick="cekTanggal('blokCalendar','awal1','akhir1')" role="button" href="#">Submit</a>
     		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
     		</div>
   	  </div>
   	</form>
+  </div>
+</div>
+
+
+<div id="popup-edit-blok" class="modal hide">
+  <div class="modal-header">
+    <button data-dismiss="modal" class="close" type="button">×</button>
+    <h3>Blok Tanggal</h3>
+  </div>
+  <div class="modal-body">
+    <form action="../../../proses/calendar.php" method="post" class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label">Awal :</label>
+        <div class="controls">
+          <input id="awal" name="awal" type="date" class="span2" required/>
+        </div>
+        <label class="control-label">Akhir :</label>
+        <div class="controls">
+          <input id="akhir" name="akhir" type="date" class="span2" required/>
+        </div>
+        <label class="control-label">Catatan :</label>
+        <div class="controls">
+          <input id="catatan" name="catatan" type="text" class="span2" required/>
+          <input id="id" name="id" type="text" class="span2 hide"/>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <input type="submit" id="updateModCal" name="updateModCal" class="btn btn-success hide">
+          <a class="btn btn-success" onclick="cekTanggal('updateModCal','awal','akhir')" role="button" href="#">Simpan Perubahan</a>
+          <a class="btn btn-danger hapus" id="hapusBlok" href="#">Hapus</a>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -204,6 +267,26 @@
   <div id="footer" class="span12"> 2018 &copy; Brought to you by <a href="http://www.booking.cozzal.com">Cozzal IT</a> </div>
 </div>
 <!--end-Footer-part-->
+<script type="text/javascript">
+  function cekTanggal(id,awal,akhir){
+    var unit_id = <?php echo $kd_unit; ?>;
+    var start = $("#"+awal).val();
+    var end = $("#"+akhir).val();
+    var d1 = new Date(end);
+    var d2 = new Date(start);
+    var d3 = new Date();
+    d3.setHours(7); d3.setMinutes(0); d3.setSeconds(0); d3.setMilliseconds(0);
+    if(d1>d3 && d2>=d3){
+      $.post("../../../proses/option_unit.php", {id1 : unit_id, tci1:start, tco1:end},
+      function (data) {
+        res = JSON.parse(data);
+        if(res.ketersediaan=="Ada"){
+          $("#"+id).click();
+        } else alert(res.ketersediaan);  
+      });   
+    } else alert("Tanggal Sudah Terlewat");   
+  }
+</script>
 <script src="../../../asset/js/select2.min.js"></script>
 <script src="../../../asset/js/jquery.dataTables.min.js"></script>
 <script src="../../../asset/js/matrix.js"></script>

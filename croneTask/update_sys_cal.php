@@ -10,7 +10,7 @@
 			$kd_unit = $_POST['generateSys'];
 		}
 		$unit = new Ics_unit($db);
-		$unit->buildIcs($kd_unit);
+		// $unit->buildIcs($kd_unit);
 
 	$callback = array('status'=>'done');
 	echo json_encode($callback);
