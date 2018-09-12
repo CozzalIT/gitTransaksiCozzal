@@ -60,7 +60,7 @@
                 $("#id").val(id);
                 $("#hapusBlok").attr("href","../../../proses/calendar.php?delete_event="+id+"&status_mod=false");
                 $('#popup-edit-blok').modal('show');
-              } else alert("Tanggal sudah tidak bisa dirubah");
+              } else swal("Tanggal sudah tidak bisa dirubah");
             }
 
             $('#calendar').fullCalendar({
@@ -222,6 +222,10 @@
     		  <input type="submit" id="blokCalendar" name="blokCalendar" class="btn btn-success hide">
           <a class="btn btn-success" onclick="cekTanggal('blokCalendar','awal1','akhir1')" role="button" href="#">Submit</a>
     		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+          <div id="ind-blokCalendar">
+            <img src="../../../asset/images/loading.gif" width="18">
+            <small>Menganalisis Tanggal...</small> 
+          </div>            
     		</div>
   	  </div>
   	</form>
@@ -256,6 +260,10 @@
           <input type="submit" id="updateModCal" name="updateModCal" class="btn btn-success hide">
           <a class="btn btn-success" onclick="cekTanggal('updateModCal','awal','akhir')" role="button" href="#">Simpan Perubahan</a>
           <a class="btn btn-danger hapus" id="hapusBlok" href="#">Hapus</a>
+          <div id="ind-updateModCal">
+            <img src="../../../asset/images/loading.gif" width="18">
+            <small>Menganalisis Tanggal...</small> 
+          </div>          
         </div>
       </div>
     </form>
@@ -268,6 +276,9 @@
 </div>
 <!--end-Footer-part-->
 <script type="text/javascript">
+  $("#ind-blokCalendar").hide();
+  $("#ind-updateModCal").hide();
+
   function cekTanggal(id,awal,akhir){
     var unit_id = <?php echo $kd_unit; ?>;
     var start = $("#"+awal).val();
@@ -277,17 +288,20 @@
     var d3 = new Date();
     d3.setHours(7); d3.setMinutes(0); d3.setSeconds(0); d3.setMilliseconds(0);
     if(d1>d3 && d2>=d3){
+      $("#ind-"+id).show();
       $.post("../../../proses/option_unit.php", {id1 : unit_id, tci1:start, tco1:end},
       function (data) {
         res = JSON.parse(data);
         if(res.ketersediaan=="Ada"){
           $("#"+id).click();
-        } else alert(res.ketersediaan);  
+        } else swal(res.ketersediaan);
+        $("#ind-"+id).hide();  
       });   
-    } else alert("Tanggal Sudah Terlewat");   
+    } else swal("Tanggal Sudah Terlewat");   
   }
 </script>
-<script src="../../../asset/js/select2.min.js"></script>
+<script src="../../../asset/js/sweetalert.min.js"></script>
+<script src="../../../asset/js/hapus.js"></script>
 <script src="../../../asset/js/jquery.dataTables.min.js"></script>
 <script src="../../../asset/js/matrix.js"></script>
 <script src="../../../asset/js/matrix.tables.js"></script>
