@@ -65,7 +65,9 @@
 
             $('#calendar').fullCalendar({
               eventClick: function(event, element) {
+                  alert('1');
                 if(event.note !== undefined){
+                    alert('2');
                   var id = event.id;
                   var note = event.note;
                   var start = event.start.format("YYYY-MM-DD");
@@ -201,12 +203,12 @@
     <h3>Blok Tanggal</h3>
   </div>
   <div class="modal-body">
-  	<form action="../../../proses/calendar.php" method="post" class="form-horizontal">
-  	  <div class="control-group">
-  		  <label class="control-label">Awal :</label>
-    		<div class="controls">
-    		  <input id="awal1" name="awal" type="date" class="span2" required/>
-    		</div>
+    <form action="../../../proses/calendar.php" method="post" class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label">Awal :</label>
+        <div class="controls">
+          <input id="awal1" name="awal" type="date" class="span2" required/>
+        </div>
         <label class="control-label">Akhir :</label>
         <div class="controls">
           <input id="akhir1" name="akhir" type="date" class="span2" required/>
@@ -216,19 +218,19 @@
           <input name="catatan" type="text" class="span2" required/>
           <input name="kd_unit" type="text" class="span2 hide" value="<?php echo $kd_unit; ?>" required/>
         </div>
-  	  </div>
-  	  <div class="control-group">
-    		<div class="controls">
-    		  <input type="submit" id="blokCalendar" name="blokCalendar" class="btn btn-success hide">
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <input type="submit" id="blokCalendar" name="blokCalendar" class="btn btn-success hide">
           <a class="btn btn-success" onclick="cekTanggal('blokCalendar','awal1','akhir1')" role="button" href="#">Submit</a>
-    		  <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
+          <a data-dismiss="modal" class="btn btn-inverse" href="#">Cancel</a>
           <div id="ind-blokCalendar">
             <img src="../../../asset/images/loading.gif" width="18">
             <small>Menganalisis Tanggal...</small> 
           </div>            
-    		</div>
-  	  </div>
-  	</form>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
 

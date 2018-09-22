@@ -208,15 +208,30 @@
                   						}
                 					  ?>
               					  </select>
+                          <div class="checkbox">
+                            <label>
+                              <input id="ch-set" type="checkbox" value="">
+                                <h4 style="margin-left: 10px; padding-top: 4px;">
+                                  Enable to Set Earnings
+                                </h4>
+                            </label>
+                          </div>
+                          <div class="set">
+                            <h5>Set Earnings To</h5>
+                            <input type="number" class="span4 se" id="setE" />
+                            <h5>Description</h5>
+                            <input type="text" class="span4 se" name="description" id="description" value="" />
+                          </div>
+                          <br>
+                          <h4 class="set"><p id="selisih">Difference: 200 IDR</p><span id="ic" class="icon-arrow-up"></span></h4>             
+                          <h4 id="ind-earnings">Earnings: <?php echo number_format($earnings, 0, ".","."); ?> IDR</h4>
                         </td>
                       </tr>
                     </tbody>
                   </table>
                   <div class="pull-right">
-                    <h4 class="pull-right"><span>EARNINGS: </span><?php echo number_format($earnings, 0, ".","."); ?> IDR</h4>
-                    <br>
-                    <br>
-                    <div class='hide'><input type='text' name='earnings' value='<?php echo $earnings;?>' /></div>
+                    <div class='hide'><input type='text' id="earnings" name='earnings' value='<?php echo $earnings;?>' /></div>
+                    <div class='hide'><input type='text' id="n-asal" name='nominal_asal' value='<?php echo $earnings;?>' /></div>
                     <button class="btn btn-success btn-large pull-right" type="submit" name="ownerPayment" style="margin-left:10px;" onclick="submitForm('../../../proses/owner.php',0)">Bayar</button>
                     <button class="btn btn-primary btn-large pull-right" type="submit" style="margin-left:10px;" onclick="submitForm('pdf.php',0)">Download/Print</button>
                     <button class="btn btn-warning btn-large pull-right" type="submit" name="kirimKwitansi" style="margin-left:10px;" onclick="submitForm('../../../proses/owner.php',1)">Kirim Kwitansi</button>
@@ -238,6 +253,44 @@
     document.getElementById('formOwnerPayment').action = action;
     document.getElementById('formOwnerPayment').submit();
   }
+
+  function toRupiah(x){
+    var reverse = x.toString().split('').reverse().join(''),
+    ribuan  = reverse.match(/\d{1,3}/g);
+    ribuan  = ribuan.join('.').split('').reverse().join('');
+    if(x<0) ribuan = "-"+ribuan;
+    return ribuan+" IDR";
+  }
+
+  function updateSelisih(){
+    $("#ind-earnings").text("Earnings: "+toRupiah($("#setE").val()));
+    var nilai = $("#n-asal").val() - $("#setE").val();
+    var icon = "icon-arrow-down";
+    if(nilai<0) { nilai*=-1; icon = "icon-arrow-up"; }
+    else if(nilai==0) icon = "icon-arrow-right";
+    nilai = toRupiah(nilai);
+    $("#selisih").text('Difference: '+nilai);
+    $("#ic").attr("class",icon);
+    $("#earnings").val($("#setE").val());
+  }
+
+  document.getElementById('selisih').style.float = "left";
+  document.getElementById('ic').style.margin = "0px 0px 0px 10px";
+  $(".set").hide();
+  
+  $("#ch-set").change(function(){
+    if(document.getElementById("ch-set").checked){
+      $(".se").attr({'required':'required'});
+      $(".set").show();
+    } else {
+      $(".se").removeAttr("required");
+      $(".set").hide();
+    }   
+    $("#setE").val($("#n-asal").val()); updateSelisih();
+  });
+
+  $("#setE").keyup(updateSelisih); $("#setE").change(updateSelisih);
+
 </script>
 <div class="row-fluid">
   <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>

@@ -194,9 +194,21 @@
                     </tbody>
                   </table>
 
+                  <div class="pull-left">
+                  <?php
+                    $kwt = $proses_o->showOwnerPaymentbyId($kd_owner_payment)->fetch(PDO::FETCH_OBJ);
+                    if($kwt->nominal != $kwt->nominal_asli){
+                      $set = $kwt->nominal - $kwt->nominal_asli;
+                      $set = number_format($set, 0, ".",".");
+                      if($set[0]!="-") $set = "+".$set;
+                      echo "<h4><span>".$kwt->keterangan.": </span>".$set." IDR</h4>";
+                    }
+                  ?>           
+                    <h4><span>EARNINGS: </span><?php echo number_format($kwt->nominal, 0, ".","."); ?> IDR</h4>                    
+                  </div>
+
                   <div class="pull-right">
                     <input name="kd_owner_payment" value="<?php echo $kd_owner_payment; ?>" class="hide"/>
-                    <h4 class="pull-right"><span>EARNINGS: </span><?php echo number_format($earnings, 0, ".","."); ?> IDR</h4>
                     <br>
                     <br>
                     <div class='hide'><input type='text' name='earnings' value='<?php echo $earnings;?>' /></div>

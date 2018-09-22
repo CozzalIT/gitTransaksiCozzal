@@ -193,9 +193,19 @@ $pdf->Cell(28 ,5,number_format($total_in, 0, ".", ".").' IDR',1,1);
 
 $pdf->Cell(189 ,10,'',0,1);
 
-$earnings = $total_in-$total_out;
+$kd_owner_payment = $_POST['kd_owner_payment'];
+$kwt = $proses_o->showOwnerPaymentbyId($kd_owner_payment)->fetch(PDO::FETCH_OBJ);
+if($kwt->nominal != $kwt->nominal_asli){
+  $set = $kwt->nominal - $kwt->nominal_asli;
+  $set = number_format($set, 0, ".",".");
+  if($set[0]!="-") $set = "+".$set;
+  $set = substr_replace($set, " ", 1, 0);
+  $pdf->Cell(130 ,5,'',0,0);
+  $pdf->Cell(59 ,5,$kwt->keterangan.': '.$set.' IDR',0,1);
+}
+
 $pdf->Cell(130 ,5,'',0,0);
-$pdf->Cell(59 ,5,'EARNINGS: '.number_format($earnings, 0, '.','.').' IDR',0,1);
+$pdf->Cell(59 ,5,'EARNINGS: '.number_format($kwt->nominal, 0, '.','.').' IDR',0,1);
 
 $pdf->Output();
 ?>

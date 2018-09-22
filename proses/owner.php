@@ -6,10 +6,9 @@ require("../class/kas.php");
 require("../class/transaksi_umum.php");
 require("../class/transaksi.php");
 
-// session_start();
+session_start();
 // date_default_timezone_set('Asia/Jakarta');
 $view = $_SESSION['hak_akses'];
-
 //Update Owner
 if(isset($_POST['updateOwner'])){
 	$nama= $_POST['nama'];
@@ -179,10 +178,13 @@ elseif(isset($_POST['ownerPayment'])){
 elseif(isset($_POST['kirimKwitansi'])){
 	$kd_kas = $_POST['kas'];
 	$earnings = $_POST['earnings'];
+	$nominal_asli = $_POST['nominal_asal'];
+	$keterangan = $_POST['description'];
+	if($keterangan == "") $keterangan = "Nothing";
+
 	$tanggal = date('Y-m-d H:i:s');
 	$status = '41';
 	$jenis = 2;
-	$keterangan = 4;
 	$kd_owner = $_SESSION['kd_owner'];
 
 	if(isset($_POST['transaksi'])){
@@ -207,7 +209,7 @@ elseif(isset($_POST['kirimKwitansi'])){
 	}
 
 	$kd_owner_payment = $kd_op_t."x".$kd_op_tu;
-	$add_owner_payment = $proses_o->addOwnerPayment($kd_owner_payment, $kd_owner, $tanggal, $jumlah_transaksi, $earnings, 2);
+	$add_owner_payment = $proses_o->addOwnerPayment($kd_owner_payment, $kd_owner, $tanggal, $jumlah_transaksi, $earnings, 2, $nominal_asli, $keterangan);
 	// Log System
 	//$logs->addLog('Add','tb_owner_payment','Kirim kwitansi pembayaran ke owner ',json_encode([$kd_owner_payment, $kd_owner, $tanggal, $jumlah_transaksi, $earnings, 2]),null);
 	header("Location:../view/".$view."/owner/owner_payment.php");

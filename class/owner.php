@@ -18,9 +18,9 @@ class Owner {
     }
   }
 
-  public function addOwnerPayment($kd_owner_payment, $kd_owner, $tgl_pembayaran, $jumlah_transaksi, $nominal, $status){
-    $sql = "INSERT INTO tb_owner_payment (kd_owner_payment, kd_owner, tgl_pembayaran, jumlah_transaksi, nominal, status)
-    VALUES('$kd_owner_payment', '$kd_owner', '$tgl_pembayaran', '$jumlah_transaksi', '$nominal', '$status')";
+  public function addOwnerPayment($kd_owner_payment, $kd_owner, $tgl_pembayaran, $jumlah_transaksi, $nominal, $status, $nominal_asli, $keterangan){
+    $sql = "INSERT INTO tb_owner_payment (kd_owner_payment, kd_owner, tgl_pembayaran, jumlah_transaksi, nominal, status, nominal_asli, keterangan)
+    VALUES('$kd_owner_payment', '$kd_owner', '$tgl_pembayaran', '$jumlah_transaksi', '$nominal', '$status', '$nominal_asli', '$keterangan')";
     $query = $this->db->query($sql);
     if(!$query){
       return "Failed";
@@ -68,6 +68,13 @@ class Owner {
     $query = $this->db->query($sql);
     return $query;
   }
+
+  public function showOwnerPaymentbyId($kd_owner_payment){
+    $sql = "SELECT * from tb_owner_payment WHERE kd_owner_payment='$kd_owner_payment'";
+    $query = $this->db->query($sql);
+    return $query;
+  }
+
 
   public function showAllOwnerPayment(){
     $sql = "SELECT * from tb_owner_payment ORDER BY tgl_pembayaran DESC";
