@@ -105,6 +105,12 @@ elseif(isset($_POST['ownerPayment'])){
 	$jenis = 2;
 	$keterangan = 4;
 	$kd_owner = $_SESSION['kd_owner'];
+	$nominal_asli = $earnings;
+	$ket = "Null";	
+	if(isset($_POST['nominal_asal'])){
+		$nominal_asli = $_POST['nominal_asal'];
+		$ket = $_POST['description'];
+	}
 
 	if(isset($_POST['transaksi'])){
 		$jumlah_t = count($_POST['transaksi']);
@@ -168,7 +174,7 @@ elseif(isset($_POST['ownerPayment'])){
 			}
 		}
 	}
-	$add_owner_payment = $proses_o->addOwnerPayment($kd_owner_payment, $kd_owner, $tanggal, $jumlah_transaksi, $earnings, 1);
+	$add_owner_payment = $proses_o->addOwnerPayment($kd_owner_payment, $kd_owner, $tanggal, $jumlah_transaksi, $earnings, 1, $nominal_asli, $ket);
 	// Log System
 	//$logs->addLog('Add','tb_owner_payment','Tambah data pembayaran dari owner ',json_encode([$kd_owner_payment, $kd_owner, $tanggal, $jumlah_transaksi, $earnings, 1]),null);
 	header("Location:../view/".$view."/owner/owner_payment.php");
@@ -178,9 +184,13 @@ elseif(isset($_POST['ownerPayment'])){
 elseif(isset($_POST['kirimKwitansi'])){
 	$kd_kas = $_POST['kas'];
 	$earnings = $_POST['earnings'];
-	$nominal_asli = $_POST['nominal_asal'];
-	$keterangan = $_POST['description'];
-	if($keterangan == "") $keterangan = "Nothing";
+
+	$nominal_asli = $earnings;
+	$ket = "Null";	
+	if(isset($_POST['nominal_asal'])){
+		$nominal_asli = $_POST['nominal_asal'];
+		$ket = $_POST['description'];
+	}
 
 	$tanggal = date('Y-m-d H:i:s');
 	$status = '41';
@@ -209,7 +219,7 @@ elseif(isset($_POST['kirimKwitansi'])){
 	}
 
 	$kd_owner_payment = $kd_op_t."x".$kd_op_tu;
-	$add_owner_payment = $proses_o->addOwnerPayment($kd_owner_payment, $kd_owner, $tanggal, $jumlah_transaksi, $earnings, 2, $nominal_asli, $keterangan);
+	$add_owner_payment = $proses_o->addOwnerPayment($kd_owner_payment, $kd_owner, $tanggal, $jumlah_transaksi, $earnings, 2, $nominal_asli, $ket);
 	// Log System
 	//$logs->addLog('Add','tb_owner_payment','Kirim kwitansi pembayaran ke owner ',json_encode([$kd_owner_payment, $kd_owner, $tanggal, $jumlah_transaksi, $earnings, 2]),null);
 	header("Location:../view/".$view."/owner/owner_payment.php");

@@ -20,9 +20,9 @@
             $callback[] = array(
                     "kd_penyewa" => $data->kd_penyewa,
                     "nama" => $data->nama,
-                    "alamat" => $data->alamat,,
+                    "alamat" => $data->alamat,
                     "no_tlp" => $data->no_tlp,
-                    "jenis_kelamin" => $jenis_kelamin,
+                    "jenis_kelamin" => $data->jenis_kelamin,
                     "email" => $data->email,
                     "tgl_gabung" => $data->tgl_gabung
             );

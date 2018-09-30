@@ -88,6 +88,10 @@ elseif(isset($_POST['id1'])){
 			else{
 				$show = $Proses->is_blocked($CI,$CO,$kd_unit,'3');
 				if($show) $hasil = "Unit yang dipilih telah diblok oleh admin";
+				else {
+					$show = $Proses->is_blocked($CI,$CO,$kd_unit,'4');
+					if($show) $hasil = "Unit yang dipilih telah diblok oleh partner";
+				}
 			}
 		}
 	}
