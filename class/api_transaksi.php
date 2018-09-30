@@ -6,7 +6,6 @@ class Api_transaksi {
       $this->db = $database;
   }
 
-  //Proses Add
   public function show_unitTersedia($kd_apt, $CI, $CO){
     $sql = "SELECT * FROM tb_unit WHERE kd_apt ='$kd_apt' AND kd_unit not IN (
       SELECT kd_unit FROM tb_transaksi WHERE ((check_in<='$CI' and check_out>='$CO')

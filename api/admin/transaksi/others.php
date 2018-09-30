@@ -1,5 +1,5 @@
 <?php 
-
+    require("../../../../config/database.php");
     require("../../../class/api_transaksi.php");
 
     function isPost($x){
@@ -12,7 +12,7 @@
 
     if(isPost("categories")=="availableUnit" && isPost("key")=="5pR1Ngdo"){
 
-        $kd_unit = isPost("kd_apt");
+        $kd_apt = isPost("kd_apt");
         $CI = isPost("check_in");
         $CO = isPost("check_out");
         $proses = new Api_transaksi($db);
