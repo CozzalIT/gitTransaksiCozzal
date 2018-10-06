@@ -108,7 +108,7 @@
             }
         }
 
-        $harga_asli = explode("/", $harga_sewa_asli);
+        $harga_asli = explode("&", $harga_sewa_asli);
         if($total<(($harga_asli[0]*$jumlah_weekday)+($harga_asli[1]*$jumlah_weekend))){
             $diskon = getDisCount($harga_sewa, $harga_sewa_we, $harga_sewa_asli, $jumlah_weekday, $jumlah_weekend, $total);
         }else{
