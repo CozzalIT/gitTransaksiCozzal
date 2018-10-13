@@ -57,7 +57,7 @@
         $tamu = isPost('tamu');
         $check_in = isPost('check_in');
         $check_out = isPost('check_out');
-        $harga_sewa = isPost('harga_sewa');
+        $harga_sewa = isPost('harga_sewa_wd');
         $harga_sewa_we = isPost('harga_sewa_we');
         $harga_sewa_gbg = isPost('harga_sewa_gbg');
         $harga_sewa_asli = isPost('harga_sewa_asli');
