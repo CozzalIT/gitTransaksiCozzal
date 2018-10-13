@@ -74,16 +74,8 @@
         $tgl_transaksi = date('y-m-d H:i:s');
         $tanggal = date('y-m-d H:i:s');
         $week = date("w",strtotime($check_in))+1;
-        
-        // if(isset(isPost('Transaksi_booked'))){
-        //     $kd_unit = isPost('unit');
-        // } else {
-        //     $kode = explode("+",isPost('unit'));
-        //     $kd_unit = $kode[0];
-        // }
 
-        $kode = explode("+",isPost('unit'));
-        $kd_unit = $kode[0];
+        $kd_unit = isPost('unit');
 
         $proses_u = new Unit($db);
         $show_u = $proses_u->editUnit($kd_unit);
@@ -91,8 +83,6 @@
         $h_owner_wd = $data_u->h_owner_wd;
         $h_owner_we = $data_u->h_owner_we;
         $kd_owner = $data_u->kd_owner;
-        //$h_owner_mg = $data_u->h_owner_mg;
-        //$h_owner_bln = $data_u->h_owner_bln;
 
         if($week>5){ //jika dimulai dari weekend
             $week_kind = explode("/",startinweekend($hari, $week, 0, 0));
@@ -122,12 +112,6 @@
 
         $add_transaksi = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $check_in, $check_out, $jumlah_weekend, $jumlah_weekday, $hari, $harga_sewa, $harga_sewa_we, $harga_sewa_gbg, $tgl_transaksi, $diskon, $ekstra_charge, $kd_kas, $tamu, $kd_booking, $dp, $total, $total_harga_owner, $sisa_pelunasan, 1, $h_owner_wd, $h_owner_we,$catatan, $deposit);
 
-        // if(isset(isPost('Transaksi_booked'))){
-        //     $proses->deleteBooked_list(isPost('kd_booked'), $check_in, $kd_unit);
-        // } else {
-        //     $proses->addUnit_kotor($kd_unit, $check_in, $check_out);
-        // }
-
 
         if($add_transaksi == "Success"){
 
@@ -150,13 +134,8 @@
             $data = $show->fetch(PDO::FETCH_OBJ);
             $keterangan_mutasi = "6/".$data->kd_transaksi;
 
-            // Log System
-            //$logs->addLog('ADD','tb_transaksi','Tambah transaksi baru dengan kd_transaksi '.$data->kd_transaksi,json_encode(['kd_transaksi'=>$data->kd_transaksi,'data'=>[$kd_penyewa, $kd_apt, $kd_unit, $check_in, $check_out, $jumlah_weekend, $jumlah_weekday, $hari, $harga_sewa, $harga_sewa_we, $harga_sewa_gbg, $tgl_transaksi, $diskon, $ekstra_charge, $kd_kas, $tamu, $kd_booking, $dp, $total, $total_harga_owner, $sisa_pelunasan, 1, $h_owner_wd, $h_owner_we,$catatan, $deposit]]),null);
             if($dp <> 0){
                 $add_mutasi = $proses2->addMutasiKas($kd_kas, $dp, 1, $tanggal, $keterangan_mutasi);
-
-                // Log System
-                //$logs->addLog('ADD','tb_mutasi_kas','Tambah mutasi kas',json_encode([$kd_kas, $dp, 1, $tanggal, $keterangan_mutasi]),null);
                 $show1 = $proses2->editSaldo($kd_kas);
                 $data1 = $show1->fetch(PDO::FETCH_OBJ);
                 $saldo = $dp + $data1->saldo;
