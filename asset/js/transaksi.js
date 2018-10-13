@@ -70,7 +70,6 @@ function hasil(form)
 	form.total.value=Number(form.harga_sewa_gbg.value)+ Number(form.ekstra_charge.value);
 
 	form.total_bayar.value = Number(form.total.value)+Number(form.deposit.value);
-	alert(Number(form.total.value)+Number(form.deposit.value));
 
 }
 

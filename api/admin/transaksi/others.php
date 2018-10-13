@@ -122,7 +122,7 @@
                     "harga_sewa_asli"=> $data->h_sewa_wd."&".$data->h_sewa_we,
                     "h_owner_gbg" => ownerPrice($data->h_owner_wd,$data->h_owner_mg,$data->h_owner_bln),
                     "deposite" => deposite(),
-                    "ekstra_charge" => $data->ekstra_charge                    
+                    "ekstra_charge" => $data->ekstra_charge*1                    
             );
         }
 
