@@ -35,7 +35,8 @@ class Booked {
   }
 
   public function getharga($kd_unit){
-    $sql = "SELECT h_sewa_we, h_sewa_wd, ekstra_charge FROM tb_unit WHERE kd_unit='$kd_unit'";
+    $sql = "SELECT h_sewa_we, h_sewa_wd, ekstra_charge, h_sewa_bln, h_sewa_mg, h_owner_wd, h_owner_we, h_owner_mg, h_owner_bln
+    FROM tb_unit WHERE kd_unit='$kd_unit'";
     $query = $this->db->query($sql);
     return $query;
   }
