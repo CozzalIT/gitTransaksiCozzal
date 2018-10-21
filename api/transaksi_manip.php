@@ -1,18 +1,18 @@
 <?php 
 
-    require("../../../class/transaksi.php");
-    require("../../../class/ics_unit.php");
-    require("../../../class/fcm.php");
-    require("../../../class/unit.php");
-    require("../../../class/owner.php");
-    require("../../../class/kas.php");
-    require("../../../../config/database.php");
+    require("../class/transaksi.php");
+    require("../class/ics_unit.php");
+    require("../class/fcm.php");
+    require("../class/unit.php");
+    require("../class/owner.php");
+    require("../class/kas.php");
+    require("../../config/database.php");
 
     $ICS = new Ics_unit($db);
 
     function buildICS($kd_unit){
         $ICS = $GLOBALS["ICS"];
-        $kd_unit = str_replace("x", "/",$_GET['id']);
+        $kd_unit = str_replace("x", "/",$kd_unit);
         $ICS->buildIcs($kd_unit);
     }
 
@@ -110,6 +110,7 @@
         $proses_o = new Owner($db);
         $proses_f = new fcm($db);
 
+        // die('Mashook Pa eko');
         $add_transaksi = $proses->addTransaksi($kd_penyewa, $kd_apt, $kd_unit, $check_in, $check_out, $jumlah_weekend, $jumlah_weekday, $hari, $harga_sewa, $harga_sewa_we, $harga_sewa_gbg, $tgl_transaksi, $diskon, $ekstra_charge, $kd_kas, $tamu, $kd_booking, $dp, $total, $total_harga_owner, $sisa_pelunasan, 1, $h_owner_wd, $h_owner_we,$catatan, $deposit);
 
 
