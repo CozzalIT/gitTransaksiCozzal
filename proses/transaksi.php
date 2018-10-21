@@ -68,7 +68,6 @@ if(isset($_POST['addTransaksi']) || isset($_POST["Transaksi_booked"])){
   $tgl_transaksi = date('y-m-d H:i:s');
   $tanggal = date('y-m-d H:i:s');
   $week = date("w",strtotime($check_in))+1;
-  die(json_encode($_POST));
   if(isset($_POST["Transaksi_booked"])){
     $kd_unit = $_POST['unit'];
   } else {

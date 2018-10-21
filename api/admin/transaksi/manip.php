@@ -1,14 +1,14 @@
 <?php 
 
     require("../../../class/transaksi.php");
-    require("../../../class/ics.php");
+    require("../../../class/ics_unit.php");
     require("../../../class/fcm.php");
     require("../../../class/unit.php");
     require("../../../class/owner.php");
     require("../../../class/kas.php");
     require("../../../../config/database.php");
 
-    $ICS = new ICS($db);
+    $ICS = new Ics_unit($db);
 
     function buildICS($kd_unit){
         $ICS = $GLOBALS["ICS"];
