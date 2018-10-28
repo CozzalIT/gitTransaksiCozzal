@@ -144,11 +144,11 @@
         $Proses2 = new Transaksi($db);
         $is_exist = $Proses2->showTransaksi_cek($edit->check_in,$edit->check_out,$edit->kd_unit);   
         if($is_exist){
-            die(json_encode(["status"=>'rejected', "description" => "Transaksi tersebut telah terisi"]));
+            die(json_encode(["status"=>'rejected', "description" => "Transaksi tersebut telah terisi", "data" => [], "suggest" => []]));
         } else {
             $is_blocked = $Proses2->is_blocked_all($edit->check_in,$edit->check_out,$edit->kd_unit);
             if($is_blocked){
-                die(json_encode(["status"=>'rejected', "description" => "Transaksi tersebut telah terblokir"]));        
+                die(json_encode(["status"=>'rejected', "description" => "Transaksi tersebut telah terblokir", "data" => [], "suggest" => []]));        
             }
         }  
 
@@ -164,7 +164,7 @@
 
         $callback = ["nama" => $edit->penyewa, "no_tlp" => $edit->no_tlp, "email" => "guest@airbnb.com"];
 
-        echo json_encode(["status"=>'accepted', "data" => $callback, "suggest"=>$indicated]);
+        echo json_encode(["status"=>'accepted', "description" => "Transaksi dapat dilanjutkan", "data" => $callback, "suggest"=>$indicated]);
 
     }
 
