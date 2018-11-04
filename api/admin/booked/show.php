@@ -162,7 +162,7 @@
             ];
         }
 
-        $callback = [["nama" => $edit->penyewa, "no_tlp" => $edit->no_tlp, "email" => "guest@airbnb.com"]];
+        $callback = ["nama" => $edit->penyewa, "no_tlp" => $edit->no_tlp, "email" => "guest@airbnb.com"];
 
         echo json_encode(array("status"=>'accepted', "description" => "Transaksi dapat dilanjutkan", "data" => [$callback], "suggest"=>$indicated);
 
