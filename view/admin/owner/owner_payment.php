@@ -156,6 +156,7 @@
                           while($data_k = $show_k->fetch(PDO::FETCH_OBJ)){
                             $show_tu = $proses_tu->showTransaksiUmumByTanggal($data_k->tanggal);
                             $data_tu = $show_tu->fetch(PDO::FETCH_OBJ);
+                            if(!isset($data_tu->kd_transaksi_umum)) break;
                             echo "
                               <tr class='gradeC'>
                                 <td class='hide'>$i</td>
