@@ -119,6 +119,7 @@
   if(isset($_GET['setlement'])){
     $show = $Proses->editTransaksi($_GET['setlement']);
     $detail = $show->fetch(PDO::FETCH_OBJ);
+    $action = ($detail->status_broker=="B" ? '../../../proses/transaksi_broker.php' : '../../../proses/transaksi.php');
 
     echo '
       <div id="popup-detail" class="modal">
@@ -137,7 +138,7 @@
           <div class="widget-content">
             <div class="row-fluid">
               <div class="span8">
-                <form action="../../../proses/transaksi.php" method="POST">
+                <form action="'.$action.'" method="POST">
                   <table class="">
                     <tbody>
                       <tr>

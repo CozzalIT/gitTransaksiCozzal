@@ -31,6 +31,7 @@
         $Proses = new Transaksi($db);
         $show = $Proses->editTransaksi($_GET['edit_transaksi']);
         $edit = $show->fetch(PDO::FETCH_OBJ);
+        $action = ($edit->status_broker=="B" ? '../../../proses/transaksi_broker.php' : '../../../proses/transaksi.php');
         echo '
           <div class="span3">
           </div>
@@ -40,7 +41,7 @@
                 <h5>Edit Transaksi</h5>
               </div>
               <div class="widget-content nopadding">
-                <form action="../../../proses/transaksi.php" method="post" class="form-horizontal">
+                <form action="'.$action.'" method="post" class="form-horizontal">
                   <div class="control-group">
                     <input name="pembayaran" class="hide" type="text" value="'.$edit->pembayaran.'"/>
                     <input name="kd_transaksi" class="hide" type="text" value="'.$edit->kd_transaksi.'"/>

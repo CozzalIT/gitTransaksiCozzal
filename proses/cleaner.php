@@ -1,7 +1,7 @@
 <?php
 require("../../config/database.php");
 require("../class/cleaner.php");
-// session_start();
+session_start();
 $view = $_SESSION['hak_akses'];
 
 

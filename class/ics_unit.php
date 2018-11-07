@@ -170,7 +170,7 @@ class Ics_unit {
     INNER JOIN tb_penyewa ON tb_penyewa.kd_penyewa = tb_transaksi.kd_penyewa
     INNER JOIN tb_apt ON tb_apt.kd_apt = tb_transaksi.kd_apt 
     WHERE tb_transaksi.kd_unit='$kd_unit' AND (tb_transaksi.check_out>='$minimum_date' 
-    OR tb_transaksi.check_in>='$minimum_date') AND tb_transaksi.status!=2 AND tb_transaksi.status!=3"; // 3 adalah kode booking airbnb dan 1 adalah status di transaksi 
+    OR tb_transaksi.check_in>='$minimum_date') AND tb_transaksi.status!=2 AND tb_transaksi.status!=3 AND tb_transaksi.status_broker != 'B'"; // 3 adalah kode booking airbnb dan 1 adalah status di transaksi 
     $query = $this->db->query($sql);
     return $query;
   }

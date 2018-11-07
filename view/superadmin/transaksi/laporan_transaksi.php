@@ -99,7 +99,7 @@
 if(isset($_GET['pembayaran'])){
   $show = $Proses->editTransaksi($_GET['pembayaran']);
   $data1 = $show->fetch(PDO::FETCH_OBJ);
-
+  $action = ($data1->status_broker=="B" ? '../../../proses/transaksi_broker.php' : '../../../proses/transaksi.php');
   echo'
     <!--Modal Tambah Pembayaran-->
     <script type="text/javascript">
@@ -124,7 +124,7 @@ if(isset($_GET['pembayaran'])){
     ';
   }
   echo'
-      	<form action="../../../proses/transaksi.php" method="post" class="form-horizontal">
+      	<form action="'.$action.'" method="post" class="form-horizontal">
           <div class="control-group">
             <label class="control-label">Total Tagihan</label>
             <label class="control-label">'.number_format($data1->total_tagihan, 0, ".", ".").' IDR</label>
