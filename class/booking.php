@@ -30,7 +30,8 @@ class Booking {
     tb_url_unit.title FROM tb_booked
     INNER JOIN tb_unit ON tb_unit.kd_unit = tb_booked.kd_unit
     INNER JOIN tb_apt ON tb_apt.kd_apt = tb_booked.kd_apt
-    LEFT JOIN tb_url_unit ON tb_booked.kd_url = tb_url_unit.kd_url";
+    LEFT JOIN tb_url_unit ON tb_booked.kd_url = tb_url_unit.kd_url 
+    ORDER BY tb_booked.check_in DESC";
     $query = $this->db->query($sql);
     return $query;
   }  
