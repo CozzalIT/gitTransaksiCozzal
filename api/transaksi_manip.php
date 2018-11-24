@@ -50,7 +50,7 @@
     	}
     }
 
-    if(isPost("input")=="Transaksi" && isPost("key")=="7asjN21#"){
+    if((isPost("input")=="Transaksi" || isPost("input")=="TransaksiOther") && isPost("key")=="7asjN21#"){
         
         $kd_penyewa = isPost('kd_penyewa');
         $kd_apt = isPost('apartemen');
@@ -116,7 +116,11 @@
 
         if($add_transaksi == "Success"){
 
-            $proses->addUnit_kotor($kd_unit, $check_in, $check_out);
+            if(isPost("input")=="TransaksiOther"){
+                $proses->deleteBooked_list($_POST["kd_booked"], $check_in, $kd_unit);
+            } else {
+                $proses->addUnit_kotor($kd_unit, $check_in, $check_out);
+            }
             
             $show_o = $proses_o->editOwner($kd_owner);
             $data_o = $show_o->fetch(PDO::FETCH_OBJ);

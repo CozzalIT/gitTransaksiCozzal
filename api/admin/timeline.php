@@ -11,6 +11,15 @@
         }
     }
 
+    function formated_jam_co($jam){
+      if($jam!=""){
+        $jam_CO = explode(":", $jam);
+        return $jam_CO[0].":".$jam_CO[1];
+      } else {
+        return "Standar";
+      }
+    }
+
     function formalTanggal($date){
         $arr_b = [
             "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli",
@@ -52,7 +61,7 @@
                 "nama" => $data->nama, "no_unit" => $data->no_unit,
                 "nama_apt" => $data->nama_apt, "no_tlp" => $data->no_tlp,
                 "alamat_apt" => $data->alamat_apt, 
-                "jam_check_out" => ($jenis=="check_out"?($data->jam_check_out!=''?formated_jam_co($data->jam_check_out):"Standar"):"-")
+                "jam_check_out" => ($jenis=="check_out" ? formated_jam_co($data->jam_check_out) : "-")
             ];
         }
         return $ret;

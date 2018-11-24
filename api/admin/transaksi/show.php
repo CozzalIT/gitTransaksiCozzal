@@ -7,15 +7,16 @@
     require("../../../class/kas.php");
     require("../../../../config/database.php");
 
-    function isPost($x){
-    	if(isset($_POST[$x])){
-    		return $_POST[$x];
-    	} else {
-    		die(json_encode(array("status" => "Incorrect Value")));
-    	}
+    function isPost($x, $check = false){
+        if(isset($_POST[$x])){
+            return $_POST[$x];
+        } else {
+            if($check) return "";
+            else die(json_encode(array("status" => "Incorrect Value ".$x)));
+        }
     }
 
-    if(isPost("list")=="LaporanTransaksi" && isPost("key")=="41mmy12k"){
+    if(isPost("list", true)=="LaporanTransaksi" && isPost("key", true)=="41mmy12k"){
 
         $start_rec = isPost("start_rec");
         $length = isPost("length");
@@ -44,7 +45,7 @@
 
     }
 
-    elseif(isPost("list")=="ConfirmTransaksi" && isPost("key")=="Q1CmrF2k"){
+    elseif(isPost("list", true)=="ConfirmTransaksi" && isPost("key", true)=="Q1CmrF2k"){
 
         $start_rec = isPost("start_rec");
         $length = isPost("length");
@@ -73,7 +74,7 @@
 
     }
 
-    elseif(isPost("list")=="CancelTransaksi" && isPost("key")=="QCbmbF3L"){
+    elseif(isPost("list", true)=="CancelTransaksi" && isPost("key", true)=="QCbmbF3L"){
 
         $start_rec = isPost("start_rec");
         $length = isPost("length");
@@ -105,7 +106,7 @@
 
     }    
 
-    elseif(isPost("detail")=="LaporanTransaksi" && isPost("key")=="41mmy12k"){
+    elseif(isPost("detail", true)=="LaporanTransaksi" && isPost("key", true)=="41mmy12k"){
 
         $kd_transaksi = isPost("kd_transaksi");
         $proses = new Transaksi($db);
@@ -142,7 +143,7 @@
 
     }
 
-    elseif(isPost("info")=="BayarTransaksi" && isPost("key")=="tZwMz307"){
+    elseif(isPost("info", true)=="BayarTransaksi" && isPost("key", true)=="tZwMz307"){
 
         $kd_transaksi = isPost("kd_transaksi");
         $proses = new Transaksi($db);
@@ -162,7 +163,7 @@
 
     }  
 
-    elseif(isPost("edit")=="Transaksi" && isPost("key")=="xr10b5dE"){
+    elseif(isPost("edit", true)=="Transaksi" && isPost("key", true)=="xr10b5dE"){
 
         $kd_transaksi = isPost("kd_transaksi");
         $proses = new Transaksi($db);
