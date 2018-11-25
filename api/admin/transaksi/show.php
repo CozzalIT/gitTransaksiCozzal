@@ -187,6 +187,7 @@
             "harga_sewa_weekend" => $data->harga_sewa_weekend,
             "jumlah_tamu" => $data->tamu,
             "harga_sewa_asli"  => $data2->h_sewa_wd."/".$data2->h_sewa_we,
+            "harga_sewa_gbg" => $data->harga_sewa_gbg,
             "ekstra_charge" => $data->ekstra_charge,
             "deposit" => $data->deposit,
             "total_biaya" => $data->total_tagihan,
