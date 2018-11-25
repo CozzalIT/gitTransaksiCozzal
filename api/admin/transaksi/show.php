@@ -183,6 +183,7 @@
             "hari" => $data->hari,
             "kd_apt" => $data->kd_apt,
             "kd_unit" => $data->kd_unit,
+            "no_unit" => $data->no_unit,
             "harga_sewa" => $data->harga_sewa,
             "harga_sewa_weekend" => $data->harga_sewa_weekend,
             "jumlah_tamu" => $data->tamu,
