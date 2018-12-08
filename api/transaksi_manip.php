@@ -42,15 +42,16 @@
         return $jumlah_weekday."/".$jumlah_weekend;
     }
 
-    function isPost($x){
+    function isPost($x, $sc = false){
     	if(isset($_POST[$x])){
     		return $_POST[$x];
     	} else {
+            if($sc) return null;
     		die(json_encode(array("status" => "Incorrect Value")));
     	}
     }
 
-    if((isPost("input")=="Transaksi" || isPost("input")=="TransaksiOther") && isPost("key")=="7asjN21#"){
+    if((isPost("input", true)=="Transaksi" || isPost("input", true)=="TransaksiOther") && isPost("key", true)=="7asjN21#"){
         
         $kd_penyewa = isPost('kd_penyewa');
         $kd_apt = isPost('apartemen');
@@ -157,7 +158,7 @@
 
     } 
 
-    elseif(isPost("update")=="Transaksi" && isPost("key")=="FdH9IDNl"){
+    elseif(isPost("update", true)=="Transaksi" && isPost("key", true)=="FdH9IDNl"){
 
         $kd_transaksi = $_POST['kd_transaksi'];
         $kd_apt = $_POST['apartemen'];
@@ -282,7 +283,7 @@
 
     }
 
-    elseif(isPost('cancel')=="Transaksi" && isPost('key')=="mKl79Pq9"){
+    elseif(isPost('cancel', true)=="Transaksi" && isPost('key', true)=="mKl79Pq9"){
 
         $kd_transaksi = isPost('kd_transaksi');
         $kd_unit = isPost('unitCancel');
@@ -302,7 +303,7 @@
 
     }
 
-    elseif(isPost('confirm')=="Transaksi" && isPost('key')=="KmlPr667"){
+    elseif(isPost('confirm', true)=="Transaksi" && isPost('key', true)=="KmlPr667"){
 
         $kd_transaksi = isPost("kd_transaksi");
         $proses = new Transaksi($db);
@@ -325,7 +326,7 @@
 
     }
 
-    elseif(isPost('update')=="Payment" && isPost('key')=="bKmsT267"){
+    elseif(isPost('update', true)=="Payment" && isPost('key', true)=="bKmsT267"){
 
         $proses = new Transaksi($db);
         $proses_kas = new Kas($db);
@@ -335,7 +336,8 @@
 
         $kd_transaksi = isPost('kd_transaksi');
         $kd_kas = isPost('kas');
-        $sisa_pelunasan_lama = isPost('sisa_pelunasan');
+        $sisa_pelunasan_lama = str_replace(" IDR", '', isPost('sisa_pelunasan'));
+        $sisa_pelunasan_lama = (int)str_replace(".", "", $sisa_pelunasan_lama);
         $pembayaran_lama = $data->pembayaran;
         $pembayaran_masuk = isPost('pembayaran');
         $pembayaran_baru = $pembayaran_lama + $pembayaran_masuk;
@@ -367,7 +369,7 @@
 
     }
 
-    elseif(isPost('setlement')=="DP" && isPost('key')=="Cl12kPz0"){
+    elseif(isPost('setlement', true)=="DP" && isPost('key', true)=="Cl12kPz0"){
 
         $kd_kas = isPost('kas');
         $setlement = isPost('setlement');
