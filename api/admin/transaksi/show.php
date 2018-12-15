@@ -5,6 +5,7 @@
     require("../../../class/unit.php");
     require("../../../class/owner.php");
     require("../../../class/kas.php");
+    require("../../../class/crypto.php");
     require("../../../../config/database.php");
 
     function isPost($x, $check = false){
@@ -112,6 +113,7 @@
         $proses = new Transaksi($db);
         $show = $proses->editTransaksi($kd_transaksi);
         $data = $show->fetch(PDO::FETCH_OBJ);
+        $crpt = new Crypto();
         $callback = array(
             "nama_penyewa" => $data->nama,
             "alamat_penyewa" => $data->alamat,
@@ -136,7 +138,8 @@
                 "dp" => number_format($data->dp, 0, ".", ".")." IDR",
                 "dp_via" => $data->sumber_dana,
                 "sisa_pelunasan" => number_format($data->sisa_pelunasan, 0, ".", ".")." IDR",
-                "catatan" => $data->catatan
+                "catatan" => $data->catatan,
+                "code" => $crpt->encrypt($data->kd_transaksi)
             )
         );    
         echo json_encode($callback);  
