@@ -213,7 +213,7 @@
 
         $callback = [];
         $Proses = new Search($db);
-        $show1 = $Proses->transaksi($keyword, ($type=="laporan" ? "1" : "42") );
+        $show = $Proses->transaksi($keyword, ($type=="laporan" ? "1" : "42") );
 
         while($data = $show->fetch(PDO::FETCH_OBJ)){
             $callback[] = array(
