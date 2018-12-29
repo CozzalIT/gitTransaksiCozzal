@@ -1,6 +1,7 @@
 <?php 
 
     require("../../../class/transaksi.php");
+    require("../../../class/search.php");
     require("../../../class/transaksi_umum.php");
     require("../../../class/unit.php");
     require("../../../class/owner.php");
@@ -205,5 +206,29 @@
 
     }  
 
+    elseif(isPost("search", true)=="Transaksi" && isPost("key", true)=="jkas78hj"){
+
+        $keyword = isPost("keyword");
+        $type = isPost("type"); // laporan atau confirm
+
+        $callback = [];
+        $Proses = new Search($db);
+        $show1 = $Proses->transaksi($keyword, ($type=="laporan" ? "1" : "42") );
+
+        while($data = $show->fetch(PDO::FETCH_OBJ)){
+            $callback[] = array(
+                    "kd_transaksi" => $data->kd_transaksi,
+                    "kd_unit" => $data->kd_unit,
+                    "no_kwitansi" => strtoupper(dechex($data->kd_transaksi)),
+                    "penyewa" => $data->nama,
+                    "unit" => $data->no_unit,
+                    "check_in" => $data->check_in,
+                    "check_out" => $data->check_out
+            );
+        }
+
+        echo json_encode($callback);
+
+    }  
 
  ?>
