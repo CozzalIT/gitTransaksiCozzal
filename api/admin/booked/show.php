@@ -5,17 +5,20 @@
     require("../../../class/penyewa.php");
     require("../../../class/transaksi.php");
     require("../../../../config/database.php");
+    require("../../../class/search.php");
+
 
     $hari = 0;
     $week_pos = 0;
     $h_we = 0;
     $h_wd = 0;
 
-    function isPost($x){
+    function isPost($x, $check = false){
         if(isset($_POST[$x])){
             return $_POST[$x];
         } else {
-            die(json_encode(array("status" => "Incorrect Value")));
+            if($check) return "";
+            else die(json_encode(array("status" => "Incorrect Value ".$x)));
         }
     }
 
@@ -108,7 +111,7 @@
 // -------------------------------------------------------------------------
 
 
-    if(isPost("info")=="ListBooked" && isPost("key")=="2xBDoQcy"){
+    if(isPost("info", true)=="ListBooked" && isPost("key", true)=="2xBDoQcy"){
 
         $Proses = new Booking($db);
         $callback = [];
@@ -134,7 +137,34 @@
 
     }
 
-    elseif(isPost("info")=="detailBookedPenyewa" && isPost("key")=="j12O2nKl1"){
+    elseif(isPost("info", true)=="search" && isPost("key", true)=="2xBDoQcx"){
+
+        $keyword = isPost("keyword");
+        $Proses = new Search($db);
+        $callback = [];
+        $show = $Proses->booked($keyword);
+        while($data = $show->fetch(PDO::FETCH_OBJ)){
+            if($data->status=='1'){
+                if($data->title!="") $title = $data->title;
+                else $title = 'Unlisted';
+                $callback[] = array(
+                    "nama_penyewa" => $data->penyewa,
+                    "no_tlp" => $data->no_tlp,
+                    "nama_apt" => $data->nama_apt,
+                    "no_unit" => $data->no_unit,
+                    "check_in" => $data->check_in,
+                    "check_out" => $data->check_out,
+                    "kd_booked" => $data->kd_booked,
+                    "kd_unit" => $data->kd_unit,
+                    "title" => $title
+                );                
+            }
+        }        
+        echo json_encode($callback);
+
+    }
+
+    elseif(isPost("info", true)=="detailBookedPenyewa" && isPost("key", true)=="j12O2nKl1"){
 
         $Proses = new Booked($db);
         $kd_booked = isPost('kd_booked');
@@ -168,7 +198,7 @@
 
     }
 
-    elseif(isPost("info")=="detailBooked" && isPost("key")=="1xBxoQdm"){
+    elseif(isPost("info", true)=="detailBooked" && isPost("key", true)=="1xBxoQdm"){
 
         $Proses = new Booked($db);
         $kd_booked = isPost('kd_booked');
