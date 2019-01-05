@@ -6,7 +6,7 @@ class Search{
     $this->db = $database;
   }
 
-  public funcion transaksi($keyword, $status){
+  public function transaksi($keyword, $status){
     $sql = "SELECT
       tb_transaksi.kd_transaksi, tb_transaksi.kd_unit, tb_transaksi.check_in, tb_transaksi.check_out, tb_transaksi.dp, tb_transaksi.setlement_dp, tb_transaksi.status,
       tb_penyewa.kd_penyewa, tb_penyewa.nama,
